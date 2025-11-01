@@ -1,26 +1,167 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Primary Colors */
+    --color-primary: rgba(19, 245, 132, 1);
+    --color-primary-dark: rgba(9, 9, 9, 1);
+    --color-primary-opacity-48: rgba(19, 245, 132, 0.48);
+    --color-primary-opacity-30: rgba(19, 245, 132, 0.3);
+    --color-primary-opacity-50: rgba(19, 245, 132, 0.5);
+    --color-primary-opacity-90: rgba(19, 245, 132, 0.9);
+    
+    /* Neutral Colors */
+    --color-white: rgba(255, 255, 255, 1);
+    --color-black: rgba(0, 0, 0, 1);
+    --color-dark: rgba(1, 1, 1, 1);
+    --color-light-gray: rgba(245, 245, 245, 1);
+    --color-light-gray-90: rgba(245, 245, 245, 0.9);
+    --color-white-opacity-10: rgba(255, 255, 255, 0.1);
+    --color-white-opacity-15: rgba(255, 255, 255, 0.15);
+    --color-white-opacity-20: rgba(255, 255, 255, 0.2);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(
+      180deg,
+      var(--color-white) 54.17%,
+      var(--color-primary-opacity-48) 100%
+    );
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--color-dark);
+  }
+
+  html {
+    color-scheme: dark;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Text Gradient Utility */
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Color Utility Classes */
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-light-gray {
+    color: var(--color-light-gray);
+  }
+
+  .text-light-gray-90 {
+    color: var(--color-light-gray-90);
+  }
+
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+
+  .bg-primary-opacity-90 {
+    background-color: var(--color-primary-opacity-90);
+  }
+
+  .bg-white-opacity-10 {
+    background-color: var(--color-white-opacity-10);
+  }
+
+  .bg-white-opacity-15 {
+    background-color: var(--color-white-opacity-15);
+  }
+
+  .border-white-opacity-20 {
+    border-color: var(--color-white-opacity-20);
+  }
+
+  .shadow-primary-30 {
+    --tw-shadow: 0 10px 15px -3px var(--color-primary-opacity-30), 0 4px 6px -2px var(--color-primary-opacity-30);
+    --tw-shadow-colored: 0 10px 15px -3px var(--color-primary-opacity-30), 0 4px 6px -2px var(--color-primary-opacity-30);
+    box-shadow: var(--tw-shadow-colored);
+  }
+
+  .shadow-primary-50 {
+    --tw-shadow: 0 10px 15px -3px var(--color-primary-opacity-50), 0 4px 6px -2px var(--color-primary-opacity-50);
+    --tw-shadow-colored: 0 10px 15px -3px var(--color-primary-opacity-50), 0 4px 6px -2px var(--color-primary-opacity-50);
+    box-shadow: var(--tw-shadow-colored);
+  }
+}
+
+@layer components {
+  /* Hero Badge Container */
+  .hero-badge {
+    @apply mb-8 inline-flex items-center gap-3 pt-1 pr-1 pb-1 pl-3 rounded-[48px] overflow-hidden;
+    background-color: var(--color-black);
+    border: 1.2px solid var(--color-white-opacity-15);
+  }
+
+  /* Hero Badge Exclusive Section */
+  .hero-badge-exclusive {
+    @apply rounded-[48px] px-4 shrink-0;
+    background-color: var(--color-primary);
+  }
+
+  /* Hero Badge Exclusive Text */
+  .hero-badge-exclusive-text {
+    @apply text-xs font-semibold;
+    color: var(--color-primary-dark);
+  }
+
+  /* Hero Badge Text Section */
+  .hero-badge-text {
+    @apply pl-2 pr-4 py-2 rounded-r-[48px];
+    background-color: var(--color-black);
+  }
+
+  /* Hero Badge Text Content */
+  .hero-badge-text-content {
+    @apply text-sm font-medium;
+    color: var(--color-primary);
+  }
+
+  /* Button Variants */
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-dark);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-primary-opacity-90);
+  }
+
+  .btn-signup {
+    background-color: var(--color-white-opacity-10);
+    border: 1px solid var(--color-white-opacity-20);
+    color: var(--color-light-gray);
+  }
+
+  .btn-signup:hover {
+    background-color: var(--color-white-opacity-15);
+  }
 }
