@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SAP - Replacement & Repair Solution & More",
-  description: "Replacement & Repair Solution & More",
+  title: "ESAP AI",
+  description: "Security AI Platform to Protect the Entire Enterprise.",
 };
 
 export default function RootLayout({

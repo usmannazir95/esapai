@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   return (
-    <nav className="w-full">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300">
       <div className="container mx-auto px-4 py-4">
         <div className="mx-auto max-w-3xl bg-white-opacity-10 backdrop-blur-lg rounded-[40px] pl-8 pr-2 py-2">
           <div className="flex items-center justify-between gap-8">
