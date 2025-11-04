@@ -12,7 +12,6 @@ const socialIcons = [
 const navigationLinks = [
   { label: "Home", href: "/" },
   { label: "Product", href: "/product" },
-  { label: "Service", href: "/service" },
   { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
 ];

@@ -1,8 +1,8 @@
-import { Hero } from "@/components/sections/hero";
-import { Mission } from "@/components/sections/mission";
-import { Service } from "@/components/sections/service";
-import { Vision } from "@/components/sections/vision";
-import { Product } from "@/components/sections/product";
+import { Hero } from "@/components/sections/hero/hero";
+import { Mission } from "@/components/sections/about/mission";
+import { Service } from "@/components/sections/features/service";
+import { Vision } from "@/components/sections/about/vision";
+import { Product } from "@/components/sections/features/product";
 
 export default function Home() {
   return (
