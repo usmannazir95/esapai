@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { getServiceBySlug, services } from "@/lib/services";
 import { ServiceHero } from "@/components/sections/hero/service-hero";
-import { ServiceFeatures } from "@/components/sections/features/service-features";
-import { RepetitiveWork } from "@/components/sections/features/repetitive-work";
+import { ServiceFeatures } from "@/components/sections/features/service/service-features";
+import { RepetitiveWork } from "@/components/sections/features/service/repetitive-work";
 import { YouTubeVideo } from "@/components/sections/shared/youtube-video";
 
 interface ServicePageProps {

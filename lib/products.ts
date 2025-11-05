@@ -13,6 +13,19 @@ export interface PerformanceMetric {
   label: string;
 }
 
+export interface AceternityFeature3 {
+  title: string;
+  description: string;
+  skeleton?: "image" | "gallery" | "youtube" | "globe";
+  skeletonProps?: {
+    imageUrl?: string;
+    galleryImages?: string[];
+    youtubeUrl?: string;
+    youtubeThumbnail?: string;
+  };
+  className?: string;
+}
+
 export interface ProductContent {
   hero?: {
     subtitle?: string[];
@@ -35,6 +48,12 @@ export interface ProductContent {
   };
   performance?: {
     metrics?: PerformanceMetric[];
+  };
+  aceternityFeatures?: {
+    title?: string;
+    subtitle?: string;
+    features?: AceternityFeature3[];
+    className?: string;
   };
 }
 
@@ -120,6 +139,59 @@ export const products: Product[] = [
           { value: "75%", label: "Time Savings" },
           { value: "90%", label: "User Satisfaction" },
           { value: "3x", label: "Productivity Increase" },
+        ],
+      },
+      aceternityFeatures: {
+        title: "Comprehensive ERP Features",
+        subtitle:
+          "Explore the powerful capabilities that make our Voice-Activated AI ERP the perfect solution for modern businesses.",
+        features: [
+          {
+            title: "Track Business Operations",
+            description:
+              "Track and manage your business operations with ease using our intuitive ERP interface.",
+            skeleton: "image",
+            skeletonProps: {
+              imageUrl: "/products/voiceerp.svg",
+            },
+            className:
+              "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
+          },
+          {
+            title: "Capture Insights with AI",
+            description:
+              "Capture business insights effortlessly using our advanced AI technology and analytics.",
+            skeleton: "gallery",
+            skeletonProps: {
+              galleryImages: [
+                "/products/voiceerp.svg",
+                "/products/voiceerp.svg",
+                "/products/voiceerp.svg",
+                "/products/voiceerp.svg",
+                "/products/voiceerp.svg",
+              ],
+            },
+            className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
+          },
+          {
+            title: "Watch ERP in Action",
+            description:
+              "See how our Voice-Activated ERP transforms business operations with real-world demonstrations.",
+            skeleton: "youtube",
+            skeletonProps: {
+              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
+              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
+            },
+            className:
+              "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
+          },
+          {
+            title: "Global Deployment",
+            description:
+              "Deploy your ERP system across multiple locations with our cloud infrastructure and global reach.",
+            skeleton: "globe",
+            className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+          },
         ],
       },
     },

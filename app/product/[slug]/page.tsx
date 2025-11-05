@@ -2,9 +2,10 @@ import { notFound } from "next/navigation";
 import { getProductBySlug, products } from "@/lib/products";
 import { ProductHero } from "@/components/sections/hero/product-hero";
 import { Mission } from "@/components/sections/about/mission";
-import { AutomationHub } from "@/components/sections/features/automation-hub";
+import { AutomationHub } from "@/components/sections/features/product/automation-hub";
 import { YouTubeVideo } from "@/components/sections/shared/youtube-video";
-import { PerformanceSection } from "@/components/sections/features/performance-section";
+import { PerformanceSection } from "@/components/sections/features/product/performance-section";
+import { AceternityFeatures3 } from "@/components/sections/features/product/aceternity-features-3";
 
 interface ProductPageProps {
   params: Promise<{
@@ -37,6 +38,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const automationHubContent = content.automationHub;
   const youtubeVideoContent = content.youtubeVideo;
   const performanceContent = content.performance;
+  const aceternityFeaturesContent = content.aceternityFeatures;
 
   return (
     <main className="relative">
@@ -56,6 +58,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
         subtitle={automationHubContent?.subtitle}
         features={automationHubContent?.features}
       />
+      {aceternityFeaturesContent?.features && (
+        <AceternityFeatures3 
+          title={aceternityFeaturesContent.title}
+          subtitle={aceternityFeaturesContent.subtitle}
+          features={aceternityFeaturesContent.features}
+          className={aceternityFeaturesContent.className}
+        />
+      )}
       <YouTubeVideo
         videoId={youtubeVideoContent?.videoId || "ED2H_y6dmC8"}
         title={youtubeVideoContent?.title}
