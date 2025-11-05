@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useProductMenu } from "./product-menu-context";
 import { useServiceMenu } from "./service-menu-context";
@@ -15,6 +15,11 @@ export function Navbar() {
   const { isServiceOpen, setIsServiceOpen } = useServiceMenu();
   const productDropdownRef = useRef<HTMLDivElement>(null);
   const serviceDropdownRef = useRef<HTMLDivElement>(null);
+  
+  // Floating navbar state
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollThreshold] = useState(100); // Minimum scroll distance to trigger hide/show
 
   useEffect(() => {
     function handleProductClickOutside(event: MouseEvent) {
@@ -54,8 +59,45 @@ export function Navbar() {
     };
   }, [isServiceOpen, setIsServiceOpen]);
 
+  // Floating navbar scroll handler
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show navbar at the top
+      if (currentScrollY < scrollThreshold) {
+        setIsVisible(true);
+        setLastScrollY(currentScrollY);
+        return;
+      }
+
+      // Hide when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+        // Scrolling down
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, scrollThreshold]);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        isVisible
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-full opacity-0 pointer-events-none"
+      }`}
+    >
       <div className="container mx-auto px-4 py-4">
         <div className="mx-auto max-w-3xl bg-white-opacity-10 backdrop-blur-lg rounded-[40px] pl-8 pr-2 py-2">
           <div className="flex items-center justify-between gap-8">

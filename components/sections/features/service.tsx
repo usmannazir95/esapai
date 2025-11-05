@@ -98,15 +98,13 @@ export function Service() {
       <div className="relative container mx-auto max-w-7xl z-10">
         {/* Main Title */}
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-center text-gradient-radial-white leading-tight">
-          <span className="block">Rebuilding today,</span>
-          <span className="block">empowering tomorrow</span>
+          <span className="block">Comprehensive AI</span>
+          <span className="block">Services & Solutions</span>
         </h2>
 
         {/* Subtitle */}
         <p className="text-lg md:text-xl text-center text-white-opacity-70 max-w-4xl mx-auto mb-16">
-          Security AI Platform to Protect the Entire Enterprise. Break Down
-          Security. Gain Enterprise-Wide Visibility. Action Your Data In
-          Real-Time.
+          From strategic consulting to complete integration, we offer end-to-end AI services that transform your business operations and drive innovation.
         </p>
 
         {/* Central Brain with Services */}
@@ -145,7 +143,7 @@ export function Service() {
                     End-to-End Agentic <span className="text-white-opacity-70">AI</span> Integration
                   </>
                 }
-                description="Integrate autonomous AI agents to streamline"
+                description="Complete AI agent integration from strategy to deployment"
                 iconPosition="right"
                 positionStyle={{
                   left: 'calc(50% - 450px)',
@@ -156,8 +154,8 @@ export function Service() {
 
               {/* Middle Left - 180 degrees */}
               <ServiceItem
-                title="Enterprise Security Intelligence"
-                description="Advanced threat detection and response"
+                title="Enterprise Automation Strategy"
+                description="Strategic consulting to identify and implement automation opportunities"
                 iconPosition="right"
                 positionStyle={{
                   left: 'calc(50% - 500px)',
@@ -168,8 +166,8 @@ export function Service() {
 
               {/* Bottom Left - ~240 degrees */}
               <ServiceItem
-                title="Real-Time Data Analytics"
-                description="Action insights from your enterprise data"
+                title="Framework-as-a-Service"
+                description="Managed AI framework platform with cloud infrastructure"
                 iconPosition="right"
                 positionStyle={{
                   left: 'calc(50% - 450px)',
@@ -180,8 +178,8 @@ export function Service() {
 
               {/* Top Right - ~60 degrees */}
               <ServiceItem
-                title="Unified Security Platform"
-                description="Centralized visibility across all systems"
+                title="Tailored AI Solutions"
+                description="Custom AI solutions designed for your specific business needs"
                 iconPosition="left"
                 positionStyle={{
                   left: 'calc(50% + 450px)',
@@ -192,8 +190,8 @@ export function Service() {
 
               {/* Middle Right - 0/360 degrees */}
               <ServiceItem
-                title="Automated Response Systems"
-                description="AI-powered incident response and remediation"
+                title="Industry-Specific Excellence"
+                description="Specialized AI solutions for healthcare, finance, and manufacturing"
                 iconPosition="left"
                 positionStyle={{
                   left: 'calc(50% + 500px)',
@@ -204,8 +202,8 @@ export function Service() {
 
               {/* Bottom Right - ~300 degrees */}
               <ServiceItem
-                title="Continuous Monitoring"
-                description="24/7 surveillance and protection"
+                title="Innovation & Research Lab"
+                description="Cutting-edge AI research and development for next-gen solutions"
                 iconPosition="left"
                 positionStyle={{
                   left: 'calc(50% + 450px)',

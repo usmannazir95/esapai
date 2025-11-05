@@ -8,9 +8,16 @@ interface ProductHeroProps {
   title: string;
   subtitle: string[];
   description?: string;
+  centerIcon?: string;
+  centerIconAlt?: string;
 }
 
-export function ProductHero({ title, subtitle }: ProductHeroProps) {
+export function ProductHero({ 
+  title, 
+  subtitle, 
+  centerIcon = "/products/voiceerp.svg",
+  centerIconAlt = "Product Icon"
+}: ProductHeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
       {/* Top Light SVG */}
@@ -147,11 +154,11 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
               />
             </div>
 
-            {/* Central Voice ERP Icon - Bigger size */}
+            {/* Central Product Icon - Bigger size */}
             <div className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[3]">
               <Image
-                src="/products/voiceerp.svg"
-                alt="Voice ERP"
+                src={centerIcon}
+                alt={centerIconAlt}
                 width={300}
                 height={300}
                 className="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80"

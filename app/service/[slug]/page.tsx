@@ -25,7 +25,17 @@ export default async function ServicePage({ params }: ServicePageProps) {
     notFound();
   }
 
-  // Default features for the service
+  // Extract content configurations with fallbacks
+  const content = service.content || {};
+  const heroSubtitle = content.hero?.subtitle || [
+    service.description,
+    "Where Innovation Meets Productivity Driven by agents Powered by automation",
+    "Built for what's next",
+  ];
+  const featuresContent = content.features;
+  const youtubeVideoContent = content.youtubeVideo;
+
+  // Default features fallback
   const defaultFeatures = [
     {
       title: "Developer-Friendly Architecture",
@@ -54,22 +64,27 @@ export default async function ServicePage({ params }: ServicePageProps) {
     },
   ];
 
+  const features = featuresContent?.items || defaultFeatures;
+
   return (
     <main className="relative">
       <ServiceHero
         title={service.name}
-        subtitle={[
-          service.description,
-          "Where Innovation Meets Productivity Driven by agents Powered by automation",
-          "Built for what's next",
-        ]}
+        subtitle={heroSubtitle}
       />
 
-      <ServiceFeatures features={defaultFeatures} />
+      <ServiceFeatures
+        title={featuresContent?.title}
+        subtitle={featuresContent?.subtitle}
+        features={features}
+      />
 
       <RepetitiveWork />
 
-      <YouTubeVideo videoId="dQw4w9WgXcQ" />
+      <YouTubeVideo
+        videoId={youtubeVideoContent?.videoId || "dQw4w9WgXcQ"}
+        title={youtubeVideoContent?.title}
+      />
     </main>
   );
 }

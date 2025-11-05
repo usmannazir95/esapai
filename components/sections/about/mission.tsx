@@ -9,24 +9,24 @@ interface MissionProps {
   cards?: MissionCardType[];
 }
 
-const defaultTitle = "Protect your organization from any threat";
+const defaultTitle = "Empowering Businesses with Intelligent AI Solutions";
 const defaultSubtitle =
-  "Security AI Platform to Protect the Entire Enterprise. Break Down Security. Gain Enterprise-Wide Visibility. Action Your Data In Real-Time.";
+  "We build AI-powered systems that transform how businesses operate. From voice-activated ERP systems to intelligent knowledge agents, our solutions drive productivity, automation, and innovation across industries.";
 const defaultCards: MissionCardType[] = [
   {
-    title: "Developer-Friendly Architecture",
+    title: "Voice-First Innovation",
     description:
-      "Seamlessly integrate AI capabilities into existing tools and platforms.",
+      "Revolutionize business operations with voice-activated AI systems that make enterprise management accessible and intuitive for everyone.",
   },
   {
-    title: "Dual Interfaces for Flexibility",
+    title: "Intelligent Automation",
     description:
-      "Seamlessly integrate AI capabilities into existing tools and platforms.",
+      "Deploy AI agents and automation frameworks that handle complex workflows, freeing your team to focus on strategic decision-making.",
   },
   {
-    title: "Human-in-the-Loop Workflows",
+    title: "Seamless Integration",
     description:
-      "Seamlessly integrate AI capabilities into existing tools and platforms.",
+      "Connect legacy systems with modern AI capabilities through our Domain Expansion platform, modernizing without replacing infrastructure.",
   },
 ];
 

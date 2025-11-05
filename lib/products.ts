@@ -16,6 +16,8 @@ export interface PerformanceMetric {
 export interface ProductContent {
   hero?: {
     subtitle?: string[];
+    centerIcon?: string;
+    centerIconAlt?: string;
   };
   mission?: {
     title?: string;
@@ -54,68 +56,70 @@ export const products: Product[] = [
     content: {
       hero: {
         subtitle: [
-          "Where Innovation Meets Productivity Driven by agents Powered by automation",
-          "Built for what's next",
+          "Voice-Activated Enterprise Resource Planning for Modern SMEs",
+          "Transform your business operations with AI-powered voice commands",
         ],
+        centerIcon: "/products/voiceerp.svg",
+        centerIconAlt: "Voice ERP Icon",
       },
       mission: {
-        title: "Protect your organization from any threat",
+        title: "Revolutionize Your Business Operations",
         subtitle:
-          "Security AI Platform to Protect the Entire Enterprise. Break Down Security. Gain Enterprise-Wide Visibility. Action Your Data In Real-Time.",
+          "Our Voice-Activated AI ERP empowers small and medium enterprises with intelligent automation, seamless integration, and natural voice interaction. Manage your entire business through intuitive voice commands while maintaining enterprise-grade security and reliability.",
         cards: [
           {
-            title: "Developer-Friendly Architecture",
+            title: "Voice-First Interface",
             description:
-              "Seamlessly integrate AI capabilities into existing tools and platforms.",
+              "Control all ERP functions through natural voice commands, making business management accessible and efficient for everyone.",
           },
           {
-            title: "Dual Interfaces for Flexibility",
+            title: "AI-Powered Automation",
             description:
-              "Seamlessly integrate AI capabilities into existing tools and platforms.",
+              "Intelligent automation handles routine tasks, data entry, and reporting, freeing your team to focus on strategic decisions.",
           },
           {
-            title: "Human-in-the-Loop Workflows",
+            title: "SME-Optimized Design",
             description:
-              "Seamlessly integrate AI capabilities into existing tools and platforms.",
+              "Built specifically for small and medium enterprises with scalable architecture that grows with your business needs.",
           },
         ],
       },
       automationHub: {
         title: "Intelligent Automation Hub",
         subtitle:
-          "Security AI Platform to Protect the Entire Enterprise. Break Down Security. Gain Enterprise-Wide Visibility. Action Your Data In Real-Time.",
+          "Comprehensive automation capabilities that streamline your business processes from inventory management to financial reporting.",
         features: [
           {
             title: "Adaptive Legacy Bridge",
             description:
-              "Seamlessly wraps around existing systems to enable smart AI enhancements without disruption",
+              "Seamlessly wraps around existing systems to enable smart AI enhancements without disruption to your current operations.",
           },
           {
             title: "Voice Command Suite",
             description:
-              "Optimized interfaces for both developers and end-users to maximize efficiency and adoption.",
+              "Complete voice control for inventory, sales, accounting, and HR management with natural language processing.",
           },
           {
-            title: "Dual User Access",
+            title: "Real-Time Analytics",
             description:
-              "Full voice control for effortless operation across all platform functions and workflows.",
+              "Get instant insights into your business performance with AI-driven analytics and predictive reporting.",
           },
           {
-            title: "Collaborative Workflow",
+            title: "Smart Workflow Automation",
             description:
-              "Integrates human expertise with AI for refined and reliable automation processes.",
+              "Automate complex business processes with intelligent workflows that adapt to your operational patterns.",
           },
         ],
       },
       youtubeVideo: {
         videoId: "ED2H_y6dmC8",
-        title: "Products That Work for You",
+        title: "Voice ERP in Action",
       },
       performance: {
         metrics: [
-          { value: "85%", label: "Adoption Rate" },
-          { value: "85%", label: "Adoption Rate" },
-          { value: "85%", label: "Adoption Rate" },
+          { value: "75%", label: "Time Savings" },
+          { value: "90%", label: "User Satisfaction" },
+          { value: "3x", label: "Productivity Increase" },
         ],
       },
     },
@@ -131,53 +135,55 @@ export const products: Product[] = [
           "Build powerful AI agents and automation workflows",
           "Scalable framework for enterprise AI solutions",
         ],
+        centerIcon: "/products/ai-framework.svg",
+        centerIconAlt: "AI Framework Icon",
       },
       mission: {
         title: "Empower Your Development Team",
         subtitle:
-          "A comprehensive framework that enables rapid development and deployment of AI-powered applications and automation systems.",
+          "A comprehensive framework that enables rapid development and deployment of AI-powered applications and automation systems. Build, deploy, and scale AI agents with enterprise-grade reliability and performance.",
         cards: [
           {
             title: "Modular Architecture",
             description:
-              "Flexible, composable components that adapt to your specific needs and use cases.",
+              "Flexible, composable components that adapt to your specific needs and use cases, enabling rapid development and customization.",
           },
           {
             title: "Easy Integration",
             description:
-              "Seamlessly connect with existing systems and third-party services.",
+              "Seamlessly connect with existing systems, APIs, and third-party services through standardized interfaces and connectors.",
           },
           {
             title: "Scalable Design",
             description:
-              "Built to handle enterprise-scale workloads with high performance and reliability.",
+              "Built to handle enterprise-scale workloads with high performance, reliability, and automatic scaling capabilities.",
           },
         ],
       },
       automationHub: {
         title: "Powerful Automation Capabilities",
         subtitle:
-          "Create sophisticated automation workflows with our intuitive framework and extensive tooling.",
+          "Create sophisticated automation workflows with our intuitive framework and extensive tooling library.",
         features: [
           {
             title: "Agent Orchestration",
             description:
-              "Coordinate multiple AI agents to work together on complex tasks.",
+              "Coordinate multiple AI agents to work together on complex tasks with intelligent task distribution and collaboration.",
           },
           {
             title: "Workflow Builder",
             description:
-              "Visual tools to design and deploy automation workflows without coding.",
+              "Visual tools to design and deploy automation workflows without coding, with drag-and-drop simplicity.",
           },
           {
             title: "Event-Driven Architecture",
             description:
-              "React to system events and trigger automated responses in real-time.",
+              "React to system events and trigger automated responses in real-time with reactive programming patterns.",
           },
           {
             title: "Monitoring & Analytics",
             description:
-              "Track performance, debug issues, and optimize your automation workflows.",
+              "Track performance, debug issues, and optimize your automation workflows with comprehensive observability tools.",
           },
         ],
       },
@@ -199,24 +205,304 @@ export const products: Product[] = [
     name: "Zakra",
     description: "Smart Knowledge Agent",
     slug: "zakra",
+    content: {
+      hero: {
+        subtitle: [
+          "Intelligent Knowledge Management at Your Fingertips",
+          "Transform information into actionable insights with AI-powered knowledge retrieval",
+        ],
+        centerIcon: "/products/zakra.svg",
+        centerIconAlt: "Zakra Knowledge Agent Icon",
+      },
+      mission: {
+        title: "Unlock the Power of Your Knowledge Base",
+        subtitle:
+          "Zakra is your intelligent knowledge assistant that understands context, retrieves relevant information instantly, and provides accurate answers from your organization's knowledge base. Make every piece of information accessible and actionable.",
+        cards: [
+          {
+            title: "Intelligent Search",
+            description:
+              "Natural language queries that understand context and intent, delivering precise answers from your knowledge base.",
+          },
+          {
+            title: "Multi-Source Integration",
+            description:
+              "Connect and search across documents, databases, wikis, and knowledge repositories in one unified interface.",
+          },
+          {
+            title: "Context-Aware Responses",
+            description:
+              "Get answers that understand your specific domain, industry terminology, and organizational context.",
+          },
+        ],
+      },
+      automationHub: {
+        title: "Advanced Knowledge Capabilities",
+        subtitle:
+          "Powerful features that make knowledge management effortless and intelligent.",
+        features: [
+          {
+            title: "Semantic Search",
+            description:
+              "Find information using meaning, not just keywords. Understands synonyms, related concepts, and context.",
+          },
+          {
+            title: "Knowledge Graph",
+            description:
+              "Visualize connections between concepts, documents, and people to discover hidden relationships in your data.",
+          },
+          {
+            title: "Automated Summarization",
+            description:
+              "Generate concise summaries of long documents, meetings, and reports to save time and improve comprehension.",
+          },
+          {
+            title: "Real-Time Updates",
+            description:
+              "Stay current with automatic indexing of new content and notifications about relevant information changes.",
+          },
+        ],
+      },
+      youtubeVideo: {
+        videoId: "ED2H_y6dmC8",
+        title: "Zakra Knowledge Agent Demo",
+      },
+      performance: {
+        metrics: [
+          { value: "80%", label: "Faster Information Retrieval" },
+          { value: "95%", label: "Answer Accuracy" },
+          { value: "60%", label: "Time Saved" },
+        ],
+      },
+    },
   },
   {
     id: "jawib",
     name: "Jawib",
     description: "Customer Service Agent",
     slug: "jawib",
+    content: {
+      hero: {
+        subtitle: [
+          "24/7 AI-Powered Customer Support",
+          "Deliver exceptional customer experiences with intelligent automation",
+        ],
+        centerIcon: "/products/jawib.svg",
+        centerIconAlt: "Jawib Customer Service Agent Icon",
+      },
+      mission: {
+        title: "Elevate Your Customer Service Experience",
+        subtitle:
+          "Jawib is an intelligent customer service agent that handles inquiries, resolves issues, and provides personalized support around the clock. Reduce response times, improve satisfaction, and scale your customer service operations effortlessly.",
+        cards: [
+          {
+            title: "24/7 Availability",
+            description:
+              "Provide instant support to customers anytime, anywhere, with intelligent responses that never sleep.",
+          },
+          {
+            title: "Multi-Channel Support",
+            description:
+              "Engage customers across chat, email, phone, and social media with consistent, personalized experiences.",
+          },
+          {
+            title: "Human Handoff",
+            description:
+              "Seamlessly escalate complex issues to human agents when needed, with full context and conversation history.",
+          },
+        ],
+      },
+      automationHub: {
+        title: "Comprehensive Customer Service Features",
+        subtitle:
+          "Advanced capabilities that transform how you interact with and support your customers.",
+        features: [
+          {
+            title: "Natural Language Understanding",
+            description:
+              "Understand customer intent, sentiment, and context to provide accurate, helpful responses in natural conversation.",
+          },
+          {
+            title: "Ticket Management",
+            description:
+              "Automatically create, prioritize, and track support tickets while maintaining detailed conversation logs.",
+          },
+          {
+            title: "Knowledge Base Integration",
+            description:
+              "Access your product documentation, FAQs, and knowledge base to provide accurate, up-to-date information.",
+          },
+          {
+            title: "Analytics & Insights",
+            description:
+              "Track customer satisfaction, identify common issues, and gain insights to continuously improve your service.",
+          },
+        ],
+      },
+      youtubeVideo: {
+        videoId: "ED2H_y6dmC8",
+        title: "Jawib Customer Service Agent Demo",
+      },
+      performance: {
+        metrics: [
+          { value: "90%", label: "First Contact Resolution" },
+          { value: "2s", label: "Average Response Time" },
+          { value: "4.8/5", label: "Customer Satisfaction" },
+        ],
+      },
+    },
   },
   {
     id: "fasih",
     name: "Fasih",
     description: "The native Arabic LLM",
     slug: "fasih",
+    content: {
+      hero: {
+        subtitle: [
+          "Native Arabic Language Model",
+          "Advanced AI built specifically for Arabic language understanding and generation",
+        ],
+        centerIcon: "/products/fasih.svg",
+        centerIconAlt: "Fasih Arabic LLM Icon",
+      },
+      mission: {
+        title: "Bridging the Arabic Language AI Gap",
+        subtitle:
+          "Fasih is a large language model specifically trained on Arabic language, dialects, and cultural context. Delivering accurate, culturally-aware Arabic language processing for applications requiring native Arabic understanding.",
+        cards: [
+          {
+            title: "Native Arabic Understanding",
+            description:
+              "Deep understanding of Modern Standard Arabic, regional dialects, and cultural nuances for accurate communication.",
+          },
+          {
+            title: "Cultural Context",
+            description:
+              "Trained on Arabic content with cultural awareness, ensuring appropriate and contextually relevant responses.",
+          },
+          {
+            title: "Multi-Dialect Support",
+            description:
+              "Recognize and process various Arabic dialects while maintaining high accuracy across different regions.",
+          },
+        ],
+      },
+      automationHub: {
+        title: "Advanced Arabic Language Capabilities",
+        subtitle:
+          "Comprehensive features designed for Arabic language processing and generation.",
+        features: [
+          {
+            title: "Text Generation",
+            description:
+              "Generate high-quality Arabic text for content creation, translations, and automated responses with natural fluency.",
+          },
+          {
+            title: "Language Understanding",
+            description:
+              "Deep semantic understanding of Arabic text, including complex grammar, idioms, and regional expressions.",
+          },
+          {
+            title: "Translation Services",
+            description:
+              "Accurate bidirectional translation between Arabic and other languages with context preservation.",
+          },
+          {
+            title: "Voice & Speech",
+            description:
+              "Support for Arabic speech recognition and text-to-speech with natural pronunciation and intonation.",
+          },
+        ],
+      },
+      youtubeVideo: {
+        videoId: "ED2H_y6dmC8",
+        title: "Fasih Arabic LLM Overview",
+      },
+      performance: {
+        metrics: [
+          { value: "98%", label: "Arabic Text Accuracy" },
+          { value: "15", label: "Dialects Supported" },
+          { value: "50B+", label: "Arabic Tokens Trained" },
+        ],
+      },
+    },
   },
   {
     id: "domain-expansion",
     name: "Domain Expansion",
     description: "Seamlessly connect legacy",
     slug: "domain-expansion",
+    content: {
+      hero: {
+        subtitle: [
+          "Seamlessly Connect Legacy Systems",
+          "Bridge the gap between legacy infrastructure and modern AI-powered solutions",
+        ],
+        centerIcon: "/products/domain-expansion.svg",
+        centerIconAlt: "Domain Expansion Icon",
+      },
+      mission: {
+        title: "Modernize Without Replacing",
+        subtitle:
+          "Domain Expansion enables seamless integration between your existing legacy systems and modern AI technologies. Extend the capabilities of your current infrastructure without costly migrations or complete overhauls.",
+        cards: [
+          {
+            title: "Legacy System Integration",
+            description:
+              "Connect to any legacy system, database, or API without requiring modifications to existing infrastructure.",
+          },
+          {
+            title: "AI-Enhanced Functionality",
+            description:
+              "Add intelligent automation, natural language processing, and AI capabilities to systems built decades ago.",
+          },
+          {
+            title: "Zero-Downtime Deployment",
+            description:
+              "Implement AI enhancements gradually without disrupting your current operations or requiring system downtime.",
+          },
+        ],
+      },
+      automationHub: {
+        title: "Comprehensive Integration Capabilities",
+        subtitle:
+          "Powerful tools and connectors that make legacy system integration simple and reliable.",
+        features: [
+          {
+            title: "Universal Connectors",
+            description:
+              "Pre-built connectors for common legacy systems, databases, and protocols with support for custom integrations.",
+          },
+          {
+            title: "Data Transformation",
+            description:
+              "Automatically transform data formats, schemas, and protocols to enable seamless communication between systems.",
+          },
+          {
+            title: "API Wrapping",
+            description:
+              "Create modern REST and GraphQL APIs around legacy systems, making them accessible to modern applications.",
+          },
+          {
+            title: "Real-Time Synchronization",
+            description:
+              "Keep data synchronized between legacy and modern systems in real-time with conflict resolution and error handling.",
+          },
+        ],
+      },
+      youtubeVideo: {
+        videoId: "ED2H_y6dmC8",
+        title: "Domain Expansion Integration Demo",
+      },
+      performance: {
+        metrics: [
+          { value: "70%", label: "Cost Reduction" },
+          { value: "100+", label: "System Types Supported" },
+          { value: "99.9%", label: "Integration Reliability" },
+        ],
+      },
+    },
   },
 ];
 

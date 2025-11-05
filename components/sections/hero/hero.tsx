@@ -74,14 +74,14 @@ export function Hero() {
 
         {/* Main Title */}
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-gradient-primary">
-          <span className="block">Smartly Built for</span>
-          <span className="">What&apos;s Next</span>
+          <span className="block">AI-Powered Solutions</span>
+          <span className="">For Modern Enterprises</span>
         </h1>
 
         {/* Subtitle/Description */}
         <div className="mb-10 space-y-2 text-lg md:text-xl text-light-gray-90 max-w-3xl">
-          <p>Where Innovation Meets Productivity Driven by agents</p>
-          <p>Powered by automation Built for what&apos;s next</p>
+          <p>Transform your business with intelligent automation, voice-activated systems,</p>
+          <p>and AI agents that drive productivity and innovation</p>
         </div>
 
         {/* CTA Button */}

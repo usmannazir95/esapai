@@ -16,9 +16,7 @@ export function Vision() {
 
         {/* Subtitle */}
         <p className="text-lg md:text-xl text-center text-white-opacity-70 max-w-4xl mx-auto mb-16">
-          Security AI Platform to Protect the Entire Enterprise. Break Down
-          Security. Gain Enterprise-Wide Visibility. Action Your Data In
-          Real-Time.
+          We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes.
         </p>
 
         {/* Robot Icon with Bot Light behind and Dot Circle below */}
