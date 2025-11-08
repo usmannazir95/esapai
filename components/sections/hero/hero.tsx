@@ -2,27 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { VideoText } from "@/components/ui/video-text";
+import { motion, useScroll, useTransform } from "motion/react";
 
 export function Hero() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { scrollY } = useScroll();
+  
+  // Frame animation - fade out on scroll
+  const frameOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const frameScale = useTransform(scrollY, [0, 100], [1, 0.8]);
 
   return (
-    <section className="relative w-full min-h-[calc(100vh-120px)] flex items-center justify-center overflow-hidden -mt-0">
-      {/* Frame in top left - hidden on scroll */}
-      <div
-        className={`fixed top-0 left-0 z-20 pointer-events-none transition-opacity duration-300 ${
-          isScrolled ? "opacity-0" : "opacity-100"
-        }`}
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-visible pb-32 -mt-0">
+      {/* Frame in top left - animated fade out on scroll */}
+      <motion.div
+        className="fixed top-0 left-0 z-20 pointer-events-none"
+        style={{ opacity: frameOpacity, scale: frameScale }}
       >
         <Image
           src="/landing/frame.svg"
@@ -32,36 +27,77 @@ export function Hero() {
           className="w-auto h-auto"
           priority
         />
-      </div>
+      </motion.div>
 
-      {/* Circle behind content */}
-      <div className="absolute top-[55%] left-1/2 -translate-x-1/2 z-0 pointer-events-none">
-        <Image
-          src="/landing/circle.svg"
-          alt="Circle decoration"
-          width={600}
-          height={608}
-          className="w-auto h-auto"
-          priority
-        />
-      </div>
+      {/* Circle behind content - animated glow and breathing effect */}
+      <motion.div
+        className="absolute top-[40%] left-1/2 -translate-x-1/2 z-0 pointer-events-none"
+        style={{ rotate: 15 }}
+        animate={{
+          scale: [1, 1.08, 1.05, 1.08, 1],
+          opacity: [0.8, 1, 0.9, 1, 0.8],
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <motion.div
+          className="relative"
+          animate={{
+            filter: [
+              "drop-shadow(0 0 20px rgba(19,245,132,0.3))",
+              "drop-shadow(0 0 40px rgba(19,245,132,0.6))",
+              "drop-shadow(0 0 30px rgba(19,245,132,0.4))",
+              "drop-shadow(0 0 50px rgba(19,245,132,0.7))",
+              "drop-shadow(0 0 20px rgba(19,245,132,0.3))",
+            ],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Image
+            src="/landing/circle.svg"
+            alt="Circle decoration"
+            width={600}
+            height={608}
+            className="w-auto h-auto"
+            priority
+          />
+        </motion.div>
+      </motion.div>
 
-      {/* Hexagonal Icons (box.svg) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden lg:block w-full">
+      {/* Hexagonal Icons (box.svg) - floating with glow */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden lg:block w-full"
+        animate={{
+          y: [0, -20, 0],
+          opacity: [0.7, 1, 0.7],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
         <Image
           src="/landing/box.svg"
           alt="Hexagonal icons decoration"
           width={100}
           height={100}
-          className="w-full h-auto opacity-90"
+          className="w-full h-auto opacity-90 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.3)]"
           priority
         />
-      </div>
+      </motion.div>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 flex flex-col items-center text-center max-w-5xl">
+      <div className="relative z-10 container mx-auto px-4 py-16 flex flex-col items-center text-center">
         {/* Tagline Badge */}
-        <div className="hero-badge">
+        <div className="hero-badge max-w-5xl">
           <div className="hero-badge-exclusive">
             <span className="hero-badge-exclusive-text">Exclusive</span>
           </div>
@@ -72,14 +108,28 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Main Title */}
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-gradient-primary">
-          <span className="block">AI-Powered Solutions</span>
-          <span className="">For Modern Enterprises</span>
-        </h1>
+        {/* Main Title with Video Text Effect - Full Width Container */}
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight w-full">
+            <div className="relative h-[100px] md:h-[120px] lg:h-[140px] xl:h-[160px] w-full mb-4 flex items-center justify-center overflow-hidden">
+              <VideoText 
+                src="https://cdn.magicui.design/ocean-small.webm"
+                fontSize={4.5}
+                fontWeight="bold"
+                className="w-full h-full overflow-hidden"
+                autoPlay
+                muted
+                loop
+              >
+                AI-Powered Solutions
+              </VideoText>
+            </div>
+            <span className="block text-gradient-primary mt-2">For Modern Enterprises</span>
+          </h1>
+        </div>
 
         {/* Subtitle/Description */}
-        <div className="mb-10 space-y-2 text-lg md:text-xl text-light-gray-90 max-w-3xl">
+        <div className="mb-10 space-y-2 text-lg md:text-xl text-light-gray-90 max-w-3xl mx-auto">
           <p>Transform your business with intelligent automation, voice-activated systems,</p>
           <p>and AI agents that drive productivity and innovation</p>
         </div>

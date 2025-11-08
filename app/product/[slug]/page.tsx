@@ -5,7 +5,7 @@ import { Mission } from "@/components/sections/about/mission";
 import { AutomationHub } from "@/components/sections/features/product/automation-hub";
 import { YouTubeVideo } from "@/components/sections/shared/youtube-video";
 import { PerformanceSection } from "@/components/sections/features/product/performance-section";
-import { AceternityFeatures3 } from "@/components/sections/features/product/aceternity-features-3";
+import { ProductFeatures } from "@/components/sections/features/product/product-features";
 
 interface ProductPageProps {
   params: Promise<{
@@ -59,7 +59,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         features={automationHubContent?.features}
       />
       {aceternityFeaturesContent?.features && (
-        <AceternityFeatures3 
+        <ProductFeatures 
           title={aceternityFeaturesContent.title}
           subtitle={aceternityFeaturesContent.subtitle}
           features={aceternityFeaturesContent.features}

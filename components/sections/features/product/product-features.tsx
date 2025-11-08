@@ -6,7 +6,7 @@ import { FeatureTitle } from "@/components/ui/feature-title";
 import { FeatureDescription } from "@/components/ui/feature-description";
 import { FeatureSkeleton } from "@/components/ui/feature-skeletons";
 
-export interface AceternityFeature3Item {
+export interface ProductFeatureItem {
   title: string;
   description: string;
   skeleton?: "image" | "gallery" | "youtube" | "globe";
@@ -19,19 +19,19 @@ export interface AceternityFeature3Item {
   className?: string;
 }
 
-interface AceternityFeatures3Props {
+interface ProductFeaturesProps {
   title?: string;
   subtitle?: string;
-  features: AceternityFeature3Item[];
+  features: ProductFeatureItem[];
   className?: string;
 }
 
-export function AceternityFeatures3({ 
+export function ProductFeatures({ 
   title, 
   subtitle, 
   features, 
   className 
-}: AceternityFeatures3Props) {
+}: ProductFeaturesProps) {
   if (!features || features.length === 0) {
     return null;
   }
@@ -82,5 +82,4 @@ export function AceternityFeatures3({
     </div>
   );
 }
-
 

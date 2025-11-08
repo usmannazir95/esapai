@@ -13,7 +13,7 @@ export interface PerformanceMetric {
   label: string;
 }
 
-export interface AceternityFeature3 {
+export interface ProductFeature {
   title: string;
   description: string;
   skeleton?: "image" | "gallery" | "youtube" | "globe";
@@ -52,7 +52,7 @@ export interface ProductContent {
   aceternityFeatures?: {
     title?: string;
     subtitle?: string;
-    features?: AceternityFeature3[];
+    features?: ProductFeature[];
     className?: string;
   };
 }
@@ -270,6 +270,58 @@ export const products: Product[] = [
           { value: "99.9%", label: "Uptime" },
         ],
       },
+      aceternityFeatures: {
+        title: "AI Framework Capabilities",
+        subtitle:
+          "Discover the powerful features that make our AI Framework the ideal solution for building and deploying intelligent automation systems.",
+        features: [
+          {
+            title: "Build AI Agents",
+            description:
+              "Create sophisticated AI agents with our intuitive framework and comprehensive tooling library.",
+            skeleton: "image",
+            skeletonProps: {
+              imageUrl: "/products/ai-framework.svg",
+            },
+            className:
+              "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Workflow Automation",
+            description:
+              "Design and deploy complex automation workflows with visual tools and drag-and-drop simplicity.",
+            skeleton: "gallery",
+            skeletonProps: {
+              galleryImages: [
+                "/products/ai-framework.svg",
+                "/products/ai-framework.svg",
+                "/products/ai-framework.svg",
+                "/products/ai-framework.svg",
+              ],
+            },
+            className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
+          },
+          {
+            title: "Watch Framework Demo",
+            description:
+              "See how our AI Framework enables rapid development and deployment of enterprise AI solutions.",
+            skeleton: "youtube",
+            skeletonProps: {
+              youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
+            },
+            className:
+              "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Enterprise Scale",
+            description:
+              "Deploy and scale your AI solutions across enterprise infrastructure with high performance and reliability.",
+            skeleton: "globe",
+            className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+          },
+        ],
+      },
     },
   },
   {
@@ -344,6 +396,58 @@ export const products: Product[] = [
           { value: "80%", label: "Faster Information Retrieval" },
           { value: "95%", label: "Answer Accuracy" },
           { value: "60%", label: "Time Saved" },
+        ],
+      },
+      aceternityFeatures: {
+        title: "Zakra Knowledge Features",
+        subtitle:
+          "Explore the intelligent capabilities that make Zakra your ultimate knowledge management solution.",
+        features: [
+          {
+            title: "Intelligent Knowledge Search",
+            description:
+              "Search across your entire knowledge base with natural language queries and semantic understanding.",
+            skeleton: "image",
+            skeletonProps: {
+              imageUrl: "/products/zakra.svg",
+            },
+            className:
+              "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Knowledge Graph Visualization",
+            description:
+              "Visualize connections between concepts, documents, and people in your knowledge base.",
+            skeleton: "gallery",
+            skeletonProps: {
+              galleryImages: [
+                "/products/zakra.svg",
+                "/products/zakra.svg",
+                "/products/zakra.svg",
+                "/products/zakra.svg",
+              ],
+            },
+            className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
+          },
+          {
+            title: "Watch Zakra in Action",
+            description:
+              "See how Zakra transforms information retrieval and knowledge management for your organization.",
+            skeleton: "youtube",
+            skeletonProps: {
+              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
+              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
+            },
+            className:
+              "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Multi-Source Integration",
+            description:
+              "Connect and search across documents, databases, wikis, and knowledge repositories seamlessly.",
+            skeleton: "globe",
+            className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+          },
         ],
       },
     },
@@ -422,6 +526,58 @@ export const products: Product[] = [
           { value: "4.8/5", label: "Customer Satisfaction" },
         ],
       },
+      aceternityFeatures: {
+        title: "Jawib Customer Service Features",
+        subtitle:
+          "Discover the comprehensive features that make Jawib the perfect solution for exceptional customer service.",
+        features: [
+          {
+            title: "24/7 Customer Support",
+            description:
+              "Provide instant, intelligent customer support around the clock with natural language understanding.",
+            skeleton: "image",
+            skeletonProps: {
+              imageUrl: "/products/jawib.svg",
+            },
+            className:
+              "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Multi-Channel Engagement",
+            description:
+              "Engage customers across chat, email, phone, and social media with consistent experiences.",
+            skeleton: "gallery",
+            skeletonProps: {
+              galleryImages: [
+                "/products/jawib.svg",
+                "/products/jawib.svg",
+                "/products/jawib.svg",
+                "/products/jawib.svg",
+              ],
+            },
+            className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
+          },
+          {
+            title: "Watch Jawib Demo",
+            description:
+              "See how Jawib transforms customer service with AI-powered automation and intelligent responses.",
+            skeleton: "youtube",
+            skeletonProps: {
+              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
+              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
+            },
+            className:
+              "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Global Support Network",
+            description:
+              "Scale your customer service operations globally with multi-language support and regional deployment.",
+            skeleton: "globe",
+            className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+          },
+        ],
+      },
     },
   },
   {
@@ -498,6 +654,58 @@ export const products: Product[] = [
           { value: "50B+", label: "Arabic Tokens Trained" },
         ],
       },
+      aceternityFeatures: {
+        title: "Fasih Arabic LLM Features",
+        subtitle:
+          "Explore the advanced capabilities that make Fasih the leading native Arabic language model.",
+        features: [
+          {
+            title: "Native Arabic Processing",
+            description:
+              "Deep understanding of Modern Standard Arabic, regional dialects, and cultural nuances for accurate communication.",
+            skeleton: "image",
+            skeletonProps: {
+              imageUrl: "/products/fasih.svg",
+            },
+            className:
+              "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Multi-Dialect Support",
+            description:
+              "Recognize and process various Arabic dialects with high accuracy across different regions.",
+            skeleton: "gallery",
+            skeletonProps: {
+              galleryImages: [
+                "/products/fasih.svg",
+                "/products/fasih.svg",
+                "/products/fasih.svg",
+                "/products/fasih.svg",
+              ],
+            },
+            className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
+          },
+          {
+            title: "Watch Fasih Overview",
+            description:
+              "See how Fasih delivers accurate, culturally-aware Arabic language processing for your applications.",
+            skeleton: "youtube",
+            skeletonProps: {
+              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
+              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
+            },
+            className:
+              "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Global Arabic Support",
+            description:
+              "Deploy Arabic language capabilities across global applications with regional dialect support.",
+            skeleton: "globe",
+            className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+          },
+        ],
+      },
     },
   },
   {
@@ -572,6 +780,58 @@ export const products: Product[] = [
           { value: "70%", label: "Cost Reduction" },
           { value: "100+", label: "System Types Supported" },
           { value: "99.9%", label: "Integration Reliability" },
+        ],
+      },
+      aceternityFeatures: {
+        title: "Domain Expansion Integration Features",
+        subtitle:
+          "Discover how Domain Expansion seamlessly connects legacy systems with modern AI-powered solutions.",
+        features: [
+          {
+            title: "Legacy System Integration",
+            description:
+              "Connect to any legacy system, database, or API without requiring modifications to existing infrastructure.",
+            skeleton: "image",
+            skeletonProps: {
+              imageUrl: "/products/domain-expansion.svg",
+            },
+            className:
+              "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Universal Connectors",
+            description:
+              "Pre-built connectors for common legacy systems with support for custom integrations and protocols.",
+            skeleton: "gallery",
+            skeletonProps: {
+              galleryImages: [
+                "/products/domain-expansion.svg",
+                "/products/domain-expansion.svg",
+                "/products/domain-expansion.svg",
+                "/products/domain-expansion.svg",
+              ],
+            },
+            className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
+          },
+          {
+            title: "Watch Integration Demo",
+            description:
+              "See how Domain Expansion bridges the gap between legacy infrastructure and modern AI solutions.",
+            skeleton: "youtube",
+            skeletonProps: {
+              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
+              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
+            },
+            className:
+              "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
+          },
+          {
+            title: "Global Deployment",
+            description:
+              "Deploy integrations across multiple locations with cloud infrastructure and enterprise-grade reliability.",
+            skeleton: "globe",
+            className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+          },
         ],
       },
     },

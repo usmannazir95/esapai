@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { motion } from "motion/react";
 
 export function Vision() {
   return (
@@ -31,8 +32,29 @@ export function Vision() {
             />
           </div>
 
-          {/* Robot Icon (in front) */}
-          <div className="relative z-10 mb-8">
+          {/* Robot Icon (in front) - Animated */}
+          <motion.div
+            className="relative z-10 mb-8"
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{
+              opacity: 1,
+              y: [0, -10, 0],
+              scale: 1,
+            }}
+            transition={{
+              opacity: { duration: 0.8, ease: "easeOut" },
+              y: {
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            }}
+            whileHover={{
+              scale: 1.1,
+              filter: "drop-shadow(0 0 30px rgba(19,245,132,0.6))",
+              transition: { duration: 0.3 },
+            }}
+          >
             <Image
               src="/landing/vision/robot.svg"
               alt="AI Robot icon"
@@ -41,7 +63,7 @@ export function Vision() {
               className="w-full h-full max-w-[250px] md:max-w-[300px] object-contain"
               priority
             />
-          </div>
+          </motion.div>
 
           {/* Dot Circle (at bottom of robot) */}
           <div className="relative z-10 -mt-[280px] w-full flex items-center justify-center">
