@@ -3,6 +3,8 @@
 import { FeatureCardSkeleton } from "./feature-card-skeleton";
 import { SectionSkeleton } from "./section-skeleton";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "./skeleton";
+import { SkeletonText } from "./skeleton-text";
 
 export interface ServiceFeaturesSkeletonProps {
   /**
