@@ -1,37 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
+import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 
 interface ProductHeroProps {
   title: string;
   subtitle: string[];
-  centerIcon?: string;
-  centerIconAlt?: string;
 }
 
-export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: ProductHeroProps) {
+export function ProductHero({ title, subtitle }: ProductHeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
-      {/* Background gradient effect */}
-      <div className="absolute inset-0 z-0 opacity-30">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary opacity-10 blur-[120px] rounded-full" />
-      </div>
-
-      {/* Center Icon */}
-      {centerIcon && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] pointer-events-none">
-          <Image
-            src={centerIcon}
-            alt={centerIconAlt || "Product icon"}
-            width={400}
-            height={400}
-            className="w-auto h-auto max-w-[300px] md:max-w-[400px] opacity-90"
-            priority
-          />
-        </div>
-      )}
+      {/* Background ripple effect */}
+      <BackgroundRippleEffect />
 
       <div className="relative z-[2] container mx-auto px-4 pt-32 pb-20">
         <div className="max-w-6xl mx-auto text-center">

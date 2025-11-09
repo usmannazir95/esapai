@@ -33,7 +33,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     "Where Innovation Meets Productivity Driven by agents Powered by automation",
     "Built for what's next",
   ];
-  const heroContent = content.hero;
   const missionContent = content.mission;
   const automationHubContent = content.automationHub;
   const youtubeVideoContent = content.youtubeVideo;
@@ -45,8 +44,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <ProductHero 
         title={product.name} 
         subtitle={heroSubtitle}
-        centerIcon={heroContent?.centerIcon}
-        centerIconAlt={heroContent?.centerIconAlt || `${product.name} Icon`}
       />
       <Mission
         title={missionContent?.title}
