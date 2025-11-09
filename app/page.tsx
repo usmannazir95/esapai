@@ -4,6 +4,8 @@ import { Service } from "@/components/sections/features/home/service";
 import { Vision } from "@/components/sections/about/vision";
 import { WorldMapSection } from "@/components/sections/features/home/world-map-section";
 import { TechnologyStack } from "@/components/sections/features/home/technology-stack";
+import { ProductShowcase } from "@/components/sections/features/home/product-showcase";
+import { CTASection } from "@/components/sections/shared/cta-section";
 
 export default function Home() {
   return (
@@ -12,8 +14,10 @@ export default function Home() {
       <WorldMapSection />
       <Mission />
       <TechnologyStack />
+      <ProductShowcase />
       <Vision />
       <Service />
+      <CTASection />
     </main>
   );
 }

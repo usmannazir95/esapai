@@ -4,7 +4,6 @@ import React from "react";
 import { FeatureCard } from "@/components/ui/feature-card";
 import { FeatureTitle } from "@/components/ui/feature-title";
 import { FeatureDescription } from "@/components/ui/feature-description";
-import { FeatureSkeleton } from "@/components/ui/feature-skeletons";
 
 export interface ProductFeatureItem {
   title: string;
@@ -71,9 +70,6 @@ export function ProductFeatures({
               <FeatureCard key={feature.title} className={featureClassName}>
                 <FeatureTitle>{feature.title}</FeatureTitle>
                 <FeatureDescription>{feature.description}</FeatureDescription>
-                <div className="h-full w-full">
-                  <FeatureSkeleton skeleton={feature.skeleton} props={feature.skeletonProps} />
-                </div>
               </FeatureCard>
             );
           })}
