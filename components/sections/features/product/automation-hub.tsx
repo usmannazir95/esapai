@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { AutomationFeature } from "@/lib/products";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { cn } from "@/lib/utils";
 
 interface AutomationHubProps {
   title?: string;
@@ -58,13 +59,23 @@ export function AutomationHub({
 
       {/* Feature Cards Grid - 4 columns side by side */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-        {features.map((feature, index) => (
-          <FeatureCard
-            key={index}
-            title={feature.title}
-            description={feature.description}
-          />
-        ))}
+        {features.map((feature, index) => {
+          const zigZagOffsets = [
+            "lg:translate-y-0",
+            "lg:translate-y-10 xl:translate-y-12",
+            "lg:-translate-y-6 xl:-translate-y-8",
+            "lg:translate-y-6 xl:translate-y-8",
+          ];
+
+          return (
+            <FeatureCard
+              key={index}
+              title={feature.title}
+              description={feature.description}
+              className={zigZagOffsets[index % zigZagOffsets.length]}
+            />
+          );
+        })}
       </div>
     </Section>
   );
@@ -73,11 +84,17 @@ export function AutomationHub({
 interface FeatureCardProps {
   title: string;
   description: string;
+  className?: string;
 }
 
-function FeatureCard({ title, description }: FeatureCardProps) {
+function FeatureCard({ title, description, className }: FeatureCardProps) {
   return (
-    <div className="relative overflow-hidden group">
+    <div
+      className={cn(
+        "relative overflow-hidden transition-transform duration-500 ease-out",
+        className,
+      )}
+    >
       {/* Content */}
       <div className="relative p-8 h-full flex flex-col">
         {/* Feature Graphic */}

@@ -14,7 +14,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
       {/* Frame SVG centered */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1 pointer-events-none">
         <Image
           src="/services/frame.svg"
           alt="Frame decoration"
@@ -25,7 +25,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
         />
       </div>
 
-      <div className="relative z-[2] container mx-auto px-4 pt-32 pb-20">
+      <div className="relative z-2 container mx-auto px-4 pt-32 pb-20">
         <div className="max-w-6xl mx-auto text-center">
           {/* Headline */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight text-gradient-primary">

@@ -80,7 +80,8 @@
   }
 
   .animate-cell-ripple {
-    animation: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+    animation: cell-ripple var(--duration, 200ms) ease-out none 1
+      var(--delay, 0ms);
   }
 
   /* Text Gradient Utility */
@@ -168,11 +169,13 @@
 
   /* Filter Drop Shadow Utilities - Green Glow Effects */
   .filter-glow-primary {
-    filter: drop-shadow(0 0 20px rgba(19, 245, 132, 0.6)) drop-shadow(0 0 40px rgba(19, 245, 132, 0.3));
+    filter: drop-shadow(0 0 20px rgba(19, 245, 132, 0.6))
+      drop-shadow(0 0 40px rgba(19, 245, 132, 0.3));
   }
 
   .filter-glow-primary-strong {
-    filter: drop-shadow(0 0 20px rgba(19, 245, 132, 0.8)) drop-shadow(0 0 40px rgba(19, 245, 132, 0.4));
+    filter: drop-shadow(0 0 20px rgba(19, 245, 132, 0.8))
+      drop-shadow(0 0 40px rgba(19, 245, 132, 0.4));
   }
 
   .filter-glow-primary-small {
@@ -181,23 +184,35 @@
 
   /* Box Shadow Utilities - Primary Color Glows */
   .shadow-glow-primary-hover {
-    box-shadow: 0 0 30px rgba(19, 245, 132, 0.4), inset 0 0 30px rgba(19, 245, 132, 0.1);
+    box-shadow: 0 0 30px rgba(19, 245, 132, 0.4),
+      inset 0 0 30px rgba(19, 245, 132, 0.1);
   }
 
   .shadow-glow-primary-feature {
-    box-shadow: 0 0 20px rgba(19, 245, 132, 0.3), inset 0 0 20px rgba(19, 245, 132, 0.1);
+    box-shadow: 0 0 20px rgba(19, 245, 132, 0.3),
+      inset 0 0 20px rgba(19, 245, 132, 0.1);
   }
 
   /* Background Radial Gradient Utilities */
   .bg-glow-outer {
-    background: radial-gradient(circle, rgba(19, 245, 132, 0.8) 0%, rgba(19, 245, 132, 0.4) 40%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(19, 245, 132, 0.8) 0%,
+      rgba(19, 245, 132, 0.4) 40%,
+      transparent 70%
+    );
     width: 200%;
     height: 200%;
     transform: translate(-25%, -25%);
   }
 
   .bg-glow-inner {
-    background: radial-gradient(circle, rgba(19, 245, 132, 0.9) 0%, rgba(19, 245, 132, 0.5) 50%, transparent 80%);
+    background: radial-gradient(
+      circle,
+      rgba(19, 245, 132, 0.9) 0%,
+      rgba(19, 245, 132, 0.5) 50%,
+      transparent 80%
+    );
     width: 150%;
     height: 150%;
     transform: translate(-16.67%, -16.67%);
@@ -295,9 +310,6 @@
     color: rgba(255, 255, 255, 0.9);
   }
 
- 
-  
-
   /* Mission Card */
   .mission-card {
     background: linear-gradient(
@@ -315,7 +327,7 @@
         rgba(19, 245, 132, 0) 71.78%,
         rgba(19, 245, 132, 0.2) 124.92%
       );
-    border: 1.5px solid;
+
     border-image-source: linear-gradient(
       158.39deg,
       rgba(255, 255, 255, 0.06) 14.19%,
@@ -390,8 +402,6 @@
     backdrop-filter: blur(70px);
   }
 
-
-
   /* Product Dropdown Item */
   .product-dropdown-item {
     position: relative;
@@ -447,10 +457,8 @@
       rgba(255, 255, 255, 0.05) 0%,
       rgba(255, 255, 255, 0.08) 100%
     );
-    box-shadow: 
-      0 8px 32px rgba(19, 245, 132, 0.15),
-      0 4px 16px rgba(19, 245, 132, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(19, 245, 132, 0.15),
+      0 4px 16px rgba(19, 245, 132, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .product-dropdown-item:hover::before {
@@ -478,8 +486,6 @@
     border-radius: 32px;
     backdrop-filter: blur(70px);
   }
-
-
 
   /* Service Dropdown Item */
   .service-dropdown-item {
@@ -536,10 +542,8 @@
       rgba(255, 255, 255, 0.05) 0%,
       rgba(255, 255, 255, 0.08) 100%
     );
-    box-shadow: 
-      0 8px 32px rgba(19, 245, 132, 0.15),
-      0 4px 16px rgba(19, 245, 132, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(19, 245, 132, 0.15),
+      0 4px 16px rgba(19, 245, 132, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .service-dropdown-item:hover::before {
@@ -588,27 +592,22 @@
   /* YouTube Video Glow Effect */
   .video-glow {
     position: relative;
-    box-shadow: 
-      0 0 40px rgba(19, 245, 132, 0.4),
-      0 0 80px rgba(19, 245, 132, 0.3),
-      0 0 120px rgba(19, 245, 132, 0.2),
+    box-shadow: 0 0 40px rgba(19, 245, 132, 0.4),
+      0 0 80px rgba(19, 245, 132, 0.3), 0 0 120px rgba(19, 245, 132, 0.2),
       0 0 160px rgba(19, 245, 132, 0.1);
     animation: glow-pulse 3s ease-in-out infinite;
   }
 
   @keyframes glow-pulse {
-    0%, 100% {
-      box-shadow: 
-        0 0 40px rgba(19, 245, 132, 0.4),
-        0 0 80px rgba(19, 245, 132, 0.3),
-        0 0 120px rgba(19, 245, 132, 0.2),
+    0%,
+    100% {
+      box-shadow: 0 0 40px rgba(19, 245, 132, 0.4),
+        0 0 80px rgba(19, 245, 132, 0.3), 0 0 120px rgba(19, 245, 132, 0.2),
         0 0 160px rgba(19, 245, 132, 0.1);
     }
     50% {
-      box-shadow: 
-        0 0 60px rgba(19, 245, 132, 0.6),
-        0 0 100px rgba(19, 245, 132, 0.4),
-        0 0 140px rgba(19, 245, 132, 0.3),
+      box-shadow: 0 0 60px rgba(19, 245, 132, 0.6),
+        0 0 100px rgba(19, 245, 132, 0.4), 0 0 140px rgba(19, 245, 132, 0.3),
         0 0 180px rgba(19, 245, 132, 0.15);
     }
   }
@@ -675,7 +674,7 @@
     .product-card-optimized {
       transition: none;
     }
-    
+
     .product-card-optimized:hover {
       transform: none;
     }

@@ -6,7 +6,6 @@ import { products } from "@/lib/products";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { Button } from "@/components/ui/button";
 
 export function ProductShowcase() {
   // Show all products in the suite
@@ -65,18 +64,6 @@ export function ProductShowcase() {
             </SpotlightCard>
           </Link>
         ))}
-      </div>
-
-      {/* View All Products Link */}
-      <div className="mt-12 text-center">
-        <Button
-          variant="outline"
-          size="lg"
-          className="rounded-[40px] px-8 py-6 text-lg font-semibold border-white-opacity-20 hover:bg-white-opacity-10"
-          asChild
-        >
-          <Link href="/product">View All Products</Link>
-        </Button>
       </div>
     </Section>
   );

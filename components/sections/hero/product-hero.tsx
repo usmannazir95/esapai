@@ -2,16 +2,41 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
+import { motion, useScroll, useTransform } from "motion/react";
 
 interface ProductHeroProps {
   title: string;
   subtitle: string[];
+  centerIcon?: string;
+  centerIconAlt?: string;
 }
 
-export function ProductHero({ title, subtitle }: ProductHeroProps) {
+export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: ProductHeroProps) {
+  const { scrollY } = useScroll();
+  
+  // Top light animation - fade out on scroll
+  const topLightOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const topLightScale = useTransform(scrollY, [0, 100], [1, 0.8]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
+      {/* Top light effect - animated fade out on scroll */}
+      <motion.div
+        className="absolute top-0 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
+        style={{ opacity: topLightOpacity, scale: topLightScale }}
+      >
+        <Image
+          src="/products/Top Light.svg"
+          alt="Top light decoration"
+          width={1312}
+          height={954}
+          className="w-full max-w-[1312px] h-auto"
+          priority
+        />
+      </motion.div>
+
       {/* Background ripple effect */}
       <BackgroundRippleEffect />
 
@@ -44,6 +69,33 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
             >
               <Link href="#demo">Watch Demo</Link>
             </Button>
+          </div>
+
+          {/* Product Images - Watermakr and VoiceERP */}
+          <div className="relative w-full mt-16 flex justify-center">
+            <div className="relative w-full max-w-[960px]">
+              <Image
+                src="/products/Watermakr.svg"
+                alt="Watermark"
+                width={1200}
+                height={900}
+                className="w-full h-auto mx-auto"
+                priority
+              />
+
+              {centerIcon && (
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <Image
+                    src={centerIcon}
+                    alt={centerIconAlt || "Product Icon"}
+                    width={640}
+                    height={640}
+                    className="w-[60%] md:w-[50%] lg:w-[45%] xl:w-[40%] h-auto drop-shadow-[0_10px_40px_rgba(0,255,170,0.35)]"
+                    priority
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
