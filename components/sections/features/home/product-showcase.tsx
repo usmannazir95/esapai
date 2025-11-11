@@ -6,6 +6,7 @@ import { products } from "@/lib/products";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { cn } from "@/lib/utils";
 
 export function ProductShowcase() {
   // Show all products in the suite
@@ -46,19 +47,12 @@ export function ProductShowcase() {
                 </p>
 
                 {/* CTA */}
-                <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all">
+                <div
+                  className={cn(
+                    "btn-surface text-base font-semibold mt-auto w-fit transition-all"
+                  )}
+                >
                   <span>Learn More</span>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="transition-transform group-hover:translate-x-1"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
                 </div>
               </div>
             </SpotlightCard>
