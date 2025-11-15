@@ -13,7 +13,7 @@
     /* Neutral Colors */
     --color-white: rgba(255, 255, 255, 1);
     --color-black: rgba(0, 0, 0, 1);
-    --color-dark: rgba(1, 1, 1, 1);
+    --color-dark: rgba(0, 3, 0, 1);
     --color-light-gray: rgba(245, 245, 245, 1);
     --color-light-gray-90: rgba(245, 245, 245, 0.9);
     --color-white-opacity-10: rgba(255, 255, 255, 0.1);
