@@ -421,20 +421,18 @@
 
   /* Product Dropdown Menu */
   .product-dropdown {
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.03),
-        rgba(255, 255, 255, 0.03)
-      ),
+    background: 
       radial-gradient(
         41.4% 41.4% at 28.87% 0%,
-        rgba(19, 245, 132, 0.7) 0%,
+        rgba(19, 245, 132, 0.15) 0%,
         rgba(19, 245, 132, 0) 100%
       ),
-      rgba(0, 0, 0, 0.4);
+      var(--color-dark);
 
     border-radius: 20px;
     backdrop-filter: blur(28px);
+    border: 1px solid var(--color-white-opacity-20);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
   }
 
   /* Product Dropdown Item */
@@ -506,20 +504,18 @@
 
   /* Service Dropdown Menu */
   .service-dropdown {
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.03),
-        rgba(255, 255, 255, 0.03)
-      ),
+    background: 
       radial-gradient(
         41.4% 41.4% at 28.87% 0%,
-        rgba(19, 245, 132, 0.7) 0%,
+        rgba(19, 245, 132, 0.15) 0%,
         rgba(19, 245, 132, 0) 100%
       ),
-      rgba(0, 0, 0, 0.4);
+      var(--color-dark);
 
     border-radius: 20px;
     backdrop-filter: blur(28px);
+    border: 1px solid var(--color-white-opacity-20);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
   }
 
   /* Service Dropdown Item */

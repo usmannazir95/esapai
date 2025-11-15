@@ -4,9 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ProductMenuProvider } from "@/components/layout/product-menu-context";
-import { ProductMenuBackdrop } from "@/components/layout/product-menu-backdrop";
 import { ServiceMenuProvider } from "@/components/layout/service-menu-context";
-import { ServiceMenuBackdrop } from "@/components/layout/service-menu-backdrop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,8 +34,6 @@ export default function RootLayout({
         <ProductMenuProvider>
           <ServiceMenuProvider>
             <Navbar />
-            <ProductMenuBackdrop />
-            <ServiceMenuBackdrop />
             <main className="flex-1">{children}</main>
             <Footer />
           </ServiceMenuProvider>

@@ -80,13 +80,13 @@ export function DropdownMenu({
                 >
                   <div className="flex items-center md:items-start gap-2.5 md:gap-3">
                     {iconSrc && (
-                      <div className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-primary-opacity-20 group-hover:bg-primary-opacity-30 transition-colors filter-glow-primary-small shrink-0 overflow-hidden">
+                      <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-primary-opacity-20 group-hover:bg-primary-opacity-30 transition-colors filter-glow-primary-small shrink-0 overflow-hidden">
                         <Image
                           src={iconSrc}
                           alt={iconAlt}
-                          width={40}
-                          height={40}
-                          className="h-7 w-7 md:h-8 md:w-8 object-contain"
+                          width={56}
+                          height={56}
+                          className="h-10 w-10 md:h-12 md:w-12 object-contain"
                         />
                       </div>
                     )}
