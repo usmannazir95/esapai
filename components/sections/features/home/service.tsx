@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ServiceItem } from "@/components/ui/service-item";
 
@@ -20,8 +21,16 @@ export function Service() {
 
         {/* Central Brain with Services */}
         <div className="relative w-full min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center py-8 md:py-12 -mt-12 md:-mt-16">
-          {/* Ellipse around the brain */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none">
+          {/* Ellipse around the brain - Rotating */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          >
             <Image
               src="/landing/service/ellipse.svg"
               alt="Ellipse glow"
@@ -29,7 +38,7 @@ export function Service() {
               height={600}
               className="w-full h-full max-w-[500px] sm:max-w-[550px] md:max-w-[600px] lg:max-w-[650px] object-contain"
             />
-          </div>
+          </motion.div>
 
           {/* Central Brain */}
           <div className="relative z-20 animate-float">

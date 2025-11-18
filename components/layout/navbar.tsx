@@ -136,14 +136,6 @@ export function Navbar() {
               >
                 <span className="nav-glow" aria-hidden="true" />
                 <span className="relative z-10">Home</span>
-                {/* Active underline */}
-                <span
-                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300 z-10 ${
-                    isActive("/")
-                      ? "scale-x-100 opacity-100"
-                      : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                  }`}
-                />
                 {/* Glow effect on hover */}
               </Link>
               {/* Product Dropdown */}
@@ -161,14 +153,6 @@ export function Navbar() {
                   <ChevronDown
                     className={`size-4 transition-transform duration-200 relative z-10 ${
                       isProductOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                  {/* Active underline */}
-                  <span
-                    className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300 z-10 ${
-                      productActive
-                        ? "scale-x-100 opacity-100"
-                        : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
                     }`}
                   />
                   {/* Glow effect on hover */}
@@ -192,14 +176,6 @@ export function Navbar() {
                       isServiceOpen ? "rotate-180" : ""
                     }`}
                   />
-                  {/* Active underline */}
-                  <span
-                    className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300 z-10 ${
-                      serviceActive
-                        ? "scale-x-100 opacity-100"
-                        : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                    }`}
-                  />
                   {/* Glow effect on hover */}
                 </button>
                 <ServiceDropdownMenu />
@@ -214,14 +190,6 @@ export function Navbar() {
               >
                 <span className="nav-glow" aria-hidden="true" />
                 <span className="relative z-10">About Us</span>
-                {/* Active underline */}
-                <span
-                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300 z-10 ${
-                    isActive("/about")
-                      ? "scale-x-100 opacity-100"
-                      : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                  }`}
-                />
                 {/* Glow effect on hover */}
               </Link>
               <Link
@@ -234,14 +202,6 @@ export function Navbar() {
               >
                 <span className="nav-glow" aria-hidden="true" />
                 <span className="relative z-10">Contact Us</span>
-                {/* Active underline */}
-                <span
-                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full transition-all duration-300 z-10 ${
-                    isActive("/contact")
-                      ? "scale-x-100 opacity-100"
-                      : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                  }`}
-                />
                 {/* Glow effect on hover */}
               </Link>
             </div>

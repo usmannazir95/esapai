@@ -72,6 +72,7 @@ export const products: Product[] = [
     name: "ERP",
     description: "Voice Activated AI ERP for SMEs",
     slug: "erp",
+    icon: "/products/erp.svg",
     content: {
       hero: {
         subtitle: [

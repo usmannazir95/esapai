@@ -13,7 +13,7 @@
     /* Neutral Colors */
     --color-white: rgba(255, 255, 255, 1);
     --color-black: rgba(0, 0, 0, 1);
-    --color-dark: rgba(1, 1, 1, 1);
+    --color-dark: rgba(0, 3, 0, 1);
     --color-light-gray: rgba(245, 245, 245, 1);
     --color-light-gray-90: rgba(245, 245, 245, 0.9);
     --color-white-opacity-10: rgba(255, 255, 255, 0.1);
@@ -421,20 +421,18 @@
 
   /* Product Dropdown Menu */
   .product-dropdown {
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.03),
-        rgba(255, 255, 255, 0.03)
-      ),
+    background: 
       radial-gradient(
         41.4% 41.4% at 28.87% 0%,
-        rgba(19, 245, 132, 0.7) 0%,
+        rgba(19, 245, 132, 0.15) 0%,
         rgba(19, 245, 132, 0) 100%
       ),
-      rgba(0, 0, 0, 0.4);
+      var(--color-dark);
 
     border-radius: 20px;
     backdrop-filter: blur(28px);
+    border: 1px solid var(--color-white-opacity-20);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
   }
 
   /* Product Dropdown Item */
@@ -506,20 +504,18 @@
 
   /* Service Dropdown Menu */
   .service-dropdown {
-    background: linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.03),
-        rgba(255, 255, 255, 0.03)
-      ),
+    background: 
       radial-gradient(
         41.4% 41.4% at 28.87% 0%,
-        rgba(19, 245, 132, 0.7) 0%,
+        rgba(19, 245, 132, 0.15) 0%,
         rgba(19, 245, 132, 0) 100%
       ),
-      rgba(0, 0, 0, 0.4);
+      var(--color-dark);
 
     border-radius: 20px;
     backdrop-filter: blur(28px);
+    border: 1px solid var(--color-white-opacity-20);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
   }
 
   /* Service Dropdown Item */
@@ -661,7 +657,7 @@
         rgba(255, 255, 255, 0.03)
       );
     border: 1.5px solid transparent;
-    backdrop-filter: blur(20px);
+ 
   }
 
   .team-card::before {
@@ -683,6 +679,43 @@
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     pointer-events: none;
+  }
+
+  /* Contact Form Card */
+  .contact-form-card {
+    position: relative;
+    border-radius: 32px;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.03),
+        rgba(255, 255, 255, 0.03)
+      ),
+      linear-gradient(
+        246.02deg,
+        rgba(19, 245, 132, 0) 91.9%,
+        rgba(19, 245, 132, 0.2) 114.38%
+      ),
+      linear-gradient(
+        59.16deg,
+        rgba(19, 245, 132, 0) 71.78%,
+        rgba(19, 245, 132, 0.2) 124.92%
+      );
+    
+    border-image-source: linear-gradient(
+      158.39deg,
+      rgba(255, 255, 255, 0.06) 14.19%,
+      rgba(255, 255, 255, 0.000015) 50.59%,
+      rgba(255, 255, 255, 0.000015) 68.79%,
+      rgba(255, 255, 255, 0.015) 105.18%
+    );
+    border-image-slice: 1;
+  }
+
+  /* Contact Form Inputs */
+  .contact-input {
+    border: 0.91px solid rgba(70, 70, 70, 1);
+    border-radius: 35px;
+    background-color: transparent;
   }
 
   /* Optimized Product Card - Performance-focused */
@@ -714,4 +747,18 @@
       transform: none;
     }
   }
+
+  /* Footer Background Gradient */
+  .footer-background {
+    background: 
+      radial-gradient(
+        78.52% 85.5% at 50% 0%,
+        rgba(19, 245, 132, 0.1) 9.56%,
+        rgba(0, 0, 0, 0) 100%
+      )
+     
+      
+  }
+
+ 
 }

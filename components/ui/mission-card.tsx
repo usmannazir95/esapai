@@ -18,8 +18,21 @@ export function MissionCard({
 }: MissionCardProps) {
   return (
     <div className={`mission-card relative overflow-hidden ${className}`}>
+      {/* Card Frame - fits entire card */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="relative w-full h-full">
+          <Image
+            src="/landing/cardframe.svg"
+            alt="Card frame"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      </div>
+
       {/* Content */}
-      <div className="relative p-8 h-full flex flex-col">
+      <div className="relative p-8 h-full flex flex-col z-10">
         {/* Card Title */}
         <h3 className="text-2xl font-bold mb-4 text-gradient-radial-white">
           {title}

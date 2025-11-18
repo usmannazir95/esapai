@@ -12,7 +12,7 @@ export function Hero() {
   const frameScale = useTransform(scrollY, [0, 100], [1, 0.8]);
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-visible pb-32 -mt-0">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-visible pb-32 mt-0">
       {/* Frame in top left - animated fade out on scroll */}
       <motion.div
         className="fixed top-0 left-0 z-20 pointer-events-none"
@@ -62,9 +62,9 @@ export function Hero() {
           <Image
             src="/landing/circle.svg"
             alt="Circle decoration"
-            width={600}
-            height={608}
-            className="w-auto h-auto"
+            width={450}
+            height={456}
+            className="max-w-[450px] w-auto h-auto"
             priority
           />
         </motion.div>
@@ -72,7 +72,7 @@ export function Hero() {
 
       {/* Hexagonal Icons (box.svg) - floating with glow */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden lg:block w-full"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden lg:block"
         animate={{
           y: [0, -20, 0],
           opacity: [0.7, 1, 0.7],
@@ -86,9 +86,9 @@ export function Hero() {
         <Image
           src="/landing/box.svg"
           alt="Hexagonal icons decoration"
-          width={50}
-          height={50}
-          className="w-full h-auto opacity-90 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.3)]"
+          width={1200}
+          height={480}
+          className="max-w-[1400px] w-auto h-auto opacity-90 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.3)]"
           priority
         />
       </motion.div>
