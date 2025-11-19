@@ -1,20 +1,35 @@
-import { Hero } from "@/components/sections/hero/hero";
-import { Mission } from "@/components/sections/about/mission";
-import { Service } from "@/components/sections/features/home/service";
-import { Vision } from "@/components/sections/about/vision";
-import { WorldMapSection } from "@/components/sections/features/home/world-map-section";
-import { ProductShowcase } from "@/components/sections/features/home/product-showcase";
+import dynamic from "next/dynamic";
+const HeroSection = dynamic(
+  () => import("@/components/sections/hero/hero").then((mod) => ({ default: mod.Hero })),
+);
+
+const MissionSection = dynamic(
+  () => import("@/components/sections/about/mission").then((mod) => ({ default: mod.Mission })),
+);
+
+const ServiceSection = dynamic(
+  () => import("@/components/sections/features/home/service").then((mod) => ({ default: mod.Service })),
+);
+
+const VisionSection = dynamic(
+  () => import("@/components/sections/about/vision").then((mod) => ({ default: mod.Vision })),
+);
+
+
+
+const ProductShowcaseSection = dynamic(
+  () => import("@/components/sections/features/home/product-showcase").then((mod) => ({ default: mod.ProductShowcase })),
+);
 
 
 export default function Home() {
   return (
     <main className="relative">
-      <Hero />
-      <Mission />
-      <Vision />
-      <Service />
-      <ProductShowcase />
-     
+      <HeroSection />
+      <MissionSection />
+      <VisionSection />
+      <ServiceSection />
+      <ProductShowcaseSection />
     </main>
   );
 }

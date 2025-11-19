@@ -6,6 +6,8 @@ export interface ServiceFeature {
 export interface ServiceContent {
   hero?: {
     subtitle?: string[];
+    centerIcon?: string;
+    centerIconAlt?: string;
   };
   features?: {
     title?: string;

@@ -26,6 +26,10 @@ export function ContactSection() {
   });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState<string>("");
+  const [submissionState, setSubmissionState] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,16 +43,52 @@ export function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!agreedToTerms) return;
+
+    if (!agreedToTerms) {
+      setSubmissionState("error");
+      setSubmissionMessage("Please accept the terms to continue.");
+      return;
+    }
 
     setIsSubmitting(true);
-    // TODO: Implement form submission logic
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSubmitting(false);
+    setSubmissionState("sending");
+    setSubmissionMessage("Sending your message…");
 
-    // Reset form
-    setFormData({ fullName: "", email: "", message: "" });
-    setAgreedToTerms(false);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      const data = (await response.json()) as { success: boolean; message: string };
+
+      if (data.success) {
+        setSubmissionState("success");
+        setSubmissionMessage("Thanks! We received your message.");
+        setFormData({ fullName: "", email: "", message: "" });
+        setAgreedToTerms(false);
+      } else {
+        throw new Error(data.message || "Submission failed");
+      }
+    } catch (error) {
+      setSubmissionState("error");
+      setSubmissionMessage(
+        error instanceof Error ? error.message : "Unexpected error occurred.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -191,6 +231,20 @@ export function ContactSection() {
                   >
                     {isSubmitting ? "Submitting..." : "Submit"}
                   </Button>
+
+                  {submissionMessage && (
+                    <p
+                      className={`text-sm ${
+                        submissionState === "error"
+                          ? "text-red-400"
+                          : submissionState === "success"
+                            ? "text-primary"
+                            : "text-light-gray-90"
+                      }`}
+                    >
+                      {submissionMessage}
+                    </p>
+                  )}
 
                   {/* Terms and Conditions */}
                   <div className="flex items-start gap-3 pt-2">

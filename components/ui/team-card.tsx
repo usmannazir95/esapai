@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -29,7 +28,7 @@ export function TeamCard({ member, isLarge = false, className = "" }: TeamCardPr
         className
       )}
     >
-      <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0f241a] via-[#0b1712] to-[#050a08] shadow-[0_40px_80px_rgba(12,255,165,0.08)] transition-transform duration-500 group-hover:-translate-y-1">
+      <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-linear-to-br from-[#0f241a] via-[#0b1712] to-[#050a08] shadow-[0_40px_80px_rgba(12,255,165,0.08)] transition-transform duration-500 group-hover:-translate-y-1">
         {/* Top Image */}
         <div className={cn("relative w-full overflow-hidden", imageHeight)}>
           <Image
@@ -47,11 +46,11 @@ export function TeamCard({ member, isLarge = false, className = "" }: TeamCardPr
             }}
           />
 
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#04120b]/70" />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#04120b]/70" />
         </div>
 
         {/* Content */}
-        <div className="relative px-6 pt-6 pb-8 md:px-8 md:pb-10 space-y-4 bg-gradient-to-b from-[#0d271b]/80 via-[#0a1b14]/70 to-[#06130d]/90">
+        <div className="relative px-6 pt-6 pb-8 md:px-8 md:pb-10 space-y-4 bg-linear-to-b from-[#0d271b]/80 via-[#0a1b14]/70 to-[#06130d]/90">
           <span className="inline-flex items-center rounded-full border border-[#1EF38A]/40 bg-[#1EF38A]/10 px-4 py-1 text-sm font-semibold text-[#1EF38A] shadow-[0_0_24px_rgba(30,243,138,0.45)]">
             {member.role}
           </span>
