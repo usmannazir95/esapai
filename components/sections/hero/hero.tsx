@@ -3,17 +3,38 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "motion/react";
+import FramerBackdrop from "./framer";
 
 export function Hero() {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-visible pb-32 mt-0">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pb-32 mt-0">
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          initial={{ opacity: 0.6, scale: 0.96 }}
+          animate={{
+            opacity: [0.6, 0.85, 0.7],
+            scale: [0.96, 1, 0.98],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          aria-hidden="true"
+        >
+          <FramerBackdrop className="w-[120%] max-w-none min-h-full translate-x-[-10%] translate-y-[-5%]" />
+        </motion.div>
+        <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background/80" />
+      </div>
+
       {/* Circle behind content - animated glow and breathing effect */}
       <motion.div
         className="absolute top-[48%] left-1/2 -translate-x-1/2 z-0 pointer-events-none"
         style={{ rotate: 15 }}
         animate={{
           scale: [1, 1.08, 1.05, 1.08, 1],
-          opacity: [0.8, 1, 0.9, 1, 0.8],
+          opacity: [0.4, 0.7, 0.55, 0.7, 0.4],
         }}
         transition={{
           duration: 5,
@@ -25,11 +46,11 @@ export function Hero() {
           className="relative"
           animate={{
             filter: [
-              "drop-shadow(0 0 20px rgba(19,245,132,0.3))",
-              "drop-shadow(0 0 40px rgba(19,245,132,0.6))",
-              "drop-shadow(0 0 30px rgba(19,245,132,0.4))",
-              "drop-shadow(0 0 50px rgba(19,245,132,0.7))",
-              "drop-shadow(0 0 20px rgba(19,245,132,0.3))",
+              "drop-shadow(0 0 20px rgba(19,245,132,0.15))",
+              "drop-shadow(0 0 40px rgba(19,245,132,0.35))",
+              "drop-shadow(0 0 30px rgba(19,245,132,0.25))",
+              "drop-shadow(0 0 50px rgba(19,245,132,0.45))",
+              "drop-shadow(0 0 20px rgba(19,245,132,0.15))",
             ],
           }}
           transition={{
@@ -43,7 +64,7 @@ export function Hero() {
             alt="Circle decoration"
             width={450}
             height={456}
-            className="max-w-[450px] w-auto h-auto"
+            className="max-w-[450px] w-auto h-auto opacity-80"
             priority
           />
         </motion.div>
@@ -54,7 +75,7 @@ export function Hero() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden lg:block"
         animate={{
           y: [0, -20, 0],
-          opacity: [0.7, 1, 0.7],
+          opacity: [0.4, 0.8, 0.4],
         }}
         transition={{
           duration: 3,
@@ -67,7 +88,7 @@ export function Hero() {
           alt="Hexagonal icons decoration"
           width={1200}
           height={480}
-          className="max-w-[1400px] w-auto h-auto opacity-90 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.3)]"
+          className="max-w-[1400px] w-auto h-auto opacity-60 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.2)]"
           priority
         />
       </motion.div>
