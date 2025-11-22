@@ -1,14 +1,97 @@
 import * as React from "react";
-const SVGComponent = (props) => (
-  <svg
-    width={870}
-    height={592}
-    viewBox="0 0 870 592"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <g opacity={0.8} clipPath="url(#clip0_34_55175)">
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+
+const SVGComponent = (props: React.SVGProps<SVGSVGElement>) => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const mainGroupRef = useRef<SVGGElement>(null);
+  const circle1Ref = useRef<SVGCircleElement>(null);
+  const circle2Ref = useRef<SVGCircleElement>(null);
+  const sweepRectRef = useRef<SVGRectElement>(null);
+  const pathsGroupRef = useRef<SVGGElement>(null);
+
+  const anim = useGSAPAnimations(svgRef);
+
+  useGSAP(() => {
+    if (!svgRef.current) return;
+
+    // Animate main group opacity
+    if (mainGroupRef.current) {
+      anim.fadeIn(mainGroupRef.current, {
+        duration: 1.5,
+        from: { opacity: 0 },
+        to: { opacity: 0.8 },
+      });
+    }
+
+    // Animate paths with staggered fade-in
+    if (pathsGroupRef.current) {
+      const paths = pathsGroupRef.current.querySelectorAll("path");
+      anim.staggerFadeIn(paths, {
+        duration: 1.2,
+        stagger: 0.03,
+        from: { opacity: 0, scale: 0.95 },
+        to: { opacity: 1, scale: 1 },
+      });
+    }
+
+    // Animate circle 1
+    if (circle1Ref.current) {
+      anim.animateSVGCircle(circle1Ref.current, {
+        r: { from: 300, to: 350 },
+        cx: { from: 340, to: 400 },
+        cy: { from: 120, to: 70 },
+        opacity: { from: 0.45, to: 0.7 },
+        rotation: { from: -6, to: 4, origin: "360px 110px" },
+        duration: 4.5,
+      });
+    }
+
+    // Animate circle 2
+    if (circle2Ref.current) {
+      anim.animateSVGCircle(circle2Ref.current, {
+        r: { from: 200, to: 250 },
+        cx: { from: 500, to: 550 },
+        cy: { from: 240, to: 180 },
+        opacity: { from: 0.35, to: 0.55 },
+        rotation: { from: 3, to: -5, origin: "520px 220px" },
+        duration: 3.25,
+      });
+    }
+
+    // Animate sweep rect
+    if (sweepRectRef.current) {
+      anim.animateSVGRect(sweepRectRef.current, {
+        x: { from: -320, to: 120 },
+        opacity: { from: 0.15, to: 0.35 },
+        duration: 8,
+      });
+    }
+
+    // Add subtle continuous animations to gradient paths
+    if (pathsGroupRef.current) {
+      const gradientPaths = pathsGroupRef.current.querySelectorAll("path");
+      anim.animateGradientPaths(gradientPaths, {
+        count: 15,
+        opacityRange: [0.8, 1.0],
+        durationRange: [2, 4],
+        stagger: 0.15,
+      });
+    }
+  }, { scope: svgRef });
+
+  return (
+    <svg
+      ref={svgRef}
+      width={870}
+      height={592}
+      viewBox="0 0 870 592"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+    <g ref={mainGroupRef} opacity={0.8} clipPath="url(#clip0_34_55175)">
       <g filter="url(#filter0_f_34_55175)">
         <mask
           id="mask0_34_55175"
@@ -21,6 +104,7 @@ const SVGComponent = (props) => (
           width={1803}
           height={1753}
         >
+          <g ref={pathsGroupRef}>
           <path
             d="M772.72 609.868L176.722 -279.557L-32.6243 -139.277L563.374 750.149L772.72 609.868Z"
             fill="url(#paint0_linear_34_55175)"
@@ -423,6 +507,7 @@ const SVGComponent = (props) => (
             d="M464.732 565.644L-131.266 -323.781L-340.611 -183.502L255.387 705.925L464.732 565.644Z"
             fill="url(#paint87_linear_34_55175)"
           />
+          </g>
         </mask>
         <g mask="url(#mask0_34_55175)">
           <rect
@@ -433,6 +518,7 @@ const SVGComponent = (props) => (
             fill="#13F584"
           />
           <circle
+            ref={circle1Ref}
             cx={360}
             cy={110}
             r={320}
@@ -441,40 +527,9 @@ const SVGComponent = (props) => (
             style={{
               mixBlendMode: "screen",
             }}
-          >
-            <animate
-              attributeName="r"
-              values="300;350;300"
-              dur="9s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="cx"
-              values="340;400;360;340"
-              dur="13s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="cy"
-              values="120;70;140;120"
-              dur="11s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="opacity"
-              values="0.45;0.7;0.45"
-              dur="8s"
-              repeatCount="indefinite"
-            />
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              values="-6 360 110;4 360 110;-2 360 110;-6 360 110"
-              dur="18s"
-              repeatCount="indefinite"
-            />
-          </circle>
+          />
           <circle
+            ref={circle2Ref}
             cx={520}
             cy={220}
             r={220}
@@ -483,40 +538,9 @@ const SVGComponent = (props) => (
             style={{
               mixBlendMode: "screen",
             }}
-          >
-            <animate
-              attributeName="r"
-              values="200;250;200"
-              dur="6.5s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="cx"
-              values="520;550;500;520"
-              dur="10s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="cy"
-              values="220;180;240;220"
-              dur="12s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="opacity"
-              values="0.35;0.55;0.35"
-              dur="7s"
-              repeatCount="indefinite"
-            />
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              values="3 520 220;-5 520 220;3 520 220"
-              dur="14s"
-              repeatCount="indefinite"
-            />
-          </circle>
+          />
           <rect
+            ref={sweepRectRef}
             x={-300}
             y={-40}
             width={1300}
@@ -526,20 +550,7 @@ const SVGComponent = (props) => (
             style={{
               mixBlendMode: "screen",
             }}
-          >
-            <animate
-              attributeName="x"
-              values="-320;120;-320"
-              dur="16s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="opacity"
-              values="0.15;0.35;0.2;0.15"
-              dur="16s"
-              repeatCount="indefinite"
-            />
-          </rect>
+          />
         </g>
       </g>
     </g>
@@ -1574,5 +1585,7 @@ const SVGComponent = (props) => (
       </clipPath>
     </defs>
   </svg>
-);
+  );
+};
+
 export default SVGComponent;
