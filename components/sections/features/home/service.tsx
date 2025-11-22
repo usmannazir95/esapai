@@ -10,12 +10,7 @@ export function Service() {
     <section className="relative w-full py-20 px-4 overflow-hidden bg-dark">
       <div className="relative container mx-auto max-w-7xl z-10">
         <SectionHeader
-          title={
-            <>
-              <span className="block">Comprehensive AI</span>
-              <span className="block">Services & Solutions</span>
-            </>
-          }
+          title="AI Services & Solutions"
           subtitle="From strategic consulting to complete integration, we offer end-to-end AI services that transform your business operations and drive innovation."
         />
 

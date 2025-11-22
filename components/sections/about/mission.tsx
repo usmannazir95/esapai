@@ -11,7 +11,7 @@ interface MissionProps {
   cards?: MissionCardType[];
 }
 
-const defaultTitle = "Empowering Businesses with Intelligent AI Solutions";
+const defaultTitle = "Intelligent AI Solutions";
 const defaultSubtitle =
   "We build AI-powered systems that transform how businesses operate. From voice-activated ERP systems to intelligent knowledge agents, our solutions drive productivity, automation, and innovation across industries.";
 const defaultCards: MissionCardType[] = [

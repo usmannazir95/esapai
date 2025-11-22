@@ -9,12 +9,7 @@ export function Vision() {
   return (
     <Section>
       <SectionHeader
-        title={
-          <>
-            <span className="block">Rebuilding today,</span>
-            <span className="block">empowering tomorrow</span>
-          </>
-        }
+        title="Our Vision"
         subtitle="We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes."
       />
 

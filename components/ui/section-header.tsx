@@ -19,7 +19,7 @@ export function SectionHeader({
     <div className={className}>
       {/* Main Title */}
       <h2
-        className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-center text-gradient-radial-white leading-tight ${titleClassName}`}
+        className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-center text-gradient-radial-white leading-tight ${titleClassName}`}
       >
         {title}
       </h2>

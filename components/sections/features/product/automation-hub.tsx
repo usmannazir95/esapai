@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
 import type { AutomationFeature } from "@/lib/products";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
@@ -73,6 +74,7 @@ export function AutomationHub({
               title={feature.title}
               description={feature.description}
               className={zigZagOffsets[index % zigZagOffsets.length]}
+              index={index}
             />
           );
         })}
@@ -85,15 +87,31 @@ interface FeatureCardProps {
   title: string;
   description: string;
   className?: string;
+  index: number;
 }
 
-function FeatureCard({ title, description, className }: FeatureCardProps) {
+function FeatureCard({ title, description, className, index }: FeatureCardProps) {
+  const floatSequences = [
+    [0, -14, 4, 10, 0],
+    [0, 10, -6, 8, 0],
+    [0, -10, 6, -4, 0],
+    [0, 12, -8, 6, 0],
+  ];
+
+  const sequence = floatSequences[index % floatSequences.length];
+
   return (
-    <div
+    <motion.div
       className={cn(
         "relative overflow-hidden transition-transform duration-500 ease-out",
         className,
       )}
+      animate={{ y: sequence, rotate: [0, 0.5, 0, -0.5, 0] }}
+      transition={{
+        duration: 8 + index * 0.4,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
     >
       {/* Content */}
       <div className="relative p-8 h-full flex flex-col">
@@ -118,6 +136,6 @@ function FeatureCard({ title, description, className }: FeatureCardProps) {
           {description}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }

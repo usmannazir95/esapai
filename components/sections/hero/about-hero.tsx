@@ -6,7 +6,7 @@ export function AboutHero() {
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-32 pb-20">
       {/* Frame SVG centered (shared with Service Hero) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1 pointer-events-none">
         <Image
           src="/services/frame.svg"
           alt="Frame decoration"
@@ -30,8 +30,8 @@ export function AboutHero() {
               Where Innovation Meets Productivity
             </p>
             <p className="text-base md:text-lg text-white-opacity-70 max-w-3xl mx-auto">
-              Driven by agents, powered by automation, built for what's next. 
-              We're a team of visionaries dedicated to transforming how businesses 
+              Driven by agents, powered by automation, built for what&apos;s next. 
+              We&apos;re a team of visionaries dedicated to transforming how businesses 
               operate through cutting-edge AI technology.
             </p>
           </div>
