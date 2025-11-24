@@ -1,11 +1,29 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Canvas } from "@react-three/fiber";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ServiceItem } from "@/components/ui/service-item";
+import FloorGrid from "@/components/three/floor-grid";
 
 export function Service() {
+  const ellipseRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!ellipseRef.current) return;
+
+    gsap.to(ellipseRef.current, {
+      rotate: 360,
+      duration: 20,
+      ease: "linear",
+      repeat: -1,
+      transformOrigin: "50% 50%",
+    });
+  }, { scope: ellipseRef });
+
   return (
     <section className="relative w-full py-20 px-4 overflow-hidden bg-dark">
       <div className="relative container mx-auto max-w-7xl z-10">
@@ -17,14 +35,9 @@ export function Service() {
         {/* Central Brain with Services */}
         <div className="relative w-full min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center justify-center py-8 md:py-12 -mt-12 md:-mt-16">
           {/* Ellipse around the brain - Rotating */}
-          <motion.div
+          <div
+            ref={ellipseRef}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
           >
             <Image
               src="/landing/service/ellipse.svg"
@@ -33,7 +46,7 @@ export function Service() {
               height={600}
               className="w-full h-full max-w-[500px] sm:max-w-[550px] md:max-w-[600px] lg:max-w-[650px] object-contain"
             />
-          </motion.div>
+          </div>
 
           {/* Central Brain */}
           <div className="relative z-20 animate-float">
@@ -131,15 +144,12 @@ export function Service() {
         </div>
       </div>
 
-      {/* Floor Grid Pattern - boxes.svg */}
-      <div className="absolute -bottom-24 left-0 right-0 z-0 pointer-events-none">
-        <Image
-          src="/landing/service/boxes.svg"
-          alt="Floor grid pattern"
-          width={1370}
-          height={547}
-          className="w-full object-cover"
-        />
+      {/* Floor Grid Pattern */}
+      <div className="absolute -bottom-60 left-0 right-0 z-0 pointer-events-none h-[360px]">
+        <Canvas camera={{ position: [0, 5, 8], fov: 45 }} gl={{ alpha: true }}>
+          <ambientLight intensity={0.1} />
+          <FloorGrid />
+        </Canvas>
       </div>
     </section>
   );
