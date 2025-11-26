@@ -9,6 +9,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { ServiceItem } from "@/components/ui/service-item";
 import FloorGrid from "@/components/three/floor-grid";
 
+
 export function Service() {
   const ellipseRef = useRef<HTMLDivElement>(null);
 
@@ -154,5 +155,4 @@ export function Service() {
     </section>
   );
 }
-
 

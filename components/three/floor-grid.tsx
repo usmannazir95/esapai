@@ -118,4 +118,3 @@ const FloorGrid: React.FC = () => {
 };
 
 export default FloorGrid;
-
