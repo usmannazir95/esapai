@@ -834,8 +834,151 @@
         rgba(19, 245, 132, 0.1) 9.56%,
         rgba(0, 0, 0, 0) 100%
       )
-     
       
+      
+  }
+
+  /* ========================================
+     RESPONSIVE UTILITY CLASSES
+     ======================================== */
+
+  /* Responsive Container Utilities */
+  .container-responsive {
+    @apply px-4 sm:px-6 md:px-8 lg:px-12;
+  }
+
+  /* Responsive Text Scaling - Consistent typography across breakpoints */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl md:text-3xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+
+  .text-responsive-3xl {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  .text-responsive-4xl {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
+  }
+
+  /* Responsive Spacing - Consistent gaps and padding */
+  .spacing-responsive-xs {
+    @apply gap-1 sm:gap-2 md:gap-3;
+  }
+
+  .spacing-responsive-sm {
+    @apply gap-2 sm:gap-3 md:gap-4;
+  }
+
+  .spacing-responsive-md {
+    @apply gap-4 sm:gap-6 md:gap-8;
+  }
+
+  .spacing-responsive-lg {
+    @apply gap-6 sm:gap-8 md:gap-10 lg:gap-12;
+  }
+
+  .spacing-responsive-xl {
+    @apply gap-8 sm:gap-10 md:gap-12 lg:gap-16;
+  }
+
+  /* Responsive Padding */
+  .padding-responsive-sm {
+    @apply p-3 sm:p-4 md:p-6;
+  }
+
+  .padding-responsive-md {
+    @apply p-4 sm:p-6 md:p-8;
+  }
+
+  .padding-responsive-lg {
+    @apply p-6 sm:p-8 md:p-10 lg:p-12;
+  }
+
+  /* ========================================
+     ANIMATION PERFORMANCE UTILITIES
+     ======================================== */
+
+  /* GPU Acceleration - Forces hardware acceleration for smooth animations */
+  .animate-optimized {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  .animate-gpu {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* Optimized GSAP Animation States with GPU hints */
+  .gsap-fade-in-optimized {
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  .gsap-slide-up-optimized {
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  .gsap-scale-in-optimized {
+    opacity: 0;
+    transform: scale(0.9) translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  /* Reduce animations on low-end devices */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-optimized,
+    .animate-gpu,
+    .gsap-fade-in-optimized,
+    .gsap-slide-up-optimized,
+    .gsap-scale-in-optimized {
+      animation: none !important;
+      transition: none !important;
+      will-change: auto;
+    }
+
+    .animate-float,
+    .animate-pulse-slow,
+    .animate-cell-ripple {
+      animation: none !important;
+    }
+  }
+
+  /* Mobile-optimized animations - reduce complexity */
+  @media (max-width: 767px) {
+    .animate-float {
+      animation-duration: 8s; /* Slower on mobile */
+    }
+
+    .filter-glow-primary,
+    .filter-glow-primary-strong {
+      filter: drop-shadow(0 0 10px rgba(19, 245, 132, 0.4)); /* Simpler glow */
+    }
   }
 
  

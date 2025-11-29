@@ -1,23 +1,19 @@
 "use client";
 
-import Image from "next/image";
+import Frame from "@/components/sections/shared/frame";
 
 export function AboutHero() {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-32 pb-20">
-      {/* Frame SVG centered (shared with Service Hero) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1 pointer-events-none">
-        <Image
-          src="/services/frame.svg"
-          alt="Frame decoration"
-          width={300}
-          height={300}
-          className="w-auto h-auto opacity-90"
-          priority
-        />
+    <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-24 pb-16 md:pt-32 md:pb-20">
+      {/* Animated Frame Background */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center opacity-40">
+          <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/80" />
       </div>
 
-      <div className="relative z-2 container mx-auto px-4">
+      <div className="relative z-10 container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           {/* Headline */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight text-gradient-primary">

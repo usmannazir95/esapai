@@ -359,7 +359,24 @@ export function ServiceFeatures({
         subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
       />
 
-      <div className="relative w-full h-[700px] md:h-[900px] max-w-7xl mx-auto service-features-flow">
+      {/* Mobile/Tablet View - Grid Layout */}
+      <div className="block lg:hidden max-w-4xl mx-auto px-4 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {features.map((feature, index) => (
+            <div key={index} className="product-card p-6 md:p-8 rounded-[24px] border border-white-opacity-10 bg-white-opacity-5">
+              <h3 className="text-xl font-bold mb-3 text-gradient-radial-white">
+                {feature.title}
+              </h3>
+              <p className="text-base text-light-gray-90 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop View - Interactive Graph */}
+      <div className="hidden lg:block relative w-full h-[700px] md:h-[900px] max-w-7xl mx-auto service-features-flow">
         <ConnectionDotsMarkers />
         <style dangerouslySetInnerHTML={{ __html: `
           .service-features-flow {
