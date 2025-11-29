@@ -110,7 +110,7 @@ const ConcentricRings: React.FC<{ intensity: number }> = ({ intensity }) => {
       meshRef.current!.setMatrixAt(i, dummy.matrix);
 
       color.copy(PRIMARY_COLOR).lerp(SECONDARY_COLOR, waveActivation);
-      const brightness = 1 + waveActivation * 2;
+      const brightness = 0.8 + waveActivation * 1.2;
       color.multiplyScalar(brightness);
       meshRef.current!.setColorAt(i, color);
     });
@@ -124,7 +124,7 @@ const ConcentricRings: React.FC<{ intensity: number }> = ({ intensity }) => {
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, particles.length]}>
       <sphereGeometry args={[1, 8, 8]} />
-      <meshBasicMaterial toneMapped={false} color={PRIMARY_COLOR_HEX} transparent opacity={0.9} />
+      <meshBasicMaterial toneMapped={false} color={PRIMARY_COLOR_HEX} transparent opacity={0.75} />
     </instancedMesh>
   );
 };
@@ -164,7 +164,7 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
     <div className={`w-full h-full relative ${className}`}>
       <Canvas
         dpr={[1, 2]}
-        gl={{ antialias: false, alpha: true, toneMapping: THREE.ReinhardToneMapping, toneMappingExposure: 1.5 }}
+        gl={{ antialias: false, alpha: true, toneMapping: THREE.ReinhardToneMapping, toneMappingExposure: 1.1 }}
         style={{ background: "transparent" }}
       >
         <PerspectiveCamera makeDefault position={[0, 12, 18]} fov={60} />
@@ -178,7 +178,7 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
         <fog attach="fog" args={[BG_COLOR_FAR_HEX, 10, 50]} />
 
         <ambientLight intensity={0.2} color={BG_COLOR_NEAR_HEX} />
-        <pointLight position={[0, 15, 0]} intensity={2 * intensity} color={PRIMARY_COLOR_HEX} distance={40} decay={2} />
+        <pointLight position={[0, 15, 0]} intensity={1.25 * intensity} color={PRIMARY_COLOR_HEX} distance={40} decay={2} />
         <pointLight position={[10, 5, 10]} intensity={1} color={SECONDARY_COLOR_HEX} distance={30} decay={2} />
         <spotLight position={[0, 20, 0]} angle={0.5} penumbra={0.5} intensity={3} color="#ffffff" />
 
@@ -188,7 +188,7 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
         </group>
 
         <EffectComposer>
-          <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.2 * intensity} radius={0.6} />
+          <Bloom luminanceThreshold={0.2} mipmapBlur intensity={0.8 * intensity} radius={0.5} />
         </EffectComposer>
       </Canvas>
     </div>

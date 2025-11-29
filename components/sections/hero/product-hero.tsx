@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
+import Frame from "@/components/sections/shared/frame";
 
 interface ProductHeroProps {
   title: string;
@@ -15,7 +16,14 @@ interface ProductHeroProps {
 export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: ProductHeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
-      <div className="relative z-2 container mx-auto px-4 pt-32 md:pt-40 pb-8">
+      {/* Animated Frame Background */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center opacity-40">
+          <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/80" />
+      </div>
+      <div className="relative z-10 container mx-auto px-4 pt-32 md:pt-40 pb-8">
         <div className="max-w-6xl mx-auto text-center">
           {/* Headline */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight text-gradient-primary">

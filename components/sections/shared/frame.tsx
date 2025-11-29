@@ -1,15 +1,129 @@
 import * as React from "react";
-const Frame = (props) => (
-  <svg
-    width={808}
-    height={1117}
-    viewBox="0 0 808 1117"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <g clipPath="url(#clip0_204_154694)" filter="url(#filter0_d_204_154694)">
-      <g opacity={0.6} filter="url(#filter1_f_204_154694)">
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+
+const Frame = (props: React.SVGProps<SVGSVGElement>) => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const mainGroupRef = useRef<SVGGElement>(null);
+  const pathsGroupRef = useRef<SVGGElement>(null);
+
+  const anim = useGSAPAnimations(svgRef);
+
+  useGSAP(() => {
+    const tl = anim.createTimeline();
+
+    // Entrance animations - main group fades in
+    tl.to(mainGroupRef.current, {
+      opacity: 0.6,
+      duration: 1.5,
+      ease: "power2.out",
+    });
+
+    // Staggered paths fade-in
+    if (pathsGroupRef.current) {
+      const paths = pathsGroupRef.current.querySelectorAll("path");
+      anim.staggerFadeIn(paths, {
+        duration: 1.2,
+        stagger: 0.03,
+        delay: 0.3,
+        from: { opacity: 0, scale: 0.95 },
+        to: { opacity: 1, scale: 1 },
+      });
+    }
+
+    // Continuous floating animation - smooth, organic floating effect with multiple layers
+    const floatDelay = 1.5;
+    
+    // Set transform origin for smooth rotations
+    gsap.set(mainGroupRef.current, { transformOrigin: "50% 50%" });
+    
+    // Create a complex floating timeline with figure-8 pattern
+    const floatTimeline = gsap.timeline({ 
+      repeat: -1, 
+      delay: floatDelay,
+      ease: "sine.inOut"
+    });
+    
+    // Figure-8 floating pattern - creates a smooth, organic movement
+    floatTimeline
+      .to(mainGroupRef.current, {
+        y: -25,
+        x: 20,
+        duration: 3,
+        ease: "sine.inOut",
+      })
+      .to(mainGroupRef.current, {
+        y: -15,
+        x: -15,
+        duration: 3,
+        ease: "sine.inOut",
+      })
+      .to(mainGroupRef.current, {
+        y: -20,
+        x: -20,
+        duration: 3,
+        ease: "sine.inOut",
+      })
+      .to(mainGroupRef.current, {
+        y: -10,
+        x: 15,
+        duration: 3,
+        ease: "sine.inOut",
+      })
+      .to(mainGroupRef.current, {
+        y: 0,
+        x: 0,
+        duration: 2,
+        ease: "sine.inOut",
+      });
+    
+    // Gentle rotation - more noticeable but still subtle
+    gsap.to(mainGroupRef.current, {
+      rotation: 3,
+      duration: 7,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      delay: floatDelay,
+    });
+    
+    // Breathing scale effect - makes it feel alive
+    gsap.to(mainGroupRef.current, {
+      scale: 1.04,
+      duration: 5,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      delay: floatDelay,
+    });
+
+    // Continuous looping animations for gradient paths
+    if (pathsGroupRef.current) {
+      const gradientPaths = pathsGroupRef.current.querySelectorAll("path");
+      anim.animateGradientPaths(gradientPaths, {
+        count: 33,
+        opacityRange: [0.5, 0.8],
+        durationRange: [2, 4],
+        stagger: 0.1,
+      });
+    }
+  }, { scope: svgRef });
+
+  return (
+    <svg
+      ref={svgRef}
+      width={808}
+      height={1117}
+      viewBox="0 0 808 1117"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g clipPath="url(#clip0_204_154694)" filter="url(#filter0_d_204_154694)">
+        <g ref={mainGroupRef} className="gsap-fade-in" opacity={0} filter="url(#filter1_f_204_154694)">
+          <g ref={pathsGroupRef}>
         <path
           style={{
             mixBlendMode: "screen",
@@ -248,8 +362,9 @@ const Frame = (props) => (
           d="M804 -411.664H4V288.276H804V-411.664Z"
           fill="url(#paint33_radial_204_154694)"
         />
+          </g>
+        </g>
       </g>
-    </g>
     <defs>
       <filter
         id="filter0_d_204_154694"
@@ -963,5 +1078,7 @@ const Frame = (props) => (
       </clipPath>
     </defs>
   </svg>
-);
+  );
+};
+
 export default Frame;
