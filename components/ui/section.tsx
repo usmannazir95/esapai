@@ -23,9 +23,9 @@ const containerMaxWidthClasses = {
 
 const paddingClasses = {
   none: "",
-  sm: "py-10 px-4",
-  md: "py-20 px-4",
-  lg: "py-32 px-4",
+  sm: "py-8 sm:py-10 px-4",
+  md: "py-12 sm:py-16 md:py-20 px-4",
+  lg: "py-16 sm:py-24 md:py-32 px-4",
 };
 
 const backgroundClasses = {

@@ -15,7 +15,7 @@ interface ProductHeroProps {
 
 export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: ProductHeroProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
+    <section className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-dark">
       {/* Animated Frame Background */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center opacity-40">
@@ -23,7 +23,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/80" />
       </div>
-      <div className="relative z-10 container mx-auto px-4 pt-32 md:pt-40 pb-8">
+      <div className="relative z-10 container mx-auto px-4 pt-24 md:pt-40 pb-12 md:pb-8">
         <div className="max-w-6xl mx-auto text-center">
           {/* Headline */}
           <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight text-gradient-primary">

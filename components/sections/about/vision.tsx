@@ -47,9 +47,15 @@ export function Vision() {
 
   }, { scope: sectionRef });
 
-  // Cursor follower effect for robot
+  // Cursor follower effect for robot - Disabled on touch devices
   useGSAP(() => {
     if (!robotWrapperRef.current || !sectionRef.current) return;
+
+    // Detect touch device
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Skip cursor follower on touch devices
+    if (isTouchDevice) return;
 
     const wrapper = robotWrapperRef.current;
     const section = sectionRef.current;
@@ -71,8 +77,9 @@ export function Vision() {
       const relativeX = (e.clientX - centerX) / (rect.width / 2);
       const relativeY = (e.clientY - centerY) / (rect.height / 2);
       
-      // Increased movement range for more responsiveness
-      const maxMove = 40; 
+      // Responsive movement range - smaller on smaller screens
+      const screenWidth = window.innerWidth;
+      const maxMove = screenWidth < 768 ? 20 : screenWidth < 1024 ? 30 : 40;
       const targetX = relativeX * maxMove;
       const targetY = relativeY * maxMove;
 
@@ -112,25 +119,24 @@ export function Vision() {
           subtitle="We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes."
         />
 
-        {/* Scene Wrapper */}
-        <div className="relative w-full flex items-center justify-center py-10">
+        {/* Scene Wrapper - Responsive */}
+        <div className="relative w-full flex items-center justify-center py-6 sm:py-8 md:py-10">
           <div
-            className="relative w-full max-w-[1100px]"
-            style={{ aspectRatio: "2 / 1" }}
+            className="relative w-full max-w-[1100px] aspect-square md:aspect-[1/1] lg:aspect-[1.2/1]"
           >
             {/* Concave Floor */}
             <div
               ref={dotCircleContainerRef}
-              className="absolute inset-0 gsap-fade-in"
+              className="absolute inset-0 gsap-fade-in-optimized"
               style={{ mixBlendMode: "screen", opacity: 0 }}
             >
               <ConcaveFloor intensity={1} className="absolute inset-0" />
             </div>
 
-            {/* Robot Icon */}
+            {/* Robot Icon - Responsive Sizing */}
             <div
               ref={robotWrapperRef}
-              className="absolute left-1/2 -translate-x-1/2 z-20"
+              className="absolute left-1/2 -translate-x-1/2 z-20 animate-optimized"
               style={{ top: "-8%" }}
             >
               <div
@@ -139,7 +145,7 @@ export function Vision() {
                 style={{ opacity: 0, transform: "translateY(50px) scale(0.8)" }}
               >
                 <Robot
-                  className="w-[150px] md:w-[180px] lg:w-[220px] h-auto object-contain"
+                  className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px] h-auto object-contain"
                   width={220}
                   height={220}
                 />

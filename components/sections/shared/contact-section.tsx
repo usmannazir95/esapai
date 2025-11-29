@@ -110,14 +110,14 @@ export function ContactSection() {
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-8">
+      <div className="relative z-10 container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start lg:items-center">
             {/* Left Column - Contact Information */}
-            <div className="lg:col-span-3 space-y-8">
+            <div className="lg:col-span-3 space-y-6 md:space-y-8">
               {/* Main Heading */}
               <div className="space-y-4">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gradient-primary">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-gradient-primary">
                   <span className="block">Contact us today.</span>
                   <span className="block">We&apos;re ready</span>
                   <span className="block">to assist you.</span>
@@ -159,8 +159,8 @@ export function ContactSection() {
             </div>
 
             {/* Right Column - Contact Form */}
-            <div className="lg:col-span-2">
-              <div className="contact-form-card p-6 md:p-8 lg:p-10">
+            <div className="lg:col-span-2 w-full">
+              <div className="contact-form-card p-5 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Full Name Field */}
                   <div className="space-y-2">

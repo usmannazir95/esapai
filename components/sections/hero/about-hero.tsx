@@ -4,7 +4,7 @@ import Frame from "@/components/sections/shared/frame";
 
 export function AboutHero() {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-32 pb-20">
+    <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-24 pb-16 md:pt-32 md:pb-20">
       {/* Animated Frame Background */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center opacity-40">

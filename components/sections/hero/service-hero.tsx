@@ -18,7 +18,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
   const firstPart = titleWords.join(' ');
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark">
+    <section className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-dark">
       {/* Animated Frame Background */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center opacity-40">

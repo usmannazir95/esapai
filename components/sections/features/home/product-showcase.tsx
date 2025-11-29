@@ -15,10 +15,10 @@ export function ProductShowcase() {
       <SectionHeader
         title="Our Product Suite"
         subtitle="Discover our comprehensive range of AI-powered solutions designed to transform your business operations and drive innovation."
-        subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
+        subtitleClassName="text-sm sm:text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-12 sm:mb-14 md:mb-16"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-4">
         {products.map((product) => {
           const iconSrc = product.icon ?? product.content?.hero?.centerIcon;
           const iconAlt =
@@ -27,10 +27,10 @@ export function ProductShowcase() {
           return (
             <Link key={product.id} href={`/product/${product.slug}`} className="block h-full">
               <SpotlightCard className="h-full">
-                <div className="p-6 md:p-8 h-full flex flex-col">
-                  {/* Product Icon */}
+                <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
+                  {/* Product Icon - Responsive sizing */}
                   {iconSrc && (
-                    <div className="relative w-16 h-16 md:w-20 md:h-20 mb-6 flex items-center justify-center">
+                    <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-4 sm:mb-5 md:mb-6 flex items-center justify-center">
                       <Image
                         src={iconSrc}
                         alt={iconAlt}
@@ -41,20 +41,20 @@ export function ProductShowcase() {
                     </div>
                   )}
 
-                  {/* Product Name */}
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gradient-radial-white">
+                  {/* Product Name - Responsive typography */}
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gradient-radial-white">
                     {product.name}
                   </h3>
 
-                  {/* Product Description */}
-                  <p className="text-base md:text-lg text-light-gray-90 leading-relaxed mb-6 flex-1">
+                  {/* Product Description - Responsive text */}
+                  <p className="text-sm sm:text-base md:text-lg text-light-gray-90 leading-relaxed mb-4 sm:mb-5 md:mb-6 flex-1">
                     {product.description}
                   </p>
 
                   {/* CTA */}
                   <div
                     className={cn(
-                      "btn-surface text-base font-semibold mt-auto w-fit transition-all"
+                      "btn-surface text-sm sm:text-base font-semibold mt-auto w-fit transition-all"
                     )}
                   >
                     <span>Learn More</span>

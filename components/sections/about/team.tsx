@@ -92,7 +92,7 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
       />
 
         {/* Team Grid */}
-        <div className="relative max-w-6xl mx-auto">
+        <div className="relative max-w-6xl mx-auto px-4">
           {/* Top Row - 1 large card, centered */}
           {topMember && (
             <div className="flex justify-center mb-8 md:mb-12">
@@ -101,14 +101,14 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
           )}
 
           {/* Middle Row - 3 cards */}
-          <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-8 mb-8 md:mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12 justify-items-center">
             {middleMembers.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}
           </div>
 
           {/* Bottom Row - 3 cards */}
-          <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center">
             {bottomMembers.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}

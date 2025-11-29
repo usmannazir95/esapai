@@ -87,76 +87,76 @@ export function Hero() {
     if (circleGlowRef.current) {
       anim.glow(circleGlowRef.current, { delay: 0.8 });
     }
+    // Animate the icons container
     if (iconsRef.current) {
       anim.float(iconsRef.current, { delay: 0.8 });
     }
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pb-32 mt-0">
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+    <section ref={sectionRef} className="relative w-full min-h-screen flex items-start md:items-center justify-center overflow-hidden pb-0 md:pb-32 pt-24 md:pt-0">
+      <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden">
         <div
           ref={backdropRef}
-          className="absolute inset-0 gsap-fade-in"
+          className="absolute inset-0 gsap-fade-in-optimized"
         >
-          <FramerBackdrop className="w-[120%] max-w-none min-h-full translate-x-[-10%] translate-y-[-5%]" />
+          <FramerBackdrop className="w-[120%] max-w-none min-h-full translate-x-[-10%] -translate-y-[35%] md:translate-y-[-5%]" />
         </div>
         <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background/80" />
       </div>
 
-      {/* Circle behind content - animated glow and breathing effect */}
+      {/* Circle behind content - animated glow and breathing effect - Responsive sizing */}
       <div
         ref={circleContainerRef}
-        className="absolute top-[48%] left-1/2 -translate-x-1/2 z-0 pointer-events-none"
+        className="absolute top-[35%] md:top-[48%] left-1/2 -translate-x-1/2 z-0 pointer-events-none animate-optimized"
       >
         <div ref={circleGlowRef} className="relative">
           <Circle
-            className="max-w-[450px] w-auto h-auto"
-            style={{ width: "450px", height: "auto" }}
+            className="w-[200px] sm:w-[300px] md:w-[400px] lg:w-[450px] h-auto"
+            style={{ maxWidth: "450px" }}
           />
         </div>
       </div>
 
-      {/* Hexagonal Icons (box.svg) - floating with glow */}
+      {/* Hexagonal Icons (box.svg) - floating with glow - Hidden on mobile/tablet for cleaner layout */}
       <div
         ref={iconsRef}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden lg:block gsap-fade-in"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden xl:block gsap-fade-in-optimized animate-optimized"
       >
         <Image
           src="/landing/box.svg"
           alt="Hexagonal icons decoration"
           width={1200}
           height={480}
-          className="max-w-[1400px] w-auto h-auto opacity-60 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.2)]"
+          className="max-w-[1200px] xl:max-w-[1400px] w-auto h-auto opacity-60 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.2)]"
           priority
         />
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 flex flex-col items-center text-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16 flex flex-col items-center text-center">
         {/* Tagline Badge */}
         <div
           ref={badgeRef}
-          className="hero-badge max-w-5xl gsap-slide-up"
+          className="hero-badge max-w-5xl gsap-slide-up-optimized scale-95 md:scale-100 mb-6 md:mb-8"
         >
           <div className="hero-badge-exclusive">
-            <span className="hero-badge-exclusive-text">Exclusive</span>
+            <span className="hero-badge-exclusive-text text-[10px] md:text-sm">Exclusive</span>
           </div>
           <div className="hero-badge-text">
-            <span className="hero-badge-text-content">
+            <span className="hero-badge-text-content text-[11px] md:text-sm">
               Tomorrow&apos;s Edge, Built Today
             </span>
           </div>
         </div>
 
         {/* Main Title - Full Width Container */}
-        <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 overflow-hidden">
           <h1
             ref={titleRef}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight w-full gsap-slide-up-lg"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 leading-tight w-full gsap-slide-up-optimized"
           >
             <span className="block text-white">AI-Powered Solutions</span>
-            <span className="block text-gradient-primary mt-2">
+            <span className="block text-gradient-primary mt-1 sm:mt-2">
               For Modern Enterprises
             </span>
           </h1>
@@ -165,7 +165,7 @@ export function Hero() {
         {/* Subtitle/Description */}
         <div
           ref={subtitleRef}
-          className="mb-10 space-y-2 text-lg md:text-xl text-light-gray-90 max-w-3xl mx-auto gsap-fade-in"
+          className="mb-6 sm:mb-8 md:mb-10 space-y-1 sm:space-y-2 text-sm sm:text-base md:text-xl text-light-gray-90 max-w-3xl mx-auto px-2 gsap-fade-in-optimized"
         >
           <p>
             Transform your business with intelligent automation, voice-activated
@@ -177,11 +177,11 @@ export function Hero() {
         {/* CTA Button */}
         <div
           ref={buttonRef}
-          className="gsap-fade-scale-in"
+          className="gsap-scale-in-optimized"
         >
           <Button
             variant="primary"
-            className="text-base md:text-lg px-8 py-6 rounded-[40px] font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all"
+            className="text-sm sm:text-base md:text-lg px-6 sm:px-8 py-4 sm:py-5 md:py-6 rounded-[40px] font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all"
           >
             Get Started
           </Button>
