@@ -7,7 +7,12 @@ import { useGSAP } from "@gsap/react";
 import { Canvas } from "@react-three/fiber";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ServiceItem } from "@/components/ui/service-item";
-import FloorGrid from "@/components/three/floor-grid";
+import dynamic from "next/dynamic";
+import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
+
+const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
+  ssr: false,
+});
 
 
 export function Service() {
@@ -16,7 +21,7 @@ export function Service() {
   // Removed rotation animation for cleaner presentation
 
   return (
-    <section className="relative w-full py-12 sm:py-16 md:py-20 px-4 overflow-hidden bg-dark">
+    <section className="relative w-full py-12 sm:py-16 md:py-20 px-4 overflow-hidden bg-dark render-optimized">
       <div className="relative container mx-auto max-w-7xl z-10">
         <SectionHeader
           title="AI Services & Solutions"
@@ -216,10 +221,12 @@ export function Service() {
 
       {/* Floor Grid Pattern - Only on desktop for performance */}
       <div className="hidden lg:block absolute -bottom-60 left-0 right-0 z-0 pointer-events-none h-[360px]">
-        <Canvas camera={{ position: [0, 5, 8], fov: 45 }} gl={{ alpha: true }}>
-          <ambientLight intensity={0.1} />
-          <FloorGrid />
-        </Canvas>
+        <LazyThreeWrapper>
+          <Canvas camera={{ position: [0, 5, 8], fov: 45 }} gl={{ alpha: true }}>
+            <ambientLight intensity={0.1} />
+            <FloorGrid />
+          </Canvas>
+        </LazyThreeWrapper>
       </div>
     </section>
   );

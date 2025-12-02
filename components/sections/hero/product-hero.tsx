@@ -3,8 +3,10 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "motion/react";
 import Frame from "@/components/sections/shared/frame";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 interface ProductHeroProps {
   title: string;
@@ -14,8 +16,107 @@ interface ProductHeroProps {
 }
 
 export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: ProductHeroProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Refs for animated elements
+  const leftEl1Ref = useRef<HTMLDivElement>(null);
+  const leftEl2Ref = useRef<HTMLDivElement>(null);
+  const leftEl3Ref = useRef<HTMLDivElement>(null);
+  const leftEl4Ref = useRef<HTMLDivElement>(null);
+  
+  const rightEl1Ref = useRef<HTMLDivElement>(null);
+  const rightEl2Ref = useRef<HTMLDivElement>(null);
+  const rightEl3Ref = useRef<HTMLDivElement>(null);
+  const rightEl4Ref = useRef<HTMLDivElement>(null);
+  
+  const centerGlow1Ref = useRef<HTMLDivElement>(null);
+  const centerGlow2Ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // Helper for floating animation
+    const float = (target: any, vars: any) => {
+      gsap.to(target, {
+        ...vars,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut",
+      });
+    };
+
+    // Left side elements
+    float(leftEl1Ref.current, {
+      y: -15,
+      opacity: 1, // from 0.7 to 1
+      duration: 2, // half of 4s loop
+    });
+    
+    float(leftEl2Ref.current, {
+      y: 15,
+      opacity: 0.9,
+      duration: 2.5,
+      delay: 0.5,
+    });
+
+    float(leftEl3Ref.current, {
+      y: -10,
+      opacity: 0.8,
+      duration: 1.75,
+      delay: 1,
+    });
+
+    float(leftEl4Ref.current, {
+      y: 20,
+      opacity: 0.95,
+      duration: 2.4,
+      delay: 1.2,
+    });
+
+    // Right side elements
+    float(rightEl1Ref.current, {
+      y: 12,
+      opacity: 1,
+      duration: 2.25,
+    });
+
+    float(rightEl2Ref.current, {
+      y: -18,
+      opacity: 0.9,
+      duration: 1.9,
+      delay: 0.7,
+    });
+
+    float(rightEl3Ref.current, {
+      y: 14,
+      opacity: 0.85,
+      duration: 2.1,
+      delay: 1.2,
+    });
+
+    float(rightEl4Ref.current, {
+      y: -18,
+      opacity: 0.9,
+      duration: 2.2,
+      delay: 1.4,
+    });
+
+    // Center glow effects
+    float(centerGlow1Ref.current, {
+      scale: 1.1,
+      opacity: 0.35,
+      duration: 3,
+    });
+
+    float(centerGlow2Ref.current, {
+      scale: 1.05,
+      opacity: 0.4,
+      duration: 2,
+      delay: 0.5,
+    });
+
+  }, { scope: containerRef });
+
   return (
-    <section className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-dark">
+    <section ref={containerRef} className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-dark">
       {/* Animated Frame Background */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center opacity-40">
@@ -65,25 +166,13 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
               height={1000}
               className="w-full h-auto mx-auto"
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 95vw, 1600px"
             />
 
             {/* Left side decorative elements */}
-            <motion.div
-              className="absolute left-0 top-[20%] pointer-events-none z-10"
-              animate={{
-                y: [0, -15, 0],
-                opacity: [0.7, 1, 0.7],
-                filter: [
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 20px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+            <div
+              ref={leftEl1Ref}
+              className="absolute left-0 top-[20%] pointer-events-none z-10 opacity-70 drop-shadow-[0_0_8px_rgba(19,245,132,0.4)]"
             >
               <Image
                 src="/products/element1.svg"
@@ -93,24 +182,10 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
                 priority
               />
-            </motion.div>
-            <motion.div
-              className="absolute left-[8%] top-[40%] pointer-events-none z-10"
-              animate={{
-                y: [0, 15, 0],
-                opacity: [0.6, 0.9, 0.6],
-                filter: [
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                  "drop-shadow(0 0 16px rgba(19, 245, 132, 0.6))",
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                ],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
+            </div>
+            <div
+              ref={leftEl2Ref}
+              className="absolute left-[8%] top-[40%] pointer-events-none z-10 opacity-60 drop-shadow-[0_0_6px_rgba(19,245,132,0.3)]"
             >
               <Image
                 src="/products/element2.svg"
@@ -120,24 +195,10 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
                 priority
               />
-            </motion.div>
-            <motion.div
-              className="absolute left-[3%] top-[60%] pointer-events-none z-10"
-              animate={{
-                y: [0, -10, 0],
-                opacity: [0.5, 0.8, 0.5],
-                filter: [
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 24px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
+            </div>
+            <div
+              ref={leftEl3Ref}
+              className="absolute left-[3%] top-[60%] pointer-events-none z-10 opacity-50 drop-shadow-[0_0_10px_rgba(19,245,132,0.4)]"
             >
               <Image
                 src="/products/element3.svg"
@@ -147,24 +208,10 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
                 priority
               />
-            </motion.div>
-            <motion.div
-              className="absolute left-[12%] top-[72%] pointer-events-none z-10"
-              animate={{
-                y: [0, 20, 0],
-                opacity: [0.55, 0.95, 0.55],
-                filter: [
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                  "drop-shadow(0 0 28px rgba(19, 245, 132, 0.65))",
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                ],
-              }}
-              transition={{
-                duration: 4.8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.2,
-              }}
+            </div>
+            <div
+              ref={leftEl4Ref}
+              className="absolute left-[12%] top-[72%] pointer-events-none z-10 opacity-55 drop-shadow-[0_0_10px_rgba(19,245,132,0.35)]"
             >
               <Image
                 src="/products/elemnet4.svg"
@@ -174,25 +221,12 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-14 h-14 md:w-[4.5rem] md:h-[4.5rem] lg:w-24 lg:h-24"
                 priority
               />
-            </motion.div>
+            </div>
 
             {/* Right side decorative elements */}
-            <motion.div
-              className="absolute right-0 top-[15%] pointer-events-none z-10"
-              animate={{
-                y: [0, 12, 0],
-                opacity: [0.7, 1, 0.7],
-                filter: [
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 20px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+            <div
+              ref={rightEl1Ref}
+              className="absolute right-0 top-[15%] pointer-events-none z-10 opacity-70 drop-shadow-[0_0_8px_rgba(19,245,132,0.4)]"
             >
               <Image
                 src="/products/element5.svg"
@@ -202,24 +236,10 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
                 priority
               />
-            </motion.div>
-            <motion.div
-              className="absolute right-[8%] top-[35%] pointer-events-none z-10"
-              animate={{
-                y: [0, -18, 0],
-                opacity: [0.6, 0.9, 0.6],
-                filter: [
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                  "drop-shadow(0 0 18px rgba(19, 245, 132, 0.6))",
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                ],
-              }}
-              transition={{
-                duration: 3.8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.7,
-              }}
+            </div>
+            <div
+              ref={rightEl2Ref}
+              className="absolute right-[8%] top-[35%] pointer-events-none z-10 opacity-60 drop-shadow-[0_0_6px_rgba(19,245,132,0.3)]"
             >
               <Image
                 src="/products/element6.svg"
@@ -229,24 +249,10 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20"
                 priority
               />
-            </motion.div>
-            <motion.div
-              className="absolute right-[3%] top-[55%] pointer-events-none z-10"
-              animate={{
-                y: [0, 14, 0],
-                opacity: [0.5, 0.85, 0.5],
-                filter: [
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 22px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 4.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.2,
-              }}
+            </div>
+            <div
+              ref={rightEl3Ref}
+              className="absolute right-[3%] top-[55%] pointer-events-none z-10 opacity-50 drop-shadow-[0_0_8px_rgba(19,245,132,0.4)]"
             >
               <Image
                 src="/products/element7.svg"
@@ -256,24 +262,10 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
                 priority
               />
-            </motion.div>
-            <motion.div
-              className="absolute right-[12%] top-[72%] pointer-events-none z-10"
-              animate={{
-                y: [0, -18, 0],
-                opacity: [0.55, 0.9, 0.55],
-                filter: [
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                  "drop-shadow(0 0 28px rgba(19, 245, 132, 0.65))",
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                ],
-              }}
-              transition={{
-                duration: 4.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.4,
-              }}
+            </div>
+            <div
+              ref={rightEl4Ref}
+              className="absolute right-[12%] top-[72%] pointer-events-none z-10 opacity-55 drop-shadow-[0_0_10px_rgba(19,245,132,0.35)]"
             >
               <Image
                 src="/products/element8.svg"
@@ -283,34 +275,17 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
                 className="w-12 h-12 md:w-16 md:h-16 lg:w-[5.5rem] lg:h-[5.5rem]"
                 priority
               />
-            </motion.div>
+            </div>
 
             {centerIcon && (
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-20">
-                <motion.div
-                  className="absolute w-[55%] max-w-[520px] aspect-square rounded-full bg-gradient-to-b from-emerald-400/50 via-emerald-400/20 to-transparent blur-3xl"
-                  animate={{
-                    scale: [0.95, 1.1, 0.95],
-                    opacity: [0.5, 0.35, 0.5],
-                  }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+                <div
+                  ref={centerGlow1Ref}
+                  className="absolute w-[55%] max-w-[520px] aspect-square rounded-full bg-gradient-to-b from-emerald-400/50 via-emerald-400/20 to-transparent blur-3xl opacity-50 scale-95"
                 />
-                <motion.div
-                  className="absolute w-[32%] max-w-[320px] aspect-square rounded-full bg-emerald-400/40 blur-[120px]"
-                  animate={{
-                    scale: [0.9, 1.05, 0.9],
-                    opacity: [0.6, 0.4, 0.6],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.5,
-                  }}
+                <div
+                  ref={centerGlow2Ref}
+                  className="absolute w-[32%] max-w-[320px] aspect-square rounded-full bg-emerald-400/40 blur-[120px] opacity-60 scale-90"
                 />
                 <Image
                   src={centerIcon}
@@ -328,4 +303,3 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: Prod
     </section>
   );
 }
-

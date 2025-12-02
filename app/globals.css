@@ -68,6 +68,12 @@
     animation: float 6s ease-in-out infinite;
   }
 
+  /* Performance Optimization Utilities */
+  .render-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px; /* Approximate height to prevent scrollbar jumping */
+  }
+
   @keyframes cell-ripple {
     0% {
       opacity: 0.4;

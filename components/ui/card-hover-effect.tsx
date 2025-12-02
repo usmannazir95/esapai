@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 interface HoverEffectItem {
   title: string;
@@ -19,6 +20,32 @@ export const HoverEffect = ({
   className?: string;
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const hoverBgRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
+  const handleMouseEnter = (idx: number) => {
+    setHoveredIndex(idx);
+    const element = hoverBgRefs.current[idx];
+    if (element) {
+      gsap.to(element, {
+        opacity: 1,
+        duration: 0.15,
+        ease: "power2.out",
+      });
+    }
+  };
+
+  const handleMouseLeave = (idx: number) => {
+    setHoveredIndex(null);
+    const element = hoverBgRefs.current[idx];
+    if (element) {
+      gsap.to(element, {
+        opacity: 0,
+        duration: 0.15,
+        delay: 0.2,
+        ease: "power2.out",
+      });
+    }
+  };
 
   return (
     <div
@@ -32,26 +59,15 @@ export const HoverEffect = ({
           href={item?.link}
           key={item?.link}
           className="relative group block p-2 h-full w-full"
-          onMouseEnter={() => setHoveredIndex(idx)}
-          onMouseLeave={() => setHoveredIndex(null)}
+          onMouseEnter={() => handleMouseEnter(idx)}
+          onMouseLeave={() => handleMouseLeave(idx)}
         >
-          <AnimatePresence>
-            {hoveredIndex === idx && (
-              <motion.span
-                className="absolute inset-0 h-full w-full bg-primary/10 block rounded-[32px]"
-                layoutId="hoverBackground"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { duration: 0.15 },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.15, delay: 0.2 },
-                }}
-              />
-            )}
-          </AnimatePresence>
+          {hoveredIndex === idx && (
+            <span
+              ref={(el) => (hoverBgRefs.current[idx] = el)}
+              className="absolute inset-0 h-full w-full bg-primary/10 block rounded-[32px] opacity-0"
+            />
+          )}
           <Card>
             {item.icon && (
               <div className="relative w-16 h-16 mb-6 flex items-center justify-center">
