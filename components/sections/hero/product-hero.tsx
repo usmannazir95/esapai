@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Frame from "@/components/sections/shared/frame";
 import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
+import GridFloor from "@/components/sections/shared/grid-floor";
 
 interface ProductHeroProps {
   title: string;
@@ -15,6 +16,11 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
     <section className="relative overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
       {/* Background Layers */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        {/* Grid Floor */}
+        <div className="absolute top-0 left-0 right-0 h-[60vh]">
+          <GridFloor className="opacity-60" perspective="dramatic" />
+        </div>
+        
         {/* Frame Background */}
         <div className="absolute inset-0 flex items-center justify-center opacity-40">
           <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
@@ -69,8 +75,8 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
           </div>
 
           {/* Product Halo Section */}
-          <div className="flex justify-center pt-8 md:pt-12 lg:pt-16">
-            <InteractiveProductIconHalo scale={1.2} intensity="high">
+          <div className="flex justify-center -mt-8 md:-mt-12">
+            <InteractiveProductIconHalo scale={1.0} intensity="high">
               <div className="w-24 h-24 bg-black/50 backdrop-blur-md rounded-2xl border border-emerald-500/30 p-4 flex items-center justify-center shadow-2xl">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
