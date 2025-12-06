@@ -68,6 +68,12 @@
     animation: float 6s ease-in-out infinite;
   }
 
+  /* Performance Optimization Utilities */
+  .render-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px; /* Approximate height to prevent scrollbar jumping */
+  }
+
   @keyframes cell-ripple {
     0% {
       opacity: 0.4;
@@ -128,6 +134,24 @@
 
   .animate-pulse-slow {
     animation: pulse-slow 2.2s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
   }
 
   /* Text Gradient Utility */

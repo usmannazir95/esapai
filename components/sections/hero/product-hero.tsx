@@ -2,330 +2,141 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "motion/react";
 import Frame from "@/components/sections/shared/frame";
+import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
+import GridFloor from "@/components/sections/shared/grid-floor";
 
 interface ProductHeroProps {
   title: string;
   subtitle: string[];
-  centerIcon?: string;
-  centerIconAlt?: string;
 }
 
-export function ProductHero({ title, subtitle, centerIcon, centerIconAlt }: ProductHeroProps) {
+export function ProductHero({ title, subtitle }: ProductHeroProps) {
   return (
-    <section className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-dark">
-      {/* Animated Frame Background */}
+    <section className="relative overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
+      {/* Background Layers */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        {/* Grid Floor - Extended to cover product halo area */}
+        <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+          <div className="w-full h-full max-h-[80vh] relative overflow-hidden">
+            <GridFloor className="opacity-60" perspective="dramatic" />
+            {/* Subtle edge blending */}
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `
+                  radial-gradient(ellipse 70% 50% at 50% 55%, 
+                    transparent 0%, 
+                    transparent 50%, 
+                    rgba(0, 3, 0, 0.2) 65%, 
+                    rgba(0, 3, 0, 0.5) 80%, 
+                    rgba(0, 3, 0, 0.9) 95%
+                  ),
+                  radial-gradient(ellipse 80% 30% at 50% 100%, 
+                    rgba(0, 3, 0, 1) 0%, 
+                    rgba(0, 3, 0, 0.8) 50%, 
+                    transparent 100%
+                  )
+                `
+              }}
+            />
+            {/* Subtle edge fades - only at very edges */}
+            <div 
+              className="absolute top-0 left-0 right-0 h-[20%] pointer-events-none"
+              style={{
+                background: 'linear-gradient(to bottom, rgba(0, 3, 0, 0.4) 0%, transparent 60%)'
+              }}
+            />
+            <div 
+              className="absolute bottom-0 left-0 right-0 h-[30%] pointer-events-none"
+              style={{
+                background: `
+                  linear-gradient(to top, rgba(0, 3, 0, 1) 0%, rgba(0, 3, 0, 0.8) 30%, rgba(0, 3, 0, 0.4) 60%, transparent 100%),
+                  radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0, 3, 0, 1) 0%, rgba(0, 3, 0, 0.9) 40%, rgba(0, 3, 0, 0.5) 70%, transparent 100%)
+                `
+              }}
+            />
+            <div 
+              className="absolute top-0 bottom-0 left-0 w-[15%] pointer-events-none"
+              style={{
+                background: 'linear-gradient(to right, rgba(0, 3, 0, 0.4) 0%, transparent 70%)'
+              }}
+            />
+            <div 
+              className="absolute top-0 bottom-0 right-0 w-[15%] pointer-events-none"
+              style={{
+                background: 'linear-gradient(to left, rgba(0, 3, 0, 0.4) 0%, transparent 70%)'
+              }}
+            />
+          </div>
+        </div>
+        
+        {/* Frame Background */}
         <div className="absolute inset-0 flex items-center justify-center opacity-40">
           <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/80" />
+        
+        
       </div>
-      <div className="relative z-10 container mx-auto px-4 pt-24 md:pt-40 pb-12 md:pb-8">
-        <div className="max-w-6xl mx-auto text-center">
-          {/* Headline */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight text-gradient-primary">
-            {title}
-          </h1>
 
-          {/* Sub-headline */}
-          <div className="mb-6 space-y-2">
-            {subtitle.map((line, index) => (
-              <p key={index} className="text-lg md:text-xl lg:text-2xl text-light-gray-90">
-                {line}
-              </p>
-            ))}
+      {/* Content Container */}
+      <div className="relative z-10 container mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Text Content Section */}
+          <div className="text-center mb-16 md:mb-20 lg:mb-24 xl:mb-28">
+            {/* Main Title */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 leading-tight text-gradient-primary">
+              {title}
+            </h1>
+
+            {/* Subtitle */}
+            <div className="mb-10 md:mb-12 lg:mb-14 space-y-2 md:space-y-3">
+              {subtitle.map((line, index) => (
+                <p 
+                  key={index} 
+                  className="text-lg md:text-xl lg:text-2xl text-light-gray-90"
+                >
+                  {line}
+                </p>
+              ))}
+            </div>
+
+            {/* Call-to-Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
+              <Button 
+                variant="primary" 
+                size="lg" 
+                className="rounded-[40px] px-8 py-6 text-lg font-semibold min-w-[180px]" 
+                asChild
+              >
+                <Link href="#explore">Explore Solution</Link>
+              </Button>
+              
+              <Button 
+                variant="watch-demo" 
+                size="lg" 
+                className="rounded-[40px] px-8 py-6 text-lg font-semibold min-w-[180px]" 
+                asChild
+              >
+                <Link href="#demo">Watch Demo</Link>
+              </Button>
+            </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <Button variant="primary" size="lg" className="rounded-[40px] px-8 py-6 text-lg font-semibold min-w-[180px]" asChild>
-              <Link href="#explore">Explore Solution</Link>
-            </Button>
-            <Button 
-              variant="watch-demo" 
-              size="lg" 
-              className="rounded-[40px] px-8 py-6 text-lg font-semibold min-w-[180px]" 
-              asChild
-            >
-              <Link href="#demo">Watch Demo</Link>
-            </Button>
-          </div>
-        </div>
-
-        {/* Product Images - Watermakr and VoiceERP */}
-        <div className="relative w-full flex justify-center -mt-4">
-          <div className="relative w-full max-w-[95vw]">
-            <Image
-              src="/products/Watermakr.svg"
-              alt="Watermark"
-              width={1600}
-              height={1000}
-              className="w-full h-auto mx-auto"
-              priority
-            />
-
-            {/* Left side decorative elements */}
-            <motion.div
-              className="absolute left-0 top-[20%] pointer-events-none z-10"
-              animate={{
-                y: [0, -15, 0],
-                opacity: [0.7, 1, 0.7],
-                filter: [
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 20px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Image
-                src="/products/element1.svg"
-                alt="Decorative element"
-                width={80}
-                height={80}
-                className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
-                priority
-              />
-            </motion.div>
-            <motion.div
-              className="absolute left-[8%] top-[40%] pointer-events-none z-10"
-              animate={{
-                y: [0, 15, 0],
-                opacity: [0.6, 0.9, 0.6],
-                filter: [
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                  "drop-shadow(0 0 16px rgba(19, 245, 132, 0.6))",
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                ],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-            >
-              <Image
-                src="/products/element2.svg"
-                alt="Decorative element"
-                width={60}
-                height={60}
-                className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
-                priority
-              />
-            </motion.div>
-            <motion.div
-              className="absolute left-[3%] top-[60%] pointer-events-none z-10"
-              animate={{
-                y: [0, -10, 0],
-                opacity: [0.5, 0.8, 0.5],
-                filter: [
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 24px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            >
-              <Image
-                src="/products/element3.svg"
-                alt="Decorative element"
-                width={100}
-                height={100}
-                className="w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
-                priority
-              />
-            </motion.div>
-            <motion.div
-              className="absolute left-[12%] top-[72%] pointer-events-none z-10"
-              animate={{
-                y: [0, 20, 0],
-                opacity: [0.55, 0.95, 0.55],
-                filter: [
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                  "drop-shadow(0 0 28px rgba(19, 245, 132, 0.65))",
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                ],
-              }}
-              transition={{
-                duration: 4.8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.2,
-              }}
-            >
-              <Image
-                src="/products/elemnet4.svg"
-                alt="Decorative element"
-                width={90}
-                height={90}
-                className="w-14 h-14 md:w-[4.5rem] md:h-[4.5rem] lg:w-24 lg:h-24"
-                priority
-              />
-            </motion.div>
-
-            {/* Right side decorative elements */}
-            <motion.div
-              className="absolute right-0 top-[15%] pointer-events-none z-10"
-              animate={{
-                y: [0, 12, 0],
-                opacity: [0.7, 1, 0.7],
-                filter: [
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 20px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Image
-                src="/products/element5.svg"
-                alt="Decorative element"
-                width={90}
-                height={90}
-                className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
-                priority
-              />
-            </motion.div>
-            <motion.div
-              className="absolute right-[8%] top-[35%] pointer-events-none z-10"
-              animate={{
-                y: [0, -18, 0],
-                opacity: [0.6, 0.9, 0.6],
-                filter: [
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                  "drop-shadow(0 0 18px rgba(19, 245, 132, 0.6))",
-                  "drop-shadow(0 0 6px rgba(19, 245, 132, 0.3))",
-                ],
-              }}
-              transition={{
-                duration: 3.8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.7,
-              }}
-            >
-              <Image
-                src="/products/element6.svg"
-                alt="Decorative element"
-                width={70}
-                height={70}
-                className="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20"
-                priority
-              />
-            </motion.div>
-            <motion.div
-              className="absolute right-[3%] top-[55%] pointer-events-none z-10"
-              animate={{
-                y: [0, 14, 0],
-                opacity: [0.5, 0.85, 0.5],
-                filter: [
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                  "drop-shadow(0 0 22px rgba(19, 245, 132, 0.7))",
-                  "drop-shadow(0 0 8px rgba(19, 245, 132, 0.4))",
-                ],
-              }}
-              transition={{
-                duration: 4.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.2,
-              }}
-            >
-              <Image
-                src="/products/element7.svg"
-                alt="Decorative element"
-                width={85}
-                height={85}
-                className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
-                priority
-              />
-            </motion.div>
-            <motion.div
-              className="absolute right-[12%] top-[72%] pointer-events-none z-10"
-              animate={{
-                y: [0, -18, 0],
-                opacity: [0.55, 0.9, 0.55],
-                filter: [
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                  "drop-shadow(0 0 28px rgba(19, 245, 132, 0.65))",
-                  "drop-shadow(0 0 10px rgba(19, 245, 132, 0.35))",
-                ],
-              }}
-              transition={{
-                duration: 4.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.4,
-              }}
-            >
-              <Image
-                src="/products/element8.svg"
-                alt="Decorative element"
-                width={75}
-                height={75}
-                className="w-12 h-12 md:w-16 md:h-16 lg:w-[5.5rem] lg:h-[5.5rem]"
-                priority
-              />
-            </motion.div>
-
-            {centerIcon && (
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-20">
-                <motion.div
-                  className="absolute w-[55%] max-w-[520px] aspect-square rounded-full bg-gradient-to-b from-emerald-400/50 via-emerald-400/20 to-transparent blur-3xl"
-                  animate={{
-                    scale: [0.95, 1.1, 0.95],
-                    opacity: [0.5, 0.35, 0.5],
-                  }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <motion.div
-                  className="absolute w-[32%] max-w-[320px] aspect-square rounded-full bg-emerald-400/40 blur-[120px]"
-                  animate={{
-                    scale: [0.9, 1.05, 0.9],
-                    opacity: [0.6, 0.4, 0.6],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.5,
-                  }}
-                />
-                <Image
-                  src={centerIcon}
-                  alt={centerIconAlt || "Product Icon"}
-                  width={640}
-                  height={640}
-                  className="w-[40%] md:w-[35%] lg:w-[30%] xl:w-[28%] h-auto drop-shadow-[0_10px_40px_rgba(0,255,170,0.35)]"
-                  priority
-                />
+          {/* Product Halo Section - Positioned on top of grid floor */}
+          <div className="relative z-20 flex justify-center items-center -mt-8 md:-mt-12 lg:-mt-16">
+            <InteractiveProductIconHalo scale={1.0} intensity="high">
+              <div className="w-24 h-24 bg-black/50 backdrop-blur-md rounded-2xl border border-emerald-500/30 p-4 flex items-center justify-center shadow-2xl">
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 17L12 22L22 17" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 12L12 17L22 12" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </div>
-            )}
+            </InteractiveProductIconHalo>
           </div>
         </div>
       </div>
     </section>
   );
 }
-

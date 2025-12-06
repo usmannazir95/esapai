@@ -1,10 +1,12 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 /**
  * Advanced SVG-based loading animation
- * Perfect for loading states, can replace or enhance existing spinners
+ * Migrated from Motion to GSAP for better performance
  */
 
 interface AnimatedSVGLoaderProps {
@@ -32,6 +34,41 @@ export function AnimatedSVGLoader({
 }: AnimatedSVGLoaderProps) {
   const dimension = sizeMap[size];
   const color = colorMap[variant];
+  const outerRingRef = useRef<SVGCircleElement>(null);
+  const innerCircleRef = useRef<SVGCircleElement>(null);
+  const centerDotRef = useRef<SVGCircleElement>(null);
+
+  useGSAP(() => {
+    // Outer rotating ring
+    gsap.to(outerRingRef.current, {
+      rotation: 360,
+      duration: 1.5,
+      repeat: -1,
+      ease: "none",
+      transformOrigin: "50% 50%",
+    });
+
+    // Inner pulsing circle
+    gsap.to(innerCircleRef.current, {
+      scale: 1.2,
+      opacity: 0.8,
+      duration: 0.75,
+      repeat: -1,
+      yoyo: true,
+      ease: "power2.inOut",
+      transformOrigin: "50% 50%",
+    });
+
+    // Center dot
+    gsap.to(centerDotRef.current, {
+      scale: 1.3,
+      duration: 0.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "power2.inOut",
+      transformOrigin: "50% 50%",
+    });
+  });
 
   return (
     <div className={`inline-flex items-center justify-center ${className}`}>
@@ -56,7 +93,8 @@ export function AnimatedSVGLoader({
         </defs>
 
         {/* Outer rotating ring */}
-        <motion.circle
+        <circle
+          ref={outerRingRef}
           cx="50"
           cy="50"
           r="40"
@@ -67,19 +105,11 @@ export function AnimatedSVGLoader({
           strokeDasharray="125.6"
           strokeDashoffset="94.2"
           filter={`url(#glow-${variant})`}
-          animate={{
-            rotate: 360,
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{ transformOrigin: "50% 50%" }}
         />
 
         {/* Inner pulsing circle */}
-        <motion.circle
+        <circle
+          ref={innerCircleRef}
           cx="50"
           cy="50"
           r="20"
@@ -87,31 +117,15 @@ export function AnimatedSVGLoader({
           stroke={color}
           strokeWidth="3"
           strokeOpacity="0.5"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         />
 
         {/* Center dot */}
-        <motion.circle
+        <circle
+          ref={centerDotRef}
           cx="50"
           cy="50"
           r="4"
           fill={color}
-          animate={{
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         />
       </svg>
     </div>
@@ -128,40 +142,54 @@ export function SVGPathLoader({
 }: AnimatedSVGLoaderProps) {
   const dimension = sizeMap[size];
   const color = colorMap[variant];
+  const pathRef = useRef<SVGPathElement>(null);
+  const circleRef = useRef<SVGCircleElement>(null);
 
   const pathData = "M 20,50 Q 50,20 80,50 T 80,50";
+
+  useGSAP(() => {
+    // Path drawing animation
+    gsap.fromTo(
+      pathRef.current,
+      { strokeDashoffset: 200, opacity: 0 },
+      {
+        strokeDashoffset: 0,
+        opacity: 1,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "power2.inOut",
+      }
+    );
+
+    // Circle movement along path
+    gsap.to(circleRef.current, {
+      x: 60,
+      duration: 0.75,
+      repeat: -1,
+      yoyo: true,
+      ease: "power2.inOut",
+    });
+  });
 
   return (
     <div className={`inline-flex items-center justify-center ${className}`}>
       <svg width={dimension} height={dimension} viewBox="0 0 100 100">
-        <motion.path
+        <path
+          ref={pathRef}
           d={pathData}
           fill="none"
           stroke={color}
           strokeWidth="4"
           strokeLinecap="round"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
+          strokeDasharray="200"
         />
-        <motion.circle
+        <circle
+          ref={circleRef}
           cx="20"
           cy="50"
           r="4"
           fill={color}
-          animate={{
-            x: [0, 60, 0],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         />
       </svg>
     </div>
@@ -178,42 +206,37 @@ export function MorphingLoader({
 }: AnimatedSVGLoaderProps) {
   const dimension = sizeMap[size];
   const color = colorMap[variant];
+  const pathRef = useRef<SVGPathElement>(null);
 
   const shapes = {
     circle: "M 50,50 m -30,0 a 30,30 0 1,0 60,0 a 30,30 0 1,0 -60,0",
-    triangle:
-      "M 50,20 L 80,70 L 20,70 Z",
+    triangle: "M 50,20 L 80,70 L 20,70 Z",
     square: "M 30,30 L 70,30 L 70,70 L 30,70 Z",
-    hexagon:
-      "M 50,20 L 75,35 L 75,65 L 50,80 L 25,65 L 25,35 Z",
+    hexagon: "M 50,20 L 75,35 L 75,65 L 50,80 L 25,65 L 25,35 Z",
   };
+
+  useGSAP(() => {
+    const timeline = gsap.timeline({ repeat: -1 });
+    
+    timeline
+      .to(pathRef.current, { attr: { d: shapes.triangle }, duration: 0.5, ease: "power2.inOut" })
+      .to(pathRef.current, { attr: { d: shapes.square }, duration: 0.5, ease: "power2.inOut" })
+      .to(pathRef.current, { attr: { d: shapes.hexagon }, duration: 0.5, ease: "power2.inOut" })
+      .to(pathRef.current, { attr: { d: shapes.circle }, duration: 0.5, ease: "power2.inOut" });
+  });
 
   return (
     <div className={`inline-flex items-center justify-center ${className}`}>
       <svg width={dimension} height={dimension} viewBox="0 0 100 100">
-        <motion.path
+        <path
+          ref={pathRef}
           d={shapes.circle}
           fill={color}
           fillOpacity="0.3"
           stroke={color}
           strokeWidth="2"
-          animate={{
-            d: [
-              shapes.circle,
-              shapes.triangle,
-              shapes.square,
-              shapes.hexagon,
-              shapes.circle,
-            ],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         />
       </svg>
     </div>
   );
 }
-

@@ -130,6 +130,7 @@ export function Hero() {
           height={480}
           className="max-w-[1200px] xl:max-w-[1400px] w-auto h-auto opacity-60 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.2)]"
           priority
+          sizes="(max-width: 1280px) 100vw, 1400px"
         />
       </div>
 
