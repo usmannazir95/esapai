@@ -167,7 +167,7 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
         gl={{ antialias: false, alpha: true, toneMapping: THREE.ReinhardToneMapping, toneMappingExposure: 1.1 }}
         style={{ background: "transparent" }}
       >
-        <PerspectiveCamera makeDefault position={[0, 14, 28]} fov={65} />
+        <PerspectiveCamera makeDefault position={[0, 14, 32]} fov={67} />
         <OrbitControls
           enablePan={false}
           maxPolarAngle={Math.PI / 2 - 0.1}
