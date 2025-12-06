@@ -169,8 +169,8 @@ const GridFloor: React.FC<GridFloorProps> = ({ className = "", perspective = 'no
         
         <InstancedGrid mousePos={mousePos} />
         
-        {/* Fog to hide the grid edge */}
-        <fog attach="fog" args={['#000000', 5, 25]} />
+        {/* Fog to hide the grid edge - match background color */}
+        <fog attach="fog" args={['#000300', 4, 24]} />
         <Environment preset="city" />
       </Canvas>
     </div>
