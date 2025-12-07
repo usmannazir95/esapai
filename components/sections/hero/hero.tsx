@@ -1,12 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import FramerBackdrop from "./framer";
 import Circle from "./circle";
+import gsap from "gsap";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -18,8 +21,15 @@ export function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
+  const continuousAnimationsRef = useRef<gsap.core.Tween[]>([]);
 
   const anim = useGSAPAnimations(sectionRef);
+  
+  // Intersection observer to pause animations when off-screen
+  const { ref: intersectionRef, isInView } = useIntersectionAnimation({
+    threshold: 0.1,
+    rootMargin: "100px",
+  });
 
   useGSAP(() => {
     const tl = anim.createTimeline();
@@ -81,20 +91,62 @@ export function Hero() {
       );
 
     // Continuous animations (start after entrance sequence completes)
-    if (circleContainerRef.current) {
-      anim.breathing(circleContainerRef.current, { delay: 0.8 });
+    // Only if not reduced motion (viewport visibility handled by useEffect)
+    if (!prefersReducedMotion()) {
+      if (circleContainerRef.current) {
+        const breathingTween = anim.breathing(circleContainerRef.current, { delay: 0.8 });
+        if (breathingTween) {
+          breathingTween.paused(!isInView); // Start paused if not in view
+          continuousAnimationsRef.current.push(breathingTween);
+        }
+      }
+      if (circleGlowRef.current) {
+        const glowTween = anim.glow(circleGlowRef.current, { delay: 0.8 });
+        if (glowTween) {
+          glowTween.paused(!isInView); // Start paused if not in view
+          continuousAnimationsRef.current.push(glowTween);
+        }
+      }
+      // Animate the icons container (box.svg)
+      if (iconsRef.current) {
+        const floatTween = anim.float(iconsRef.current, { delay: 0.8 });
+        if (floatTween) {
+          floatTween.paused(!isInView); // Start paused if not in view
+          continuousAnimationsRef.current.push(floatTween);
+        }
+      }
     }
-    if (circleGlowRef.current) {
-      anim.glow(circleGlowRef.current, { delay: 0.8 });
-    }
-    // Animate the icons container
-    if (iconsRef.current) {
-      anim.float(iconsRef.current, { delay: 0.8 });
-    }
+    
+    // Cleanup function
+    return () => {
+      continuousAnimationsRef.current.forEach(tween => {
+        if (tween) tween.kill();
+      });
+      continuousAnimationsRef.current = [];
+    };
   }, { scope: sectionRef });
+  
+  // Pause/resume animations based on viewport visibility
+  useEffect(() => {
+    if (!isInView || prefersReducedMotion()) {
+      continuousAnimationsRef.current.forEach(tween => {
+        if (tween) tween.pause();
+      });
+    } else {
+      continuousAnimationsRef.current.forEach(tween => {
+        if (tween) tween.resume();
+      });
+    }
+  }, [isInView]);
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-screen flex items-start md:items-center justify-center overflow-hidden pb-0 md:pb-32 pt-24 md:pt-0">
+    <section 
+      ref={(el) => {
+        sectionRef.current = el;
+        intersectionRef.current = el;
+      }} 
+      className="relative w-full min-h-screen flex items-start md:items-center justify-center overflow-hidden pb-0 md:pb-32 pt-24 md:pt-0"
+    >
       <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden">
         <div
           ref={backdropRef}

@@ -1,14 +1,16 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useInView } from "motion/react";
 import { Canvas } from "@react-three/fiber";
 import { SectionHeader } from "@/components/ui/section-header";
 import { ServiceItem } from "@/components/ui/service-item";
 import dynamic from "next/dynamic";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
 const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
   ssr: false,
@@ -17,11 +19,54 @@ const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
 
 export function Service() {
   const ellipseRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const rotationAnimationRef = useRef<gsap.core.Tween | null>(null);
+  
+  // Intersection observer to pause animations when off-screen
+  const isInView = useInView(sectionRef, { amount: 0.1, margin: "100px" });
 
-  // Removed rotation animation for cleaner presentation
+  // Continuous circular rotation animation for the ellipse ring
+  useGSAP(() => {
+    if (prefersReducedMotion()) return;
+    
+    if (!ellipseRef.current) return;
+    
+    // Set transform origin to center for proper rotation
+    gsap.set(ellipseRef.current, { transformOrigin: "50% 50%" });
+    
+    // Continuous 360-degree rotation
+    const rotationTween = gsap.to(ellipseRef.current, {
+      rotation: 360,
+      duration: 20, // Slow, smooth rotation (20 seconds for full circle)
+      ease: "none", // Linear rotation for consistent speed
+      repeat: -1, // Infinite loop
+      paused: !isInView, // Start paused if not in view
+    });
+    
+    rotationAnimationRef.current = rotationTween;
+    
+    // Cleanup function
+    return () => {
+      if (rotationAnimationRef.current) {
+        rotationAnimationRef.current.kill();
+        rotationAnimationRef.current = null;
+      }
+    };
+  }, { scope: ellipseRef, dependencies: [isInView] });
+  
+  // Pause/resume rotation based on viewport visibility
+  useEffect(() => {
+    if (!rotationAnimationRef.current) return;
+    
+    if (!isInView || prefersReducedMotion()) {
+      rotationAnimationRef.current.pause();
+    } else {
+      rotationAnimationRef.current.resume();
+    }
+  }, [isInView]);
 
   return (
-    <section className="relative w-full py-12 sm:py-16 md:py-20 px-4 overflow-hidden bg-dark render-optimized">
+    <section ref={sectionRef} className="relative w-full pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10 px-4 overflow-hidden bg-dark render-optimized">
       <div className="relative container mx-auto max-w-7xl z-10">
         <SectionHeader
           title="AI Services & Solutions"

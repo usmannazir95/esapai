@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
 /**
  * Advanced SVG-based loading animation
@@ -37,19 +38,26 @@ export function AnimatedSVGLoader({
   const outerRingRef = useRef<SVGCircleElement>(null);
   const innerCircleRef = useRef<SVGCircleElement>(null);
   const centerDotRef = useRef<SVGCircleElement>(null);
+  const animationsRef = useRef<gsap.core.Tween[]>([]);
 
   useGSAP(() => {
+    // Respect reduced motion
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     // Outer rotating ring
-    gsap.to(outerRingRef.current, {
+    const ringTween = gsap.to(outerRingRef.current, {
       rotation: 360,
       duration: 1.5,
       repeat: -1,
       ease: "none",
       transformOrigin: "50% 50%",
     });
+    animationsRef.current.push(ringTween);
 
     // Inner pulsing circle
-    gsap.to(innerCircleRef.current, {
+    const circleTween = gsap.to(innerCircleRef.current, {
       scale: 1.2,
       opacity: 0.8,
       duration: 0.75,
@@ -58,9 +66,10 @@ export function AnimatedSVGLoader({
       ease: "power2.inOut",
       transformOrigin: "50% 50%",
     });
+    animationsRef.current.push(circleTween);
 
     // Center dot
-    gsap.to(centerDotRef.current, {
+    const dotTween = gsap.to(centerDotRef.current, {
       scale: 1.3,
       duration: 0.5,
       repeat: -1,
@@ -68,7 +77,25 @@ export function AnimatedSVGLoader({
       ease: "power2.inOut",
       transformOrigin: "50% 50%",
     });
+    animationsRef.current.push(dotTween);
+    
+    // Cleanup
+    return () => {
+      animationsRef.current.forEach(tween => {
+        if (tween) tween.kill();
+      });
+      animationsRef.current = [];
+    };
   });
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      animationsRef.current.forEach(tween => {
+        if (tween) tween.kill();
+      });
+    };
+  }, []);
 
   return (
     <div className={`inline-flex items-center justify-center ${className}`}>
@@ -144,12 +171,18 @@ export function SVGPathLoader({
   const color = colorMap[variant];
   const pathRef = useRef<SVGPathElement>(null);
   const circleRef = useRef<SVGCircleElement>(null);
+  const animationsRef = useRef<gsap.core.Tween[]>([]);
 
   const pathData = "M 20,50 Q 50,20 80,50 T 80,50";
 
   useGSAP(() => {
+    // Respect reduced motion
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     // Path drawing animation
-    gsap.fromTo(
+    const pathTween = gsap.fromTo(
       pathRef.current,
       { strokeDashoffset: 200, opacity: 0 },
       {
@@ -161,16 +194,35 @@ export function SVGPathLoader({
         ease: "power2.inOut",
       }
     );
+    animationsRef.current.push(pathTween);
 
     // Circle movement along path
-    gsap.to(circleRef.current, {
+    const circleTween = gsap.to(circleRef.current, {
       x: 60,
       duration: 0.75,
       repeat: -1,
       yoyo: true,
       ease: "power2.inOut",
     });
+    animationsRef.current.push(circleTween);
+    
+    // Cleanup
+    return () => {
+      animationsRef.current.forEach(tween => {
+        if (tween) tween.kill();
+      });
+      animationsRef.current = [];
+    };
   });
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      animationsRef.current.forEach(tween => {
+        if (tween) tween.kill();
+      });
+    };
+  }, []);
 
   return (
     <div className={`inline-flex items-center justify-center ${className}`}>
@@ -207,6 +259,7 @@ export function MorphingLoader({
   const dimension = sizeMap[size];
   const color = colorMap[variant];
   const pathRef = useRef<SVGPathElement>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   const shapes = {
     circle: "M 50,50 m -30,0 a 30,30 0 1,0 60,0 a 30,30 0 1,0 -60,0",
@@ -216,14 +269,36 @@ export function MorphingLoader({
   };
 
   useGSAP(() => {
-    const timeline = gsap.timeline({ repeat: -1 });
+    // Respect reduced motion
+    if (prefersReducedMotion()) {
+      return;
+    }
+
+    timelineRef.current = gsap.timeline({ repeat: -1 });
     
-    timeline
+    timelineRef.current
       .to(pathRef.current, { attr: { d: shapes.triangle }, duration: 0.5, ease: "power2.inOut" })
       .to(pathRef.current, { attr: { d: shapes.square }, duration: 0.5, ease: "power2.inOut" })
       .to(pathRef.current, { attr: { d: shapes.hexagon }, duration: 0.5, ease: "power2.inOut" })
       .to(pathRef.current, { attr: { d: shapes.circle }, duration: 0.5, ease: "power2.inOut" });
+    
+    // Cleanup
+    return () => {
+      if (timelineRef.current) {
+        timelineRef.current.kill();
+        timelineRef.current = null;
+      }
+    };
   });
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (timelineRef.current) {
+        timelineRef.current.kill();
+      }
+    };
+  }, []);
 
   return (
     <div className={`inline-flex items-center justify-center ${className}`}>

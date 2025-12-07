@@ -3,6 +3,8 @@
 import React, { useRef, useEffect, useState, useCallback, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { lerp, randomRange } from '@/lib/utils/animation';
+import { prefersReducedMotion } from '@/lib/utils/performance-utils';
+import { useIntersectionAnimation } from '@/lib/hooks/use-intersection-animation';
 
 interface InteractiveProductIconHaloProps {
   children: React.ReactNode;
@@ -93,10 +95,43 @@ export const InteractiveProductIconHalo: React.FC<InteractiveProductIconHaloProp
   const mouseRef = useRef({ x: 0, y: 0, rawX: 0, rawY: 0 });
   const targetMouseRef = useRef({ x: 0, y: 0 });
   const animationFrameRef = useRef<number>(0);
+  const isAnimatingRef = useRef(true);
+  const lastFrameTimeRef = useRef(0);
+  const targetFPS = 60;
+  const frameInterval = 1000 / targetFPS;
+
+  // Intersection observer to pause animations when off-screen
+  const { ref: intersectionRef, isInView } = useIntersectionAnimation({
+    threshold: 0.1,
+    rootMargin: "50px",
+    onVisible: () => {
+      isAnimatingRef.current = true;
+    },
+    onHidden: () => {
+      isAnimatingRef.current = false;
+    },
+  });
 
   // --- Animation Loop ---
-  const animate = useCallback(() => {
-    if (!containerRef.current) return;
+  const animate = useCallback((currentTime: number) => {
+    if (!containerRef.current || !isAnimatingRef.current) {
+      animationFrameRef.current = requestAnimationFrame(animate);
+      return;
+    }
+
+    // Throttle to target FPS
+    const elapsed = currentTime - lastFrameTimeRef.current;
+    if (elapsed < frameInterval) {
+      animationFrameRef.current = requestAnimationFrame(animate);
+      return;
+    }
+    lastFrameTimeRef.current = currentTime - (elapsed % frameInterval);
+
+    // Respect reduced motion
+    if (prefersReducedMotion()) {
+      animationFrameRef.current = requestAnimationFrame(animate);
+      return;
+    }
 
     // Smooth Mouse Interpolation
     mouseRef.current.x = lerp(mouseRef.current.x, targetMouseRef.current.x, 0.1);
@@ -110,12 +145,14 @@ export const InteractiveProductIconHalo: React.FC<InteractiveProductIconHaloProp
         x: mx * 1.2,
         y: my * 1.2,
         opacity: 0.2,
+        force3D: true, // GPU acceleration
       });
       gsap.set(cursorGlowRef.current, {
         x: mx,
         y: my,
         scale: 1,
         opacity: 0.1,
+        force3D: true, // GPU acceleration
       });
     }
 
@@ -129,6 +166,7 @@ export const InteractiveProductIconHalo: React.FC<InteractiveProductIconHaloProp
         rotateY: rotateY,
         x: mx * 0.05,
         y: my * 0.05,
+        force3D: true, // GPU acceleration
       });
     }
 
@@ -139,6 +177,7 @@ export const InteractiveProductIconHalo: React.FC<InteractiveProductIconHaloProp
         y: my * 0.08,
         scale: 1,
         filter: `drop-shadow(0 0 5px rgba(19, 245, 132, 0.1))`,
+        force3D: true, // GPU acceleration
       });
     }
 
@@ -147,12 +186,15 @@ export const InteractiveProductIconHalo: React.FC<InteractiveProductIconHaloProp
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      lastFrameTimeRef.current = performance.now();
       animationFrameRef.current = requestAnimationFrame(animate);
     }, containerRef);
 
     return () => {
       ctx.revert();
-      cancelAnimationFrame(animationFrameRef.current);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
   }, [animate]);
 
@@ -215,9 +257,16 @@ export const InteractiveProductIconHalo: React.FC<InteractiveProductIconHaloProp
 
   return (
     <div
-      ref={containerRef}
+      ref={(el) => {
+        containerRef.current = el;
+        intersectionRef.current = el;
+      }}
       className={`relative flex items-center justify-center cursor-pointer select-none ${className}`}
-      style={{ width: `${300 * scale}px`, height: `${300 * scale}px` }}
+      style={{ 
+        width: `${300 * scale}px`, 
+        height: `${300 * scale}px`,
+        willChange: prefersReducedMotion() ? 'auto' : 'transform',
+      }}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => {
         targetMouseRef.current = { x: 0, y: 0 };

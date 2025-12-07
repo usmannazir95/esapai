@@ -43,6 +43,7 @@ export const BackgroundRippleEffect = ({
             setRippleKey((k) => k + 1);
           }}
           interactive
+          style={{ willChange: 'transform' }}
         />
       </div>
     </div>

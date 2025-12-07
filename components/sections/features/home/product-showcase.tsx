@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 export function ProductShowcase() {
   // Show all products in the suite
   return (
-    <Section background="dark" padding="md">
+    <Section background="dark" padding="md" className="pt-6 sm:pt-8 md:pt-10">
       <SectionHeader
         title="Our Product Suite"
         subtitle="Discover our comprehensive range of AI-powered solutions designed to transform your business operations and drive innovation."

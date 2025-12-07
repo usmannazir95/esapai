@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Frame from "@/components/sections/shared/frame";
 import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
-import GridFloor from "@/components/sections/shared/grid-floor";
+import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
+import GridFloorWrapper from "@/components/sections/shared/grid-floor-wrapper";
 
 interface ProductHeroProps {
   title: string;
@@ -16,11 +17,23 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
     <section className="relative overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
       {/* Background Layers */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        {/* Grid Floor with seamless edge fade */}
+        {/* Grid Floor with seamless edge fade - Lazy loaded */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-full h-full max-h-[80vh] relative overflow-hidden">
             <div className="w-full h-full pointer-events-auto">
-              <GridFloor className="opacity-60" perspective="dramatic" />
+              <LazyThreeWrapper
+                fallback={
+                  <div 
+                    className="w-full h-full opacity-60"
+                    style={{ 
+                      backgroundColor: 'transparent',
+                      minHeight: '400px', // Prevent layout shift
+                    }}
+                  />
+                }
+              >
+                <GridFloorWrapper className="opacity-60" perspective="dramatic" />
+              </LazyThreeWrapper>
             </div>
             {/* Center radial fade - fades from center outward */}
             <div 

@@ -1,8 +1,10 @@
 import * as React from "react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useInView } from "motion/react";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
 const SVGComponent = (props: React.SVGProps<SVGSVGElement>) => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -11,8 +13,12 @@ const SVGComponent = (props: React.SVGProps<SVGSVGElement>) => {
   const circle2Ref = useRef<SVGCircleElement>(null);
   const sweepRectRef = useRef<SVGRectElement>(null);
   const pathsGroupRef = useRef<SVGGElement>(null);
+  const continuousAnimationsRef = useRef<(gsap.core.Tween | gsap.core.Timeline)[]>([]);
 
   const anim = useGSAPAnimations(svgRef);
+  
+  // Intersection observer to pause animations when off-screen
+  const isInView = useInView(svgRef, { amount: 0.1, margin: "100px" });
 
   useGSAP(() => {
     const tl = anim.createTimeline();
@@ -38,86 +44,157 @@ const SVGComponent = (props: React.SVGProps<SVGSVGElement>) => {
     }
 
     // Continuous floating animation - smooth, organic floating effect
-    const floatDelay = 1.5;
-    
-    gsap.to(mainGroupRef.current, {
-      y: -8,
-      x: 10,
-      duration: 5,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      delay: floatDelay,
-    });
-    
-    gsap.to(mainGroupRef.current, {
-      rotation: 1,
-      duration: 6,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      delay: floatDelay,
-    });
-    
-    gsap.to(mainGroupRef.current, {
-      scale: 1.01,
-      duration: 4.5,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      delay: floatDelay,
-    });
-
-    // Continuous looping animations - always active and lively
-    if (circle1Ref.current) {
-      anim.animateSVGCircle(circle1Ref.current, {
-        r: { from: 300, to: 380 },
-        cx: { from: 320, to: 420 },
-        cy: { from: 100, to: 80 },
-        opacity: { from: 0.4, to: 0.75 },
-        rotation: { from: -8, to: 6, origin: "360px 110px" },
-        duration: 3.5,
+    // Only if not reduced motion (viewport visibility handled by useEffect)
+    if (!prefersReducedMotion()) {
+      const floatDelay = 1.5;
+      
+      const floatYTween = gsap.to(mainGroupRef.current, {
+        y: -8,
+        x: 10,
+        duration: 5,
+        ease: "sine.inOut",
         repeat: -1,
         yoyo: true,
-        ease: "sine.inOut",
+        delay: floatDelay,
+        paused: !isInView, // Start paused if not in view
       });
-    }
-
-    if (circle2Ref.current) {
-      anim.animateSVGCircle(circle2Ref.current, {
-        r: { from: 200, to: 270 },
-        cx: { from: 480, to: 570 },
-        cy: { from: 220, to: 160 },
-        opacity: { from: 0.3, to: 0.6 },
-        rotation: { from: 5, to: -7, origin: "520px 220px" },
-        duration: 2.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-    }
-
-    if (sweepRectRef.current) {
-      anim.animateSVGRect(sweepRectRef.current, {
-        x: { from: -400, to: 200 },
-        opacity: { from: 0.1, to: 0.4 },
+      continuousAnimationsRef.current.push(floatYTween);
+      
+      const rotationTween = gsap.to(mainGroupRef.current, {
+        rotation: 1,
         duration: 6,
+        ease: "sine.inOut",
         repeat: -1,
         yoyo: true,
+        delay: floatDelay,
+        paused: !isInView, // Start paused if not in view
+      });
+      continuousAnimationsRef.current.push(rotationTween);
+      
+      const scaleTween = gsap.to(mainGroupRef.current, {
+        scale: 1.01,
+        duration: 4.5,
         ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        delay: floatDelay,
+        paused: !isInView, // Start paused if not in view
       });
-    }
+      continuousAnimationsRef.current.push(scaleTween);
 
-    if (pathsGroupRef.current) {
-      const gradientPaths = pathsGroupRef.current.querySelectorAll("path");
-      anim.animateGradientPaths(gradientPaths, {
-        count: 20,
-        opacityRange: [0.7, 1.0],
-        durationRange: [1.5, 3.5],
-        stagger: 0.1,
+      // Continuous looping animations - circle and box (sweepRect) animations
+      if (circle1Ref.current) {
+        const circle1Timeline = gsap.timeline({ repeat: -1, yoyo: true, paused: !isInView });
+        
+        circle1Timeline
+          .to(circle1Ref.current, {
+            attr: { r: 380 },
+            duration: 3.5,
+            ease: "sine.inOut",
+          })
+          .to(circle1Ref.current, {
+            attr: { cx: 420, cy: 80 },
+            duration: 3.5 * 1.4,
+            ease: "sine.inOut",
+          }, "<")
+          .to(circle1Ref.current, {
+            opacity: 0.75,
+            duration: 3.5 * 0.9,
+            ease: "sine.inOut",
+          }, "<")
+          .to(circle1Ref.current, {
+            rotation: 6,
+            transformOrigin: "360px 110px",
+            duration: 3.5 * 2,
+            ease: "sine.inOut",
+          }, "<");
+        
+        continuousAnimationsRef.current.push(circle1Timeline);
+      }
+
+      if (circle2Ref.current) {
+        const circle2Timeline = gsap.timeline({ repeat: -1, yoyo: true, paused: !isInView });
+        
+        circle2Timeline
+          .to(circle2Ref.current, {
+            attr: { r: 270 },
+            duration: 2.8,
+            ease: "sine.inOut",
+          })
+          .to(circle2Ref.current, {
+            attr: { cx: 570, cy: 160 },
+            duration: 2.8 * 1.4,
+            ease: "sine.inOut",
+          }, "<")
+          .to(circle2Ref.current, {
+            opacity: 0.6,
+            duration: 2.8 * 0.9,
+            ease: "sine.inOut",
+          }, "<")
+          .to(circle2Ref.current, {
+            rotation: -7,
+            transformOrigin: "520px 220px",
+            duration: 2.8 * 2,
+            ease: "sine.inOut",
+          }, "<");
+        
+        continuousAnimationsRef.current.push(circle2Timeline);
+      }
+
+      if (sweepRectRef.current) {
+        const sweepTween = gsap.fromTo(
+          sweepRectRef.current,
+          { x: -400, opacity: 0.1 },
+          {
+            x: 200,
+            opacity: 0.4,
+            duration: 6,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            paused: !isInView,
+          }
+        );
+        
+        continuousAnimationsRef.current.push(sweepTween);
+      }
+
+      if (pathsGroupRef.current) {
+        const gradientPaths = pathsGroupRef.current.querySelectorAll("path");
+        const gradientTween = anim.animateGradientPaths(gradientPaths, {
+          count: 20,
+          opacityRange: [0.7, 1.0],
+          durationRange: [1.5, 3.5],
+          stagger: 0.1,
+        });
+        if (gradientTween) {
+          gradientTween.paused(!isInView); // Start paused if not in view
+          continuousAnimationsRef.current.push(gradientTween);
+        }
+      }
+    }
+    
+    // Cleanup function
+    return () => {
+      continuousAnimationsRef.current.forEach(tween => {
+        if (tween) tween.kill();
+      });
+      continuousAnimationsRef.current = [];
+    };
+  }, { scope: svgRef });
+  
+  // Pause/resume animations based on viewport visibility
+  useEffect(() => {
+    if (!isInView || prefersReducedMotion()) {
+      continuousAnimationsRef.current.forEach(tween => {
+        if (tween) tween.pause();
+      });
+    } else {
+      continuousAnimationsRef.current.forEach(tween => {
+        if (tween) tween.resume();
       });
     }
-  }, { scope: svgRef });
+  }, [isInView]);
 
   return (
     <svg
@@ -127,6 +204,7 @@ const SVGComponent = (props: React.SVGProps<SVGSVGElement>) => {
       viewBox="0 0 870 592"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ willChange: prefersReducedMotion() ? 'auto' : 'transform' }}
       {...props}
     >
     <g ref={mainGroupRef} className="gsap-fade-in" clipPath="url(#clip0_34_55175)">
