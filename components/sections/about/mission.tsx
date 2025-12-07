@@ -38,7 +38,7 @@ export function Mission({
   cards = defaultCards,
 }: MissionProps = {}) {
   return (
-    <Section>
+    <Section className="pb-6 sm:pb-8 md:pb-10">
       <SectionHeader title={title} subtitle={subtitle} />
 
       {/* Mission Cards - Responsive Grid */}

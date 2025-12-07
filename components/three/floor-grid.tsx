@@ -3,6 +3,7 @@
 import React, { useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { getPerformanceTier, getAdaptiveQuality, createFrameThrottle } from "@/lib/utils/performance-utils";
 
 interface GridUniforms {
   uTime: { value: number };
@@ -71,6 +72,11 @@ const fragmentShader = `
 const FloorGrid: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const { mouse } = useThree();
+  
+  // Performance optimizations
+  const performanceTier = useMemo(() => getPerformanceTier(), []);
+  const quality = useMemo(() => getAdaptiveQuality(performanceTier), [performanceTier]);
+  const throttleFrame = useMemo(() => createFrameThrottle(quality.maxFPS), [quality.maxFPS]);
 
   const uniforms = useMemo<GridUniforms>(
     () => ({
@@ -83,6 +89,9 @@ const FloorGrid: React.FC = () => {
 
   useFrame((state) => {
     if (!meshRef.current) return;
+    
+    // Throttle frame updates based on performance tier
+    if (!throttleFrame(() => {})) return;
 
     (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
       state.clock.getElapsedTime();

@@ -1,15 +1,21 @@
 import * as React from "react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useInView } from "motion/react";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
 const Frame = (props: React.SVGProps<SVGSVGElement>) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const mainGroupRef = useRef<SVGGElement>(null);
   const pathsGroupRef = useRef<SVGGElement>(null);
+  const continuousAnimationsRef = useRef<(gsap.core.Tween | gsap.core.Timeline)[]>([]);
 
   const anim = useGSAPAnimations(svgRef);
+  
+  // Intersection observer to pause animations when off-screen
+  const isInView = useInView(svgRef, { amount: 0.1, margin: "100px" });
 
   useGSAP(() => {
     const tl = anim.createTimeline();
@@ -34,82 +40,117 @@ const Frame = (props: React.SVGProps<SVGSVGElement>) => {
     }
 
     // Continuous floating animation - smooth, organic floating effect with multiple layers
-    const floatDelay = 1.5;
-    
-    // Set transform origin for smooth rotations
-    gsap.set(mainGroupRef.current, { transformOrigin: "50% 50%" });
-    
-    // Create a complex floating timeline with figure-8 pattern
-    const floatTimeline = gsap.timeline({ 
-      repeat: -1, 
-      delay: floatDelay,
-      ease: "sine.inOut"
-    });
-    
-    // Figure-8 floating pattern - creates a smooth, organic movement
-    floatTimeline
-      .to(mainGroupRef.current, {
-        y: -25,
-        x: 20,
-        duration: 3,
+    // Only if not reduced motion (viewport visibility is handled by useEffect)
+    if (!prefersReducedMotion()) {
+      const floatDelay = 1.5;
+      
+      // Set transform origin for smooth rotations
+      gsap.set(mainGroupRef.current, { transformOrigin: "50% 50%" });
+      
+      // Create a complex floating timeline with figure-8 pattern
+      const floatTimeline = gsap.timeline({ 
+        repeat: -1, 
+        delay: floatDelay,
         ease: "sine.inOut",
-      })
-      .to(mainGroupRef.current, {
-        y: -15,
-        x: -15,
-        duration: 3,
-        ease: "sine.inOut",
-      })
-      .to(mainGroupRef.current, {
-        y: -20,
-        x: -20,
-        duration: 3,
-        ease: "sine.inOut",
-      })
-      .to(mainGroupRef.current, {
-        y: -10,
-        x: 15,
-        duration: 3,
-        ease: "sine.inOut",
-      })
-      .to(mainGroupRef.current, {
-        y: 0,
-        x: 0,
-        duration: 2,
-        ease: "sine.inOut",
+        paused: !isInView, // Start paused if not in view
       });
-    
-    // Gentle rotation - more noticeable but still subtle
-    gsap.to(mainGroupRef.current, {
-      rotation: 3,
-      duration: 7,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      delay: floatDelay,
-    });
-    
-    // Breathing scale effect - makes it feel alive
-    gsap.to(mainGroupRef.current, {
-      scale: 1.04,
-      duration: 5,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      delay: floatDelay,
-    });
+      
+      // Figure-8 floating pattern - creates a smooth, organic movement
+      floatTimeline
+        .to(mainGroupRef.current, {
+          y: -25,
+          x: 20,
+          duration: 3,
+          ease: "sine.inOut",
+        })
+        .to(mainGroupRef.current, {
+          y: -15,
+          x: -15,
+          duration: 3,
+          ease: "sine.inOut",
+        })
+        .to(mainGroupRef.current, {
+          y: -20,
+          x: -20,
+          duration: 3,
+          ease: "sine.inOut",
+        })
+        .to(mainGroupRef.current, {
+          y: -10,
+          x: 15,
+          duration: 3,
+          ease: "sine.inOut",
+        })
+        .to(mainGroupRef.current, {
+          y: 0,
+          x: 0,
+          duration: 2,
+          ease: "sine.inOut",
+        });
+      
+      continuousAnimationsRef.current.push(floatTimeline);
+      
+      // Gentle rotation - more noticeable but still subtle
+      const rotationTween = gsap.to(mainGroupRef.current, {
+        rotation: 3,
+        duration: 7,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        delay: floatDelay,
+        paused: !isInView, // Start paused if not in view
+      });
+      continuousAnimationsRef.current.push(rotationTween);
+      
+      // Breathing scale effect - makes it feel alive
+      const scaleTween = gsap.to(mainGroupRef.current, {
+        scale: 1.04,
+        duration: 5,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        delay: floatDelay,
+        paused: !isInView, // Start paused if not in view
+      });
+      continuousAnimationsRef.current.push(scaleTween);
 
-    // Continuous looping animations for gradient paths
-    if (pathsGroupRef.current) {
-      const gradientPaths = pathsGroupRef.current.querySelectorAll("path");
-      anim.animateGradientPaths(gradientPaths, {
-        count: 33,
-        opacityRange: [0.5, 0.8],
-        durationRange: [2, 4],
-        stagger: 0.1,
+      // Continuous looping animations for gradient paths
+      if (pathsGroupRef.current) {
+        const gradientPaths = pathsGroupRef.current.querySelectorAll("path");
+        const gradientTween = anim.animateGradientPaths(gradientPaths, {
+          count: 33,
+          opacityRange: [0.5, 0.8],
+          durationRange: [2, 4],
+          stagger: 0.1,
+        });
+        if (gradientTween) {
+          gradientTween.paused(!isInView); // Start paused if not in view
+          continuousAnimationsRef.current.push(gradientTween);
+        }
+      }
+    }
+    
+    // Cleanup function
+    return () => {
+      continuousAnimationsRef.current.forEach(animation => {
+        if (animation) animation.kill();
+      });
+      continuousAnimationsRef.current = [];
+    };
+  }, { scope: svgRef });
+  
+  // Pause/resume animations based on viewport visibility
+  useEffect(() => {
+    if (!isInView || prefersReducedMotion()) {
+      continuousAnimationsRef.current.forEach(animation => {
+        if (animation) animation.pause();
+      });
+    } else {
+      continuousAnimationsRef.current.forEach(animation => {
+        if (animation) animation.resume();
       });
     }
-  }, { scope: svgRef });
+  }, [isInView]);
 
   return (
     <svg
@@ -119,6 +160,7 @@ const Frame = (props: React.SVGProps<SVGSVGElement>) => {
       viewBox="0 0 808 1117"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ willChange: prefersReducedMotion() ? 'auto' : 'transform' }}
       {...props}
     >
       <g clipPath="url(#clip0_204_154694)" filter="url(#filter0_d_204_154694)">

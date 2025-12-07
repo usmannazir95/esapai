@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { getPerformanceTier, getAdaptiveQuality } from "@/lib/utils/performance-utils";
 
 /**
  * Shared Three.js configuration for consistent setup across components
@@ -37,21 +38,26 @@ export const checkWebGLSupport = (): boolean => {
 
 /**
  * Get device performance tier for optimization
+ * Re-exported from performance-utils for backward compatibility
  */
-export const getPerformanceTier = (): "high" | "medium" | "low" => {
-  if (typeof window === "undefined") return "medium";
+export { getPerformanceTier };
+
+/**
+ * Get optimized Canvas props based on performance tier
+ */
+export const getOptimizedCanvasProps = () => {
+  const tier = getPerformanceTier();
+  const quality = getAdaptiveQuality(tier);
   
-  const hardwareConcurrency = navigator.hardwareConcurrency || 4;
-  const deviceMemory = (navigator as any).deviceMemory || 4;
-  const pixelRatio = window.devicePixelRatio || 1;
-  
-  if (hardwareConcurrency >= 8 && deviceMemory >= 8 && pixelRatio <= 2) {
-    return "high";
-  } else if (hardwareConcurrency >= 4 && deviceMemory >= 4) {
-    return "medium";
-  } else {
-    return "low";
-  }
+  return {
+    dpr: quality.dpr as [number, number],
+    gl: {
+      antialias: quality.antialias,
+      alpha: true,
+      powerPreference: "high-performance" as WebGLPowerPreference,
+    },
+    shadows: quality.shadows,
+  };
 };
 
 /**
@@ -59,10 +65,11 @@ export const getPerformanceTier = (): "high" | "medium" | "low" => {
  */
 export const createOptimizedRenderer = (container: HTMLElement): THREE.WebGLRenderer => {
   const tier = getPerformanceTier();
-  const pixelRatio = tier === "high" ? Math.min(window.devicePixelRatio, 2) : 1;
+  const quality = getAdaptiveQuality(tier);
+  const pixelRatio = quality.dpr[1];
   
   const renderer = new THREE.WebGLRenderer({
-    antialias: tier !== "low",
+    antialias: quality.antialias,
     alpha: true,
     powerPreference: "high-performance",
   });

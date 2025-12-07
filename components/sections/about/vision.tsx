@@ -7,6 +7,8 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import Robot from "@/components/sections/shared/robot";
 
 const ConcaveFloor = dynamic(() => import("@/components/sections/shared/concave-floor"), {
@@ -18,8 +20,15 @@ export function Vision() {
   const robotRef = useRef<HTMLDivElement>(null);
   const robotWrapperRef = useRef<HTMLDivElement>(null);
   const dotCircleContainerRef = useRef<HTMLDivElement>(null);
+  const cursorAnimationTweenRef = useRef<gsap.core.Tween | null>(null);
 
   const anim = useGSAPAnimations(sectionRef as React.RefObject<HTMLElement>);
+  
+  // Intersection observer to pause animations when off-screen
+  const { ref: intersectionRef, isInView } = useIntersectionAnimation({
+    threshold: 0.1,
+    rootMargin: "100px",
+  });
 
   useGSAP(() => {
     const tl = anim.createTimeline();
@@ -47,9 +56,10 @@ export function Vision() {
 
   }, { scope: sectionRef });
 
-  // Cursor follower effect for robot - Disabled on touch devices
+  // Cursor follower effect for robot - Disabled on touch devices and reduced motion
   useGSAP(() => {
     if (!robotWrapperRef.current || !sectionRef.current) return;
+    if (!isInView || prefersReducedMotion()) return;
 
     // Detect touch device
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -59,7 +69,6 @@ export function Vision() {
 
     const wrapper = robotWrapperRef.current;
     const section = sectionRef.current;
-    let animationTween: gsap.core.Tween | null = null;
 
     // Initialize GSAP transform values
     gsap.set(wrapper, {
@@ -69,6 +78,8 @@ export function Vision() {
     });
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (!isInView) return;
+      
       const rect = section.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -84,12 +95,12 @@ export function Vision() {
       const targetY = relativeY * maxMove;
 
       // Kill existing animation if running
-      if (animationTween) {
-        animationTween.kill();
+      if (cursorAnimationTweenRef.current) {
+        cursorAnimationTweenRef.current.kill();
       }
 
       // Use GSAP for smooth, eased animation with explicit transform properties
-      animationTween = gsap.to(wrapper, {
+      cursorAnimationTweenRef.current = gsap.to(wrapper, {
         x: targetX,
         y: targetY,
         duration: 0.6,
@@ -103,17 +114,24 @@ export function Vision() {
 
     return () => {
       section.removeEventListener("mousemove", handleMouseMove);
-      if (animationTween) {
-        animationTween.kill();
+      if (cursorAnimationTweenRef.current) {
+        cursorAnimationTweenRef.current.kill();
+        cursorAnimationTweenRef.current = null;
       }
       // Reset transform on cleanup
       gsap.set(wrapper, { x: 0, y: 0 });
     };
-  }, { scope: sectionRef, dependencies: [] });
+  }, { scope: sectionRef, dependencies: [isInView] });
 
   return (
-    <Section>
-      <div ref={sectionRef}>
+    <Section className="pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10">
+      <div 
+        ref={(el) => {
+          sectionRef.current = el;
+          intersectionRef.current = el;
+        }}
+        style={{ willChange: prefersReducedMotion() ? 'auto' : 'transform' }}
+      >
         <SectionHeader
           title="Our Vision"
           subtitle="We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes."
@@ -122,13 +140,13 @@ export function Vision() {
         {/* Scene Wrapper - Responsive */}
         <div className="relative w-full flex items-center justify-center py-6 sm:py-8 md:py-10">
           <div
-            className="relative w-full max-w-[1100px] aspect-square md:aspect-[1/1] lg:aspect-[1.2/1]"
+            className="relative w-full max-w-[1100px] aspect-square md:aspect-square lg:aspect-[1.2/1]"
           >
             {/* Concave Floor */}
             <div
               ref={dotCircleContainerRef}
-              className="absolute inset-0 gsap-fade-in-optimized"
-              style={{ mixBlendMode: "screen", opacity: 0 }}
+              className="absolute left-0 right-0 gsap-fade-in-optimized"
+              style={{ mixBlendMode: "screen", opacity: 0, top: "0%", height: "90%" }}
             >
               <ConcaveFloor intensity={1} className="absolute inset-0" />
             </div>
@@ -137,7 +155,7 @@ export function Vision() {
             <div
               ref={robotWrapperRef}
               className="absolute left-1/2 -translate-x-1/2 z-20 animate-optimized"
-              style={{ top: "-8%" }}
+              style={{ top: "5%" }}
             >
               <div
                 ref={robotRef}

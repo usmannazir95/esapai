@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState, useRef } from "react";
 import { useInView } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { getPerformanceTier } from "@/lib/utils/performance-utils";
 
 interface LazyThreeWrapperProps {
   children: React.ReactNode;
@@ -36,11 +37,27 @@ export function LazyThreeWrapper({
     }
   }, [isInView]);
 
-  const DefaultFallback = () => (
-    <div className="flex h-full w-full items-center justify-center bg-black/5">
-      <Loader2 className="h-8 w-8 animate-spin text-primary/50" />
-    </div>
-  );
+  const DefaultFallback = () => {
+    const tier = getPerformanceTier();
+    // Show simpler fallback for low-end devices
+    if (tier === "low") {
+      return (
+        <div 
+          className="flex h-full w-full items-center justify-center bg-black/5"
+          style={{ minHeight: '400px' }} // Prevent layout shift
+        />
+      );
+    }
+    
+    return (
+      <div 
+        className="flex h-full w-full items-center justify-center bg-black/5"
+        style={{ minHeight: '400px' }} // Prevent layout shift
+      >
+        <Loader2 className="h-8 w-8 animate-spin text-primary/50" />
+      </div>
+    );
+  };
 
   return (
     <div ref={ref} className={cn("relative h-full w-full", className)}>

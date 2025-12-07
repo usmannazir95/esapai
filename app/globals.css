@@ -1003,6 +1003,30 @@
     .filter-glow-primary-strong {
       filter: drop-shadow(0 0 10px rgba(19, 245, 132, 0.4)); /* Simpler glow */
     }
+    
+    /* Reduce will-change on mobile to save memory */
+    .animate-optimized,
+    .animate-gpu {
+      will-change: auto;
+    }
+  }
+  
+  /* Content visibility for off-screen sections */
+  .render-optimized {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px;
+  }
+  
+  /* Ensure all animations use GPU-accelerated properties */
+  .gsap-fade-scale-in {
+    opacity: 0;
+    transform: scale(0.9) translateZ(0);
+    will-change: transform, opacity;
+  }
+  
+  .gsap-fade-in {
+    opacity: 0;
+    will-change: opacity;
   }
 
  

@@ -1,10 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,13 +31,29 @@ export const TypewriterEffect = ({
 
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const cursorTweenRef = useRef<gsap.core.Tween | null>(null);
+
   useGSAP(
     () => {
+      // Respect reduced motion
+      if (prefersReducedMotion()) {
+        // Just show all characters immediately
+        gsap.set(".char", {
+          display: "inline-block",
+          opacity: 1,
+          width: "fit-content",
+        });
+        return;
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 80%",
           once: true,
+          // Optimize ScrollTrigger performance
+          markers: false,
+          refreshPriority: -1,
         },
       });
 
@@ -49,17 +66,42 @@ export const TypewriterEffect = ({
         ease: "power2.inOut",
       });
 
-      // Cursor blinking
-      gsap.to(".cursor", {
+      // Cursor blinking - only if not reduced motion
+      cursorTweenRef.current = gsap.to(".cursor", {
         opacity: 0,
         duration: 0.8,
         repeat: -1,
         yoyo: true,
         ease: "power2.inOut",
       });
+      
+      // Cleanup
+      return () => {
+        if (cursorTweenRef.current) {
+          cursorTweenRef.current.kill();
+          cursorTweenRef.current = null;
+        }
+      };
     },
     { scope: containerRef }
   );
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    const container = containerRef.current;
+    return () => {
+      if (cursorTweenRef.current) {
+        cursorTweenRef.current.kill();
+      }
+      if (container) {
+        ScrollTrigger.getAll().forEach(trigger => {
+          if (trigger.vars.trigger === container) {
+            trigger.kill();
+          }
+        });
+      }
+    };
+  }, []);
 
   const renderWords = () => {
     return (
@@ -128,8 +170,18 @@ export const TypewriterEffectSmooth = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const textWrapperRef = useRef<HTMLDivElement>(null);
 
+  const cursorTweenRef = useRef<gsap.core.Tween | null>(null);
+
   useGSAP(
     () => {
+      // Respect reduced motion
+      if (prefersReducedMotion()) {
+        if (textWrapperRef.current) {
+          gsap.set(textWrapperRef.current, { width: "fit-content" });
+        }
+        return;
+      }
+
       gsap.to(textWrapperRef.current, {
         width: "fit-content",
         duration: 2,
@@ -139,20 +191,47 @@ export const TypewriterEffectSmooth = ({
           trigger: containerRef.current,
           start: "top 80%",
           once: true,
+          markers: false,
+          refreshPriority: -1,
         },
       });
 
       // Cursor blinking
-      gsap.to(".cursor", {
+      cursorTweenRef.current = gsap.to(".cursor", {
         opacity: 0,
         duration: 0.8,
         repeat: -1,
         yoyo: true,
         ease: "power2.inOut",
       });
+      
+      // Cleanup
+      return () => {
+        if (cursorTweenRef.current) {
+          cursorTweenRef.current.kill();
+          cursorTweenRef.current = null;
+        }
+      };
     },
     { scope: containerRef }
   );
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    const container = containerRef.current;
+    return () => {
+      if (cursorTweenRef.current) {
+        cursorTweenRef.current.kill();
+      }
+      if (container) {
+        ScrollTrigger.getAll().forEach(trigger => {
+          if (trigger.vars.trigger === container) {
+            trigger.kill();
+          }
+        });
+      }
+    };
+  }, []);
 
   const renderWords = () => {
     return (

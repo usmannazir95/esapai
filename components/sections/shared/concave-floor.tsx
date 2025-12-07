@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useMemo, useRef, useLayoutEffect } from "react";
+import React, { useMemo, useRef, useLayoutEffect, memo } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import { getPerformanceTier, getAdaptiveQuality, createFrameThrottle } from '@/lib/utils/performance-utils';
 
 interface ConcaveFloorProps {
   className?: string;
@@ -39,9 +40,13 @@ const pseudoRandom = (seed: number) => {
   return x - Math.floor(x);
 };
 
-const ConcentricRings: React.FC<{ intensity: number }> = ({ intensity }) => {
+const ConcentricRings: React.FC<{ intensity: number }> = memo(({ intensity }) => {
   const meshRef = useRef<THREE.InstancedMesh | null>(null);
-  const numRings = 18;
+  
+  // Adaptive particle count based on performance tier
+  const performanceTier = useMemo(() => getPerformanceTier(), []);
+  const quality = useMemo(() => getAdaptiveQuality(performanceTier), [performanceTier]);
+  const numRings = useMemo(() => Math.floor(18 * quality.particleCount), [quality.particleCount]);
 
   const { particles, dummy, color } = useMemo(() => {
     const tempParticles: RingParticle[] = [];
@@ -51,7 +56,7 @@ const ConcentricRings: React.FC<{ intensity: number }> = ({ intensity }) => {
     for (let i = 0; i < numRings; i++) {
       const radiusX = 0.5 + i * 0.8;
       const radiusZ = 0.5 + i * 0.6;
-      const dotsInRing = 20 + i * 6;
+      const dotsInRing = Math.floor((20 + i * 6) * quality.particleCount);
 
       for (let j = 0; j < dotsInRing; j++) {
         const angle = (j / dotsInRing) * Math.PI * 2;
@@ -72,7 +77,10 @@ const ConcentricRings: React.FC<{ intensity: number }> = ({ intensity }) => {
     }
 
     return { particles: tempParticles, dummy: tempDummy, color: tempColor };
-  }, []);
+  }, [numRings, quality.particleCount]);
+  
+  // Frame rate throttling
+  const throttleFrame = useMemo(() => createFrameThrottle(quality.maxFPS), [quality.maxFPS]);
 
   useLayoutEffect(() => {
     if (!meshRef.current) return;
@@ -93,6 +101,9 @@ const ConcentricRings: React.FC<{ intensity: number }> = ({ intensity }) => {
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
+
+    // Throttle frame updates based on performance tier
+    if (!throttleFrame(() => {})) return;
 
     const time = clock.getElapsedTime();
 
@@ -127,7 +138,9 @@ const ConcentricRings: React.FC<{ intensity: number }> = ({ intensity }) => {
       <meshBasicMaterial toneMapped={false} color={PRIMARY_COLOR_HEX} transparent opacity={0.75} />
     </instancedMesh>
   );
-};
+});
+
+ConcentricRings.displayName = 'ConcentricRings';
 
 const WireframeFloor = () => {
   const geometry = useMemo(() => {
@@ -160,11 +173,21 @@ const WireframeFloor = () => {
 };
 
 const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity = 1 }) => {
+  // Get performance tier and adaptive settings
+  const performanceTier = useMemo(() => getPerformanceTier(), []);
+  const quality = useMemo(() => getAdaptiveQuality(performanceTier), [performanceTier]);
+  
   return (
-    <div className={`w-full h-full relative ${className}`}>
+    <div className={`w-full h-full relative ${className}`} style={{ willChange: 'transform' }}>
       <Canvas
-        dpr={[1, 2]}
-        gl={{ antialias: false, alpha: true, toneMapping: THREE.ReinhardToneMapping, toneMappingExposure: 1.1 }}
+        dpr={quality.dpr as [number, number]}
+        gl={{ 
+          antialias: quality.antialias, 
+          alpha: true, 
+          toneMapping: THREE.ReinhardToneMapping, 
+          toneMappingExposure: 1.1,
+          powerPreference: "high-performance",
+        }}
         style={{ background: "transparent" }}
       >
         <PerspectiveCamera makeDefault position={[0, 14, 32]} fov={67} />
@@ -187,9 +210,12 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
           <ConcentricRings intensity={intensity} />
         </group>
 
-        <EffectComposer>
-          <Bloom luminanceThreshold={0.2} mipmapBlur intensity={0.8 * intensity} radius={0.5} />
-        </EffectComposer>
+        {/* Only use post-processing on high/medium tier devices */}
+        {quality.particleCount > 0.5 && (
+          <EffectComposer>
+            <Bloom luminanceThreshold={0.2} mipmapBlur intensity={0.8 * intensity} radius={0.5} />
+          </EffectComposer>
+        )}
       </Canvas>
     </div>
   );

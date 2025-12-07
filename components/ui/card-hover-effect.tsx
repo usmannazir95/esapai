@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
 interface HoverEffectItem {
   title: string;
@@ -23,6 +24,15 @@ export const HoverEffect = ({
   const hoverBgRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const handleMouseEnter = (idx: number) => {
+    if (prefersReducedMotion()) {
+      setHoveredIndex(idx);
+      const element = hoverBgRefs.current[idx];
+      if (element) {
+        gsap.set(element, { opacity: 1 });
+      }
+      return;
+    }
+    
     setHoveredIndex(idx);
     const element = hoverBgRefs.current[idx];
     if (element) {
@@ -30,11 +40,21 @@ export const HoverEffect = ({
         opacity: 1,
         duration: 0.15,
         ease: "power2.out",
+        force3D: true, // GPU acceleration
       });
     }
   };
 
   const handleMouseLeave = (idx: number) => {
+    if (prefersReducedMotion()) {
+      setHoveredIndex(null);
+      const element = hoverBgRefs.current[idx];
+      if (element) {
+        gsap.set(element, { opacity: 0 });
+      }
+      return;
+    }
+    
     setHoveredIndex(null);
     const element = hoverBgRefs.current[idx];
     if (element) {
@@ -43,6 +63,7 @@ export const HoverEffect = ({
         duration: 0.15,
         delay: 0.2,
         ease: "power2.out",
+        force3D: true, // GPU acceleration
       });
     }
   };

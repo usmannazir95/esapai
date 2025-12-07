@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { RefObject } from "react";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
 export interface FadeInOptions {
   duration?: number;
@@ -84,11 +85,17 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
 
   /**
    * Continuous breathing/pulse animation
+   * Returns cleanup function to kill animation
    */
   const breathing = (
     target: gsap.TweenTarget,
     options: ContinuousAnimationOptions = {}
-  ) => {
+  ): gsap.core.Tween | null => {
+    // Respect reduced motion preference
+    if (prefersReducedMotion()) {
+      return null;
+    }
+
     const {
       duration = 2.5,
       ease = "sine.inOut",
@@ -97,7 +104,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
       delay = 0,
     } = options;
 
-    gsap.to(target, {
+    return gsap.to(target, {
       scale: 1.05,
       opacity: 0.7,
       duration,
@@ -110,11 +117,17 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
 
   /**
    * Continuous float animation
+   * Returns cleanup function to kill animation
    */
   const float = (
     target: gsap.TweenTarget,
     options: ContinuousAnimationOptions = {}
-  ) => {
+  ): gsap.core.Tween | null => {
+    // Respect reduced motion preference
+    if (prefersReducedMotion()) {
+      return null;
+    }
+
     const {
       duration = 3,
       ease = "sine.inOut",
@@ -123,7 +136,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
       delay = 0,
     } = options;
 
-    gsap.to(target, {
+    return gsap.to(target, {
       y: -20,
       opacity: 0.8,
       duration,
@@ -136,11 +149,17 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
 
   /**
    * Continuous glow animation
+   * Returns cleanup function to kill animation
    */
   const glow = (
     target: gsap.TweenTarget,
     options: ContinuousAnimationOptions = {}
-  ) => {
+  ): gsap.core.Tween | null => {
+    // Respect reduced motion preference
+    if (prefersReducedMotion()) {
+      return null;
+    }
+
     const {
       duration = 2.5,
       ease = "sine.inOut",
@@ -149,7 +168,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
       delay = 0,
     } = options;
 
-    gsap.fromTo(
+    return gsap.fromTo(
       target,
       {
         filter: "drop-shadow(0 0 20px rgba(19,245,132,0.15))",
@@ -330,6 +349,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
 
   /**
    * Continuous rotation animation
+   * Returns cleanup function to kill animation
    */
   const rotate = (
     target: gsap.TweenTarget,
@@ -340,7 +360,12 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
       delay?: number;
       rotation?: number;
     } = {}
-  ) => {
+  ): gsap.core.Tween | null => {
+    // Respect reduced motion preference
+    if (prefersReducedMotion()) {
+      return null;
+    }
+
     const {
       duration = 20,
       ease = "none",
@@ -349,7 +374,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
       rotation = 360,
     } = options;
 
-    gsap.to(target, {
+    return gsap.to(target, {
       rotation,
       duration,
       ease,
@@ -360,6 +385,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
 
   /**
    * Animate gradient paths with subtle variations
+   * Returns cleanup function to kill animations
    */
   const animateGradientPaths = (
     paths: NodeListOf<Element> | Element[],
@@ -369,7 +395,12 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
       durationRange?: [number, number];
       stagger?: number;
     } = {}
-  ) => {
+  ): gsap.core.Tween | null => {
+    // Respect reduced motion preference
+    if (prefersReducedMotion()) {
+      return null;
+    }
+
     const {
       count = 15,
       opacityRange = [0.8, 1.0],
@@ -380,7 +411,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
     const pathsArray = Array.from(paths).slice(0, count);
     
     if (pathsArray.length > 0) {
-      gsap.to(pathsArray, {
+      return gsap.to(pathsArray, {
         opacity: () => opacityRange[0] + Math.random() * (opacityRange[1] - opacityRange[0]),
         duration: () => durationRange[0] + Math.random() * (durationRange[1] - durationRange[0]),
         ease: "sine.inOut",
@@ -389,6 +420,8 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
         stagger,
       });
     }
+    
+    return null;
   };
 
   return {
