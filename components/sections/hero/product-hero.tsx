@@ -16,56 +16,42 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
     <section className="relative overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
       {/* Background Layers */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        {/* Grid Floor - Extended to cover product halo area */}
-        <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+        {/* Grid Floor with seamless edge fade */}
+        <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-full h-full max-h-[80vh] relative overflow-hidden">
-            <GridFloor className="opacity-60" perspective="dramatic" />
-            {/* Subtle edge blending */}
+            <div className="w-full h-full pointer-events-auto">
+              <GridFloor className="opacity-60" perspective="dramatic" />
+            </div>
+            {/* Center radial fade - fades from center outward */}
             <div 
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: `
-                  radial-gradient(ellipse 70% 50% at 50% 55%, 
-                    transparent 0%, 
-                    transparent 50%, 
-                    rgba(0, 3, 0, 0.2) 65%, 
-                    rgba(0, 3, 0, 0.5) 80%, 
-                    rgba(0, 3, 0, 0.9) 95%
-                  ),
-                  radial-gradient(ellipse 80% 30% at 50% 100%, 
-                    rgba(0, 3, 0, 1) 0%, 
-                    rgba(0, 3, 0, 0.8) 50%, 
-                    transparent 100%
-                  )
-                `
+                backgroundImage: 'radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(0, 3, 0, 0.2) 50%, rgba(0, 3, 0, 0.4) 70%, rgba(0, 3, 0, 0.6) 100%)'
               }}
             />
-            {/* Subtle edge fades - only at very edges */}
+            {/* Seamless edge fade - subtle gradients only at edges */}
             <div 
-              className="absolute top-0 left-0 right-0 h-[20%] pointer-events-none"
+              className="absolute top-0 left-0 right-0 h-[12%] pointer-events-none"
               style={{
-                background: 'linear-gradient(to bottom, rgba(0, 3, 0, 0.4) 0%, transparent 60%)'
+                backgroundImage: 'linear-gradient(to bottom, rgba(0, 3, 0, 0.8) 0%, rgba(0, 3, 0, 0.3) 60%, transparent 100%)'
               }}
             />
             <div 
-              className="absolute bottom-0 left-0 right-0 h-[30%] pointer-events-none"
+              className="absolute bottom-0 left-0 right-0 h-[15%] pointer-events-none"
               style={{
-                background: `
-                  linear-gradient(to top, rgba(0, 3, 0, 1) 0%, rgba(0, 3, 0, 0.8) 30%, rgba(0, 3, 0, 0.4) 60%, transparent 100%),
-                  radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0, 3, 0, 1) 0%, rgba(0, 3, 0, 0.9) 40%, rgba(0, 3, 0, 0.5) 70%, transparent 100%)
-                `
+                backgroundImage: 'linear-gradient(to top, rgba(0, 3, 0, 0.9) 0%, rgba(0, 3, 0, 0.4) 60%, transparent 100%)'
               }}
             />
             <div 
-              className="absolute top-0 bottom-0 left-0 w-[15%] pointer-events-none"
+              className="absolute top-0 bottom-0 left-0 w-[8%] pointer-events-none"
               style={{
-                background: 'linear-gradient(to right, rgba(0, 3, 0, 0.4) 0%, transparent 70%)'
+                backgroundImage: 'linear-gradient(to right, rgba(0, 3, 0, 0.7) 0%, rgba(0, 3, 0, 0.3) 60%, transparent 100%)'
               }}
             />
             <div 
-              className="absolute top-0 bottom-0 right-0 w-[15%] pointer-events-none"
+              className="absolute top-0 bottom-0 right-0 w-[8%] pointer-events-none"
               style={{
-                background: 'linear-gradient(to left, rgba(0, 3, 0, 0.4) 0%, transparent 70%)'
+                backgroundImage: 'linear-gradient(to left, rgba(0, 3, 0, 0.7) 0%, rgba(0, 3, 0, 0.3) 60%, transparent 100%)'
               }}
             />
           </div>
@@ -75,8 +61,6 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
         <div className="absolute inset-0 flex items-center justify-center opacity-40">
           <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
         </div>
-        
-        
       </div>
 
       {/* Content Container */}
