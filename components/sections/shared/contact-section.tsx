@@ -262,7 +262,7 @@ export function ContactSection() {
                     >
                       By submitting, I agree to the{" "}
                       <a
-                        href="#"
+                        href="/terms"
                         className="text-primary hover:underline"
                         target="_blank"
                         rel="noopener noreferrer"
