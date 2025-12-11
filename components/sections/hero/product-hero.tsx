@@ -6,7 +6,6 @@ import Frame from "@/components/sections/shared/frame";
 import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
 import GridFloorWrapper from "@/components/sections/shared/grid-floor-wrapper";
-import { ProductHaloFlow } from "./product-halo-flow";
 
 interface ProductHeroProps {
   title: string;
@@ -121,25 +120,17 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
             </div>
           </div>
 
-          {/* Product Halo Flow Section - React Flow with nodes and animated glow bars */}
-          <div className="relative z-20 -mt-8 md:-mt-12 lg:-mt-16 h-[800px] md:h-[900px]">
-            <ProductHaloFlow
-              centerNode={{
-                id: 'center',
-                title: 'Core Engine',
-                icon: (
-                  <InteractiveProductIconHalo scale={1.0} intensity="high">
-                    <div className="w-24 h-24 bg-black/50 backdrop-blur-md rounded-2xl border border-emerald-500/30 p-4 flex items-center justify-center shadow-2xl">
-                      <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </InteractiveProductIconHalo>
-                ),
-              }}
-            />
+          {/* Interactive Product Icon Halo Section */}
+          <div className="relative z-20 -mt-8 md:-mt-12 lg:-mt-16 flex items-center justify-center py-16 md:py-20">
+            <InteractiveProductIconHalo scale={1.0} intensity="high">
+              <div className="w-24 h-24 bg-black/50 backdrop-blur-md rounded-2xl border border-emerald-500/30 p-4 flex items-center justify-center shadow-2xl">
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 17L12 22L22 17" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 12L12 17L22 12" stroke="#13F584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </InteractiveProductIconHalo>
           </div>
         </div>
       </div>

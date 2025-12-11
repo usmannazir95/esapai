@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useMemo } from 'react';
-// React Flow component with animated glow bars
-
 import ReactFlow, {
   type Edge,
   type EdgeProps,
@@ -12,14 +10,27 @@ import ReactFlow, {
   Position,
   useNodesState,
   useEdgesState,
-  getBezierPath,
   ConnectionMode,
   BaseEdge,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { Server, Database, Shield, Zap, Cpu, Globe, Activity, Lock, Layers } from 'lucide-react';
+import {
+  DEFAULT_ICON_PROPS,
+  PATH_CONSTANTS,
+  LAYOUT_CONSTANTS,
+  EDGE_ANIMATION,
+  seededRandom,
+  getNodeOffset,
+  extractConnectionIndex,
+  generateZigZagPath,
+  calculateHandlePositions,
+  calculateNodePosition
+} from './product-halo-flow-utils';
 
-// --- Types ---
+// ============================================================================
+// TYPES
+// ============================================================================
 
 export interface ProductHaloFlowNode {
   id: string;
@@ -38,31 +49,15 @@ export interface ProductHaloFlowProps {
   };
 }
 
-// --- Icons / Default Data ---
+// ============================================================================
+// CONSTANTS
+// ============================================================================
 
-const defaultIconProps = { size: 20, className: "text-[#13F584]" };
 
-const DEFAULT_LEFT_NODES: ProductHaloFlowNode[] = [
-  { id: 'l1', title: 'Data Ingestion', description: 'Real-time stream processing', icon: <Database {...defaultIconProps} /> },
-  { id: 'l2', title: 'Security', description: 'Enterprise-grade encryption', icon: <Shield {...defaultIconProps} /> },
-  { id: 'l3', title: 'Compute', description: 'Distributed processing', icon: <Cpu {...defaultIconProps} /> },
-  { id: 'l4', title: 'Network', description: 'Global low-latency edge', icon: <Globe {...defaultIconProps} /> },
-];
 
-const DEFAULT_RIGHT_NODES: ProductHaloFlowNode[] = [
-  { id: 'r1', title: 'Analytics', description: 'Predictive insights', icon: <Activity {...defaultIconProps} /> },
-  { id: 'r2', title: 'Protection', description: 'Threat mitigation', icon: <Lock {...defaultIconProps} /> },
-  { id: 'r3', title: 'Integration', description: 'API gateway connection', icon: <Layers {...defaultIconProps} /> },
-  { id: 'r4', title: 'Delivery', description: 'Content optimization', icon: <Zap {...defaultIconProps} /> },
-];
-
-const DEFAULT_CENTER = {
-  id: 'center',
-  title: 'Core Engine',
-  icon: <Server size={48} className="text-[#13F584]" />,
-};
-
-// --- Custom Edge Component ---
+// ============================================================================
+// EDGE COMPONENT
+// ============================================================================
 
 const GlowEdge: React.FC<EdgeProps> = ({
   id,
@@ -70,65 +65,41 @@ const GlowEdge: React.FC<EdgeProps> = ({
   sourceY,
   targetX,
   targetY,
-  sourcePosition,
-  targetPosition,
   style = {},
   markerEnd,
 }) => {
-  const [edgePath] = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
-
-  // Unique ID for the filter to avoid conflicts if multiple flows exist
   const filterId = `glow-filter-${id}`;
+  
+  // Generate path
+  const edgePath = useMemo(() => {
+    const connectionIndex = extractConnectionIndex(id);
+    // Use connectionIndex as seed for variation to ensure symmetry between left and right
+    // e.g. "edge-center-l1" and "edge-center-r1" will both use index 0
+    const variation = seededRandom(`edge-variation-${connectionIndex}`, 0, 1);
+    return generateZigZagPath(sourceX, sourceY, targetX, targetY, variation, connectionIndex);
+  }, [id, sourceX, sourceY, targetX, targetY]);
 
-  // Deterministic "random" function using edge ID as seed
-  const seededRandom = (seed: string, min: number, max: number): number => {
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    const normalized = Math.abs(hash) / 2147483647; // Normalize to 0-1
-    return min + normalized * (max - min);
-  };
-
-  // Randomize configuration for Cyberpunk feel, but keep bar sizes CONSTANT
-  // Bar size must be smaller than outer circle diameter (280px when scale=1.0)
+  // Animation configuration
   const config = useMemo(() => {
-    // Smaller bar size - must be less than outer circle diameter (280px)
-    const barSize = 25; 
-    
-    // Deterministic randomization based on edge ID
-    const gap = Math.floor(seededRandom(id, 60, 160)); // 60px - 160px gap
-    const dashArrayString = `${barSize} ${gap}`;
-    const totalLen = barSize + gap;
-    
-    // Randomize duration for speed variance (some connections are faster)
-    const durationVal = seededRandom(id + '-dur', 1.5, 3.0); // 1.5s - 3.0s
-    const delayVal = seededRandom(id + '-delay', 0, 5); // 0s - 5s
-    const pulseVal = seededRandom(id + '-pulse', 2, 5); // 2s - 5s
+    const gap = Math.floor(seededRandom(id, EDGE_ANIMATION.GAP_MIN, EDGE_ANIMATION.GAP_MAX));
+    const dashArrayString = `${EDGE_ANIMATION.BAR_SIZE} ${gap}`;
+    const totalLen = EDGE_ANIMATION.BAR_SIZE + gap;
+    const durationVal = seededRandom(id + '-dur', EDGE_ANIMATION.DURATION_MIN, EDGE_ANIMATION.DURATION_MAX);
+    const delayVal = seededRandom(id + '-delay', 0, EDGE_ANIMATION.DELAY_MAX);
+    const pulseVal = seededRandom(id + '-pulse', EDGE_ANIMATION.PULSE_MIN, EDGE_ANIMATION.PULSE_MAX);
     
     return {
       dashArray: dashArrayString,
       totalLength: totalLen,
       duration: `${durationVal}s`,
-      // Negative delay allows the animation to start "in progress" at random points
-      delay: `-${delayVal}s`, 
-      width: 2.5, // Slightly thinner width
-      // Randomize opacity pulse duration
-      pulseDuration: `${pulseVal}s` 
+      delay: `-${delayVal}s`,
+      width: EDGE_ANIMATION.WIDTH,
+      pulseDuration: `${pulseVal}s`,
     };
   }, [id]);
 
   return (
     <>
-      {/* Definitions for Glow Filter */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }}>
         <defs>
           <filter id={filterId} x="-50%" y="-50%" width="200%" height="200%">
@@ -141,31 +112,27 @@ const GlowEdge: React.FC<EdgeProps> = ({
         </defs>
       </svg>
 
-      {/* Base Path (Static subtle line) */}
       <BaseEdge
         path={edgePath}
         markerEnd={markerEnd}
         style={{
-          stroke: 'rgba(19, 245, 132, 0.1)', // Very subtle base
+          stroke: `rgba(19, 245, 132, ${EDGE_ANIMATION.BASE_OPACITY})`,
           strokeWidth: 2,
           fill: 'none',
           ...style,
         }}
       />
 
-      {/* Animated Glow Overlay */}
       <path
         id={id}
         d={edgePath}
         fill="none"
         stroke="#13F584"
         strokeWidth={config.width}
-        strokeOpacity={0.9}
+        strokeOpacity={EDGE_ANIMATION.GLOW_OPACITY}
         strokeDasharray={config.dashArray}
         filter={`url(#${filterId})`}
-        style={{
-          pointerEvents: 'none',
-        }}
+        style={{ pointerEvents: 'none' }}
       >
         <animate
           attributeName="stroke-dashoffset"
@@ -176,35 +143,33 @@ const GlowEdge: React.FC<EdgeProps> = ({
           repeatCount="indefinite"
           calcMode="linear"
         />
-        {/* Secondary animation for opacity/flicker effect */}
-        <animate 
-            attributeName="stroke-opacity" 
-            values="0.8;1;0.8;0.6;1;0.9" 
-            dur={config.pulseDuration} 
-            repeatCount="indefinite" 
+        <animate
+          attributeName="stroke-opacity"
+          values="0.8;1;0.8;0.6;1;0.9"
+          dur={config.pulseDuration}
+          repeatCount="indefinite"
         />
       </path>
     </>
   );
 };
 
-// --- Custom Node Components ---
+// ============================================================================
+// NODE COMPONENTS
+// ============================================================================
 
-// Shared styles for icon-only nodes - reduced size
-const nodeBaseStyle = "product-card rounded-full w-16 h-16 flex items-center justify-center transition-all duration-300 group relative bg-black/40 backdrop-blur-md border border-white/10";
-const nodeHoverStyle = "hover:shadow-[0_0_30px_-5px_rgba(19,245,132,0.3)] hover:border-[#13F584]/50 hover:scale-105";
+const NODE_BASE_STYLE = "product-card rounded-full w-12 h-12 flex items-center justify-center transition-all duration-300 group relative bg-black/40 backdrop-blur-md border border-white/10";
+const NODE_HOVER_STYLE = "hover:shadow-[0_0_30px_-5px_rgba(19,245,132,0.3)] hover:border-[#13F584]/50 hover:scale-105";
 
 const LeftNode: React.FC<NodeProps<ProductHaloFlowNode>> = ({ data }) => {
   return (
-    <div className={`${nodeBaseStyle} ${nodeHoverStyle}`} title={data.title}>
-      {/* Receives FROM center now (Target) */}
+    <div className={`${NODE_BASE_STYLE} ${NODE_HOVER_STYLE}`} title={data.title}>
       <Handle
         type="target"
         position={Position.Right}
         className="w-3 h-3 bg-[#13F584] border-2 border-[#13F584] opacity-0! group-hover:opacity-100! transition-opacity"
-        style={{ right: -6 }}
+        style={{ right: 0 }}
       />
-      
       <div className="flex items-center justify-center">
         <div className="text-[#13F584] transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(19,245,132,0.3)]">
           {data.icon || <div className="w-5 h-5" />}
@@ -216,15 +181,13 @@ const LeftNode: React.FC<NodeProps<ProductHaloFlowNode>> = ({ data }) => {
 
 const RightNode: React.FC<NodeProps<ProductHaloFlowNode>> = ({ data }) => {
   return (
-    <div className={`${nodeBaseStyle} ${nodeHoverStyle}`} title={data.title}>
-      {/* Receives FROM center (Target) */}
+    <div className={`${NODE_BASE_STYLE} ${NODE_HOVER_STYLE}`} title={data.title}>
       <Handle
         type="target"
         position={Position.Left}
         className="w-3 h-3 bg-[#13F584] border-2 border-[#13F584] opacity-0! group-hover:opacity-100! transition-opacity"
-        style={{ left: -6 }}
+        style={{ left: 0 }}
       />
-      
       <div className="flex items-center justify-center">
         <div className="text-[#13F584] transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(19,245,132,0.3)]">
           {data.icon || <div className="w-5 h-5" />}
@@ -234,139 +197,178 @@ const RightNode: React.FC<NodeProps<ProductHaloFlowNode>> = ({ data }) => {
   );
 };
 
-const CenterNode: React.FC<NodeProps<{ title: string; icon?: React.ReactNode }>> = ({ data }) => {
-  // Outer circle radius from InteractiveProductIconHalo: 140px (in 300x300 viewBox)
-  // When scale=1.0, the component is 300px, so radius = 140px
-  // Center node is 128px (w-32), so its center is at 64px from each edge
-  // To position handles on outer circle: offset = outerRadius - nodeHalfSize = 140 - 64 = 76px
-  const outerCircleRadius = 140; // pixels (matches InteractiveProductIconHalo outer ring radius)
-  const nodeHalfSize = 64; // w-32 / 2 = 64px
-  const handleOffset = outerCircleRadius - nodeHalfSize; // 76px offset from node edge
+const CenterNode: React.FC<NodeProps<{ title: string; icon?: React.ReactNode; handlePositions?: Array<{ id: string; angle: number }> }>> = ({ data }) => {
+  const scaledHaloSize = LAYOUT_CONSTANTS.CENTER_NODE_BASE_SIZE * LAYOUT_CONSTANTS.CENTER_NODE_SCALE;
+  const scaledOuterRadius = LAYOUT_CONSTANTS.CENTER_NODE_OUTER_RADIUS * LAYOUT_CONSTANTS.CENTER_NODE_SCALE;
+  const nodeHalfSize = scaledHaloSize / 2;
+  const handles = data.handlePositions || [];
   
   return (
-    <div className="relative w-32 h-32 flex items-center justify-center" title={data.title}>
-        {/* Handles positioned on outer circle - Left side */}
-        {/* Position.Left places handle at left edge, we offset it further left by handleOffset */}
-        <Handle 
-          id="source-left" 
-          type="source" 
-          position={Position.Left} 
-          className="opacity-0!" 
-          style={{ 
-            left: -handleOffset, // -76px from left edge = on outer circle
-            top: '50%',
-            transform: 'translateY(-50%)'
-          }}
-        />
-        {/* Handles positioned on outer circle - Right side */}
-        {/* Position.Right places handle at right edge, we offset it further right by handleOffset */}
-        <Handle 
-          id="source-right" 
-          type="source" 
-          position={Position.Right} 
-          className="opacity-0!" 
-          style={{ 
-            right: -handleOffset, // -76px from right edge = on outer circle
-            top: '50%',
-            transform: 'translateY(-50%)'
-          }}
-        />
-        {/* Content - Can be InteractiveProductIconHalo or simple icon */}
-        <div className="relative z-10 flex items-center justify-center">
-           {data.icon}
-        </div>
+    <div 
+      className="relative flex items-center justify-center" 
+      style={{ width: `${scaledHaloSize}px`, height: `${scaledHaloSize}px` }} 
+      title={data.title}
+    >
+      {handles.map((handle) => {
+        const angleRad = (handle.angle * Math.PI) / 180;
+        const x = Math.cos(angleRad) * scaledOuterRadius;
+        const y = Math.sin(angleRad) * scaledOuterRadius;
+        const left = nodeHalfSize + x;
+        const top = nodeHalfSize + y;
+        
+        return (
+          <Handle
+            key={handle.id}
+            id={handle.id}
+            type="source"
+            position={Position.Top}
+            className="opacity-0!"
+            style={{
+              left: `${left}px`,
+              top: `${top}px`,
+              transform: 'translate(-50%, -50%)',
+              position: 'absolute',
+            }}
+          />
+        );
+      })}
+      <div className="relative z-10 flex items-center justify-center">
+        {data.icon}
+      </div>
     </div>
   );
 };
 
-// --- Main Component ---
+// ============================================================================
+// LAYOUT CALCULATION
+// ============================================================================
+
+/**
+  };
+};
+
+/**
+ * Creates all nodes and edges for the flow
+ */
+const createFlowElements = (
+  leftNodes: ProductHaloFlowNode[],
+  rightNodes: ProductHaloFlowNode[],
+  centerNode: { id?: string; title?: string; icon?: React.ReactNode }
+): { nodes: Node[]; edges: Edge[] } => {
+  const nodes: Node[] = [];
+  const edges: Edge[] = [];
+  
+  const { CENTER_X, CENTER_Y, RADIUS, Y_SPACING } = LAYOUT_CONSTANTS;
+  
+  // Calculate handle positions
+  const handlePositions = calculateHandlePositions(
+    leftNodes,
+    rightNodes,
+    CENTER_X,
+    CENTER_Y,
+    RADIUS,
+    Y_SPACING
+  );
+  
+  // Center node
+  const centerNodeSize = LAYOUT_CONSTANTS.CENTER_NODE_BASE_SIZE * LAYOUT_CONSTANTS.CENTER_NODE_SCALE;
+  const centerNodeHalfSize = centerNodeSize / 2;
+  nodes.push({
+    id: centerNode.id || 'center',
+    type: 'centerNode',
+    position: { x: CENTER_X - centerNodeHalfSize, y: CENTER_Y - centerNodeHalfSize },
+    data: {
+      title: centerNode.title,
+      icon: centerNode.icon,
+      handlePositions: handlePositions,
+    },
+    draggable: false,
+  });
+  
+  // Left nodes
+  leftNodes.forEach((item, index) => {
+    const position = calculateNodePosition(
+      CENTER_X,
+      CENTER_Y,
+      RADIUS,
+      index,
+      Y_SPACING,
+      item.id,
+      true
+    );
+    
+    nodes.push({
+      id: item.id,
+      type: 'leftNode',
+      position,
+      data: item,
+      draggable: false,
+    });
+    
+    edges.push({
+      id: `edge-center-${item.id}`,
+      source: centerNode.id || 'center',
+      sourceHandle: `handle-left-${item.id}`,
+      target: item.id,
+      type: 'glowEdge',
+      animated: false,
+    });
+  });
+  
+  // Right nodes
+  rightNodes.forEach((item, index) => {
+    const position = calculateNodePosition(
+      CENTER_X,
+      CENTER_Y,
+      RADIUS,
+      index,
+      Y_SPACING,
+      item.id,
+      false
+    );
+    
+    nodes.push({
+      id: item.id,
+      type: 'rightNode',
+      position,
+      data: item,
+      draggable: false,
+    });
+    
+    edges.push({
+      id: `edge-center-${item.id}`,
+      source: centerNode.id || 'center',
+      sourceHandle: `handle-right-${item.id}`,
+      target: item.id,
+      type: 'glowEdge',
+      animated: false,
+    });
+  });
+  
+  return { nodes, edges };
+};
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 
 export const ProductHaloFlow: React.FC<ProductHaloFlowProps> = ({
   leftNodes = DEFAULT_LEFT_NODES,
   rightNodes = DEFAULT_RIGHT_NODES,
   centerNode = DEFAULT_CENTER,
 }) => {
-  // Define Node Types
   const nodeTypes = useMemo(() => ({
     leftNode: LeftNode,
     rightNode: RightNode,
     centerNode: CenterNode,
   }), []);
 
-  // Define Edge Types
   const edgeTypes = useMemo(() => ({
     glowEdge: GlowEdge,
   }), []);
 
-  // Calculate Layout and Initial State
-  const { initialNodes, initialEdges } = useMemo(() => {
-    const nodes: Node[] = [];
-    const edges: Edge[] = [];
-
-    const centerX = 600;
-    const centerY = 400;
-    const radius = 350;
-    const ySpacing = 140; // Spacing between vertical nodes
-
-    // 1. Center Node
-    nodes.push({
-      id: centerNode.id || 'center',
-      type: 'centerNode',
-      position: { x: centerX - 64, y: centerY - 64 }, // Offset by half width/height (w-32=128px)
-      data: { title: centerNode.title, icon: centerNode.icon },
-      draggable: false,
-    });
-
-    // 2. Left Nodes
-    leftNodes.forEach((item, index) => {
-      // Calculate Y offset: (index - 1.5) centers 4 items
-      const yOffset = (index - 1.5) * ySpacing;
-      
-      nodes.push({
-        id: item.id,
-        type: 'leftNode',
-        // w-16 is 64px, half is 32.
-        position: { x: centerX - radius - 32, y: centerY + yOffset - 32 }, 
-        data: item,
-        draggable: false,
-      });
-
-      // Edge: Center -> Left (Reversed direction)
-      edges.push({
-        id: `edge-center-${item.id}`,
-        source: centerNode.id || 'center',
-        sourceHandle: 'source-left', // Connect to left side of center node
-        target: item.id,
-        // targetHandle is implicit since there is only one handle on LeftNode
-        type: 'glowEdge',
-        animated: false, 
-      });
-    });
-
-    // 3. Right Nodes
-    rightNodes.forEach((item, index) => {
-      const yOffset = (index - 1.5) * ySpacing;
-      nodes.push({
-        id: item.id,
-        type: 'rightNode',
-        // w-16 is 64px, half is 32.
-        position: { x: centerX + radius - 32, y: centerY + yOffset - 32 },
-        data: item,
-        draggable: false,
-      });
-
-      // Edge: Center -> Right (Standard direction)
-      edges.push({
-        id: `edge-center-${item.id}`,
-        source: centerNode.id || 'center',
-        sourceHandle: 'source-right', // Connect to right side of center node
-        target: item.id,
-        type: 'glowEdge',
-        animated: false,
-      });
-    });
-
-    return { initialNodes: nodes, initialEdges: edges };
+  const { nodes: initialNodes, edges: initialEdges } = useMemo(() => {
+    return createFlowElements(leftNodes, rightNodes, centerNode);
   }, [leftNodes, rightNodes, centerNode]);
 
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
@@ -409,4 +411,3 @@ export const ProductHaloFlow: React.FC<ProductHaloFlowProps> = ({
     </div>
   );
 };
-
