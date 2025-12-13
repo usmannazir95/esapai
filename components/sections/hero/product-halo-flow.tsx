@@ -53,6 +53,25 @@ export interface ProductHaloFlowProps {
 // CONSTANTS
 // ============================================================================
 
+const DEFAULT_LEFT_NODES: ProductHaloFlowNode[] = [
+  { id: 'l1', title: 'Real-time Processing', icon: <Activity {...DEFAULT_ICON_PROPS} /> },
+  { id: 'l2', title: 'Cloud Infrastructure', icon: <Server {...DEFAULT_ICON_PROPS} /> },
+  { id: 'l3', title: 'Data Security', icon: <Shield {...DEFAULT_ICON_PROPS} /> },
+  { id: 'l4', title: 'Global Network', icon: <Globe {...DEFAULT_ICON_PROPS} /> },
+];
+
+const DEFAULT_RIGHT_NODES: ProductHaloFlowNode[] = [
+  { id: 'r1', title: 'High Performance', icon: <Zap {...DEFAULT_ICON_PROPS} /> },
+  { id: 'r2', title: 'Smart Processing', icon: <Cpu {...DEFAULT_ICON_PROPS} /> },
+  { id: 'r3', title: 'Encrypted Storage', icon: <Lock {...DEFAULT_ICON_PROPS} /> },
+  { id: 'r4', title: 'Database Management', icon: <Database {...DEFAULT_ICON_PROPS} /> },
+];
+
+const DEFAULT_CENTER = {
+  id: 'center',
+  title: 'ESAP AI Platform',
+  icon: <Layers size={32} className="text-[#13F584]" />,
+};
 
 
 // ============================================================================

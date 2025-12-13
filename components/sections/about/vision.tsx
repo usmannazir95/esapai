@@ -15,6 +15,10 @@ const ConcaveFloor = dynamic(() => import("@/components/sections/shared/concave-
   ssr: false,
 });
 
+const SpaceBackground = dynamic(() => import("@/components/sections/shared/space-background"), {
+  ssr: false,
+});
+
 export function Vision() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const robotRef = useRef<HTMLDivElement>(null);
@@ -123,56 +127,130 @@ export function Vision() {
     };
   }, { scope: sectionRef, dependencies: [isInView] });
 
+  // Holographic Glitch Effect
+  useGSAP(() => {
+    if (!robotRef.current || !isInView || prefersReducedMotion()) return;
+
+    const robot = robotRef.current;
+    
+    // Create a glitch timeline function
+    const triggerGlitch = () => {
+      // Randomize glitch parameters
+      const duration = gsap.utils.random(0.1, 0.3);
+      const skew = gsap.utils.random(-20, 20);
+      const scaleX = gsap.utils.random(0.9, 1.1);
+      const x = gsap.utils.random(-5, 5);
+      
+      const tl = gsap.timeline({
+        onComplete: () => {
+          // Reset to normal state
+          gsap.set(robot, { 
+            skewX: 0, 
+            scaleX: 1, 
+            x: 0, 
+            opacity: 1,
+            filter: "none"
+          });
+          // Schedule next glitch
+          const nextDelay = gsap.utils.random(2, 6);
+          gsap.delayedCall(nextDelay, triggerGlitch);
+        }
+      });
+
+      // Glitch sequence
+      tl.to(robot, {
+        skewX: skew,
+        scaleX: scaleX,
+        x: x,
+        opacity: 0.8,
+        filter: "brightness(1.5) hue-rotate(90deg)", // Chromatic aberration-ish color shift
+        duration: 0.05,
+        ease: "power4.inOut"
+      })
+      .to(robot, {
+        skewX: -skew / 2,
+        scaleX: 1,
+        x: -x / 2,
+        opacity: 0.9,
+        filter: "brightness(1.2) hue-rotate(-45deg)",
+        duration: 0.05,
+        ease: "rough({ template: none.out, strength: 1, points: 20, taper: none, randomize: true, clamp: false })"
+      })
+      .to(robot, {
+        skewX: 0,
+        scaleX: 1,
+        x: 0,
+        opacity: 1,
+        filter: "none",
+        duration: 0.05
+      });
+    };
+
+    // Start the glitch loop after initial entrance
+    const startDelay = gsap.utils.random(1, 3);
+    gsap.delayedCall(startDelay, triggerGlitch);
+
+    return () => {
+      gsap.killTweensOf(robot);
+    };
+  }, { scope: sectionRef, dependencies: [isInView] });
+
   return (
-    <Section className="pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10">
-      <div 
-        ref={(el) => {
-          sectionRef.current = el;
-          intersectionRef.current = el;
-        }}
-        style={{ willChange: prefersReducedMotion() ? 'auto' : 'transform' }}
+    <div className="relative w-full overflow-hidden">
+      <SpaceBackground />
+      <Section 
+        background="transparent"
+        className="pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10"
       >
-        <SectionHeader
-          title="Our Vision"
-          subtitle="We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes."
-        />
-
-        {/* Scene Wrapper - Responsive */}
-        <div className="relative w-full flex items-center justify-center py-6 sm:py-8 md:py-10">
-          <div
-            className="relative w-full max-w-[1100px] aspect-square md:aspect-square lg:aspect-[1.2/1]"
-          >
-            {/* Concave Floor */}
+        <div 
+          ref={(el) => {
+            sectionRef.current = el;
+            intersectionRef.current = el;
+          }}
+          style={{ willChange: prefersReducedMotion() ? 'auto' : 'transform' }}
+        >
+          <SectionHeader
+            title="Our Vision"
+            subtitle="We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes."
+          />
+  
+          {/* Scene Wrapper - Responsive */}
+          <div className="relative w-full flex items-center justify-center py-4 sm:py-6 md:py-8">
             <div
-              ref={dotCircleContainerRef}
-              className="absolute left-0 right-0 gsap-fade-in-optimized"
-              style={{ mixBlendMode: "screen", opacity: 0, top: "0%", height: "90%" }}
+              className="relative w-full max-w-[1200px] aspect-[1.8/1] md:aspect-[2.5/1]"
             >
-              <ConcaveFloor intensity={1} className="absolute inset-0" />
-            </div>
-
-            {/* Robot Icon - Responsive Sizing */}
-            <div
-              ref={robotWrapperRef}
-              className="absolute left-1/2 -translate-x-1/2 z-20 animate-optimized"
-              style={{ top: "5%" }}
-            >
+              {/* Concave Floor */}
               <div
-                ref={robotRef}
-                className="gsap-fade-scale-in"
-                style={{ opacity: 0, transform: "translateY(50px) scale(0.8)" }}
+                ref={dotCircleContainerRef}
+                className="absolute left-0 right-0 gsap-fade-in-optimized"
+                style={{ mixBlendMode: "screen", opacity: 0, top: "10%", height: "100%" }}
               >
-                <Robot
-                  className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px] h-auto object-contain"
-                  width={220}
-                  height={220}
-                />
+                <ConcaveFloor intensity={1} className="absolute inset-0" />
+              </div>
+  
+              {/* Robot Icon - Responsive Sizing */}
+              <div
+                ref={robotWrapperRef}
+                className="absolute left-1/2 -translate-x-1/2 z-20 animate-optimized"
+                style={{ top: "-15%" }}
+              >
+                <div
+                  ref={robotRef}
+                  className="gsap-fade-scale-in"
+                  style={{ opacity: 0, transform: "translateY(50px) scale(0.8)" }}
+                >
+                  <Robot
+                    className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px] h-auto object-contain"
+                    width={220}
+                    height={220}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+    </div>
   );
 }
 

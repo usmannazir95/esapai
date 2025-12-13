@@ -2,11 +2,27 @@ import Link from "next/link";
 import Image from "next/image";
 
 const socialIcons = [
-  { name: "facebook", href: "#" },
-  { name: "instagram", href: "#" },
-  { name: "telegram", href: "#" },
-  { name: "whatsapp", href: "#" },
-  { name: "youtube", href: "#" },
+  {
+    name: "Facebook",
+    iconPath: "/contact/cfacebook.svg",
+    href: "https://www.facebook.com/esapai.official/",
+  },
+  { name: "X", iconPath: "/contact/xc.svg", href: "https://x.com/esap_ai" },
+  {
+    name: "LinkedIn",
+    iconPath: "/contact/clinkedin.svg",
+    href: "https://www.linkedin.com/company/esapai/",
+  },
+  {
+    name: "Instagram",
+    iconPath: "/contact/cinstagram.svg",
+    href: "https://www.instagram.com/esapai.official/",
+  },
+  {
+    name: "YouTube",
+    iconPath: "/contact/xyoutube.svg",
+    href: "https://www.youtube.com/channel/UC7LyRbfXwb7at1gCQpUMzGg",
+  },
 ];
 
 const navigationLinks = [
@@ -74,7 +90,7 @@ export function Footer() {
                     aria-label={icon.name}
                   >
                     <Image
-                      src={`/footer/${icon.name}.svg`}
+                      src={icon.iconPath}
                       alt={icon.name}
                       width={20}
                       height={20}

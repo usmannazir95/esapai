@@ -5,11 +5,27 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 const socialMediaLinks = [
-  { name: "Facebook", iconPath: "/contact/cfacebook.svg", href: "#" },
-  { name: "Instagram", iconPath: "/contact/cinstagram.svg", href: "#" },
-  { name: "LinkedIn", iconPath: "/contact/clinkedin.svg", href: "#" },
-  { name: "X", iconPath: "/contact/xc.svg", href: "#" },
-  { name: "YouTube", iconPath: "/contact/xyoutube.svg", href: "#" },
+  {
+    name: "Facebook",
+    iconPath: "/contact/cfacebook.svg",
+    href: "https://www.facebook.com/esapai.official/",
+  },
+  {
+    name: "Instagram",
+    iconPath: "/contact/cinstagram.svg",
+    href: "https://www.instagram.com/esapai.official/",
+  },
+  {
+    name: "LinkedIn",
+    iconPath: "/contact/clinkedin.svg",
+    href: "https://www.linkedin.com/company/esapai/",
+  },
+  { name: "X", iconPath: "/contact/xc.svg", href: "https://x.com/esap_ai" },
+  {
+    name: "YouTube",
+    iconPath: "/contact/xyoutube.svg",
+    href: "https://www.youtube.com/channel/UC7LyRbfXwb7at1gCQpUMzGg",
+  },
 ];
 
 interface FormData {
