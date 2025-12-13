@@ -13,9 +13,9 @@ interface ConcaveFloorProps {
 }
 
 const PRIMARY_COLOR_HEX = "#13F584";
-const SECONDARY_COLOR_HEX = "#8EFFC7";
-const BG_COLOR_NEAR_HEX = "#001a0d";
-const BG_COLOR_FAR_HEX = "#000000";
+const SECONDARY_COLOR_HEX = "#71FDB7";
+const BG_COLOR_NEAR_HEX = "#000300";
+const BG_COLOR_FAR_HEX = "#000300";
 
 const PRIMARY_COLOR = new THREE.Color(PRIMARY_COLOR_HEX);
 const SECONDARY_COLOR = new THREE.Color(SECONDARY_COLOR_HEX);
@@ -190,7 +190,7 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
         }}
         style={{ background: "transparent" }}
       >
-        <PerspectiveCamera makeDefault position={[0, 14, 32]} fov={67} />
+        <PerspectiveCamera makeDefault position={[0, 10, 22]} fov={67} />
         <OrbitControls
           enablePan={false}
           maxPolarAngle={Math.PI / 2 - 0.1}

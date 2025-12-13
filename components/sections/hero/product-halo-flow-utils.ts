@@ -149,24 +149,27 @@ export const generateDiagonalSegment = (
     const isDynamic = (connectionIndex === 1 || connectionIndex === 2) && targetY !== undefined;
 
     if (isDynamic && targetY !== undefined) {
-        // Dynamic calculation: Diagonal must end at targetY to ensure subsequent horizontal line
-        const dy = targetY - currentY;
+        // Use fixed diagonal length but adjust to reach near targetY
+        const effectiveIndex = 1; // Both use index 1's base angle
+        const baseAngleVal = Math.abs(PATH_CONSTANTS.ANGLE_BASE + (effectiveIndex * PATH_CONSTANTS.ANGLE_INCREMENT));
 
         // For Index 1: Upward (negative angle)
         // For Index 2 (mirrored): Downward (positive angle)
         const angleSign = connectionIndex === 1 ? -1 : 1;
-        const effectiveIndex = 1; // Both use index 1's base angle
-        const baseAngleVal = Math.abs(PATH_CONSTANTS.ANGLE_BASE + (effectiveIndex * PATH_CONSTANTS.ANGLE_INCREMENT));
-
         const angleDeg = baseAngleVal * angleSign;
         const angleRad = (angleDeg * Math.PI) / 180;
 
-        // Calculate required horizontal distance to cover dy with this angle
-        const dxWidth = Math.abs(dy / Math.tan(angleRad));
+        // Use the same fixed diagonal length as before
+        const diagLengthRatio = PATH_CONSTANTS.DIAGONAL_LENGTH_RATIOS.SECOND;
+        const standardDx = LAYOUT_CONSTANTS.RADIUS;
+        const yOffsetIndex = indexToYOffsetIndex(1);
+        const standardDy = Math.abs(yOffsetIndex * LAYOUT_CONSTANTS.Y_SPACING);
+        const standardDistance = Math.sqrt(standardDx * standardDx + standardDy * standardDy);
+        const diagLength = standardDistance * diagLengthRatio;
 
-        // Always add width (Right Side)
-        const diagX = currentX + dxWidth;
-        const diagY = targetY;
+        // Calculate end point using fixed length and angle
+        const diagX = currentX + Math.cos(angleRad) * diagLength;
+        const diagY = currentY + Math.sin(angleRad) * diagLength;
 
         return {
             x: diagX,
@@ -204,7 +207,8 @@ export const generateDiagonalSegment = (
 };
 
 /**
- * Generates path for 2nd connection (index 1) - extended horizontal line connecting directly to icon
+ * Generates path for 2nd connection (index 1) - horizontal line to target
+ * Diagonal has fixed length, so we need horizontal then vertical adjustment if needed
  */
 export const generateSecondConnectionPath = (
     currentX: number,
@@ -212,12 +216,13 @@ export const generateSecondConnectionPath = (
     targetX: number,
     targetY: number
 ): string => {
-    // Connect directly to icon
-    return ` L ${targetX},${targetY}`;
+    // Go horizontal to targetX, then vertical to targetY if needed
+    return ` L ${targetX},${currentY} L ${targetX},${targetY}`;
 };
 
 /**
- * Generates path for 3rd connection (index 2) - mirrored version of 2nd connection (vertically opposite)
+ * Generates path for 3rd connection (index 2) - horizontal line to target
+ * Mirror of 2nd connection
  */
 export const generateThirdConnectionPath = (
     currentX: number,
@@ -225,8 +230,8 @@ export const generateThirdConnectionPath = (
     targetX: number,
     targetY: number
 ): string => {
-    // Mirror of 2nd connection - connect directly to icon
-    return ` L ${targetX},${targetY}`;
+    // Go horizontal to targetX, then vertical to targetY if needed
+    return ` L ${targetX},${currentY} L ${targetX},${targetY}`;
 };
 
 /**
@@ -324,9 +329,10 @@ export const generateFirstThreeConnectionsPath = (
     currentY = diagonal.y;
 
     // Connection-specific paths
-    if (connectionIndex === 1 || connectionIndex === 2) {
-        // Both use the same direct connection path (index 2 is mirrored vertically)
+    if (connectionIndex === 1) {
         path += generateSecondConnectionPath(currentX, currentY, targetX, targetY);
+    } else if (connectionIndex === 2) {
+        path += generateThirdConnectionPath(currentX, currentY, targetX, targetY);
     } else {
         path += generateFirstConnectionPath(currentX, currentY, targetX, targetY);
     }
@@ -409,8 +415,8 @@ export const generateLegacyZigZagPath = (
 /**
  * Main path generation function - routes to appropriate generator based on connection index
  * Index 0: Original pattern
- * Index 1: Original pattern
- * Index 2: Vertical mirror of index 1
+ * Index 1: Original pattern with horizontal ending
+ * Index 2: Vertical mirror of index 1 with horizontal ending
  * Index 3: Vertical mirror of index 0
  */
 export const generateZigZagPath = (
@@ -443,7 +449,7 @@ export const generateZigZagPath = (
             seg3Ratio
         );
     }
-    // Second connection (1) - original behavior
+    // Second connection (1) - horizontal ending
     else if (connectionIndex === 1) {
         const { seg2Ratio, seg3Ratio } = calculateSegmentRatios(connectionIndex, variation);
         path = generateFirstThreeConnectionsPath(
@@ -456,7 +462,7 @@ export const generateZigZagPath = (
             seg3Ratio
         );
     }
-    // Third connection (2) - vertical mirror of second connection (index 1)
+    // Third connection (2) - vertical mirror of second connection with horizontal ending
     else if (connectionIndex === 2) {
         const { seg2Ratio, seg3Ratio } = calculateSegmentRatios(1, variation);
         path = generateFirstThreeConnectionsPath(
