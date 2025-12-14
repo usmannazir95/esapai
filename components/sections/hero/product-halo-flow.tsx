@@ -47,6 +47,7 @@ export interface ProductHaloFlowProps {
     title?: string;
     icon?: React.ReactNode;
   };
+  haloScale?: number;
 }
 
 // ============================================================================
@@ -216,9 +217,10 @@ const RightNode: React.FC<NodeProps<ProductHaloFlowNode>> = ({ data }) => {
   );
 };
 
-const CenterNode: React.FC<NodeProps<{ title: string; icon?: React.ReactNode; handlePositions?: Array<{ id: string; angle: number }> }>> = ({ data }) => {
-  const scaledHaloSize = LAYOUT_CONSTANTS.CENTER_NODE_BASE_SIZE * LAYOUT_CONSTANTS.CENTER_NODE_SCALE;
-  const scaledOuterRadius = LAYOUT_CONSTANTS.CENTER_NODE_OUTER_RADIUS * LAYOUT_CONSTANTS.CENTER_NODE_SCALE;
+const CenterNode: React.FC<NodeProps<{ title: string; icon?: React.ReactNode; handlePositions?: Array<{ id: string; angle: number }>; haloScale?: number }>> = ({ data }) => {
+  const scale = data.haloScale || LAYOUT_CONSTANTS.CENTER_NODE_SCALE;
+  const scaledHaloSize = LAYOUT_CONSTANTS.CENTER_NODE_BASE_SIZE * scale;
+  const scaledOuterRadius = LAYOUT_CONSTANTS.CENTER_NODE_OUTER_RADIUS * scale;
   const nodeHalfSize = scaledHaloSize / 2;
   const handles = data.handlePositions || [];
   
@@ -272,7 +274,8 @@ const CenterNode: React.FC<NodeProps<{ title: string; icon?: React.ReactNode; ha
 const createFlowElements = (
   leftNodes: ProductHaloFlowNode[],
   rightNodes: ProductHaloFlowNode[],
-  centerNode: { id?: string; title?: string; icon?: React.ReactNode }
+  centerNode: { id?: string; title?: string; icon?: React.ReactNode },
+  haloScale: number = LAYOUT_CONSTANTS.CENTER_NODE_SCALE
 ): { nodes: Node[]; edges: Edge[] } => {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
@@ -290,7 +293,7 @@ const createFlowElements = (
   );
   
   // Center node
-  const centerNodeSize = LAYOUT_CONSTANTS.CENTER_NODE_BASE_SIZE * LAYOUT_CONSTANTS.CENTER_NODE_SCALE;
+  const centerNodeSize = LAYOUT_CONSTANTS.CENTER_NODE_BASE_SIZE * haloScale;
   const centerNodeHalfSize = centerNodeSize / 2;
   nodes.push({
     id: centerNode.id || 'center',
@@ -300,6 +303,7 @@ const createFlowElements = (
       title: centerNode.title,
       icon: centerNode.icon,
       handlePositions: handlePositions,
+      haloScale: haloScale,
     },
     draggable: false,
   });
@@ -375,6 +379,7 @@ export const ProductHaloFlow: React.FC<ProductHaloFlowProps> = ({
   leftNodes = DEFAULT_LEFT_NODES,
   rightNodes = DEFAULT_RIGHT_NODES,
   centerNode = DEFAULT_CENTER,
+  haloScale = LAYOUT_CONSTANTS.CENTER_NODE_SCALE,
 }) => {
   const nodeTypes = useMemo(() => ({
     leftNode: LeftNode,
@@ -387,8 +392,8 @@ export const ProductHaloFlow: React.FC<ProductHaloFlowProps> = ({
   }), []);
 
   const { nodes: initialNodes, edges: initialEdges } = useMemo(() => {
-    return createFlowElements(leftNodes, rightNodes, centerNode);
-  }, [leftNodes, rightNodes, centerNode]);
+    return createFlowElements(leftNodes, rightNodes, centerNode, haloScale);
+  }, [leftNodes, rightNodes, centerNode, haloScale]);
 
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
