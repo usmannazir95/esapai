@@ -230,11 +230,20 @@ export function Vision() {
   
               {/* Robot Icon - Responsive Sizing */}
               <div
-                ref={robotWrapperRef}
-                className="absolute left-1/2 -translate-x-1/2 z-20 animate-optimized"
-                style={{ top: "-15%" }}
-              >
-                <div
+              ref={robotWrapperRef}
+              className="absolute left-1/2 -translate-x-1/2 z-20 animate-optimized"
+              style={{ top: "-15%" }}
+            >
+              {/* Green Glow Effect */}
+              <div 
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] -z-10 pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle, rgba(19, 245, 132, 0.6) 0%, rgba(19, 245, 132, 0.3) 40%, transparent 70%)",
+                  filter: "blur(50px)",
+                  transform: "translateZ(0)" // Force GPU acceleration
+                }}
+              />
+              <div
                   ref={robotRef}
                   className="gsap-fade-scale-in"
                   style={{ opacity: 0, transform: "translateY(50px) scale(0.8)" }}

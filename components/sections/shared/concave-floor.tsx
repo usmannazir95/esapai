@@ -21,8 +21,12 @@ const PRIMARY_COLOR = new THREE.Color(PRIMARY_COLOR_HEX);
 const SECONDARY_COLOR = new THREE.Color(SECONDARY_COLOR_HEX);
 
 const getSurfaceHeight = (x: number, z: number) => {
+  // Subtle convex surface - raised center creates floating disc effect
   const distSq = x * x + z * z;
-  return 0.02 * distSq;
+  const maxDist = 400; // Normalize the distance
+  const normalizedDist = Math.min(distSq / maxDist, 1);
+  // Slight downward curve at edges, raised center
+  return -normalizedDist * 2;
 };
 
 type RingParticle = {
@@ -54,9 +58,10 @@ const ConcentricRings: React.FC<{ intensity: number }> = memo(({ intensity }) =>
     const tempColor = new THREE.Color();
 
     for (let i = 0; i < numRings; i++) {
-      const radiusX = 0.5 + i * 0.8;
-      const radiusZ = 0.5 + i * 0.6;
-      const dotsInRing = Math.floor((20 + i * 6) * quality.particleCount);
+      // Medium-sized radii
+      const radiusX = 0.6 + i * 0.9;
+      const radiusZ = 0.6 + i * 0.7;
+      const dotsInRing = Math.floor((22 + i * 6) * quality.particleCount);
 
       for (let j = 0; j < dotsInRing; j++) {
         const angle = (j / dotsInRing) * Math.PI * 2;
@@ -114,14 +119,17 @@ const ConcentricRings: React.FC<{ intensity: number }> = memo(({ intensity }) =>
       const waveActivation = THREE.MathUtils.smoothstep(wave, 0.5, 1);
       const pulse = Math.sin(time * 3 + p.phase) * 0.2 + 1;
 
+      // Edge fade - outer rings fade into background
+      const edgeFade = 1 - Math.pow(p.ringIndex / numRings, 1.5);
+
       dummy.position.set(p.x, p.y + waveActivation * 0.5, p.z);
-      const scale = p.baseScale * 0.1 * pulse * (1 + waveActivation * 0.8);
+      const scale = p.baseScale * 0.1 * pulse * (1 + waveActivation * 0.8) * edgeFade;
       dummy.scale.setScalar(scale);
       dummy.updateMatrix();
       meshRef.current!.setMatrixAt(i, dummy.matrix);
 
       color.copy(PRIMARY_COLOR).lerp(SECONDARY_COLOR, waveActivation);
-      const brightness = 0.8 + waveActivation * 1.2;
+      const brightness = (0.5 + waveActivation * 0.5) * edgeFade;
       color.multiplyScalar(brightness);
       meshRef.current!.setColorAt(i, color);
     });
@@ -135,7 +143,7 @@ const ConcentricRings: React.FC<{ intensity: number }> = memo(({ intensity }) =>
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, particles.length]}>
       <sphereGeometry args={[1, 8, 8]} />
-      <meshBasicMaterial toneMapped={false} color={PRIMARY_COLOR_HEX} transparent opacity={0.75} />
+      <meshBasicMaterial toneMapped={false} color={PRIMARY_COLOR_HEX} transparent opacity={0.5} />
     </instancedMesh>
   );
 });
@@ -190,9 +198,10 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
         }}
         style={{ background: "transparent" }}
       >
-        <PerspectiveCamera makeDefault position={[0, 10, 22]} fov={67} />
+        <PerspectiveCamera makeDefault position={[0, 16, 22]} fov={45} />
         <OrbitControls
           enablePan={false}
+          enableZoom={false}
           maxPolarAngle={Math.PI / 2 - 0.1}
           minDistance={5}
           maxDistance={50}
@@ -200,10 +209,10 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
 
         <fog attach="fog" args={[BG_COLOR_FAR_HEX, 10, 50]} />
 
-        <ambientLight intensity={0.2} color={BG_COLOR_NEAR_HEX} />
-        <pointLight position={[0, 15, 0]} intensity={1.25 * intensity} color={PRIMARY_COLOR_HEX} distance={40} decay={2} />
-        <pointLight position={[10, 5, 10]} intensity={1} color={SECONDARY_COLOR_HEX} distance={30} decay={2} />
-        <spotLight position={[0, 20, 0]} angle={0.5} penumbra={0.5} intensity={3} color="#ffffff" />
+        <ambientLight intensity={0.1} color={BG_COLOR_NEAR_HEX} />
+        <pointLight position={[0, 15, 0]} intensity={0.6 * intensity} color={PRIMARY_COLOR_HEX} distance={40} decay={2} />
+        <pointLight position={[10, 5, 10]} intensity={0.4} color={SECONDARY_COLOR_HEX} distance={30} decay={2} />
+        <spotLight position={[0, 20, 0]} angle={0.5} penumbra={0.5} intensity={1} color="#ffffff" />
 
         <group>
           <WireframeFloor />
@@ -213,7 +222,7 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
         {/* Only use post-processing on high/medium tier devices */}
         {quality.particleCount > 0.5 && (
           <EffectComposer>
-            <Bloom luminanceThreshold={0.2} mipmapBlur intensity={0.8 * intensity} radius={0.5} />
+            <Bloom luminanceThreshold={0.3} mipmapBlur intensity={0.4 * intensity} radius={0.4} />
           </EffectComposer>
         )}
       </Canvas>

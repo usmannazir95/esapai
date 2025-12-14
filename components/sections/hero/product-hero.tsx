@@ -126,6 +126,7 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
             {/* Connection Flow Diagram */}
             <div className="w-full h-[450px] md:h-[500px] relative">
               <ProductHaloFlow 
+                haloScale={1.0}
                 centerNode={{
                   title: "ESAP AI Platform",
                   icon: (
