@@ -470,7 +470,6 @@
         rgba(19, 245, 132, 0) 71.78%,
         rgba(19, 245, 132, 0.2) 124.92%
       );
-    border: 1.5px solid transparent;
     border-radius: 32px;
     backdrop-filter: blur(170px);
   }

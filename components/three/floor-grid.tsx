@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useMemo, useRef } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { getPerformanceTier, getAdaptiveQuality, createFrameThrottle } from "@/lib/utils/performance-utils";
 
-interface GridUniforms {
-  uTime: { value: number };
-  uColorMain: { value: THREE.Color };
-  uColorAccent: { value: THREE.Color };
+interface GridUniforms extends Record<string, THREE.IUniform<any>> {
+  uTime: THREE.IUniform<number>;
+  uColorMain: THREE.IUniform<THREE.Color>;
+  uColorAccent: THREE.IUniform<THREE.Color>;
 }
 
 const vertexShader = `
@@ -71,7 +71,6 @@ const fragmentShader = `
 
 const FloorGrid: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const { mouse } = useThree();
   
   // Performance optimizations
   const performanceTier = useMemo(() => getPerformanceTier(), []);
@@ -93,22 +92,9 @@ const FloorGrid: React.FC = () => {
     // Throttle frame updates based on performance tier
     if (!throttleFrame(() => {})) return;
 
+    // Update time for shader animation only (no rotation)
     (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value =
       state.clock.getElapsedTime();
-
-    const targetRotX = -Math.PI / 2 + mouse.y * 0.05;
-    const targetRotZ = -(mouse.x * 0.05);
-
-    meshRef.current.rotation.x = THREE.MathUtils.lerp(
-      meshRef.current.rotation.x,
-      targetRotX,
-      0.1
-    );
-    meshRef.current.rotation.z = THREE.MathUtils.lerp(
-      meshRef.current.rotation.z,
-      targetRotZ,
-      0.1
-    );
   });
 
   return (

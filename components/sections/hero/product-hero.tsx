@@ -15,26 +15,28 @@ interface ProductHeroProps {
 
 export function ProductHero({ title, subtitle }: ProductHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
+    <section className="relative w-full overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
       {/* Background Layers */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden w-full">
         {/* Grid Floor with seamless edge fade - Lazy loaded */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-full h-full max-h-[80vh] relative overflow-hidden">
-            <div className="w-full h-full pointer-events-auto">
-              <LazyThreeWrapper
-                fallback={
-                  <div 
-                    className="w-full h-full opacity-60"
-                    style={{ 
-                      backgroundColor: 'transparent',
-                      minHeight: '400px', // Prevent layout shift
-                    }}
-                  />
-                }
-              >
-                <GridFloorWrapper className="opacity-60" perspective="dramatic" />
-              </LazyThreeWrapper>
+        <div className="absolute inset-0 w-full h-full left-0 right-0">
+          <div className="absolute inset-0 w-full h-full left-0 right-0 relative overflow-hidden">
+            <div className="absolute inset-0 w-full h-full left-0 right-0 pointer-events-auto">
+              <div className="absolute inset-0 w-full h-full">
+                <LazyThreeWrapper
+                  fallback={
+                    <div 
+                      className="absolute inset-0 w-full h-full opacity-60"
+                      style={{ 
+                        backgroundColor: 'transparent',
+                        minHeight: '400px', // Prevent layout shift
+                      }}
+                    />
+                  }
+                >
+                  <GridFloorWrapper className="opacity-60" perspective="dramatic" />
+                </LazyThreeWrapper>
+              </div>
             </div>
             {/* Center radial fade - fades from center outward */}
             <div 
@@ -57,15 +59,15 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
               }}
             />
             <div 
-              className="absolute top-0 bottom-0 left-0 w-[8%] pointer-events-none"
+              className="absolute top-0 bottom-0 left-0 w-[2%] pointer-events-none"
               style={{
-                backgroundImage: 'linear-gradient(to right, rgba(0, 3, 0, 0.7) 0%, rgba(0, 3, 0, 0.3) 60%, transparent 100%)'
+                backgroundImage: 'linear-gradient(to right, rgba(0, 3, 0, 0.5) 0%, transparent 100%)'
               }}
             />
             <div 
-              className="absolute top-0 bottom-0 right-0 w-[8%] pointer-events-none"
+              className="absolute top-0 bottom-0 right-0 w-[2%] pointer-events-none"
               style={{
-                backgroundImage: 'linear-gradient(to left, rgba(0, 3, 0, 0.7) 0%, rgba(0, 3, 0, 0.3) 60%, transparent 100%)'
+                backgroundImage: 'linear-gradient(to left, rgba(0, 3, 0, 0.5) 0%, transparent 100%)'
               }}
             />
           </div>

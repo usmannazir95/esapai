@@ -35,9 +35,57 @@ export function Vision() {
   });
 
   useGSAP(() => {
+    if (!isInView || prefersReducedMotion() || !sectionRef.current) return;
+
     const tl = anim.createTimeline();
 
-    // Entrance animations - sequenced
+    // Find the actual rendered title and subtitle elements
+    const titleElement = sectionRef.current.querySelector('h2');
+    const subtitleElement = sectionRef.current.querySelector('p');
+
+    // Set initial states for header
+    if (titleElement) {
+      gsap.set(titleElement, { opacity: 0, y: -20 });
+    }
+    if (subtitleElement) {
+      gsap.set(subtitleElement, { opacity: 0, y: 10 });
+    }
+
+    // Step 1: Title appears
+    if (titleElement) {
+      tl.to(
+        titleElement,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        }
+      );
+    }
+
+    // Step 2: Subtitle appears
+    if (subtitleElement) {
+      tl.to(
+        subtitleElement,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+    }
+
+    // Step 3: Robot entrance animation
+    if (robotRef.current) {
+      gsap.set(robotRef.current, { opacity: 0, y: 50, scale: 0.8 });
+    }
+    if (dotCircleContainerRef.current) {
+      gsap.set(dotCircleContainerRef.current, { opacity: 0 });
+    }
+
     tl.to(
       robotRef.current,
       {
@@ -46,7 +94,8 @@ export function Vision() {
         scale: 1,
         duration: 0.8,
         ease: "power2.out",
-      }
+      },
+      "-=0.3"
     )
       .to(
         dotCircleContainerRef.current,
@@ -58,7 +107,7 @@ export function Vision() {
         "-=0.3"
       );
 
-  }, { scope: sectionRef });
+  }, { scope: sectionRef, dependencies: [isInView] });
 
   // Cursor follower effect for robot - Disabled on touch devices and reduced motion
   useGSAP(() => {
@@ -215,15 +264,15 @@ export function Vision() {
           />
   
           {/* Scene Wrapper - Responsive */}
-          <div className="relative w-full flex items-center justify-center py-4 sm:py-6 md:py-8">
+          <div className="relative w-full flex items-center justify-center py-4 sm:py-6 md:py-8 z-0">
             <div
-              className="relative w-full max-w-[1200px] aspect-[1.8/1] md:aspect-[2.5/1]"
+              className="relative w-full max-w-[1200px] aspect-[1.8/1] md:aspect-[2.5/1] z-0"
             >
               {/* Concave Floor */}
               <div
                 ref={dotCircleContainerRef}
-                className="absolute left-0 right-0 gsap-fade-in-optimized"
-                style={{ mixBlendMode: "screen", opacity: 0, top: "10%", height: "100%" }}
+                className="absolute left-0 right-0 gsap-fade-in-optimized z-20"
+                style={{ mixBlendMode: "screen", opacity: 0, top: "10%", height: "100%", isolation: "isolate" }}
               >
                 <ConcaveFloor intensity={1} className="absolute inset-0" />
               </div>

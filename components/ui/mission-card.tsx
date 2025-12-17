@@ -17,7 +17,7 @@ export function MissionCard({
   className = "",
 }: MissionCardProps) {
   return (
-    <div className={`mission-card relative overflow-hidden ${className}`}>
+    <div className={`mission-card relative overflow-hidden h-full flex flex-col ${className}`}>
       {/* Card Frame - fits entire card */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="relative w-full h-full">

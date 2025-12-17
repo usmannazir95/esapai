@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import type { Service } from "@/lib/services";
 import { useServiceContent } from "@/lib/hooks/use-service-content";
 import { CardSkeleton } from "@/components/ui/skeletons";
+import { LazySection } from "@/components/ui/lazy-section";
 
 const ServiceHeroSection = dynamic(() =>
   import("@/components/sections/hero/service-hero").then((mod) => ({
@@ -106,20 +107,28 @@ export function ServicePage({ slug, initialService }: ServicePageClientProps) {
         </div>
       )}
 
+      {/* Hero loads immediately - critical for LCP */}
       <ServiceHeroSection title={hydratedService.name} subtitle={heroSubtitle} />
 
-      <ServiceFeaturesSection
-        title={featuresContent?.title}
-        subtitle={featuresContent?.subtitle}
-        features={features}
-      />
+      {/* Below-the-fold sections load progressively */}
+      <LazySection minHeight="800px">
+        <ServiceFeaturesSection
+          title={featuresContent?.title}
+          subtitle={featuresContent?.subtitle}
+          features={features}
+        />
+      </LazySection>
 
-      <RepetitiveWorkSection />
+      <LazySection minHeight="600px">
+        <RepetitiveWorkSection />
+      </LazySection>
 
-      <YouTubeVideoSection
-        videoId={youtubeVideoContent?.videoId ?? "dQw4w9WgXcQ"}
-        title={youtubeVideoContent?.title}
-      />
+      <LazySection minHeight="600px">
+        <YouTubeVideoSection
+          videoId={youtubeVideoContent?.videoId ?? "dQw4w9WgXcQ"}
+          title={youtubeVideoContent?.title}
+        />
+      </LazySection>
     </div>
   );
 }

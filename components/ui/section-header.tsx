@@ -17,17 +17,17 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className={className}>
-      {/* Main Title */}
+      {/* Main Title - Unified responsive sizing */}
       <h2
-        className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-center text-gradient-radial-white leading-tight ${titleClassName}`}
+        className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-center text-gradient-radial-white leading-tight ${titleClassName}`}
       >
         {title}
       </h2>
 
-      {/* Subtitle */}
+      {/* Subtitle - Unified responsive styling */}
       {subtitle && (
         <p
-          className={`text-lg md:text-xl text-center text-white-opacity-70 max-w-4xl mx-auto mb-16 ${subtitleClassName}`}
+          className={`text-base sm:text-lg md:text-xl lg:text-xl text-center text-light-gray-90 max-w-5xl mx-auto px-4 mb-12 sm:mb-14 md:mb-16 ${subtitleClassName}`}
         >
           {subtitle}
         </p>

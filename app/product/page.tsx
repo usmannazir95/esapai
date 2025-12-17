@@ -5,11 +5,12 @@ import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
+import { LazySection } from "@/components/ui/lazy-section";
 
 export default function ProductsPage() {
   return (
     <main className="relative">
-      {/* Hero Section */}
+      {/* Hero Section - Loads immediately (above the fold) */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark">
         {/* Background gradient effect */}
         <div className="absolute inset-0 z-0 opacity-30">
@@ -47,8 +48,9 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* Products Grid */}
-      <Section>
+      {/* Products Grid - Lazy loaded (below the fold) */}
+      <LazySection minHeight="800px">
+        <Section>
         <SectionHeader
           title="Explore Our AI Solutions"
           subtitle="Each product is built with cutting-edge technology to solve real-world business challenges and drive innovation."
@@ -119,6 +121,7 @@ export default function ProductsPage() {
           </Button>
         </div>
       </Section>
+      </LazySection>
     </main>
   );
 }

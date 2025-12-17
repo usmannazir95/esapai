@@ -11,6 +11,8 @@ import { ServiceItem } from "@/components/ui/service-item";
 import dynamic from "next/dynamic";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
+import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import Brain from "@/components/sections/shared/brain";
 
 const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
@@ -23,7 +25,15 @@ export function Service() {
   const sectionRef = useRef<HTMLElement>(null);
   const rotationAnimationRef = useRef<gsap.core.Tween | null>(null);
   
-  // Intersection observer to pause animations when off-screen
+  const anim = useGSAPAnimations(sectionRef as React.RefObject<HTMLElement>);
+  
+  // Intersection observer to trigger animations when in view
+  const { ref: intersectionRef, isInView: isSectionInView } = useIntersectionAnimation({
+    threshold: 0.1,
+    rootMargin: "100px",
+  });
+  
+  // Keep existing useInView for ellipse rotation
   const isInView = useInView(sectionRef, { amount: 0.1, margin: "100px" });
 
   // Continuous circular rotation animation for the ellipse ring
@@ -55,6 +65,52 @@ export function Service() {
     };
   }, { scope: ellipseRef, dependencies: [isInView] });
   
+  // Header animation
+  useGSAP(() => {
+    if (!isSectionInView || prefersReducedMotion() || !sectionRef.current) return;
+
+    const tl = anim.createTimeline();
+
+    // Find the actual rendered title and subtitle elements
+    const titleElement = sectionRef.current.querySelector('h2');
+    const subtitleElement = sectionRef.current.querySelector('p');
+
+    // Set initial states for header
+    if (titleElement) {
+      gsap.set(titleElement, { opacity: 0, y: -20 });
+    }
+    if (subtitleElement) {
+      gsap.set(subtitleElement, { opacity: 0, y: 10 });
+    }
+
+    // Step 1: Title appears
+    if (titleElement) {
+      tl.to(
+        titleElement,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        }
+      );
+    }
+
+    // Step 2: Subtitle appears
+    if (subtitleElement) {
+      tl.to(
+        subtitleElement,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+    }
+  }, { scope: sectionRef, dependencies: [isSectionInView] });
+
   // Pause/resume rotation based on viewport visibility
   useEffect(() => {
     if (!rotationAnimationRef.current) return;
@@ -67,7 +123,15 @@ export function Service() {
   }, [isInView]);
 
   return (
-    <section ref={sectionRef} className="relative w-full pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10 px-4 overflow-hidden bg-dark render-optimized">
+    <section 
+      ref={(node) => {
+        if (node) {
+          sectionRef.current = node;
+          (intersectionRef as React.MutableRefObject<HTMLElement | null>).current = node;
+        }
+      }}
+      className="relative w-full pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10 px-4 overflow-hidden bg-dark render-optimized"
+    >
       <div className="relative container mx-auto max-w-7xl z-10">
         <SectionHeader
           title="AI Services & Solutions"
@@ -260,14 +324,54 @@ export function Service() {
         </div>
       </div>
 
-      {/* Floor Grid Pattern - Only on desktop for performance */}
-      <div className="hidden lg:block absolute -bottom-60 left-0 right-0 z-0 pointer-events-none h-[360px]">
-        <LazyThreeWrapper>
-          <Canvas camera={{ position: [0, 5, 8], fov: 45 }} gl={{ alpha: true }}>
-            <ambientLight intensity={0.1} />
-            <FloorGrid />
-          </Canvas>
-        </LazyThreeWrapper>
+      {/* Floor Grid Pattern - Only on desktop for performance, positioned after content */}
+      <div className="hidden lg:block relative w-full z-0 pointer-events-none h-[360px] mt-auto overflow-hidden">
+        <div className="absolute inset-0 w-full h-full left-0 right-0">
+          <div className="absolute inset-0 w-full h-full left-0 right-0 relative overflow-hidden">
+            <div className="absolute inset-0 w-full h-full left-0 right-0 pointer-events-auto">
+              <div className="absolute inset-0 w-full h-full">
+                <LazyThreeWrapper>
+                  <Canvas camera={{ position: [0, 5, 8], fov: 45 }} gl={{ alpha: true }}>
+                    <ambientLight intensity={0.1} />
+                    <FloorGrid />
+                  </Canvas>
+                </LazyThreeWrapper>
+              </div>
+            </div>
+            {/* Center radial fade - fades from center outward */}
+            <div 
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage: 'radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(0, 3, 0, 0.2) 50%, rgba(0, 3, 0, 0.4) 70%, rgba(0, 3, 0, 0.6) 100%)'
+              }}
+            />
+            {/* Seamless edge fade - subtle gradients only at edges */}
+            <div 
+              className="absolute top-0 left-0 right-0 h-[12%] pointer-events-none"
+              style={{
+                backgroundImage: 'linear-gradient(to bottom, rgba(0, 3, 0, 0.8) 0%, rgba(0, 3, 0, 0.3) 60%, transparent 100%)'
+              }}
+            />
+            <div 
+              className="absolute bottom-0 left-0 right-0 h-[15%] pointer-events-none"
+              style={{
+                backgroundImage: 'linear-gradient(to top, rgba(0, 3, 0, 0.9) 0%, rgba(0, 3, 0, 0.4) 60%, transparent 100%)'
+              }}
+            />
+            <div 
+              className="absolute top-0 bottom-0 left-0 w-[2%] pointer-events-none"
+              style={{
+                backgroundImage: 'linear-gradient(to right, rgba(0, 3, 0, 0.5) 0%, transparent 100%)'
+              }}
+            />
+            <div 
+              className="absolute top-0 bottom-0 right-0 w-[2%] pointer-events-none"
+              style={{
+                backgroundImage: 'linear-gradient(to left, rgba(0, 3, 0, 0.5) 0%, transparent 100%)'
+              }}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import type { Product } from "@/lib/products";
 import { useProductContent } from "@/lib/hooks/use-product-content";
 import { CardSkeleton } from "@/components/ui/skeletons";
+import { LazySection } from "@/components/ui/lazy-section";
 
 const ProductHeroSection = dynamic(
   () =>
@@ -93,6 +94,7 @@ export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
         </div>
       )}
 
+      {/* Hero loads immediately - critical for LCP */}
       <ProductHeroSection
         title={hydratedProduct.name}
         subtitle={heroSubtitle}
@@ -100,24 +102,33 @@ export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
         centerIconAlt={content.hero?.centerIconAlt}
       />
 
-      <MissionSection
-        title={content.mission?.title}
-        subtitle={content.mission?.subtitle}
-        cards={content.mission?.cards}
-      />
+      {/* Below-the-fold sections load progressively */}
+      <LazySection minHeight="600px">
+        <MissionSection
+          title={content.mission?.title}
+          subtitle={content.mission?.subtitle}
+          cards={content.mission?.cards}
+        />
+      </LazySection>
 
-      <AutomationHubSection
-        title={content.automationHub?.title}
-        subtitle={content.automationHub?.subtitle}
-        features={content.automationHub?.features}
-      />
+      <LazySection minHeight="800px">
+        <AutomationHubSection
+          title={content.automationHub?.title}
+          subtitle={content.automationHub?.subtitle}
+          features={content.automationHub?.features}
+        />
+      </LazySection>
 
-      <YouTubeVideoSection
-        videoId={content.youtubeVideo?.videoId ?? "ED2H_y6dmC8"}
-        title={content.youtubeVideo?.title}
-      />
+      <LazySection minHeight="600px">
+        <YouTubeVideoSection
+          videoId={content.youtubeVideo?.videoId ?? "ED2H_y6dmC8"}
+          title={content.youtubeVideo?.title}
+        />
+      </LazySection>
 
-      <PerformanceSection metrics={content.performance?.metrics} />
+      <LazySection minHeight="600px">
+        <PerformanceSection metrics={content.performance?.metrics} />
+      </LazySection>
     </div>
   );
 }
