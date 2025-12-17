@@ -11,6 +11,7 @@ import { ServiceItem } from "@/components/ui/service-item";
 import dynamic from "next/dynamic";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
+import Brain from "@/components/sections/shared/brain";
 
 const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
   ssr: false,
@@ -152,7 +153,7 @@ export function Service() {
         {/* DESKTOP LAYOUT (≥ 1024px) - Circular */}
         <div className="hidden lg:block">
           {/* Central Brain with Services */}
-          <div className="relative w-full min-h-[700px] xl:min-h-[800px] flex items-center justify-center py-12 -mt-16">
+          <div className="relative w-full min-h-[700px] xl:min-h-[800px] flex items-center justify-center py-16 -mt-16 overflow-visible">
             {/* Ellipse around the brain - Rotating */}
             <div
               ref={ellipseRef}
@@ -168,14 +169,9 @@ export function Service() {
             </div>
 
             {/* Central Brain */}
-            <div className="relative z-20 animate-float">
-              <Image
-                src="/landing/service/brain.svg"
-                alt="AI Brain"
-                width={400}
-                height={400}
+            <div className="relative z-20 animate-float overflow-visible">
+              <Brain
                 className="w-full h-full max-w-[350px] xl:max-w-[400px] object-contain"
-                priority
               />
             </div>
 

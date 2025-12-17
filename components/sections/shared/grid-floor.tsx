@@ -23,7 +23,11 @@ interface InstancedGridProps {
 const InstancedGrid: React.FC<InstancedGridProps> = memo(({ mousePos, gridSize }) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  const totalTiles = gridSize * gridSize;
+  
+  // Make grid wider horizontally (left-right) - 1.8x wider than depth
+  const gridWidth = Math.floor(gridSize * 1.8); // X-axis (left-right)
+  const gridDepth = gridSize; // Z-axis (front-back)
+  const totalTiles = gridWidth * gridDepth;
   
   // Cache colors to reduce allocations
   const baseColor = useMemo(() => new THREE.Color('#001108'), []);
@@ -34,17 +38,17 @@ const InstancedGrid: React.FC<InstancedGridProps> = memo(({ mousePos, gridSize }
   const positions = useMemo(() => {
     const pos = new Float32Array(totalTiles * 3);
     let i = 0;
-    for (let x = 0; x < gridSize; x++) {
-      for (let z = 0; z < gridSize; z++) {
+    for (let x = 0; x < gridWidth; x++) {
+      for (let z = 0; z < gridDepth; z++) {
         // Center the grid
-        pos[i] = (x - gridSize / 2) * (TILE_SIZE + TILE_GAP);
+        pos[i] = (x - gridWidth / 2) * (TILE_SIZE + TILE_GAP);
         pos[i + 1] = 0; // Y is up
-        pos[i + 2] = (z - gridSize / 2) * (TILE_SIZE + TILE_GAP);
+        pos[i + 2] = (z - gridDepth / 2) * (TILE_SIZE + TILE_GAP);
         i += 3;
       }
     }
     return pos;
-  }, [gridSize, totalTiles]);
+  }, [gridWidth, gridDepth, totalTiles]);
 
   // Use simple random phases for breathing effect - only generate on client
   const phases = useMemo(() => {
@@ -58,6 +62,9 @@ const InstancedGrid: React.FC<InstancedGridProps> = memo(({ mousePos, gridSize }
     for (let i = 0; i < totalTiles; i++) p[i] = seededRandom() * Math.PI * 2;
     return p;
   }, [totalTiles]);
+  
+  // Store grid dimensions for useFrame
+  const gridDimensions = useMemo(() => ({ width: gridWidth, depth: gridDepth }), [gridWidth, gridDepth]);
   
   // Frame rate throttling based on performance tier
   const performanceTier = useMemo(() => getPerformanceTier(), []);
@@ -73,8 +80,8 @@ const InstancedGrid: React.FC<InstancedGridProps> = memo(({ mousePos, gridSize }
     const time = state.clock.getElapsedTime();
     
     let i = 0;
-    for (let x = 0; x < gridSize; x++) {
-      for (let z = 0; z < gridSize; z++) {
+    for (let x = 0; x < gridDimensions.width; x++) {
+      for (let z = 0; z < gridDimensions.depth; z++) {
         const id = i;
         const px = positions[i * 3];
         const pz = positions[i * 3 + 2];
