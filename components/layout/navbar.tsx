@@ -331,7 +331,7 @@ export function Navbar() {
                   }`}
                 >
                   <span className="nav-glow" aria-hidden="true" />
-                  <span className="relative z-10">Contact Us</span>
+                  <span className="relative z-10">Contact</span>
                 </Link>
               </div>
 
@@ -475,7 +475,7 @@ export function Navbar() {
               }`}
             >
               <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-lg font-medium">Contact Us</span>
+              <span className="relative z-10 text-lg font-medium">Contact</span>
             </Link>
           </nav>
         </div>

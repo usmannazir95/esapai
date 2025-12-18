@@ -30,7 +30,7 @@ const navigationLinks = [
   { label: "Product", href: "/product" },
   { label: "About Us", href: "/about" },
   { label: "Case Study", href: "/case-study" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Footer() {

@@ -1,8 +1,9 @@
 "use client";
 
-import Image from "next/image";
+import React, { useCallback, useState } from "react";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 import { TeamCard, type TeamMember } from "@/components/ui/team-card";
 
 export type { TeamMember };
@@ -69,27 +70,46 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
   const middleMembers = members.slice(1, 4);
   const bottomMembers = members.slice(4, 7);
 
+  const [rippleTrigger, setRippleTrigger] = useState<{ x: number; y: number } | null>(null);
+  const [rippleTriggerKey, setRippleTriggerKey] = useState(0);
+
+  const handlePointerDownCapture = useCallback((e: React.PointerEvent<HTMLElement>) => {
+    setRippleTrigger({ x: e.clientX, y: e.clientY });
+    setRippleTriggerKey((k) => k + 1);
+  }, []);
+
   return (
-    <Section className="relative">
-      {/* Background grid */}
-      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 z-0 h-full w-screen">
+    <Section
+      padding="none"
+      className="relative overflow-hidden"
+      onPointerDownCapture={handlePointerDownCapture}
+    >
+      {/* Ripple background (replaces /aboutgrid.svg) */}
+      <div className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2">
         <div className="relative h-full w-full">
-          <Image
-            src="/aboutgrid.svg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover opacity-80"
-            priority
-          />
+          <div className="absolute inset-0 [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)]">
+            <BackgroundRippleEffect
+              interactive={false}
+              mask={false}
+              cellSize={56}
+              triggerPoint={rippleTrigger}
+              triggerKey={rippleTriggerKey}
+              gridClassName="opacity-75"
+              className="[--cell-border-color:rgba(19,245,132,0.20)] [--cell-fill-color:rgba(19,245,132,0.012)] [--cell-shadow-color:rgba(19,245,132,0.18)] opacity-85"
+            />
+          </div>
+
+          {/* Blend into page background */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-dark/75 via-dark/10 to-dark/75" />
         </div>
       </div>
 
-      <SectionHeader
-        title="Our Team"
-        subtitle="Meet the visionaries driving innovation and transforming the future of AI-powered automation."
-        subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-3xl mx-auto px-4 mb-16"
-      />
+      <div className="relative z-10 py-12 sm:py-16 md:py-20">
+        <SectionHeader
+          title="Our Team"
+          subtitle="Meet the visionaries driving innovation and transforming the future of AI-powered automation."
+          subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-3xl mx-auto px-4 mb-16"
+        />
 
         {/* Team Grid */}
         <div className="relative max-w-6xl mx-auto px-4">
@@ -114,6 +134,7 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
             ))}
           </div>
         </div>
+      </div>
     </Section>
   );
 }

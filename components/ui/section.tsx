@@ -1,7 +1,10 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface SectionProps {
+export type SectionProps = Omit<
+  React.ComponentPropsWithoutRef<"section">,
+  "className" | "children"
+> & {
   children: React.ReactNode;
   className?: string;
   containerClassName?: string;
@@ -9,7 +12,7 @@ interface SectionProps {
   background?: "dark" | "transparent" | string;
   padding?: "none" | "sm" | "md" | "lg";
   overflow?: "hidden" | "visible";
-}
+};
 
 const containerMaxWidthClasses = {
   sm: "max-w-sm",
@@ -41,6 +44,7 @@ export function Section({
   background = "dark",
   padding = "md",
   overflow = "hidden",
+  ...props
 }: SectionProps) {
   const backgroundClass =
     typeof background === "string" && background in backgroundClasses
@@ -51,6 +55,7 @@ export function Section({
 
   return (
     <section
+      {...props}
       className={cn(
         "relative w-full",
         paddingClasses[padding],
