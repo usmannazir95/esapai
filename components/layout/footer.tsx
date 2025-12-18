@@ -29,6 +29,7 @@ const navigationLinks = [
   { label: "Home", href: "/" },
   { label: "Product", href: "/product" },
   { label: "About Us", href: "/about" },
+  { label: "Case Study", href: "/case-study" },
   { label: "Contact Us", href: "/contact" },
 ];
 

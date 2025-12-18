@@ -127,7 +127,7 @@ export function Navbar() {
         }`}
       >
         <div className="container mx-auto px-4 py-3 sm:py-4 md:py-5">
-          <div className="mx-auto max-w-3xl bg-white-opacity-10 backdrop-blur-lg rounded-[40px] pl-4 sm:pl-6 md:pl-8 pr-2 py-2 sm:py-2.5 md:py-3">
+          <div className="mx-auto w-full max-w-5xl bg-white-opacity-10 backdrop-blur-lg rounded-[40px] pl-4 sm:pl-6 md:pl-8 pr-2 py-2 sm:py-2.5 md:py-3">
             <div className="flex items-center justify-between gap-4 sm:gap-6 md:gap-8">
               {/* Logo */}
               <Link 
@@ -207,6 +207,17 @@ export function Navbar() {
                 >
                   <span className="nav-glow" aria-hidden="true" />
                   <span className="relative z-10">About Us</span>
+                </Link>
+                <Link
+                  href="/case-study"
+                  className={`nav-link-group relative group whitespace-nowrap cursor-pointer px-3 py-2 rounded-lg transition-all duration-300 ${
+                    isActive("/case-study")
+                      ? "is-active text-primary"
+                      : "text-light-gray hover:text-primary"
+                  }`}
+                >
+                  <span className="nav-glow" aria-hidden="true" />
+                  <span className="relative z-10">Case Study</span>
                 </Link>
                 <Link
                   href="/contact"
@@ -334,6 +345,19 @@ export function Navbar() {
             >
               <span className="nav-glow" aria-hidden="true" />
               <span className="relative z-10 text-lg font-medium">About Us</span>
+            </Link>
+
+            <Link
+              href="/case-study"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
+                isActive("/case-study")
+                  ? "is-active text-primary"
+                  : "text-light-gray hover:text-primary"
+              }`}
+            >
+              <span className="nav-glow" aria-hidden="true" />
+              <span className="relative z-10 text-lg font-medium">Case Study</span>
             </Link>
 
             <Link
