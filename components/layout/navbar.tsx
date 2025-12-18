@@ -5,10 +5,96 @@ import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { products } from "@/lib/products";
+import { services } from "@/lib/services";
 import { useProductMenu } from "./product-menu-context";
 import { useServiceMenu } from "./service-menu-context";
 import { ProductDropdownMenu } from "./product-dropdown-menu";
 import { ServiceDropdownMenu } from "./service-dropdown-menu";
+
+type MobileMenuItem = {
+  id: string;
+  name: string;
+  description?: string;
+  slug: string;
+};
+
+function MobileAccordion({
+  id,
+  title,
+  isOpen,
+  onToggle,
+  items,
+  basePath,
+  isSectionActive,
+  onNavigate,
+}: {
+  id: string;
+  title: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  items: MobileMenuItem[];
+  basePath: string;
+  isSectionActive: boolean;
+  onNavigate: () => void;
+}) {
+  return (
+    <div className="mb-2">
+      <button
+        type="button"
+        onClick={onToggle}
+        className={`nav-link-group relative group w-full px-4 py-3 rounded-lg transition-all duration-300 flex items-center justify-between ${
+          isSectionActive ? "is-active text-primary" : "text-light-gray hover:text-primary"
+        }`}
+        aria-expanded={isOpen}
+        aria-controls={id}
+      >
+        <span className="nav-glow" aria-hidden="true" />
+        <span className="relative z-10 text-lg font-medium">{title}</span>
+        <ChevronDown
+          className={`relative z-10 size-5 transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {/* Collapsible list (mobile-only) */}
+      <div
+        id={id}
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ${
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="mt-2 ml-5 border-l border-white-opacity-20 pl-3">
+            {items.map((item) => (
+              <Link
+                key={item.id}
+                href={`${basePath}/${item.slug}`}
+                onClick={onNavigate}
+                className="group block rounded-lg px-3 py-2 transition-colors hover:bg-white-opacity-10"
+              >
+                <div className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white-opacity-20 group-hover:bg-primary transition-colors" />
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-light-gray group-hover:text-primary transition-colors">
+                      {item.name}
+                    </div>
+                    {item.description && (
+                      <div className="text-xs text-white-opacity-70 truncate">
+                        {item.description}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Navbar() {
   const pathname = usePathname();
@@ -24,6 +110,8 @@ export function Navbar() {
   
   // Mobile menu state
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   
   // Helper function to check if a path is active
   const isActive = (path: string) => {
@@ -37,6 +125,9 @@ export function Navbar() {
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      // reset nested accordions whenever menu opens
+      setIsMobileProductsOpen(false);
+      setIsMobileServicesOpen(false);
     } else {
       document.body.style.overflow = "";
     }
@@ -116,6 +207,18 @@ export function Navbar() {
 
   const productActive = isProductOpen || isActive("/product");
   const serviceActive = isServiceOpen || isActive("/service");
+  const mobileProducts = products.map((p) => ({
+    id: p.id,
+    name: p.name,
+    description: p.description,
+    slug: p.slug,
+  })) satisfies MobileMenuItem[];
+  const mobileServices = services.map((s) => ({
+    id: s.id,
+    name: s.name,
+    description: s.description,
+    slug: s.slug,
+  })) satisfies MobileMenuItem[];
 
   return (
     <>
@@ -127,7 +230,7 @@ export function Navbar() {
         }`}
       >
         <div className="container mx-auto px-4 py-3 sm:py-4 md:py-5">
-          <div className="mx-auto max-w-3xl bg-white-opacity-10 backdrop-blur-lg rounded-[40px] pl-4 sm:pl-6 md:pl-8 pr-2 py-2 sm:py-2.5 md:py-3">
+          <div className="mx-auto w-full max-w-5xl bg-white-opacity-10 backdrop-blur-lg rounded-[40px] pl-4 sm:pl-6 md:pl-8 pr-2 py-2 sm:py-2.5 md:py-3">
             <div className="flex items-center justify-between gap-4 sm:gap-6 md:gap-8">
               {/* Logo */}
               <Link 
@@ -207,6 +310,17 @@ export function Navbar() {
                 >
                   <span className="nav-glow" aria-hidden="true" />
                   <span className="relative z-10">About Us</span>
+                </Link>
+                <Link
+                  href="/case-study"
+                  className={`nav-link-group relative group whitespace-nowrap cursor-pointer px-3 py-2 rounded-lg transition-all duration-300 ${
+                    isActive("/case-study")
+                      ? "is-active text-primary"
+                      : "text-light-gray hover:text-primary"
+                  }`}
+                >
+                  <span className="nav-glow" aria-hidden="true" />
+                  <span className="relative z-10">Case Study</span>
                 </Link>
                 <Link
                   href="/contact"
@@ -297,31 +411,33 @@ export function Navbar() {
               <span className="relative z-10 text-lg font-medium">Home</span>
             </Link>
 
-            <Link
-              href="/product"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
-                isActive("/product")
-                  ? "is-active text-primary"
-                  : "text-light-gray hover:text-primary"
-              }`}
-            >
-              <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-lg font-medium">Product</span>
-            </Link>
+            <MobileAccordion
+              id="mobile-products"
+              title="Product"
+              isOpen={isMobileProductsOpen}
+              onToggle={() => {
+                setIsMobileProductsOpen((prev) => !prev);
+                setIsMobileServicesOpen(false);
+              }}
+              items={mobileProducts}
+              basePath="/product"
+              isSectionActive={isActive("/product")}
+              onNavigate={() => setIsMobileMenuOpen(false)}
+            />
 
-            <Link
-              href="/service"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
-                isActive("/service")
-                  ? "is-active text-primary"
-                  : "text-light-gray hover:text-primary"
-              }`}
-            >
-              <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-lg font-medium">Service</span>
-            </Link>
+            <MobileAccordion
+              id="mobile-services"
+              title="Service"
+              isOpen={isMobileServicesOpen}
+              onToggle={() => {
+                setIsMobileServicesOpen((prev) => !prev);
+                setIsMobileProductsOpen(false);
+              }}
+              items={mobileServices}
+              basePath="/service"
+              isSectionActive={isActive("/service")}
+              onNavigate={() => setIsMobileMenuOpen(false)}
+            />
 
             <Link
               href="/about"
@@ -334,6 +450,19 @@ export function Navbar() {
             >
               <span className="nav-glow" aria-hidden="true" />
               <span className="relative z-10 text-lg font-medium">About Us</span>
+            </Link>
+
+            <Link
+              href="/case-study"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
+                isActive("/case-study")
+                  ? "is-active text-primary"
+                  : "text-light-gray hover:text-primary"
+              }`}
+            >
+              <span className="nav-glow" aria-hidden="true" />
+              <span className="relative z-10 text-lg font-medium">Case Study</span>
             </Link>
 
             <Link
