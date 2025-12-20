@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import Frame from "@/components/sections/shared/frame";
@@ -12,9 +13,41 @@ import GridFloorWrapper from "@/components/sections/shared/grid-floor-wrapper";
 interface ProductHeroProps {
   title: string;
   subtitle: string[];
+  centerIcon?: string;
+  centerIconAlt?: string;
+  productSlug?: string;
 }
 
-export function ProductHero({ title, subtitle }: ProductHeroProps) {
+/**
+ * Maps product slugs to their corresponding icon files in the product_icons directory
+ */
+const getProductIconPath = (slug?: string, centerIcon?: string): string | null => {
+  // If centerIcon is provided, use it
+  if (centerIcon) {
+    return centerIcon;
+  }
+
+  // Map product slugs to icon filenames
+  const iconMap: Record<string, string> = {
+    "erp": "/product_icons/Voice.svg",
+    "ai-framework": "/product_icons/AI automation.svg",
+    "zakra": "/product_icons/Zakra.svg",
+    "jawib": "/product_icons/Jawib.svg",
+    "fasih": "/product_icons/Fasih LLM.svg",
+    "domain-expansion": "/product_icons/Industry Automation.svg",
+  };
+
+  if (slug && iconMap[slug]) {
+    return iconMap[slug];
+  }
+
+  return null;
+};
+
+export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, productSlug }: ProductHeroProps) {
+  const iconPath = getProductIconPath(productSlug, centerIcon);
+  const iconAlt = centerIconAlt || `${title} Icon`;
+
   return (
     <section className="relative w-full overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden w-full">
@@ -89,16 +122,25 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
               <ProductHaloFlow
                 haloScale={1.0}
                 centerNode={{
-                  title: "ESAP AI Platform",
+                  title: title,
                   icon: (
                     <InteractiveProductIconHalo scale={1.0} intensity="high">
-                      <div className="w-20 h-20 md:w-24 md:h-24 bg-black/50 backdrop-blur-md rounded-2xl border border-emerald-500/30 p-3 md:p-4 flex items-center justify-center shadow-2xl">
+                      {iconPath ? (
+                        <Image
+                          src={iconPath}
+                          alt={iconAlt}
+                          width={96}
+                          height={96}
+                          className="w-20 h-20 md:w-24 md:h-24 object-contain"
+                        />
+                      ) : (
                         <svg
-                          width="100%"
-                          height="100%"
+                          width="96"
+                          height="96"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
+                          className="w-20 h-20 md:w-24 md:h-24"
                         >
                           <path
                             d="M12 2L2 7L12 12L22 7L12 2Z"
@@ -122,7 +164,7 @@ export function ProductHero({ title, subtitle }: ProductHeroProps) {
                             strokeLinejoin="round"
                           />
                         </svg>
-                      </div>
+                      )}
                     </InteractiveProductIconHalo>
                   ),
                 }}

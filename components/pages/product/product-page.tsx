@@ -100,6 +100,7 @@ export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
         subtitle={heroSubtitle}
         centerIcon={content.hero?.centerIcon}
         centerIconAlt={content.hero?.centerIconAlt}
+        productSlug={hydratedProduct.slug}
       />
 
       {/* Below-the-fold sections load progressively */}
