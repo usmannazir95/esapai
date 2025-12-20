@@ -47,6 +47,10 @@
     background-color: var(--color-dark);
   }
 
+  body.body-scroll-locked {
+    overflow: hidden;
+  }
+
   html {
     color-scheme: dark;
     scroll-behavior: smooth;

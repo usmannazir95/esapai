@@ -36,44 +36,50 @@ const backgroundClasses = {
   transparent: "bg-transparent",
 };
 
-export function Section({
-  children,
-  className = "",
-  containerClassName = "",
-  containerMaxWidth = "7xl",
-  background = "dark",
-  padding = "md",
-  overflow = "hidden",
-  ...props
-}: SectionProps) {
-  const backgroundClass =
-    typeof background === "string" && background in backgroundClasses
-      ? backgroundClasses[background as keyof typeof backgroundClasses]
-      : background === "dark"
-      ? "bg-dark"
-      : "";
+export const Section = React.forwardRef<HTMLElement, SectionProps>(
+  function Section(
+    {
+      children,
+      className = "",
+      containerClassName = "",
+      containerMaxWidth = "7xl",
+      background = "dark",
+      padding = "md",
+      overflow = "hidden",
+      ...props
+    },
+    ref
+  ) {
+    const backgroundClass =
+      typeof background === "string" && background in backgroundClasses
+        ? backgroundClasses[background as keyof typeof backgroundClasses]
+        : background === "dark"
+        ? "bg-dark"
+        : "";
 
-  return (
-    <section
-      {...props}
-      className={cn(
-        "relative w-full",
-        paddingClasses[padding],
-        overflow === "hidden" ? "overflow-hidden" : "overflow-visible",
-        backgroundClass,
-        className
-      )}
-    >
-      <div
+    return (
+      <section
+        ref={ref}
+        {...props}
         className={cn(
-          "relative container mx-auto z-10",
-          containerMaxWidthClasses[containerMaxWidth],
-          containerClassName
+          "relative w-full",
+          paddingClasses[padding],
+          overflow === "hidden" ? "overflow-hidden" : "overflow-visible",
+          backgroundClass,
+          className
         )}
       >
-        {children}
-      </div>
-    </section>
-  );
-}
+        <div
+          className={cn(
+            "relative container mx-auto z-10",
+            containerMaxWidthClasses[containerMaxWidth],
+            containerClassName
+          )}
+        >
+          {children}
+        </div>
+      </section>
+    );
+  }
+);
 

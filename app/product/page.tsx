@@ -48,79 +48,88 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* Section Header - Lazy loaded (below the fold) */}
+      <LazySection minHeight="300px">
+        <Section>
+          <SectionHeader
+            title="Explore Our AI Solutions"
+            subtitle="Each product is built with cutting-edge technology to solve real-world business challenges and drive innovation."
+            subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
+          />
+        </Section>
+      </LazySection>
+
       {/* Products Grid - Lazy loaded (below the fold) */}
       <LazySection minHeight="800px">
         <Section>
-        <SectionHeader
-          title="Explore Our AI Solutions"
-          subtitle="Each product is built with cutting-edge technology to solve real-world business challenges and drive innovation."
-          subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
-        />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 max-w-6xl mx-auto px-4">
+            {products.map((product) => (
+              <Link key={product.id} href={`/product/${product.slug}`} className="block h-full">
+                <SpotlightCard className="h-full">
+                  <div className="p-5 md:p-6 h-full flex flex-col">
+                    {/* Product Icon */}
+                    {product.content?.hero?.centerIcon && (
+                      <div className="relative w-12 h-12 md:w-16 md:h-16 mb-5 flex items-center justify-center">
+                        <Image
+                          src={product.content.hero.centerIcon}
+                          alt={`${product.name} icon`}
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-contain filter-glow-primary"
+                        />
+                      </div>
+                    )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 max-w-6xl mx-auto px-4">
-          {products.map((product) => (
-            <Link key={product.id} href={`/product/${product.slug}`} className="block h-full">
-              <SpotlightCard className="h-full">
-                <div className="p-5 md:p-6 h-full flex flex-col">
-                  {/* Product Icon */}
-                  {product.content?.hero?.centerIcon && (
-                    <div className="relative w-12 h-12 md:w-16 md:h-16 mb-5 flex items-center justify-center">
-                      <Image
-                        src={product.content.hero.centerIcon}
-                        alt={`${product.name} icon`}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-contain filter-glow-primary"
-                      />
+                    {/* Product Name */}
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-gradient-radial-white">
+                      {product.name}
+                    </h3>
+
+                    {/* Product Description */}
+                    <p className="text-sm md:text-base text-light-gray-90 leading-relaxed mb-5 flex-1">
+                      {product.description}
+                    </p>
+
+                    {/* CTA */}
+                    <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all">
+                      <span>Learn More</span>
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        className="transition-transform group-hover:translate-x-1"
+                      >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
                     </div>
-                  )}
-
-                  {/* Product Name */}
-                  <h3 className="text-xl md:text-2xl font-bold mb-3 text-gradient-radial-white">
-                    {product.name}
-                  </h3>
-
-                  {/* Product Description */}
-                  <p className="text-sm md:text-base text-light-gray-90 leading-relaxed mb-5 flex-1">
-                    {product.description}
-                  </p>
-
-                  {/* CTA */}
-                  <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all">
-                    <span>Learn More</span>
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      className="transition-transform group-hover:translate-x-1"
-                    >
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
                   </div>
-                </div>
-              </SpotlightCard>
-            </Link>
-          ))}
-        </div>
+                </SpotlightCard>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      </LazySection>
 
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <p className="text-lg md:text-xl text-light-gray-90 mb-6">
-            Need help choosing the right solution for your business?
-          </p>
-          <Button
-            variant="primary"
-            size="lg"
-            className="rounded-[40px] px-8 py-6 text-lg font-semibold"
-            asChild
-          >
-            <Link href="/contact">Contact Us</Link>
-          </Button>
-        </div>
-      </Section>
+      {/* CTA Section - Lazy loaded (below the fold) */}
+      <LazySection minHeight="300px">
+        <Section>
+          <div className="text-center">
+            <p className="text-lg md:text-xl text-light-gray-90 mb-6">
+              Need help choosing the right solution for your business?
+            </p>
+            <Button
+              variant="primary"
+              size="lg"
+              className="rounded-[40px] px-8 py-6 text-lg font-semibold"
+              asChild
+            >
+              <Link href="/contact">Contact Us</Link>
+            </Button>
+          </div>
+        </Section>
       </LazySection>
     </main>
   );
