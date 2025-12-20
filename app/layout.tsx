@@ -9,6 +9,9 @@ import { WebVitalsProvider } from "@/components/providers/web-vitals-provider";
 import { CookieConsentProvider } from "@/components/providers/cookie-consent-context";
 import { CookieConsentBanner } from "@/components/ui/cookie-consent-banner";
 import { GoogleAnalyticsProvider } from "@/components/providers/google-analytics-provider";
+import { generateHomeMetadata } from "@/lib/seo/metadata";
+import { generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/structured-data";
+import { StructuredDataComponent } from "@/components/seo/structured-data";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,10 +25,7 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "ESAP AI",
-  description: "Security AI Platform to Protect the Entire Enterprise.",
-};
+export const metadata: Metadata = generateHomeMetadata();
 
 export default function RootLayout({
   children,
@@ -34,11 +34,18 @@ export default function RootLayout({
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
+  // Generate structured data for Organization and Website
+  const structuredData = [
+    generateOrganizationSchema(),
+    generateWebsiteSchema(),
+  ];
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
+        <StructuredDataComponent data={structuredData} />
         <CookieConsentProvider>
           <WebVitalsProvider>
             <ProductMenuProvider>

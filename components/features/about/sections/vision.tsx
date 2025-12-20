@@ -243,8 +243,8 @@ export function Vision() {
             subtitle="We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes."
           />
 
-          <div className="relative w-full flex items-center justify-center py-4 sm:py-6 md:py-8 z-0">
-            <div className="relative w-full max-w-[1200px] aspect-[1.8/1] md:aspect-[2.5/1] z-0">
+          <div className="relative w-full flex items-center justify-center py-4 sm:py-6 md:py-8 lg:py-10 z-0">
+            <div className="relative w-full max-w-[1200px] aspect-[1.5/1] sm:aspect-[1.8/1] md:aspect-[2.2/1] lg:aspect-[2.5/1] z-0">
               <div
                 ref={dotCircleContainerRef}
                 className="absolute left-0 right-0 gsap-fade-in-optimized z-20 [mix-blend-mode:screen] opacity-0 top-[10%] h-full [isolation:isolate]"
@@ -256,14 +256,14 @@ export function Vision() {
                 ref={robotWrapperRef}
                 className="absolute left-1/2 -translate-x-1/2 z-20 animate-optimized top-[-15%]"
               >
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] -z-10 pointer-events-none [background:radial-gradient(circle,rgba(19,245,132,0.6)_0%,rgba(19,245,132,0.3)_40%,transparent_70%)] [filter:blur(50px)] [transform:translateZ(0)]" />
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[250px] md:w-[300px] h-[200px] sm:h-[250px] md:h-[300px] -z-10 pointer-events-none [background:radial-gradient(circle,rgba(19,245,132,0.6)_0%,rgba(19,245,132,0.3)_40%,transparent_70%)] [filter:blur(50px)] [transform:translateZ(0)]" />
 
                 <div
                   ref={robotRef}
                   className="gsap-fade-scale-in opacity-0 translate-y-[50px] scale-[0.8]"
                 >
                   <Robot
-                    className="w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px] h-auto object-contain"
+                    className="w-[100px] sm:w-[130px] md:w-[160px] lg:w-[200px] xl:w-[220px] h-auto object-contain"
                     width={220}
                     height={220}
                   />

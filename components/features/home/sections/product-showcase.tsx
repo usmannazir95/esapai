@@ -193,7 +193,7 @@ export function ProductShowcase() {
         />
 
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-4 [perspective:1000px] [transform-style:preserve-3d]"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 max-w-7xl mx-auto px-4 sm:px-6 [perspective:1000px] [transform-style:preserve-3d]"
         >
           {products.map((product, index) => {
             const iconSrc = product.icon ?? product.content?.hero?.centerIcon;
@@ -219,10 +219,10 @@ export function ProductShowcase() {
                 }}
               >
                 <SpotlightCard className="h-full">
-                  <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
+                  <div className="p-4 sm:p-5 md:p-6 lg:p-8 h-full flex flex-col">
                     {iconSrc && (
                       <div
-                        className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-4 sm:mb-5 md:mb-6 flex items-center justify-center"
+                        className="relative w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 mb-3 sm:mb-4 md:mb-5 lg:mb-6 flex items-center justify-center"
                         ref={(el) => {
                           if (cardContentRefs.current[index]) {
                             cardContentRefs.current[index].icon = el;
@@ -240,7 +240,7 @@ export function ProductShowcase() {
                     )}
 
                     <h3
-                      className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gradient-radial-white"
+                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 text-gradient-radial-white"
                       ref={(el) => {
                         if (cardContentRefs.current[index]) {
                           cardContentRefs.current[index].title = el;
@@ -251,7 +251,7 @@ export function ProductShowcase() {
                     </h3>
 
                     <p
-                      className="text-sm sm:text-base md:text-lg text-light-gray-90 leading-relaxed mb-4 sm:mb-5 md:mb-6 flex-1"
+                      className="text-xs sm:text-sm md:text-base lg:text-lg text-light-gray-90 leading-relaxed mb-3 sm:mb-4 md:mb-5 lg:mb-6 flex-1"
                       ref={(el) => {
                         if (cardContentRefs.current[index]) {
                           cardContentRefs.current[index].description = el;
@@ -262,7 +262,7 @@ export function ProductShowcase() {
                     </p>
 
                     <div
-                      className={cn("btn-surface text-sm sm:text-base font-semibold mt-auto w-fit transition-all")}
+                      className={cn("btn-surface text-xs sm:text-sm md:text-base font-semibold mt-auto w-fit transition-all min-h-[36px] sm:min-h-[40px]")}
                       ref={(el) => {
                         if (cardContentRefs.current[index]) {
                           cardContentRefs.current[index].cta = el;

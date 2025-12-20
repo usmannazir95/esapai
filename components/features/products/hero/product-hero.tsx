@@ -49,7 +49,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
   const iconAlt = centerIconAlt || `${title} Icon`;
 
   return (
-    <section className="relative w-full overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
+    <section className="relative w-full overflow-hidden bg-dark pt-20 sm:pt-24 md:pt-32 lg:pt-40 pb-12 sm:pb-16 md:pb-20 lg:pb-32">
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden w-full">
         <div className="absolute inset-0 w-full h-full left-0 right-0">
           <div className="absolute inset-0 w-full h-full left-0 right-0 relative overflow-hidden">
@@ -78,47 +78,39 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
         </div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center">
         <div className="max-w-6xl mx-auto w-full">
-          <div className="text-center mb-8 md:mb-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 leading-tight text-gradient-primary">
+          <div className="text-center mb-6 sm:mb-8 md:mb-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight text-gradient-primary">
               {title}
             </h1>
 
-            <div className="mb-6 md:mb-8 space-y-2">
+            <div className="mb-5 sm:mb-6 md:mb-8 space-y-1.5 sm:space-y-2">
               {subtitle.map((line, index) => (
                 <p
                   key={index}
-                  className="text-base md:text-lg lg:text-xl text-light-gray-90"
+                  className="text-sm sm:text-base md:text-lg lg:text-xl text-light-gray-90"
                 >
                   {line}
                 </p>
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-5">
               <Button
                 variant="primary"
                 size="lg"
-                className="rounded-[40px] px-6 py-4 md:px-8 md:py-6 text-base md:text-lg font-semibold min-w-[160px]"
+                className="rounded-[32px] sm:rounded-[40px] px-5 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-w-[140px] sm:min-w-[160px] min-h-[44px] sm:min-h-[48px]"
                 asChild
               >
                 <Link href="#explore">Explore Solution</Link>
               </Button>
 
-              <Button
-                variant="watch-demo"
-                size="lg"
-                className="rounded-[40px] px-6 py-4 md:px-8 md:py-6 text-base md:text-lg font-semibold min-w-[160px]"
-                asChild
-              >
-                <Link href="#demo">Watch Demo</Link>
-              </Button>
             </div>
           </div>
 
           <div className="relative z-20 flex items-center justify-center">
-            <div className="w-full h-[450px] md:h-[500px] relative">
+            <div className="w-full h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] relative">
               <ProductHaloFlow
                 haloScale={1.0}
                 centerNode={{
@@ -131,7 +123,9 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
                           alt={iconAlt}
                           width={96}
                           height={96}
-                          className="w-20 h-20 md:w-24 md:h-24 object-contain"
+                          priority
+                          sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
+                          className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain"
                         />
                       ) : (
                         <svg
@@ -140,7 +134,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
-                          className="w-20 h-20 md:w-24 md:h-24"
+                          className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24"
                         >
                           <path
                             d="M12 2L2 7L12 12L22 7L12 2Z"

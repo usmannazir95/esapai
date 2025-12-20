@@ -5,8 +5,8 @@ import type { CaseStudyWithUrls } from "@/lib/case-studies";
 import { useCaseStudyContent } from "@/lib/hooks/use-case-study-content";
 import { Section } from "@/components/ui/section";
 import { Timeline } from "../sections/timeline";
-import { CardSkeleton } from "@/components/ui/skeletons";
 import { CaseStudyHero } from "../hero/case-study-hero";
+import { GlobalLoader } from "@/components/ui/global-loader";
 
 const LazySection = dynamic(() =>
   import("@/components/ui/lazy-section").then((mod) => ({
@@ -28,13 +28,7 @@ export function CaseStudyPage({
   });
 
   if (loading && !caseStudy) {
-    return (
-      <div className="grid gap-4 p-6 md:grid-cols-2">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <CardSkeleton key={index} lines={3} />
-        ))}
-      </div>
-    );
+    return <GlobalLoader message="Loading case study" subMessage="Fetching case study details" />;
   }
 
   if (error && !caseStudy) {

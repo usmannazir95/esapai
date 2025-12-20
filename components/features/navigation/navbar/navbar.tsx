@@ -193,9 +193,9 @@ export function Navbar() {
             : "-translate-y-full opacity-0 pointer-events-none"
         }`}
       >
-        <div className="container mx-auto px-4 py-3 sm:py-4 md:py-5">
-          <div className="mx-auto w-full max-w-5xl bg-white-opacity-10 backdrop-blur-lg rounded-[40px] pl-4 sm:pl-6 md:pl-8 pr-2 py-2 sm:py-2.5 md:py-3">
-            <div className="flex items-center justify-between gap-4 sm:gap-6 md:gap-8">
+        <div className="container mx-auto px-3 sm:px-4 py-2.5 sm:py-3 md:py-4 lg:py-5">
+          <div className="mx-auto w-full max-w-5xl bg-white-opacity-10 backdrop-blur-lg rounded-[32px] sm:rounded-[40px] pl-3 sm:pl-4 md:pl-6 lg:pl-8 pr-2 sm:pr-2.5 md:pr-3 py-2 sm:py-2.5 md:py-3">
+            <div className="flex items-center justify-between gap-3 sm:gap-4 md:gap-6 lg:gap-8">
               {/* Logo */}
               <Link
                 href="/"
@@ -207,12 +207,12 @@ export function Navbar() {
                   alt="ESAP Logo"
                   width={65}
                   height={21}
-                  className="h-auto w-auto max-w-[50px] sm:max-w-[65px]"
+                  className="h-auto w-auto max-w-[45px] sm:max-w-[55px] md:max-w-[65px]"
                 />
               </Link>
 
               {/* Desktop Navigation Links */}
-              <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
+              <div className="hidden md:flex items-center gap-4 lg:gap-6 flex-1 justify-center">
                 <NavLinkItem
                   href="/"
                   label="Home"
@@ -295,13 +295,13 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 z-50 w-full max-w-sm h-full bg-white-opacity-10 backdrop-blur-lg shadow-2xl md:hidden transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 z-50 w-full max-w-xs sm:max-w-sm h-full bg-white-opacity-10 backdrop-blur-lg shadow-2xl md:hidden transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Mobile Menu Header */}
-          <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/10">
+          <div className="flex items-center justify-between p-4 sm:p-5 md:p-6 border-b border-white/10">
             <Link
               href="/"
               className="flex items-center gap-2"
@@ -325,18 +325,18 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Links */}
-          <nav className="flex flex-col flex-1 p-4 sm:p-6 overflow-y-auto">
+          <nav className="flex flex-col flex-1 p-4 sm:p-5 md:p-6 overflow-y-auto">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
+              className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${
                 isActive("/")
                   ? "is-active text-primary"
                   : "text-light-gray hover:text-primary"
               }`}
             >
               <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-lg font-medium">Home</span>
+              <span className="relative z-10 text-base sm:text-lg font-medium">Home</span>
             </Link>
 
             <MobileAccordion
@@ -370,40 +370,40 @@ export function Navbar() {
             <Link
               href="/about"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
+              className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${
                 isActive("/about")
                   ? "is-active text-primary"
                   : "text-light-gray hover:text-primary"
               }`}
             >
               <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-lg font-medium">About Us</span>
+              <span className="relative z-10 text-base sm:text-lg font-medium">About Us</span>
             </Link>
 
             <Link
               href="/case-study"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
+              className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${
                 isActive("/case-study")
                   ? "is-active text-primary"
                   : "text-light-gray hover:text-primary"
               }`}
             >
               <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-lg font-medium">Case Study</span>
+              <span className="relative z-10 text-base sm:text-lg font-medium">Case Study</span>
             </Link>
 
             <Link
               href="/contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 mb-2 ${
+              className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${
                 isActive("/contact")
                   ? "is-active text-primary"
                   : "text-light-gray hover:text-primary"
               }`}
             >
               <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-lg font-medium">Contact</span>
+              <span className="relative z-10 text-base sm:text-lg font-medium">Contact</span>
             </Link>
           </nav>
         </div>

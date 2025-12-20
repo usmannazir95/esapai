@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductBySlug, products } from "@/lib/products";
 import { ProductPage } from "@/components/pages/product/product-page";
+import { generateProductMetadata } from "@/lib/seo/metadata";
+import { generateProductSchema } from "@/lib/seo/structured-data";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { StructuredDataComponent } from "@/components/seo/structured-data";
 
 interface ProductSlugPageProps {
   params: Promise<{
@@ -14,6 +19,22 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({
+  params,
+}: ProductSlugPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const product = getProductBySlug(slug);
+
+  if (!product) {
+    return {
+      title: "Product Not Found",
+      description: "The requested product could not be found.",
+    };
+  }
+
+  return generateProductMetadata(product.name, product.description, slug);
+}
+
 export default async function ProductSlugPage({ params }: ProductSlugPageProps) {
   const { slug } = await params;
   const productData = getProductBySlug(slug);
@@ -22,10 +43,34 @@ export default async function ProductSlugPage({ params }: ProductSlugPageProps) 
     notFound();
   }
 
-  // Extract content configurations with fallbacks
+  // Generate structured data
+  const productImage =
+    productData.content?.hero?.centerIcon ||
+    productData.icon ||
+    "/products/default-product.svg";
+
+  const structuredData = [
+    generateProductSchema({
+      name: productData.name,
+      description: productData.description,
+      image: productImage,
+      url: `/product/${slug}`,
+      brand: "ESAP AI",
+      category: "AI Software",
+    }),
+    generateBreadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Products", url: "/product" },
+      { name: productData.name, url: `/product/${slug}` },
+    ]),
+  ];
+
   return (
-    <main className="relative">
-      <ProductPage slug={slug} initialProduct={productData} />
-    </main>
+    <>
+      <StructuredDataComponent data={structuredData} />
+      <main className="relative">
+        <ProductPage slug={slug} initialProduct={productData} />
+      </main>
+    </>
   );
 }

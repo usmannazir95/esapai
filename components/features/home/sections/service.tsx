@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import gsap from "gsap";
@@ -128,8 +128,10 @@ const DESKTOP_ITEMS = [
 
 export function Service() {
   const ellipseRef = useRef<HTMLDivElement>(null);
+  const ellipseContainerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const rotationAnimationRef = useRef<gsap.core.Tween | null>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const anim = useGSAPAnimations(sectionRef as React.RefObject<HTMLElement>);
 
@@ -148,8 +150,22 @@ export function Service() {
     () => {
       if (prefersReducedMotion()) return;
       if (!ellipseRef.current) return;
+      // Wait for image to load before setting transform origin
+      if (!imageLoaded) return;
 
-      gsap.set(ellipseRef.current, { transformOrigin: "50% 50%" });
+      // Ensure element is properly centered before setting transform origin
+      const rect = ellipseRef.current.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) {
+        // Element not ready yet, will retry when imageLoaded changes
+        return;
+      }
+
+      // Set transform origin only after element is properly sized and positioned
+      gsap.set(ellipseRef.current, { 
+        transformOrigin: "50% 50%",
+        x: 0,
+        y: 0,
+      });
 
       const rotationTween = gsap.to(ellipseRef.current, {
         rotation: 360,
@@ -166,8 +182,93 @@ export function Service() {
         rotationAnimationRef.current = null;
       };
     },
-    { scope: ellipseRef, dependencies: [isInView] }
+    { scope: ellipseRef, dependencies: [isInView, imageLoaded] }
   );
+
+  // Ensure ellipse is properly centered after image loads and container is ready
+  useEffect(() => {
+    if (!ellipseRef.current || !ellipseContainerRef.current) return;
+
+    let timeoutId: NodeJS.Timeout;
+    let rafId: number;
+    const img = ellipseContainerRef.current.querySelector('img') as HTMLImageElement | null;
+
+    const checkAndCenter = () => {
+      if (!ellipseRef.current) return;
+      
+      const container = ellipseRef.current.parentElement;
+      if (!container) return;
+
+      // Ensure container has dimensions
+      const containerRect = container.getBoundingClientRect();
+      if (containerRect.width === 0 || containerRect.height === 0) {
+        // Container not ready yet, try again
+        rafId = requestAnimationFrame(checkAndCenter);
+        return;
+      }
+
+      // Check if image is loaded and has dimensions
+      const isImageReady = img && img.complete && img.naturalWidth > 0;
+      const ellipseRect = ellipseRef.current.getBoundingClientRect();
+      
+      if (isImageReady && ellipseRect.width > 0 && ellipseRect.height > 0) {
+        setImageLoaded(true);
+        // Ensure proper centering - the CSS classes should handle this, but reset any GSAP transforms
+        if (ellipseRef.current) {
+          // Clear any transforms that might interfere with CSS centering
+          gsap.set(ellipseRef.current, {
+            x: 0,
+            y: 0,
+            clearProps: "x,y,transform",
+          });
+          
+          // Set transform origin for rotation after a frame to ensure layout is stable
+          requestAnimationFrame(() => {
+            if (ellipseRef.current) {
+              gsap.set(ellipseRef.current, {
+                transformOrigin: "50% 50%",
+              });
+            }
+          });
+        }
+      } else if (!isImageReady && img) {
+        // Image not ready, check again
+        rafId = requestAnimationFrame(checkAndCenter);
+      }
+    };
+
+    // Initial check after DOM is ready
+    rafId = requestAnimationFrame(() => {
+      checkAndCenter();
+      
+      // Listen for image load
+      if (img) {
+        if (img.complete && img.naturalWidth > 0) {
+          // Image already loaded
+          checkAndCenter();
+        } else {
+          // Wait for image to load
+          const handleLoad = () => {
+            checkAndCenter();
+          };
+          img.addEventListener('load', handleLoad, { once: true });
+          img.addEventListener('error', handleLoad, { once: true });
+        }
+      }
+      
+      // Fallback: check after a delay to handle edge cases
+      timeoutId = setTimeout(() => {
+        if (!imageLoaded) {
+          checkAndCenter();
+        }
+      }, 500);
+    });
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   // Header animation
   useGSAP(
@@ -237,8 +338,8 @@ export function Service() {
         />
 
         {/* MOBILE & TABLET LAYOUT (< 1024px) */}
-        <div className="lg:hidden flex flex-col items-center gap-6 sm:gap-8 py-8">
-          <div className="w-full max-w-2xl space-y-4 sm:space-y-6">
+        <div className="lg:hidden flex flex-col items-center gap-4 sm:gap-6 md:gap-8 py-6 sm:py-8">
+          <div className="w-full max-w-2xl space-y-3 sm:space-y-4 md:space-y-6">
             {MOBILE_ITEMS.map((item) => (
               <ServiceItem
                 key={item.key}
@@ -253,24 +354,27 @@ export function Service() {
 
         {/* DESKTOP LAYOUT (≥ 1024px) - Circular */}
         <div className="hidden lg:block">
-          <div className="relative w-full min-h-[700px] xl:min-h-[800px] flex items-center justify-center py-16 -mt-16 overflow-visible">
+          <div className="relative w-full min-h-[700px] xl:min-h-[800px] 2xl:min-h-[900px] flex items-center justify-center py-12 lg:py-16 xl:py-20 -mt-12 lg:-mt-16 overflow-visible">
             {/* Ellipse around the brain - Rotating */}
             <div
               ref={ellipseRef}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none w-[600px] h-[600px] xl:w-[650px] xl:h-[650px] will-change-transform"
             >
-              <Image
-                src="/landing/service/ellipse.svg"
-                alt="Ellipse glow"
-                width={600}
-                height={600}
-                className="w-full h-full max-w-[600px] xl:max-w-[650px] object-contain"
-              />
+              <div ref={ellipseContainerRef} className="w-full h-full">
+                <Image
+                  src="/landing/service/ellipse.svg"
+                  alt="Ellipse glow"
+                  width={600}
+                  height={600}
+                  className="w-full h-full object-contain"
+                  priority
+                />
+              </div>
             </div>
 
             {/* Central Brain */}
             <div className="relative z-20 animate-float overflow-visible">
-              <Brain className="w-full h-full max-w-[350px] xl:max-w-[400px] object-contain" />
+              <Brain className="w-full h-full max-w-[300px] lg:max-w-[350px] xl:max-w-[400px] 2xl:max-w-[450px] object-contain" />
             </div>
 
             {/* Service Modules - Circular Arrangement */}

@@ -18,13 +18,13 @@ interface TeamCardProps {
 }
 
 export function TeamCard({ member, isLarge = false, className = "" }: TeamCardProps) {
-  const imageHeight = isLarge ? "h-64 md:h-72" : "h-56 md:h-60";
+  const imageHeight = isLarge ? "h-56 sm:h-64 md:h-72" : "h-48 sm:h-56 md:h-60";
 
   return (
     <div
       className={cn(
         "group relative w-full",
-        isLarge ? "max-w-md" : "max-w-sm flex-1",
+        isLarge ? "max-w-sm sm:max-w-md" : "max-w-xs sm:max-w-sm flex-1",
         className
       )}
     >
@@ -35,7 +35,7 @@ export function TeamCard({ member, isLarge = false, className = "" }: TeamCardPr
             src={member.image}
             alt={member.name}
             fill
-            sizes="(min-width: 768px) 320px, 100vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
@@ -50,16 +50,16 @@ export function TeamCard({ member, isLarge = false, className = "" }: TeamCardPr
         </div>
 
         {/* Content */}
-        <div className="relative px-6 pt-6 pb-8 md:px-8 md:pb-10 space-y-4 bg-linear-to-b from-[#0d271b]/80 via-[#0a1b14]/70 to-[#06130d]/90">
-          <span className="inline-flex items-center rounded-full border border-[#1EF38A]/40 bg-[#1EF38A]/10 px-4 py-1 text-sm font-semibold text-[#1EF38A] shadow-[0_0_24px_rgba(30,243,138,0.45)]">
+        <div className="relative px-4 sm:px-6 md:px-8 pt-4 sm:pt-5 md:pt-6 pb-6 sm:pb-7 md:pb-8 lg:pb-10 space-y-3 sm:space-y-4 bg-linear-to-b from-[#0d271b]/80 via-[#0a1b14]/70 to-[#06130d]/90">
+          <span className="inline-flex items-center rounded-full border border-[#1EF38A]/40 bg-[#1EF38A]/10 px-3 sm:px-4 py-1 text-xs sm:text-sm font-semibold text-[#1EF38A] shadow-[0_0_24px_rgba(30,243,138,0.45)]">
             {member.role}
           </span>
 
-          <div className="space-y-2">
-            <h3 className="text-2xl md:text-3xl font-semibold text-white drop-shadow-[0_4px_20px_rgba(14,255,164,0.25)]">
+          <div className="space-y-1.5 sm:space-y-2">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white drop-shadow-[0_4px_20px_rgba(14,255,164,0.25)]">
               {member.name}
             </h3>
-            <p className="text-sm md:text-base leading-relaxed text-light-gray-90">
+            <p className="text-xs sm:text-sm md:text-base leading-relaxed text-light-gray-90">
               {member.description}
             </p>
           </div>

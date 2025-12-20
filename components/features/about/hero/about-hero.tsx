@@ -191,7 +191,7 @@ export function AboutHero() {
         sectionRef.current = el;
         setIntersectionRef(el);
       }}
-      className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-24 pb-16 md:pt-32 md:pb-20"
+      className="relative min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] lg:min-h-[65vh] flex items-center justify-center overflow-hidden bg-dark pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-12 sm:pb-16 md:pb-20"
     >
       {/* Animated Frame Background */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
@@ -203,26 +203,26 @@ export function AboutHero() {
 
       <div
         ref={contentRef}
-        className="relative z-10 container mx-auto px-4"
+        className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8"
       >
         <div className="max-w-4xl mx-auto text-center">
           <h1
             ref={titleRef}
-            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight text-gradient-primary"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight text-gradient-primary"
           >
             About Us
           </h1>
 
-          <div className="mb-10 space-y-4">
+          <div className="mb-8 sm:mb-10 space-y-3 sm:space-y-4">
             <p
               ref={subtitleRef}
-              className="text-lg md:text-xl lg:text-2xl text-light-gray-90"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-light-gray-90"
             >
               Where Innovation Meets Productivity
             </p>
             <p
               ref={descriptionRef}
-              className="text-base md:text-lg text-white-opacity-70 max-w-3xl mx-auto"
+              className="text-sm sm:text-base md:text-lg text-white-opacity-70 max-w-3xl mx-auto px-2 sm:px-4"
             >
               Driven by agents, powered by automation, built for what&apos;s next.
               We&apos;re a team of visionaries dedicated to transforming how

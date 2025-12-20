@@ -16,11 +16,10 @@ const TILE_SIZE = 1;
 const TILE_GAP = 0.1;
 
 interface InstancedGridProps {
-  mousePos: React.MutableRefObject<THREE.Vector2>;
   gridSize: number;
 }
 
-const InstancedGrid: React.FC<InstancedGridProps> = memo(({ mousePos, gridSize }) => {
+const InstancedGrid: React.FC<InstancedGridProps> = memo(({ gridSize }) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   
@@ -89,23 +88,6 @@ const InstancedGrid: React.FC<InstancedGridProps> = memo(({ mousePos, gridSize }
         // Base Breathing Logic
         let py = Math.sin(time * 2 + phases[id]) * 0.1;
         
-        // Mouse Interaction Logic (Simple distance check from a focal point projected on floor)
-        // We approximate the mouse hit on the floor by checking X/Z distance relative to camera lookat
-        // A robust raycast for tiles every frame is heavy, so we simulate interaction 
-        // by creating a wave moving from center-bottom (viewer) outwards or following a "virtual cursor" on floor.
-        
-        // Let's make the "active" zone wander or react to simple mouse X
-        const mouseXWorld = mousePos.current.x * 20; // Scale -1..1 to world units
-        const mouseYWorld = mousePos.current.y * 10 + 5; // Tilt compensation
-        
-        const dist = Math.sqrt(Math.pow(px - mouseXWorld, 2) + Math.pow(pz - (mouseYWorld + 5), 2));
-        
-        // Ripple/Hover effect
-        if (dist < 4) {
-          const intensity = 1 - dist / 4;
-          py += intensity * 0.5; // Elevate
-        }
-        
         dummy.position.set(px, py - 2, pz); // -2 to lower the floor below UI
         dummy.scale.set(1, 1, 1);
         dummy.updateMatrix();
@@ -147,20 +129,10 @@ interface GridFloorProps {
 }
 
 const GridFloorComponent: React.FC<GridFloorProps> = ({ className = "", perspective = 'normal' }) => {
-  const mousePos = useRef(new THREE.Vector2(0, 0));
-  
   // Get performance tier and adaptive settings
   const performanceTier = useMemo(() => getPerformanceTier(), []);
   const quality = useMemo(() => getAdaptiveQuality(performanceTier), [performanceTier]);
   const gridSize = useMemo(() => getGridSize(performanceTier), [performanceTier]);
-  
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (typeof window === 'undefined') return;
-    // Normalize mouse -1 to 1
-    const x = (e.clientX / window.innerWidth) * 2 - 1;
-    const y = -(e.clientY / window.innerHeight) * 2 + 1;
-    mousePos.current.set(x, y);
-  };
 
   // Camera settings based on perspective mode
   const cameraConfig = perspective === 'dramatic' 
@@ -170,7 +142,6 @@ const GridFloorComponent: React.FC<GridFloorProps> = ({ className = "", perspect
   return (
     <div 
       className={`relative w-full h-full z-0 pointer-events-auto ${className}`}
-      onMouseMove={handleMouseMove}
       style={{ willChange: 'transform' }}
     >
       <Canvas 
@@ -192,7 +163,7 @@ const GridFloorComponent: React.FC<GridFloorProps> = ({ className = "", perspect
         <pointLight position={[10, 10, 10]} color="#06b6d4" intensity={2} />
         <pointLight position={[-10, 10, -10]} color="#13F584" intensity={2} />
         
-        <InstancedGrid mousePos={mousePos} gridSize={gridSize} />
+        <InstancedGrid gridSize={gridSize} />
         
         {/* Fog to hide the grid edge - match background color */}
         <fog attach="fog" args={['#000300', 4, 24]} />

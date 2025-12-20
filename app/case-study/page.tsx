@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getCaseStudies } from "@/lib/case-studies";
@@ -6,12 +7,31 @@ import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Button } from "@/components/ui/button";
 import { LazySection } from "@/components/ui/lazy-section";
+import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { StructuredDataComponent } from "@/components/seo/structured-data";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "Case Studies",
+  description:
+    "Explore real-world implementations of ESAP AI solutions. Discover how we transform businesses through innovative AI solutions and intelligent automation.",
+  path: "/case-study",
+});
 
 export default async function CaseStudiesPage() {
   const caseStudies = await getCaseStudies();
 
+  const structuredData = [
+    generateBreadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Case Studies", url: "/case-study" },
+    ]),
+  ];
+
   return (
-    <main className="relative">
+    <>
+      <StructuredDataComponent data={structuredData} />
+      <main className="relative">
       {/* Hero Section - Loads immediately (above the fold) */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark">
         {/* Animated Frame Background */}
@@ -30,11 +50,11 @@ export default async function CaseStudiesPage() {
         </div>
 
         {/* Main Content */}
-        <div className="relative z-10 container mx-auto px-4 py-16 flex flex-col items-center text-center max-w-4xl">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-gradient-primary">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 flex flex-col items-center text-center max-w-4xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight text-gradient-primary">
             Case Studies
           </h1>
-          <p className="text-lg md:text-xl text-light-gray-90 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-light-gray-90 max-w-2xl mx-auto px-2 sm:px-4">
             Where Innovation Meets Productivity Driven by agents Powered by automation Built for what&apos;s next
           </p>
         </div>
@@ -50,7 +70,7 @@ export default async function CaseStudiesPage() {
           />
 
           {caseStudies.length > 0 ? (
-            <div className="max-w-6xl mx-auto px-4">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
               {caseStudies.map((caseStudy, index) => {
                 const thumbnail = caseStudy.thumbnail ?? caseStudy.heroImages?.[0];
                 const displayTags = (caseStudy.tags ?? []).slice(0, 3);
@@ -65,7 +85,7 @@ export default async function CaseStudiesPage() {
                     className={
                       index === 0
                         ? "relative isolate"
-                        : "relative isolate mt-14 pt-14 border-t border-white/10"
+                        : "relative isolate mt-10 sm:mt-12 md:mt-14 pt-10 sm:pt-12 md:pt-14 border-t border-white/10"
                     }
                   >
                     {/* Glow background to highlight each case study (visual only) */}
@@ -79,18 +99,18 @@ export default async function CaseStudiesPage() {
                     />
 
                     {caseStudy.featured && (
-                      <div className="mb-3">
-                        <span className="inline-flex items-center rounded-full bg-primary/10 border border-primary/30 px-3 py-1 text-xs uppercase tracking-wide text-primary">
+                      <div className="mb-2 sm:mb-3">
+                        <span className="inline-flex items-center rounded-full bg-primary/10 border border-primary/30 px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs uppercase tracking-wide text-primary">
                           Featured
                         </span>
                       </div>
                     )}
 
-                    <h2 className="text-3xl md:text-4xl font-bold text-gradient-radial-white mb-6">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient-radial-white mb-4 sm:mb-5 md:mb-6">
                       {caseStudy.title}
                     </h2>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-center">
                       {/* Left: image + tags */}
                       <div>
                         <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden">
@@ -109,11 +129,11 @@ export default async function CaseStudiesPage() {
                         </div>
 
                         {displayTags.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mt-4">
+                          <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
                             {displayTags.map((tag) => (
                               <span
                                 key={tag}
-                                className="px-3 py-1 rounded-full bg-white-opacity-10 border border-white-opacity-20 text-sm text-light-gray-90"
+                                className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white-opacity-10 border border-white-opacity-20 text-xs sm:text-sm text-light-gray-90"
                               >
                                 {tag}
                               </span>
@@ -124,14 +144,14 @@ export default async function CaseStudiesPage() {
 
                       {/* Right: excerpt + button */}
                       <div className="max-w-xl">
-                        <p className="text-light-gray-90 text-base md:text-lg leading-relaxed mb-6">
+                        <p className="text-light-gray-90 text-sm sm:text-base md:text-lg leading-relaxed mb-5 sm:mb-6">
                           {excerpt}
                         </p>
 
                         <Button
                           variant="surface"
                           size="lg"
-                          className="case-study-view-btn relative z-10 rounded-[40px] px-10 py-6 text-base md:text-lg font-semibold"
+                          className="case-study-view-btn relative z-10 rounded-[32px] sm:rounded-[40px] px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
                           asChild
                         >
                           <Link href={`/case-study/${caseStudy.slug}`}>
@@ -153,14 +173,14 @@ export default async function CaseStudiesPage() {
           )}
 
           {/* CTA Section */}
-          <div className="mt-16 text-center">
-            <p className="text-lg md:text-xl text-light-gray-90 mb-6">
+          <div className="mt-12 sm:mt-14 md:mt-16 text-center">
+            <p className="text-base sm:text-lg md:text-xl text-light-gray-90 mb-5 sm:mb-6 px-4">
               Interested in learning more about our solutions?
             </p>
             <Button
               variant="primary"
               size="lg"
-              className="rounded-[40px] px-8 py-6 text-lg font-semibold"
+              className="rounded-[32px] sm:rounded-[40px] px-8 sm:px-10 md:px-12 lg:px-14 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
               asChild
             >
               <Link href="/contact">Contact</Link>
@@ -169,5 +189,6 @@ export default async function CaseStudiesPage() {
         </Section>
       </LazySection>
     </main>
+    </>
   );
 }

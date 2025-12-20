@@ -31,30 +31,30 @@ export default function NotFound() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-4 py-16 flex flex-col items-center text-center max-w-4xl">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 flex flex-col items-center text-center max-w-4xl">
         {/* Error Code */}
-        <div className="mb-8">
-          <h1 className="text-9xl md:text-[12rem] lg:text-[15rem] font-bold leading-none text-gradient-primary opacity-20">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-6xl sm:text-7xl md:text-9xl lg:text-[12rem] xl:text-[15rem] font-bold leading-none text-gradient-primary opacity-20">
             404
           </h1>
         </div>
 
         {/* Error Message */}
-        <div className="mb-8">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gradient-primary">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 text-gradient-primary">
             Page Not Found
           </h2>
-          <p className="text-lg md:text-xl text-light-gray-90 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-light-gray-90 max-w-2xl mx-auto px-2 sm:px-4">
             The page you&apos;re looking for doesn&apos;t exist or has been moved to a different location.
           </p>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12">
           <Button
             variant="primary"
             size="lg"
-            className="rounded-[40px] px-8 py-6 text-lg font-semibold min-w-[180px]"
+            className="rounded-[32px] sm:rounded-[40px] px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-w-[140px] sm:min-w-[180px] min-h-[44px] sm:min-h-[48px]"
             asChild
           >
             <Link href="/">Go Home</Link>
@@ -62,7 +62,7 @@ export default function NotFound() {
           <Button
             variant="watch-demo"
             size="lg"
-            className="rounded-[40px] px-8 py-6 text-lg font-semibold min-w-[180px]"
+            className="rounded-[32px] sm:rounded-[40px] px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-w-[140px] sm:min-w-[180px] min-h-[44px] sm:min-h-[48px]"
             asChild
           >
             <Link href="/contact">Contact Us</Link>
@@ -70,32 +70,32 @@ export default function NotFound() {
         </div>
 
         {/* Helpful Links */}
-        <div className="product-card p-6 md:p-8 max-w-md">
-          <h3 className="text-xl md:text-2xl font-bold mb-4 text-gradient-radial-white">
+        <div className="product-card p-4 sm:p-5 md:p-6 lg:p-8 max-w-md w-full">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-gradient-radial-white">
             Quick Links
           </h3>
-          <nav className="flex flex-col sm:flex-row gap-4 justify-center">
+          <nav className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link
               href="/"
-              className="text-primary hover:text-primary-opacity-90 transition-colors text-base"
+              className="text-primary hover:text-primary-opacity-90 transition-colors text-sm sm:text-base min-h-[44px] sm:min-h-[40px] flex items-center justify-center"
             >
               Home
             </Link>
             <Link
               href="/about"
-              className="text-primary hover:text-primary-opacity-90 transition-colors text-base"
+              className="text-primary hover:text-primary-opacity-90 transition-colors text-sm sm:text-base min-h-[44px] sm:min-h-[40px] flex items-center justify-center"
             >
               About
             </Link>
             <Link
               href="/product"
-              className="text-primary hover:text-primary-opacity-90 transition-colors text-base"
+              className="text-primary hover:text-primary-opacity-90 transition-colors text-sm sm:text-base min-h-[44px] sm:min-h-[40px] flex items-center justify-center"
             >
               Products
             </Link>
             <Link
               href="/service"
-              className="text-primary hover:text-primary-opacity-90 transition-colors text-base"
+              className="text-primary hover:text-primary-opacity-90 transition-colors text-sm sm:text-base min-h-[44px] sm:min-h-[40px] flex items-center justify-center"
             >
               Services
             </Link>

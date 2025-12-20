@@ -1,23 +1,50 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import type { Product } from "@/lib/products";
 import { useProductContent } from "@/lib/hooks/use-product-content";
-import { CardSkeleton } from "@/components/ui/skeletons";
 import { LazySection } from "@/components/ui/lazy-section";
 
+// Hero loads immediately - critical for LCP
 const ProductHeroSection = dynamic(
   () =>
     import("@/components/sections/hero/product-hero").then((mod) => ({
       default: mod.ProductHero,
     })),
+  {
+    loading: () => (
+      <div className="relative w-full overflow-hidden bg-dark pt-20 sm:pt-24 md:pt-32 lg:pt-40 pb-12 sm:pb-16 md:pb-20 lg:pb-32">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="text-center mb-6 sm:mb-8 md:mb-10">
+              <div className="h-12 sm:h-16 md:h-20 w-3/4 mx-auto mb-4 bg-white/10 rounded animate-pulse" />
+              <div className="h-6 sm:h-8 w-1/2 mx-auto mb-2 bg-white/5 rounded animate-pulse" />
+              <div className="h-6 sm:h-8 w-2/3 mx-auto bg-white/5 rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  }
 );
 
+// Below-the-fold sections - lazy loaded with SSR disabled for heavy components
 const MissionSection = dynamic(
   () =>
     import("@/components/sections/about/mission").then((mod) => ({
       default: mod.Mission,
     })),
+  {
+    ssr: true,
+    loading: () => (
+      <div className="p-6 bg-white/5 rounded-lg animate-pulse">
+        <div className="h-5 w-3/4 bg-white/10 rounded mb-4" />
+        <div className="h-4 w-full bg-white/5 rounded mb-2" />
+        <div className="h-4 w-full bg-white/5 rounded" />
+      </div>
+    ),
+  }
 );
 
 const AutomationHubSection = dynamic(
@@ -27,6 +54,20 @@ const AutomationHubSection = dynamic(
         default: mod.AutomationHub,
       }),
     ),
+  {
+    ssr: true,
+    loading: () => (
+      <div className="grid gap-4 md:grid-cols-2">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <div key={index} className="p-6 bg-white/5 rounded-lg animate-pulse">
+            <div className="h-5 w-3/4 bg-white/10 rounded mb-4" />
+            <div className="h-4 w-full bg-white/5 rounded mb-2" />
+            <div className="h-4 w-full bg-white/5 rounded" />
+          </div>
+        ))}
+      </div>
+    ),
+  }
 );
 
 const YouTubeVideoSection = dynamic(
@@ -34,6 +75,12 @@ const YouTubeVideoSection = dynamic(
     import("@/components/sections/shared/youtube-video").then((mod) => ({
       default: mod.YouTubeVideo,
     })),
+  {
+    ssr: false, // YouTube embeds don't need SSR
+    loading: () => (
+      <div className="w-full aspect-video bg-white/5 rounded-lg animate-pulse" />
+    ),
+  }
 );
 
 const PerformanceSection = dynamic(
@@ -43,6 +90,16 @@ const PerformanceSection = dynamic(
         default: mod.PerformanceSection,
       }),
     ),
+  {
+    ssr: true,
+    loading: () => (
+      <div className="p-6 bg-white/5 rounded-lg animate-pulse">
+        <div className="h-5 w-3/4 bg-white/10 rounded mb-4" />
+        <div className="h-4 w-full bg-white/5 rounded mb-2" />
+        <div className="h-4 w-full bg-white/5 rounded" />
+      </div>
+    ),
+  }
 );
 
 
@@ -52,29 +109,9 @@ interface ProductPageClientProps {
 }
 
 export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
-  const { product, loading, isFetching, error } = useProductContent(slug, {
+  const { product } = useProductContent(slug, {
     initialProduct,
   });
-
-  if (loading && !product) {
-    return (
-      <div className="flex flex-col gap-8 p-6">
-        <div className="space-y-4">
-          <div className="h-8 w-1/3 rounded-full bg-white/10" />
-          <div className="h-24 w-full rounded-3xl bg-white/5" />
-        </div>
-        <div className="grid gap-4 md:grid-cols-2">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <CardSkeleton key={index} lines={3} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (error && !product) {
-    return <ErrorState message={error} />;
-  }
 
   const hydratedProduct = product ?? initialProduct;
   const content = hydratedProduct.content ?? {};
@@ -85,63 +122,101 @@ export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
     ];
 
   return (
-    <div className="relative" aria-busy={isFetching}>
-      {isFetching && (
-        <div className="pointer-events-none fixed inset-x-0 top-0 z-40 flex justify-center">
-          <span className="mt-4 rounded-full bg-dark px-4 py-1 text-xs uppercase tracking-wide text-light-gray-90 animate-pulse-slow">
-            Updating content…
-          </span>
-        </div>
-      )}
+    <div className="relative">
 
       {/* Hero loads immediately - critical for LCP */}
-      <ProductHeroSection
-        title={hydratedProduct.name}
-        subtitle={heroSubtitle}
-        centerIcon={content.hero?.centerIcon}
-        centerIconAlt={content.hero?.centerIconAlt}
-        productSlug={hydratedProduct.slug}
-      />
+      <Suspense
+        fallback={
+          <div className="relative w-full overflow-hidden bg-dark pt-20 sm:pt-24 md:pt-32 lg:pt-40 pb-12 sm:pb-16 md:pb-20 lg:pb-32">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center">
+              <div className="max-w-6xl mx-auto w-full">
+                <div className="text-center mb-6 sm:mb-8 md:mb-10">
+                  <div className="h-12 sm:h-16 md:h-20 w-3/4 mx-auto mb-4 bg-white/10 rounded animate-pulse" />
+                  <div className="h-6 sm:h-8 w-1/2 mx-auto mb-2 bg-white/5 rounded animate-pulse" />
+                  <div className="h-6 sm:h-8 w-2/3 mx-auto bg-white/5 rounded animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      >
+        <ProductHeroSection
+          title={hydratedProduct.name}
+          subtitle={heroSubtitle}
+          centerIcon={content.hero?.centerIcon}
+          centerIconAlt={content.hero?.centerIconAlt}
+          productSlug={hydratedProduct.slug}
+        />
+      </Suspense>
 
       {/* Below-the-fold sections load progressively */}
       <LazySection minHeight="600px">
-        <MissionSection
-          title={content.mission?.title}
-          subtitle={content.mission?.subtitle}
-          cards={content.mission?.cards}
-        />
+        <Suspense
+          fallback={
+            <div className="p-6 bg-white/5 rounded-lg animate-pulse">
+              <div className="h-5 w-3/4 bg-white/10 rounded mb-4" />
+              <div className="h-4 w-full bg-white/5 rounded mb-2" />
+              <div className="h-4 w-full bg-white/5 rounded" />
+            </div>
+          }
+        >
+          <MissionSection
+            title={content.mission?.title}
+            subtitle={content.mission?.subtitle}
+            cards={content.mission?.cards}
+          />
+        </Suspense>
       </LazySection>
 
       <LazySection minHeight="800px">
-        <AutomationHubSection
-          title={content.automationHub?.title}
-          subtitle={content.automationHub?.subtitle}
-          features={content.automationHub?.features}
-        />
+        <Suspense
+          fallback={
+            <div className="grid gap-4 md:grid-cols-2">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="p-6 bg-white/5 rounded-lg animate-pulse">
+                  <div className="h-5 w-3/4 bg-white/10 rounded mb-4" />
+                  <div className="h-4 w-full bg-white/5 rounded mb-2" />
+                  <div className="h-4 w-full bg-white/5 rounded" />
+                </div>
+              ))}
+            </div>
+          }
+        >
+          <AutomationHubSection
+            title={content.automationHub?.title}
+            subtitle={content.automationHub?.subtitle}
+            features={content.automationHub?.features}
+          />
+        </Suspense>
       </LazySection>
 
       <LazySection minHeight="600px">
-        <YouTubeVideoSection
-          videoId={content.youtubeVideo?.videoId ?? "ED2H_y6dmC8"}
-          title={content.youtubeVideo?.title}
-        />
+        <Suspense
+          fallback={
+            <div className="w-full aspect-video bg-white/5 rounded-lg animate-pulse" />
+          }
+        >
+          <YouTubeVideoSection
+            videoId={content.youtubeVideo?.videoId ?? "ED2H_y6dmC8"}
+            title={content.youtubeVideo?.title}
+          />
+        </Suspense>
       </LazySection>
 
       <LazySection minHeight="600px">
-        <PerformanceSection metrics={content.performance?.metrics} />
+        <Suspense
+          fallback={
+            <div className="p-6 bg-white/5 rounded-lg animate-pulse">
+              <div className="h-5 w-3/4 bg-white/10 rounded mb-4" />
+              <div className="h-4 w-full bg-white/5 rounded mb-2" />
+              <div className="h-4 w-full bg-white/5 rounded" />
+            </div>
+          }
+        >
+          <PerformanceSection metrics={content.performance?.metrics} />
+        </Suspense>
       </LazySection>
     </div>
-  );
-}
-
-function ErrorState({ message }: { message: string }) {
-  return (
-    <section className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-6 text-center">
-      <p className="text-sm uppercase tracking-[0.3em] text-white/60">
-        Unable to load product
-      </p>
-      <p className="text-lg text-white/70">{message}</p>
-    </section>
   );
 }
 

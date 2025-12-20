@@ -26,7 +26,7 @@ interface ServiceFeaturesProps {
 // Custom Central Node Component
 function CentralNode({ data }: { data: { label: string } }) {
   return (
-    <div className="relative product-card p-8 md:p-10 min-w-[200px] group">
+    <div className="relative product-card p-6 md:p-8 lg:p-10 min-w-[180px] md:min-w-[200px] group">
       <Handle
         type="source"
         position={Position.Top}
@@ -51,7 +51,7 @@ function CentralNode({ data }: { data: { label: string } }) {
         <div className="w-20 h-20 mb-4 flex items-center justify-center">
           <CentralNodeIcon />
         </div>
-        <h3 className="text-2xl md:text-3xl font-bold text-gradient-radial-white text-center">
+        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient-radial-white text-center">
           {data.label}
         </h3>
       </div>
@@ -65,7 +65,7 @@ function CentralNode({ data }: { data: { label: string } }) {
 // Custom Feature Node Component
 function FeatureNode({ data }: { data: FeatureBlockProps }) {
   return (
-    <div className="relative product-card p-6 md:p-8 min-w-[250px] max-w-[300px] group">
+    <div className="relative product-card p-4 sm:p-5 md:p-6 lg:p-8 min-w-[220px] sm:min-w-[250px] max-w-[280px] sm:max-w-[300px] group">
       <Handle
         type="target"
         position={Position.Top}
@@ -86,10 +86,10 @@ function FeatureNode({ data }: { data: FeatureBlockProps }) {
         position={Position.Left}
         style={{ background: "rgba(19, 245, 132, 0.8)" }}
       />
-      <h3 className="text-xl md:text-2xl font-bold mb-4 text-gradient-radial-white">
+      <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 md:mb-4 text-gradient-radial-white">
         {data.title}
       </h3>
-      <p className="text-base md:text-lg text-light-gray-90 leading-relaxed">
+      <p className="text-sm sm:text-base md:text-lg text-light-gray-90 leading-relaxed">
         {data.description}
       </p>
       <div className="absolute inset-0 rounded-[32px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -242,9 +242,9 @@ export function ServiceFeatures({
     const nodesList: Node[] = [];
     const edgesList: Edge[] = [];
 
-    // Central node at the center
-    const centerX = 600;
-    const centerY = 400;
+    // Central node at the center - responsive positioning
+    const centerX = typeof window !== 'undefined' && window.innerWidth >= 1280 ? 600 : 500;
+    const centerY = typeof window !== 'undefined' && window.innerWidth >= 1280 ? 400 : 350;
     
     nodesList.push({
       id: "central",
@@ -359,15 +359,18 @@ export function ServiceFeatures({
         subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
       />
 
-      {/* Mobile/Tablet View - Grid Layout */}
-      <div className="block lg:hidden max-w-4xl mx-auto px-4 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Mobile/Tablet View - Vertically Stacked Cards */}
+      <div className="block lg:hidden max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pb-8 sm:pb-10 md:pb-12">
+        <div className="flex flex-col gap-4 sm:gap-5 md:gap-6">
           {features.map((feature, index) => (
-            <div key={index} className="product-card p-6 md:p-8 rounded-[24px] border border-white-opacity-10 bg-white-opacity-5">
-              <h3 className="text-xl font-bold mb-3 text-gradient-radial-white">
+            <div 
+              key={index} 
+              className="product-card p-5 sm:p-6 md:p-7 lg:p-8 rounded-[32px] sm:rounded-[36px] md:rounded-[40px] group transition-all duration-300 hover:shadow-glow-primary-feature"
+            >
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-gradient-radial-white">
                 {feature.title}
               </h3>
-              <p className="text-base text-light-gray-90 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-light-gray-90 leading-relaxed">
                 {feature.description}
               </p>
             </div>
@@ -376,7 +379,7 @@ export function ServiceFeatures({
       </div>
 
       {/* Desktop View - Interactive Graph */}
-      <div className="hidden lg:block relative w-full h-[700px] md:h-[900px] max-w-7xl mx-auto service-features-flow">
+      <div className="hidden lg:block relative w-full h-[600px] lg:h-[700px] xl:h-[800px] 2xl:h-[900px] max-w-7xl mx-auto service-features-flow">
         <ConnectionDotsMarkers />
         <style dangerouslySetInnerHTML={{ __html: `
           .service-features-flow {
@@ -439,9 +442,9 @@ export function ServiceFeatures({
           connectionMode={ConnectionMode.Loose}
           fitView
           fitViewOptions={{
-            padding: 0.2,
-            maxZoom: 0.7,
-            minZoom: 0.7,
+            padding: 0.15,
+            maxZoom: 0.8,
+            minZoom: 0.6,
           }}
           nodesDraggable={false}
           nodesConnectable={false}

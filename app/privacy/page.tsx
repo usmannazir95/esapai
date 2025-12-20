@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { LegalPage, LegalSection, LegalParagraph, LegalList } from "@/components/pages/legal-page";
+import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | ESAP AI",
-  description: "ESAP AI Privacy Policy - Learn how we collect, use, and protect your personal information.",
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: "Privacy Policy",
+  description:
+    "ESAP AI Privacy Policy - Learn how we collect, use, and protect your personal information. Understand your rights and our commitment to data security.",
+  path: "/privacy",
+});
 
 export default function PrivacyPolicyPage() {
   const lastUpdated = "December 2025";

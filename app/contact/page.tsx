@@ -1,10 +1,31 @@
+import type { Metadata } from "next";
 import { ContactSection } from "@/components/sections/shared/contact-section";
+import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { StructuredDataComponent } from "@/components/seo/structured-data";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "Contact Us",
+  description:
+    "Get in touch with ESAP AI. Contact us to learn how our AI solutions can transform your business operations and drive innovation.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
+  const structuredData = [
+    generateBreadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Contact", url: "/contact" },
+    ]),
+  ];
+
   return (
-    <main className="relative">
-      <ContactSection />
-    </main>
+    <>
+      <StructuredDataComponent data={structuredData} />
+      <main className="relative">
+        <ContactSection />
+      </main>
+    </>
   );
 }
 
