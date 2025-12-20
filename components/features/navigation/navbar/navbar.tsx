@@ -248,7 +248,7 @@ export function Navbar() {
                 />
                 <NavLinkItem
                   href="/case-study"
-                  label="Case Study"
+                  label="Case Studies"
                   isActive={isActive("/case-study")}
                 />
                 <NavLinkItem
@@ -390,7 +390,7 @@ export function Navbar() {
               }`}
             >
               <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-base sm:text-lg font-medium">Case Study</span>
+              <span className="relative z-10 text-base sm:text-lg font-medium">Case Studies</span>
             </Link>
 
             <Link

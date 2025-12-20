@@ -88,16 +88,16 @@ export default function NotFound() {
               About
             </Link>
             <Link
-              href="/product"
+              href="/case-study"
               className="text-primary hover:text-primary-opacity-90 transition-colors text-sm sm:text-base min-h-[44px] sm:min-h-[40px] flex items-center justify-center"
             >
-              Products
+              Case Studies
             </Link>
             <Link
-              href="/service"
+              href="/contact"
               className="text-primary hover:text-primary-opacity-90 transition-colors text-sm sm:text-base min-h-[44px] sm:min-h-[40px] flex items-center justify-center"
             >
-              Services
+              Contact
             </Link>
           </nav>
         </div>

@@ -215,6 +215,7 @@ export interface ServiceItemProps {
   iconSrc?: string;
   iconAlt?: string;
   className?: string;
+  href?: string;
 }
 
 export interface MissionCardProps {

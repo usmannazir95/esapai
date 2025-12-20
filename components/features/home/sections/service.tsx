@@ -20,6 +20,16 @@ const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
   ssr: false,
 });
 
+// Mapping service keys to their slugs
+const SERVICE_SLUG_MAP: Record<string, string> = {
+  agentic: "end-to-end-integration",
+  strategy: "enterprise-automation",
+  faas: "faas",
+  tailored: "tailored-solutions",
+  industry: "industry-excellence",
+  lab: "innovation-lab",
+};
+
 const MOBILE_ITEMS = [
   {
     key: "agentic",
@@ -347,6 +357,7 @@ export function Service() {
                 description={item.description}
                 iconPosition={item.iconPosition}
                 layout="stacked"
+                href={`/service/${SERVICE_SLUG_MAP[item.key]}`}
               />
             ))}
           </div>
@@ -388,6 +399,7 @@ export function Service() {
                     iconPosition={item.iconPosition}
                     layout="absolute"
                     positionClassName={item.positionClassName}
+                    href={`/service/${SERVICE_SLUG_MAP[item.key]}`}
                   />
                 ))}
               </div>
