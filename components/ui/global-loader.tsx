@@ -5,12 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { AnimatedSVGLoader } from "@/components/ui/animated-svg-loader";
 import { cn } from "@/lib/utils";
-
-interface GlobalLoaderProps {
-  className?: string;
-  message?: string;
-  subMessage?: string;
-}
+import type { GlobalLoaderProps } from "@/types/props";
 
 /**
  * Full-viewport loader that matches the product neon aesthetic.

@@ -1,13 +1,19 @@
 import { SEO_CONFIG, getFullUrl } from "./config";
+import type {
+  StructuredData,
+  BreadcrumbItem,
+  ArticleSchemaOptions,
+  ProductSchemaOptions,
+  ServiceSchemaOptions,
+} from "@/types/seo";
 
-/**
- * Base interface for structured data
- */
-export interface StructuredData {
-  "@context": string;
-  "@type": string;
-  [key: string]: unknown;
-}
+export type {
+  StructuredData,
+  BreadcrumbItem,
+  ArticleSchemaOptions,
+  ProductSchemaOptions,
+  ServiceSchemaOptions,
+};
 
 /**
  * Generate Organization structured data (JSON-LD)
@@ -50,10 +56,6 @@ export function generateWebsiteSchema(): StructuredData {
 /**
  * Generate BreadcrumbList structured data (JSON-LD)
  */
-export interface BreadcrumbItem {
-  name: string;
-  url: string;
-}
 
 export function generateBreadcrumbSchema(
   items: BreadcrumbItem[]
@@ -73,19 +75,6 @@ export function generateBreadcrumbSchema(
 /**
  * Generate Article structured data (JSON-LD) for case studies
  */
-export interface ArticleSchemaOptions {
-  headline: string;
-  description: string;
-  image?: string | string[];
-  datePublished: string;
-  dateModified?: string;
-  author?: string | string[];
-  publisher?: {
-    name: string;
-    logo?: string;
-  };
-  url: string;
-}
 
 export function generateArticleSchema(
   options: ArticleSchemaOptions
@@ -142,19 +131,6 @@ export function generateArticleSchema(
 /**
  * Generate Product structured data (JSON-LD)
  */
-export interface ProductSchemaOptions {
-  name: string;
-  description: string;
-  image?: string | string[];
-  url: string;
-  brand?: string;
-  category?: string;
-  offers?: {
-    price?: string;
-    priceCurrency?: string;
-    availability?: string;
-  };
-}
 
 export function generateProductSchema(
   options: ProductSchemaOptions
@@ -191,18 +167,6 @@ export function generateProductSchema(
 /**
  * Generate Service structured data (JSON-LD)
  */
-export interface ServiceSchemaOptions {
-  name: string;
-  description: string;
-  image?: string | string[];
-  url: string;
-  provider?: {
-    name: string;
-    url?: string;
-  };
-  areaServed?: string;
-  serviceType?: string;
-}
 
 export function generateServiceSchema(
   options: ServiceSchemaOptions

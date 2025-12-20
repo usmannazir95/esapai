@@ -1,11 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-
-interface ProductMenuContextType {
-  isProductOpen: boolean;
-  setIsProductOpen: (open: boolean) => void;
-}
+import type { ProductMenuContextType } from "@/types/provider";
 
 const ProductMenuContext = createContext<ProductMenuContextType | undefined>(
   undefined

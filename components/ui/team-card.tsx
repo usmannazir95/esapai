@@ -2,20 +2,10 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import type { TeamMember } from "@/types/ui";
+import type { TeamCardProps } from "@/types/props";
 
-export interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  description: string;
-  image: string;
-}
-
-interface TeamCardProps {
-  member: TeamMember;
-  isLarge?: boolean;
-  className?: string;
-}
+export type { TeamMember };
 
 export function TeamCard({ member, isLarge = false, className = "" }: TeamCardProps) {
   const imageHeight = isLarge ? "h-56 sm:h-64 md:h-72" : "h-48 sm:h-56 md:h-60";

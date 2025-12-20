@@ -6,12 +6,7 @@ import { generateCaseStudyMetadata } from "@/lib/seo/metadata";
 import { generateArticleSchema } from "@/lib/seo/structured-data";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
-
-interface CaseStudySlugPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+import type { CaseStudySlugPageProps } from "@/types/page";
 
 export async function generateStaticParams() {
   const caseStudies = await getCaseStudies();

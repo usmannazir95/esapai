@@ -1,20 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { CaseStudyWithUrls } from "@/lib/case-studies";
-
-interface UseCaseStudyContentOptions {
-  enabled?: boolean;
-  initialCaseStudy?: CaseStudyWithUrls | null;
-  revalidateOnMount?: boolean;
-}
-
-interface UseCaseStudyContentResult {
-  caseStudy: CaseStudyWithUrls | null;
-  loading: boolean;
-  isFetching: boolean;
-  error: string | null;
-}
+import type { CaseStudyWithUrls } from "@/types/case-study";
+import type {
+  UseCaseStudyContentOptions,
+  UseCaseStudyContentResult,
+} from "@/types/hooks";
 
 export function useCaseStudyContent(
   slug: string,

@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
 import { SEO_CONFIG, getCanonicalUrl } from "./config";
+import type { PageMetadataOptions } from "@/types/seo";
 
-export interface PageMetadataOptions {
-  title: string;
-  description?: string;
-  path?: string;
-  image?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
-  type?: "website" | "article" | "product" | "service";
-  publishedTime?: string;
-  modifiedTime?: string;
-  authors?: string[];
-  tags?: string[];
-}
+export type { PageMetadataOptions };
 
 /**
  * Generate comprehensive metadata for a page
@@ -70,7 +59,7 @@ export function generateMetadata({
       title,
       description: description || SEO_CONFIG.defaultDescription,
       images: [fullOgImageUrl],
-      ...(SEO_CONFIG.twitterHandle && { creator: `@${SEO_CONFIG.twitterHandle}` }),
+      ...(SEO_CONFIG.twitterHandle ? { creator: `@${SEO_CONFIG.twitterHandle}` } : {}),
     },
     robots: {
       index: !noIndex,

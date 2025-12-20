@@ -2,20 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { renderToString } from "react-dom/server"
-
-interface Icon {
-  x: number
-  y: number
-  z: number
-  scale: number
-  opacity: number
-  id: number
-}
-
-interface IconCloudProps {
-  icons?: React.ReactNode[]
-  images?: string[]
-}
+import type { Icon, IconCloudProps } from "@/types/props";
 
 function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3)

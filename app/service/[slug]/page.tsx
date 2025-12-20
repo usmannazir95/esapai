@@ -6,12 +6,7 @@ import { generateServiceMetadata } from "@/lib/seo/metadata";
 import { generateServiceSchema } from "@/lib/seo/structured-data";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
-
-interface ServiceSlugPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+import type { ServiceSlugPageProps } from "@/types/page";
 
 export async function generateStaticParams() {
   return services.map((service) => ({

@@ -4,16 +4,16 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-
-interface ErrorProps {
-  error: Error & { digest?: string };
-  reset: () => void;
-}
+import type { ErrorProps } from "@/types/page";
 
 export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
     // Log error to error reporting service
-    console.error("Application error:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Application error:", error);
+    }
+    // In production, send to error tracking service
+    // e.g., Sentry.captureException(error)
   }, [error]);
 
   return (

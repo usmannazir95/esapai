@@ -14,13 +14,7 @@ import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
-
-interface CardContentRefs {
-  icon: HTMLElement | null;
-  title: HTMLElement | null;
-  description: HTMLElement | null;
-  cta: HTMLElement | null;
-}
+import type { CardContentRefs } from "@/types/props";
 
 export function ProductShowcase() {
   const sectionRef = useRef<HTMLDivElement>(null);

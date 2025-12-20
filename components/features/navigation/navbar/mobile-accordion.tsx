@@ -2,13 +2,9 @@
 
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import type { MobileMenuItem } from "@/types/navigation";
 
-export type MobileMenuItem = {
-  id: string;
-  name: string;
-  description?: string;
-  slug: string;
-};
+export type { MobileMenuItem };
 
 export function MobileAccordion({
   id,

@@ -2,26 +2,17 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { RefObject } from "react";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
+import type {
+  FadeInOptions,
+  ContinuousAnimationOptions,
+  StaggerOptions,
+} from "@/types/animation";
 
-export interface FadeInOptions {
-  duration?: number;
-  delay?: number;
-  ease?: string;
-  from?: gsap.TweenVars;
-  to?: gsap.TweenVars;
-}
-
-export interface ContinuousAnimationOptions {
-  duration?: number;
-  ease?: string;
-  repeat?: number;
-  yoyo?: boolean;
-  delay?: number;
-}
-
-export interface StaggerOptions {
-  stagger?: number;
-}
+export type {
+  FadeInOptions,
+  ContinuousAnimationOptions,
+  StaggerOptions,
+};
 
 /**
  * Reusable GSAP animation utilities hook

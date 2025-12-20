@@ -3,16 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
-import type { CaseStudyWithUrls } from "@/lib/case-studies";
+import type { CaseStudyWithUrls } from "@/types/case-study";
+import type { TimelineProps, TimelineEntryProps } from "@/types/props";
 
-interface TimelineProps {
-  timeline: CaseStudyWithUrls["timeline"];
-}
-
-interface TimelineEntryProps {
-  entry: CaseStudyWithUrls["timeline"][0];
-  entryRef: (el: HTMLDivElement | null) => void;
-}
 
 function TimelineEntry({ entry, entryRef }: TimelineEntryProps) {
   const dateRef = useRef<HTMLDivElement>(null);

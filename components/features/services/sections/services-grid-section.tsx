@@ -11,11 +11,9 @@ import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
-import type { Service } from "@/lib/services";
+import type { Service } from "@/types/service";
+import type { ServicesGridSectionProps } from "@/types/props";
 
-interface ServicesGridSectionProps {
-  services: Service[];
-}
 
 export function ServicesGridSection({ services }: ServicesGridSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);

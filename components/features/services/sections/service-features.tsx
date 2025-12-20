@@ -12,16 +12,7 @@ import "reactflow/dist/style.css";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 
-interface FeatureBlockProps {
-  title: string;
-  description: string;
-}
-
-interface ServiceFeaturesProps {
-  title?: string;
-  subtitle?: string;
-  features: FeatureBlockProps[];
-}
+import type { ServiceFeaturesProps, FeatureBlockProps } from "@/types/props";
 
 // Custom Central Node Component
 function CentralNode({ data }: { data: { label: string } }) {

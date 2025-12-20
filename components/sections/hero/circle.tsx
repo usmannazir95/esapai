@@ -2,8 +2,7 @@ import * as React from "react";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
-
-type CircleProps = React.SVGProps<SVGSVGElement>;
+import type { CircleProps } from "@/types/props";
 
 const Circle = (props: CircleProps) => {
   const svgRef = useRef<SVGSVGElement>(null);

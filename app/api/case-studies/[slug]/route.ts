@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCaseStudyBySlug } from "@/lib/case-studies";
-
-interface Params {
-  slug: string;
-}
+import type { Params } from "@/types/api";
 
 export async function GET(
   _request: Request,
@@ -25,7 +22,9 @@ export async function GET(
 
     return NextResponse.json({ caseStudy });
   } catch (error) {
-    console.error("Error fetching case study:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error fetching case study:", error);
+    }
     return NextResponse.json(
       { caseStudy: null, error: "Failed to fetch case study" },
       { status: 500 }

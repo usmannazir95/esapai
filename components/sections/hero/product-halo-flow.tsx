@@ -32,23 +32,12 @@ import {
 // TYPES
 // ============================================================================
 
-export interface ProductHaloFlowNode {
-  id: string;
-  title: string;
-  description?: string;
-  icon?: React.ReactNode;
-}
+import type {
+  ProductHaloFlowNode,
+  ProductHaloFlowProps,
+} from "@/types/component";
 
-export interface ProductHaloFlowProps {
-  leftNodes?: ProductHaloFlowNode[];
-  rightNodes?: ProductHaloFlowNode[];
-  centerNode?: {
-    id?: string;
-    title?: string;
-    icon?: React.ReactNode;
-  };
-  haloScale?: number;
-}
+export type { ProductHaloFlowNode, ProductHaloFlowProps };
 
 // ============================================================================
 // CONSTANTS

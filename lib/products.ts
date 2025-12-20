@@ -1,63 +1,20 @@
-export interface MissionCard {
-  title: string;
-  description: string;
-}
+import type {
+  MissionCard,
+  AutomationFeature,
+  PerformanceMetric,
+  ProductFeature,
+  ProductContent,
+  Product,
+} from "@/types/product";
 
-export interface AutomationFeature {
-  title: string;
-  description: string;
-}
-
-export interface PerformanceMetric {
-  value: string;
-  label: string;
-}
-
-export interface ProductFeature {
-  title: string;
-  description: string;
-  className?: string;
-}
-
-export interface ProductContent {
-  hero?: {
-    subtitle?: string[];
-    centerIcon?: string;
-    centerIconAlt?: string;
-  };
-  mission?: {
-    title?: string;
-    subtitle?: string;
-    cards?: MissionCard[];
-  };
-  automationHub?: {
-    title?: string;
-    subtitle?: string;
-    features?: AutomationFeature[];
-  };
-  youtubeVideo?: {
-    videoId?: string;
-    title?: string;
-  };
-  performance?: {
-    metrics?: PerformanceMetric[];
-  };
-  aceternityFeatures?: {
-    title?: string;
-    subtitle?: string;
-    features?: ProductFeature[];
-    className?: string;
-  };
-}
-
-export interface Product {
-  id: string;
-  name: string;
-  description: string;
-  slug: string;
-  icon?: string;
-  content?: ProductContent;
-}
+export type {
+  MissionCard,
+  AutomationFeature,
+  PerformanceMetric,
+  ProductFeature,
+  ProductContent,
+  Product,
+};
 
 export const products: Product[] = [
   {

@@ -1,10 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-
-interface FeatureTitleProps {
-  children: React.ReactNode;
-  className?: string;
-}
+import type { FeatureTitleProps } from "@/types/props";
 
 export function FeatureTitle({ children, className }: FeatureTitleProps) {
   return (

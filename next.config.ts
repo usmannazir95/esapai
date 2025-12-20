@@ -3,8 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // TypeScript configuration
   typescript: {
-    // Disable type checking during build (already configured)
-    ignoreBuildErrors: true,
+    // Enable type checking during build for production
+    ignoreBuildErrors: false,
   },
 
   // Image optimization configuration

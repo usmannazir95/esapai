@@ -6,13 +6,9 @@ import {
   motion,
 } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
+import type { UITimelineEntry } from "@/types/props";
 
-interface TimelineEntry {
-  title: string;
-  content: React.ReactNode;
-}
-
-export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
+export const Timeline = ({ data }: { data: UITimelineEntry[] }) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);

@@ -11,7 +11,7 @@ export { SectionHeader } from "./section-header";
 export { SpotlightCard } from "./spotlight-card";
 export { MissionCard } from "./mission-card";
 export { TeamCard } from "./team-card";
-export type { TeamMember } from "./team-card";
+export type { TeamMember } from "@/types/ui";
 
 // Service Components
 export { ServiceItem } from "./service-item";

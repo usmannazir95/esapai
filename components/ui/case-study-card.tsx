@@ -1,11 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import type { CaseStudyWithUrls } from "@/lib/case-studies";
+import type { CaseStudyWithUrls } from "@/types/case-study";
+import type { CaseStudyCardProps } from "@/types/props";
 
-interface CaseStudyCardProps {
-  caseStudy: CaseStudyWithUrls;
-}
 
 export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
   const thumbnailImage = caseStudy.heroImages[0];

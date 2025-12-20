@@ -2,11 +2,7 @@
 
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
-
-interface YouTubeVideoProps {
-  videoId: string;
-  title?: string;
-}
+import type { YouTubeVideoProps } from "@/types/props";
 
 export function YouTubeVideo({
   videoId,

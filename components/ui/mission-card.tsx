@@ -1,13 +1,6 @@
 import React from "react";
 import Image from "next/image";
-
-interface MissionCardProps {
-  title: string;
-  description: string;
-  imageSrc?: string;
-  imageAlt?: string;
-  className?: string;
-}
+import type { MissionCardProps } from "@/types/props";
 
 export function MissionCard({
   title,

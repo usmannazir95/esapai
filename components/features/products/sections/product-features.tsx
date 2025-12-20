@@ -2,19 +2,10 @@
 
 import React from "react";
 import { FeatureCard, FeatureTitle, FeatureDescription } from "@/components/ui";
+import type { ProductFeatureItem } from "@/types/ui";
+import type { ProductFeaturesProps } from "@/types/props";
 
-export interface ProductFeatureItem {
-  title: string;
-  description: string;
-  className?: string;
-}
-
-interface ProductFeaturesProps {
-  title?: string;
-  subtitle?: string;
-  features: ProductFeatureItem[];
-  className?: string;
-}
+export type { ProductFeatureItem };
 
 export function ProductFeatures({
   title,

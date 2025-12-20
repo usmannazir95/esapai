@@ -5,14 +5,7 @@ import { useInView } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { getPerformanceTier } from "@/lib/utils/performance-utils";
-
-interface LazyThreeWrapperProps {
-  children: React.ReactNode;
-  className?: string;
-  fallback?: React.ReactNode;
-  threshold?: number; // Intersection observer threshold
-  rootMargin?: string; // Intersection observer root margin
-}
+import type { LazyThreeWrapperProps } from "@/types/props";
 
 /**
  * Wrapper for heavy Three.js components that:
@@ -29,7 +22,7 @@ export function LazyThreeWrapper({
 }: LazyThreeWrapperProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
-  const isInView = useInView(ref, { once: true, margin: rootMargin });
+  const isInView = useInView(ref, { once: true, margin: rootMargin as `${number}px` });
 
   useEffect(() => {
     if (isInView) {

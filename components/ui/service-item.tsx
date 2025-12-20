@@ -1,30 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-
-interface ServiceItemProps {
-  title: string | React.ReactNode;
-  description: string;
-  iconPosition: "left" | "right";
-  /**
-   * Layout mode:
-   * - `stacked`: normal document flow (no absolute positioning)
-   * - `absolute`: positioned around a center point
-   */
-  layout?: "stacked" | "absolute";
-  /**
-   * Prefer classes for positioning to avoid inline styles.
-   * Example: `left-[calc(50%_-_450px)] top-[50%] -translate-x-1/2 -translate-y-1/2`
-   */
-  positionClassName?: string;
-  /**
-   * Back-compat: some sections still pass inline positioning styles.
-   */
-  positionStyle?: React.CSSProperties;
-  descriptionClassName?: string;
-  iconSrc?: string;
-  iconAlt?: string;
-}
+import type { ServiceItemProps } from "@/types/props";
 
 export function ServiceItem({
   title,

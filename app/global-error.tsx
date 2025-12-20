@@ -4,16 +4,16 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-
-interface GlobalErrorProps {
-  error: Error & { digest?: string };
-  reset: () => void;
-}
+import type { GlobalErrorProps } from "@/types/page";
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
     // Log error to error reporting service
-    console.error("Global application error:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Global application error:", error);
+    }
+    // In production, send to error tracking service
+    // e.g., Sentry.captureException(error)
   }, [error]);
 
   return (

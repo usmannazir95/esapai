@@ -2,16 +2,12 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import type { AutomationFeature } from "@/lib/products";
+import type { AutomationFeature } from "@/types/product";
+import type { AutomationHubProps, AutomationHubFeatureCardProps } from "@/types/props";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { cn } from "@/lib/utils";
 
-interface AutomationHubProps {
-  title?: string;
-  subtitle?: string;
-  features?: AutomationFeature[];
-}
 
 const defaultTitle = "Intelligent Automation Hub";
 const defaultSubtitle =
@@ -81,14 +77,8 @@ export function AutomationHub({
   );
 }
 
-interface FeatureCardProps {
-  title: string;
-  description: string;
-  className?: string;
-  index: number;
-}
 
-function FeatureCard({ title, description, className, index }: FeatureCardProps) {
+function FeatureCard({ title, description, className, index }: AutomationHubFeatureCardProps) {
   const floatSequences = [
     [0, -14, 4, 10, 0],
     [0, 10, -6, 8, 0],

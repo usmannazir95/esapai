@@ -9,12 +9,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
-
-interface ServicesHeaderSectionProps {
-  title: string;
-  subtitle: string;
-  subtitleClassName?: string;
-}
+import type { ServicesHeaderSectionProps } from "@/types/props";
 
 export function ServicesHeaderSection({
   title,

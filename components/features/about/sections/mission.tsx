@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import type { MissionCard as MissionCardType } from "@/lib/products";
+import type { MissionCard as MissionCardType } from "@/types/product";
+import type { MissionProps } from "@/types/props";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { MissionCard } from "@/components/ui/mission-card";
@@ -11,11 +12,6 @@ import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
-interface MissionProps {
-  title?: string;
-  subtitle?: string;
-  cards?: MissionCardType[];
-}
 
 const defaultTitle = "Intelligent AI Solutions";
 const defaultSubtitle =

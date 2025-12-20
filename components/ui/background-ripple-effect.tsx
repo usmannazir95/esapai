@@ -1,24 +1,11 @@
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-
-type BackgroundRippleEffectProps = {
-  rows?: number;
-  cols?: number;
-  cellSize?: number;
-  className?: string;
-  gridClassName?: string;
-  mask?: boolean;
-  interactive?: boolean;
-  auto?: boolean;
-  autoIntervalMs?: number;
-  /**
-   * Programmatically trigger a ripple at the given client coordinates.
-   * Use `triggerKey` to force a new ripple when the coordinates repeat.
-   */
-  triggerPoint?: { x: number; y: number } | null;
-  triggerKey?: number;
-};
+import type {
+  BackgroundRippleEffectProps,
+  DivGridProps,
+  CellStyle,
+} from "@/types/props";
 
 export const BackgroundRippleEffect = ({
   cellSize = 56,
@@ -162,22 +149,6 @@ export const BackgroundRippleEffect = ({
   );
 };
 
-type DivGridProps = {
-  className?: string;
-  rows: number;
-  cols: number;
-  cellSize: number; // in pixels
-  borderColor: string;
-  fillColor: string;
-  clickedCell: { row: number; col: number } | null;
-  onCellClick?: (row: number, col: number) => void;
-  interactive?: boolean;
-};
-
-type CellStyle = React.CSSProperties & {
-  ["--delay"]?: string;
-  ["--duration"]?: string;
-};
 
 const DivGrid = ({
   className,

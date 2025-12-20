@@ -1,18 +1,8 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import type { SectionProps } from "@/types/ui";
 
-export type SectionProps = Omit<
-  React.ComponentPropsWithoutRef<"section">,
-  "className" | "children"
-> & {
-  children: React.ReactNode;
-  className?: string;
-  containerClassName?: string;
-  containerMaxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "7xl" | "full";
-  background?: "dark" | "transparent" | string;
-  padding?: "none" | "sm" | "md" | "lg";
-  overflow?: "hidden" | "visible";
-};
+export type { SectionProps };
 
 const containerMaxWidthClasses = {
   sm: "max-w-sm",

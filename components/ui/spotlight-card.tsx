@@ -2,16 +2,7 @@
 
 import React, { useState, useRef, MouseEvent, useCallback, useMemo, useEffect } from "react";
 import { cn } from "@/lib/utils";
-
-interface SpotlightCardProps {
-  children: React.ReactNode;
-  className?: string;
-  spotlightColor?: string;
-  glowColor?: string;
-  onMouseMove?: (e: MouseEvent<HTMLDivElement>) => void;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
-}
+import type { SpotlightCardProps } from "@/types/props";
 
 export function SpotlightCard({
   children,

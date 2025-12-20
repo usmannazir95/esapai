@@ -12,12 +12,10 @@ const getGridSize = (tier: "high" | "medium" | "low") => {
   return quality.gridSize;
 };
 
+import type { InstancedGridProps, GridFloorProps } from "@/types/props";
+
 const TILE_SIZE = 1;
 const TILE_GAP = 0.1;
-
-interface InstancedGridProps {
-  gridSize: number;
-}
 
 const InstancedGrid: React.FC<InstancedGridProps> = memo(({ gridSize }) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
@@ -122,11 +120,6 @@ const InstancedGrid: React.FC<InstancedGridProps> = memo(({ gridSize }) => {
 });
 
 InstancedGrid.displayName = 'InstancedGrid';
-
-interface GridFloorProps {
-  className?: string;
-  perspective?: 'normal' | 'dramatic';
-}
 
 const GridFloorComponent: React.FC<GridFloorProps> = ({ className = "", perspective = 'normal' }) => {
   // Get performance tier and adaptive settings

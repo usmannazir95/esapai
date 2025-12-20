@@ -1,69 +1,13 @@
 import { client } from "@/lib/sanity/client";
 import { urlFor } from "@/lib/sanity/image";
+import type {
+  TimelineEntry,
+  CaseStudy,
+  CaseStudyWithUrls,
+} from "@/types/case-study";
+import type { SanityImage } from "@/types/sanity";
 
-export interface TimelineEntry {
-  date: string;
-  title: string;
-  description: string;
-  images: Array<{
-    _key?: string;
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-    alt?: string;
-  }>;
-}
-
-export interface CaseStudy {
-  _id: string;
-  title: string;
-  slug: {
-    current: string;
-  };
-  subtitle: string;
-  tags: string[];
-  thumbnail?: {
-    _key?: string;
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-    alt?: string;
-  } | null;
-  heroImages: Array<{
-    _key?: string;
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-    alt?: string;
-  }>;
-  timeline: TimelineEntry[];
-  publishedAt: string;
-  featured: boolean;
-}
-
-export interface CaseStudyWithUrls extends Omit<CaseStudy, "heroImages" | "timeline" | "slug"> {
-  slug: string;
-  thumbnail?: {
-    url: string;
-    alt?: string;
-  } | null;
-  heroImages: Array<{
-    url: string;
-    alt?: string;
-  }>;
-  timeline: Array<{
-    date: string;
-    title: string;
-    description: string;
-    images: Array<{
-      url: string;
-      alt?: string;
-    }>;
-  }>;
-}
+export type { TimelineEntry, CaseStudy, CaseStudyWithUrls };
 
 const CASE_STUDY_QUERY = `*[_type == "caseStudy"] | order(publishedAt desc) {
   _id,
@@ -91,14 +35,6 @@ const CASE_STUDY_BY_SLUG_QUERY = `*[_type == "caseStudy" && slug.current == $slu
   featured
 }`;
 
-type SanityImage = {
-  _key?: string;
-  asset: {
-    _ref: string;
-    _type: string;
-  };
-  alt?: string;
-};
 
 /**
  * Transform Sanity image references to URLs
@@ -171,7 +107,9 @@ export async function getCaseStudies(): Promise<CaseStudyWithUrls[]> {
     const caseStudies = await client.fetch<CaseStudy[]>(CASE_STUDY_QUERY);
     return caseStudies.map(transformCaseStudy);
   } catch (error) {
-    console.error("Error fetching case studies:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error fetching case studies:", error);
+    }
     return [];
   }
 }
@@ -193,7 +131,9 @@ export async function getCaseStudyBySlug(
 
     return transformCaseStudy(caseStudy);
   } catch (error) {
-    console.error("Error fetching case study:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error fetching case study:", error);
+    }
     return null;
   }
 }
