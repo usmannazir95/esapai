@@ -1,18 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
-import type { Product } from "@/lib/products";
-
-interface UseProductContentOptions {
-  initialProduct?: Product | null;
-}
-
-interface UseProductContentResult {
-  product: Product | null;
-  loading: boolean;
-  isFetching: boolean;
-  error: string | null;
-}
+import type { Product } from "@/types/product";
+import type {
+  UseProductContentOptions,
+  UseProductContentResult,
+} from "@/types/hooks";
 
 /**
  * Hook for accessing product data.

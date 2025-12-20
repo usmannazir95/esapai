@@ -1,12 +1,12 @@
 "use client";
 
 import type { ReactNode } from "react";
-
-interface LegalPageProps {
-  title: string;
-  lastUpdated: string;
-  children: ReactNode;
-}
+import type {
+  LegalPageProps,
+  LegalSectionProps,
+  LegalParagraphProps,
+  LegalListProps,
+} from "@/types/page";
 
 export function LegalPage({ title, lastUpdated, children }: LegalPageProps) {
   return (
@@ -52,11 +52,6 @@ export function LegalPage({ title, lastUpdated, children }: LegalPageProps) {
   );
 }
 
-interface LegalSectionProps {
-  title: string;
-  children: ReactNode;
-}
-
 export function LegalSection({ title, children }: LegalSectionProps) {
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6 relative">
@@ -75,21 +70,12 @@ export function LegalSection({ title, children }: LegalSectionProps) {
   );
 }
 
-interface LegalParagraphProps {
-  children: ReactNode;
-}
-
 export function LegalParagraph({ children }: LegalParagraphProps) {
   return (
     <p className="text-light-gray-90 leading-relaxed">
       {children}
     </p>
   );
-}
-
-interface LegalListProps {
-  items: string[];
-  ordered?: boolean;
 }
 
 export function LegalList({ items, ordered = false }: LegalListProps) {

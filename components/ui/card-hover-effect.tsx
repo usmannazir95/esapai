@@ -5,13 +5,7 @@ import { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
-
-interface HoverEffectItem {
-  title: string;
-  description: string;
-  link: string;
-  icon?: string;
-}
+import type { HoverEffectItem } from "@/types/props";
 
 export const HoverEffect = ({
   items,
@@ -85,7 +79,9 @@ export const HoverEffect = ({
         >
           {hoveredIndex === idx && (
             <span
-              ref={(el) => (hoverBgRefs.current[idx] = el)}
+              ref={(el) => {
+                hoverBgRefs.current[idx] = el;
+              }}
               className="absolute inset-0 h-full w-full bg-primary/10 block rounded-[32px] opacity-0"
             />
           )}

@@ -1,5 +1,5 @@
 import * as React from "react";
-const Robot = (props) => (
+const Robot = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width={184}
     height={183}

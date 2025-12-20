@@ -2,10 +2,7 @@
 
 import { useCookieConsent } from "./cookie-consent-context";
 import Script from "next/script";
-
-interface GoogleAnalyticsProviderProps {
-  gaId?: string;
-}
+import type { GoogleAnalyticsProviderProps } from "@/types/provider";
 
 /**
  * Google Analytics Provider

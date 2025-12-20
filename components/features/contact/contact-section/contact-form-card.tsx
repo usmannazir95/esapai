@@ -3,14 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { forwardRef } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import type { ContactFormData, SubmissionState } from "@/types/contact";
 
-export interface ContactFormData {
-  fullName: string;
-  email: string;
-  message: string;
-}
-
-export type SubmissionState = "idle" | "sending" | "success" | "error";
+export type { ContactFormData, SubmissionState };
 
 export const ContactFormCard = forwardRef<
   HTMLDivElement,

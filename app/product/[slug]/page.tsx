@@ -6,12 +6,7 @@ import { generateProductMetadata } from "@/lib/seo/metadata";
 import { generateProductSchema } from "@/lib/seo/structured-data";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
-
-interface ProductSlugPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+import type { ProductSlugPageProps } from "@/types/page";
 
 export async function generateStaticParams() {
   return products.map((product) => ({

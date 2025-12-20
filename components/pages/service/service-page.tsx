@@ -2,9 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import type { Service } from "@/lib/services";
+import type { Service } from "@/types/service";
 import { useServiceContent } from "@/lib/hooks/use-service-content";
 import { LazySection } from "@/components/ui/lazy-section";
+import type { ServicePageClientProps } from "@/types/page";
 
 // Hero loads immediately - critical for LCP
 const ServiceHeroSection = dynamic(
@@ -80,10 +81,6 @@ const YouTubeVideoSection = dynamic(
   }
 );
 
-interface ServicePageClientProps {
-  slug: string;
-  initialService: Service;
-}
 
 const defaultHeroSubtitle = [
   "Where Innovation Meets Productivity Driven by agents Powered by automation",

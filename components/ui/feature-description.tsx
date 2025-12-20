@@ -1,10 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-
-interface FeatureDescriptionProps {
-  children: React.ReactNode;
-  className?: string;
-}
+import type { FeatureDescriptionProps } from "@/types/props";
 
 export function FeatureDescription({ children, className }: FeatureDescriptionProps) {
   return (

@@ -1,12 +1,5 @@
 import React from "react";
-
-interface SectionHeaderProps {
-  title: string | React.ReactNode;
-  subtitle?: string;
-  className?: string;
-  titleClassName?: string;
-  subtitleClassName?: string;
-}
+import type { SectionHeaderProps } from "@/types/props";
 
 export function SectionHeader({
   title,

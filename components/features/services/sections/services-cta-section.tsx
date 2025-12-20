@@ -10,12 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
-
-interface ServicesCTASectionProps {
-  text: string;
-  buttonText: string;
-  buttonHref: string;
-}
+import type { ServicesCTASectionProps } from "@/types/props";
 
 export function ServicesCTASection({
   text,

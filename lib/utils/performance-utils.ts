@@ -2,7 +2,9 @@
  * Performance utilities for adaptive quality control
  */
 
-export type PerformanceTier = "high" | "medium" | "low";
+import type { PerformanceTier } from "@/types/performance";
+
+export type { PerformanceTier };
 
 /**
  * Get device performance tier for optimization

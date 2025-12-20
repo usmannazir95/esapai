@@ -1,23 +1,19 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { CaseStudyWithUrls } from "@/lib/case-studies";
+import type { CaseStudyWithUrls } from "@/types/case-study";
 import { useCaseStudyContent } from "@/lib/hooks/use-case-study-content";
 import { Section } from "@/components/ui/section";
 import { Timeline } from "../sections/timeline";
 import { CaseStudyHero } from "../hero/case-study-hero";
 import { GlobalLoader } from "@/components/ui/global-loader";
+import type { CaseStudyPageClientProps } from "@/types/page";
 
 const LazySection = dynamic(() =>
   import("@/components/ui/lazy-section").then((mod) => ({
     default: mod.LazySection,
   }))
 );
-
-interface CaseStudyPageClientProps {
-  slug: string;
-  initialCaseStudy: CaseStudyWithUrls;
-}
 
 export function CaseStudyPage({
   slug,

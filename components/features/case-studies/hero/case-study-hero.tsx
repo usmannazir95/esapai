@@ -1,11 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import type { CaseStudyWithUrls } from "@/lib/case-studies";
+import type { CaseStudyWithUrls } from "@/types/case-study";
+import type { CaseStudyHeroProps } from "@/types/props";
 
-interface CaseStudyHeroProps {
-  caseStudy: CaseStudyWithUrls;
-}
 
 export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
   return (

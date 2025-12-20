@@ -2,9 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import type { Product } from "@/lib/products";
+import type { Product } from "@/types/product";
 import { useProductContent } from "@/lib/hooks/use-product-content";
 import { LazySection } from "@/components/ui/lazy-section";
+import type { ProductPageClientProps } from "@/types/page";
 
 // Hero loads immediately - critical for LCP
 const ProductHeroSection = dynamic(
@@ -103,10 +104,6 @@ const PerformanceSection = dynamic(
 );
 
 
-interface ProductPageClientProps {
-  slug: string;
-  initialProduct: Product;
-}
 
 export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
   const { product } = useProductContent(slug, {

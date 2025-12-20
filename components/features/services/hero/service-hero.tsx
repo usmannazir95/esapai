@@ -400,11 +400,7 @@ const globeData = [
   },
 ];
 
-interface ServiceHeroProps {
-  title: string;
-  subtitle: string[];
-  description?: string;
-}
+import type { ServiceHeroProps } from "@/types/props";
 
 export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
   // Split title into parts - last word gets gradient, rest is white

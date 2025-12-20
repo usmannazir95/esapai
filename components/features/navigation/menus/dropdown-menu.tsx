@@ -2,31 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import type { MenuItem, DropdownMenuProps } from "@/types/navigation";
 
-export interface MenuItem {
-  id: string;
-  name: string;
-  description: string;
-  slug: string;
-  icon?: string;
-  content?: {
-    hero?: {
-      centerIcon?: string;
-      centerIconAlt?: string;
-    };
-  };
-}
-
-export interface DropdownMenuProps {
-  title: string;
-  description: string;
-  items: MenuItem[];
-  basePath: string;
-  dropdownClass: string;
-  itemClass: string;
-  isOpen: boolean;
-  onClose: () => void;
-}
+export type { MenuItem, DropdownMenuProps };
 
 export function DropdownMenu({
   title,

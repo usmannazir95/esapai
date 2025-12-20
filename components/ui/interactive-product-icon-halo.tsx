@@ -5,26 +5,11 @@ import gsap from 'gsap';
 import { lerp, randomRange } from '@/lib/utils/animation';
 import { prefersReducedMotion } from '@/lib/utils/performance-utils';
 import { useIntersectionAnimation } from '@/lib/hooks/use-intersection-animation';
-
-interface InteractiveProductIconHaloProps {
-  children: React.ReactNode;
-  scale?: number;
-  className?: string;
-  intensity?: 'low' | 'medium' | 'high';
-}
-
-interface BurstParticle {
-  id: string;
-  x: number;
-  y: number;
-  color: string;
-}
-
-interface ParticleItemProps {
-  x: number;
-  y: number;
-  color: string;
-}
+import type {
+  InteractiveProductIconHaloProps,
+  BurstParticle,
+  ParticleItemProps,
+} from "@/types/props";
 
 // Subcomponent for individual particle animation
 const ParticleItem: React.FC<ParticleItemProps> = ({ x, y, color }) => {

@@ -4,12 +4,7 @@ import React, { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { getPerformanceTier, getAdaptiveQuality, createFrameThrottle } from "@/lib/utils/performance-utils";
-
-interface GridUniforms extends Record<string, THREE.IUniform<any>> {
-  uTime: THREE.IUniform<number>;
-  uColorMain: THREE.IUniform<THREE.Color>;
-  uColorAccent: THREE.IUniform<THREE.Color>;
-}
+import type { GridUniforms } from "@/types/props";
 
 const vertexShader = `
   varying vec2 vUv;

@@ -3,15 +3,7 @@
 import { Suspense, useEffect, useState, useRef } from "react";
 import { useInView } from "motion/react";
 import { cn } from "@/lib/utils";
-
-interface LazySectionProps {
-  children: React.ReactNode;
-  className?: string;
-  fallback?: React.ReactNode;
-  threshold?: number;
-  rootMargin?: string;
-  minHeight?: string; // Prevent layout shift
-}
+import type { LazySectionProps } from "@/types/props";
 
 /**
  * Wrapper for sections that:
@@ -35,7 +27,7 @@ export function LazySection({
 }: LazySectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
-  const isInView = useInView(ref, { once: true, margin: rootMargin, amount: threshold });
+  const isInView = useInView(ref, { once: true, margin: rootMargin as `${number}px`, amount: threshold });
 
   useEffect(() => {
     if (isInView) {

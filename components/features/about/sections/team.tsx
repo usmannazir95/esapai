@@ -10,12 +10,9 @@ import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect
 import { TeamCard, type TeamMember } from "@/components/ui/team-card";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
+import type { TeamProps } from "@/types/props";
 
 export type { TeamMember };
-
-interface TeamProps {
-  members?: TeamMember[];
-}
 
 const defaultTeamMembers: TeamMember[] = [
   {

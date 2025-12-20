@@ -1,11 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-
-interface ServiceMenuContextType {
-  isServiceOpen: boolean;
-  setIsServiceOpen: (open: boolean) => void;
-}
+import type { ServiceMenuContextType } from "@/types/provider";
 
 const ServiceMenuContext = createContext<ServiceMenuContextType | undefined>(
   undefined

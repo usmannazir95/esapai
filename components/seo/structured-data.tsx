@@ -1,8 +1,5 @@
-import { StructuredData } from "@/lib/seo/structured-data";
-
-interface StructuredDataProps {
-  data: StructuredData | StructuredData[];
-}
+import type { StructuredData } from "@/types/seo";
+import type { StructuredDataProps } from "@/types/props";
 
 /**
  * Component to inject JSON-LD structured data into the page

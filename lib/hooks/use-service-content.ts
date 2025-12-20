@@ -1,18 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
-import type { Service } from "@/lib/services";
-
-interface UseServiceContentOptions {
-  initialService?: Service | null;
-}
-
-interface UseServiceContentResult {
-  service: Service | null;
-  loading: boolean;
-  isFetching: boolean;
-  error: string | null;
-}
+import type { Service } from "@/types/service";
+import type {
+  UseServiceContentOptions,
+  UseServiceContentResult,
+} from "@/types/hooks";
 
 /**
  * Hook for accessing service data.

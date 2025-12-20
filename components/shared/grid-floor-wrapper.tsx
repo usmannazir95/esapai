@@ -20,10 +20,7 @@ const GridFloorComponent = dynamic(
   }
 );
 
-interface GridFloorWrapperProps {
-  className?: string;
-  perspective?: 'normal' | 'dramatic';
-}
+import type { GridFloorWrapperProps } from "@/types/props";
 
 export default function GridFloorWrapper({ className, perspective }: GridFloorWrapperProps) {
   return (

@@ -92,7 +92,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   } catch (error) {
     // If case studies fail to load, continue without them
-    console.error("Failed to load case studies for sitemap:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("Failed to load case studies for sitemap:", error);
+    }
   }
 
   // Combine all routes

@@ -1,15 +1,10 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-
-type CookieConsentStatus = "pending" | "accepted" | "rejected";
-
-interface CookieConsentContextType {
-  consentStatus: CookieConsentStatus;
-  acceptCookies: () => void;
-  rejectCookies: () => void;
-  hasConsented: boolean;
-}
+import type {
+  CookieConsentStatus,
+  CookieConsentContextType,
+} from "@/types/provider";
 
 const CookieConsentContext = createContext<CookieConsentContextType | undefined>(
   undefined
@@ -19,7 +14,9 @@ const COOKIE_CONSENT_KEY = "esapai-cookie-consent";
 const COOKIE_CONSENT_EXPIRY_DAYS = 365;
 
 export function CookieConsentProvider({ children }: { children: ReactNode }) {
-  const [consentStatus, setConsentStatus] = useState<CookieConsentStatus>("pending");
+  const [consentStatus, setConsentStatus] = useState<CookieConsentStatus>(
+    "pending"
+  );
   const [hasConsented, setHasConsented] = useState(false);
 
   useEffect(() => {

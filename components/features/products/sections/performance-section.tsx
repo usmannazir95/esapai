@@ -3,18 +3,21 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import type { PerformanceMetric as PerformanceMetricType } from "@/lib/products";
+import type { PerformanceMetric as PerformanceMetricType } from "@/types/product";
+import type { PerformanceMetricProps, PerformanceSectionProps } from "@/types/props";
 import { Section } from "@/components/ui/section";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
-interface PerformanceMetricProps {
+// Note: PerformanceMetricProps in this file is different from types/props.ts
+// This is a local component-specific type, not the exported one
+type LocalPerformanceMetricProps = {
   value: string;
   label: string;
   valueRef: (el: HTMLSpanElement | null) => void;
-}
+};
 
-function PerformanceMetric({ value, label, valueRef }: PerformanceMetricProps) {
+function PerformanceMetric({ value, label, valueRef }: LocalPerformanceMetricProps) {
   return (
     <div className="flex flex-col items-center">
       <div className="text-6xl md:text-7xl lg:text-8xl font-bold mb-4 relative">
@@ -27,9 +30,6 @@ function PerformanceMetric({ value, label, valueRef }: PerformanceMetricProps) {
   );
 }
 
-interface PerformanceSectionProps {
-  metrics?: PerformanceMetricType[];
-}
 
 const defaultMetrics: PerformanceMetricType[] = [
   { value: "85%", label: "Adoption Rate" },

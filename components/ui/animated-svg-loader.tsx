@@ -10,11 +10,7 @@ import { prefersReducedMotion } from "@/lib/utils/performance-utils";
  * Migrated from Motion to GSAP for better performance
  */
 
-interface AnimatedSVGLoaderProps {
-  size?: "sm" | "md" | "lg";
-  variant?: "primary" | "white" | "gray";
-  className?: string;
-}
+import type { AnimatedSVGLoaderProps } from "@/types/props";
 
 const sizeMap = {
   sm: 24,

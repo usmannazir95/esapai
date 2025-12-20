@@ -6,11 +6,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { getPerformanceTier, getAdaptiveQuality, createFrameThrottle } from '@/lib/utils/performance-utils';
-
-interface ConcaveFloorProps {
-  className?: string;
-  intensity?: number;
-}
+import type { ConcaveFloorProps, RingParticle } from "@/types/props";
 
 const PRIMARY_COLOR_HEX = "#13F584";
 const SECONDARY_COLOR_HEX = "#71FDB7";
@@ -29,15 +25,6 @@ const getSurfaceHeight = (x: number, z: number) => {
   return -normalizedDist * 2;
 };
 
-type RingParticle = {
-  x: number;
-  y: number;
-  z: number;
-  baseScale: number;
-  angle: number;
-  ringIndex: number;
-  phase: number;
-};
 
 const pseudoRandom = (seed: number) => {
   const x = Math.sin(seed) * 10000;

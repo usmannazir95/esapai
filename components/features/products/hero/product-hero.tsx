@@ -9,14 +9,7 @@ import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-
 import { ProductHaloFlow } from "@/components/sections/hero/product-halo-flow";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
 import GridFloorWrapper from "@/components/sections/shared/grid-floor-wrapper";
-
-interface ProductHeroProps {
-  title: string;
-  subtitle: string[];
-  centerIcon?: string;
-  centerIconAlt?: string;
-  productSlug?: string;
-}
+import type { ProductHeroProps } from "@/types/props";
 
 /**
  * Maps product slugs to their corresponding icon files in the product_icons directory
