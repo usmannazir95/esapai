@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getCaseStudies } from "@/lib/case-studies";
-import Frame from "@/components/sections/shared/frame";
+import Frame from "@/components/shared/frame";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Button } from "@/components/ui/button";

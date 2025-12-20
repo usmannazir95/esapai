@@ -10,7 +10,7 @@ import type { ServicePageClientProps } from "@/types/page";
 // Hero loads immediately - critical for LCP
 const ServiceHeroSection = dynamic(
   () =>
-    import("@/components/sections/hero/service-hero").then((mod) => ({
+    import("@/components/features/services/hero/service-hero").then((mod) => ({
       default: mod.ServiceHero,
     })),
   {
@@ -28,7 +28,7 @@ const ServiceHeroSection = dynamic(
 // Below-the-fold sections - lazy loaded
 const ServiceFeaturesSection = dynamic(
   () =>
-    import("@/components/sections/features/service/service-features").then(
+    import("@/components/features/services/sections/service-features").then(
       (mod) => ({
         default: mod.ServiceFeatures,
       }),
@@ -51,7 +51,7 @@ const ServiceFeaturesSection = dynamic(
 
 const RepetitiveWorkSection = dynamic(
   () =>
-    import("@/components/sections/features/service/repetitive-work").then(
+    import("@/components/features/services/sections/repetitive-work").then(
       (mod) => ({
         default: mod.RepetitiveWork,
       }),
@@ -70,8 +70,8 @@ const RepetitiveWorkSection = dynamic(
 
 const YouTubeVideoSection = dynamic(
   () =>
-    import("@/components/sections/shared/youtube-video").then((mod) => ({
-      default: mod.YouTubeVideo,
+    import("@/components/shared/youtube-video").then((mod) => ({
+      default: mod.default,
     })),
   {
     ssr: false, // YouTube embeds don't need SSR

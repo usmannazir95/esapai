@@ -22,9 +22,13 @@ const BLINK_DURATION = 0.15; // seconds
 const DOUBLE_BLINK_GAP = 0.1; // seconds
 
 // Types
-import type { Robot3DProps } from "@/types/component";
-
-export type { Robot3DProps };
+export interface Robot3DProps {
+  className?: string;
+  style?: React.CSSProperties;
+  primaryColor?: string;
+  secondaryColor?: string;
+  scale?: number;
+}
 
 // Loader Component
 const Loader: React.FC = () => {

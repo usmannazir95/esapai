@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { AboutHero } from "@/components/sections/hero/about-hero";
-import { Team } from "@/components/sections/about/team";
+import { AboutHero } from "@/components/features/about/hero/about-hero";
+import { Team } from "@/components/features/about/sections/team";
 import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";

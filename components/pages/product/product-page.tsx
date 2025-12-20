@@ -10,7 +10,7 @@ import type { ProductPageClientProps } from "@/types/page";
 // Hero loads immediately - critical for LCP
 const ProductHeroSection = dynamic(
   () =>
-    import("@/components/sections/hero/product-hero").then((mod) => ({
+    import("@/components/features/products/hero/product-hero").then((mod) => ({
       default: mod.ProductHero,
     })),
   {
@@ -33,7 +33,7 @@ const ProductHeroSection = dynamic(
 // Below-the-fold sections - lazy loaded with SSR disabled for heavy components
 const MissionSection = dynamic(
   () =>
-    import("@/components/sections/about/mission").then((mod) => ({
+    import("@/components/features/about/sections/mission").then((mod) => ({
       default: mod.Mission,
     })),
   {
@@ -50,7 +50,7 @@ const MissionSection = dynamic(
 
 const AutomationHubSection = dynamic(
   () =>
-    import("@/components/sections/features/product/automation-hub").then(
+    import("@/components/features/products/sections/automation-hub").then(
       (mod) => ({
         default: mod.AutomationHub,
       }),
@@ -73,8 +73,8 @@ const AutomationHubSection = dynamic(
 
 const YouTubeVideoSection = dynamic(
   () =>
-    import("@/components/sections/shared/youtube-video").then((mod) => ({
-      default: mod.YouTubeVideo,
+    import("@/components/shared/youtube-video").then((mod) => ({
+      default: mod.default,
     })),
   {
     ssr: false, // YouTube embeds don't need SSR
@@ -86,7 +86,7 @@ const YouTubeVideoSection = dynamic(
 
 const PerformanceSection = dynamic(
   () =>
-    import("@/components/sections/features/product/performance-section").then(
+    import("@/components/features/products/sections/performance-section").then(
       (mod) => ({
         default: mod.PerformanceSection,
       }),
