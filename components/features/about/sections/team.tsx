@@ -427,25 +427,25 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
         </div>
       </div>
 
-      <div ref={contentRef} className="relative z-10 py-12 sm:py-16 md:py-20">
+      <div ref={contentRef} className="relative z-10 py-10 sm:py-12 md:py-16 lg:py-20">
         <div ref={headerRef}>
           <SectionHeader
             title="Our Team"
             subtitle="Meet the visionaries driving innovation and transforming the future of AI-powered automation."
-            subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-3xl mx-auto px-4 mb-16"
+            subtitleClassName="text-base sm:text-lg md:text-xl text-light-gray-90 max-w-3xl mx-auto px-4 mb-12 sm:mb-14 md:mb-16"
           />
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
           {topMember && (
-            <div ref={topCardRef} className="flex justify-center mb-8 md:mb-12">
+            <div ref={topCardRef} className="flex justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
               <TeamCard member={topMember} isLarge />
             </div>
           )}
 
           <div
             ref={middleCardsRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12 justify-items-center"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 mb-6 sm:mb-8 md:mb-10 lg:mb-12 justify-items-center"
           >
             {middleMembers.map((member) => (
               <div key={member.id} data-gsap="team-card">
@@ -456,7 +456,7 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
 
           <div
             ref={bottomCardsRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 justify-items-center"
           >
             {bottomMembers.map((member) => (
               <div key={member.id} data-gsap="team-card">

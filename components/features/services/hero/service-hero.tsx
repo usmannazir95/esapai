@@ -457,14 +457,6 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
               >
                 <Link href="#explore">Explore Solution</Link>
               </Button>
-              <Button 
-                variant="watch-demo" 
-                size="lg" 
-                className="rounded-[40px] px-6 py-4 md:px-8 md:py-6 text-base md:text-lg font-semibold min-w-[160px]" 
-                asChild
-              >
-                <Link href="#demo">Watch Demo</Link>
-              </Button>
             </div>
           </div>
 

@@ -16,13 +16,6 @@ export interface PerformanceMetric {
 export interface ProductFeature {
   title: string;
   description: string;
-  skeleton?: "image" | "gallery" | "youtube" | "globe";
-  skeletonProps?: {
-    imageUrl?: string;
-    galleryImages?: string[];
-    youtubeUrl?: string;
-    youtubeThumbnail?: string;
-  };
   className?: string;
 }
 
@@ -151,10 +144,6 @@ export const products: Product[] = [
             title: "Track Business Operations",
             description:
               "Track and manage your business operations with ease using our intuitive ERP interface.",
-            skeleton: "image",
-            skeletonProps: {
-              imageUrl: "/products/erp.svg",
-            },
             className:
               "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
           },
@@ -162,27 +151,12 @@ export const products: Product[] = [
             title: "Capture Insights with AI",
             description:
               "Capture business insights effortlessly using our advanced AI technology and analytics.",
-            skeleton: "gallery",
-            skeletonProps: {
-              galleryImages: [
-                "/products/erp.svg",
-                "/products/erp.svg",
-                "/products/erp.svg",
-                "/products/erp.svg",
-                "/products/erp.svg",
-              ],
-            },
             className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
           },
           {
             title: "Watch ERP in Action",
             description:
               "See how our Voice-Activated ERP transforms business operations with real-world demonstrations.",
-            skeleton: "youtube",
-            skeletonProps: {
-              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
-              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
-            },
             className:
               "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
           },
@@ -190,7 +164,6 @@ export const products: Product[] = [
             title: "Global Deployment",
             description:
               "Deploy your ERP system across multiple locations with our cloud infrastructure and global reach.",
-            skeleton: "globe",
             className: "col-span-1 lg:col-span-3 border-b lg:border-none",
           },
         ],
@@ -280,10 +253,6 @@ export const products: Product[] = [
             title: "Build AI Agents",
             description:
               "Create sophisticated AI agents with our intuitive framework and comprehensive tooling library.",
-            skeleton: "image",
-            skeletonProps: {
-              imageUrl: "/products/ai-framework.svg",
-            },
             className:
               "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
           },
@@ -291,26 +260,12 @@ export const products: Product[] = [
             title: "Workflow Automation",
             description:
               "Design and deploy complex automation workflows with visual tools and drag-and-drop simplicity.",
-            skeleton: "gallery",
-            skeletonProps: {
-              galleryImages: [
-                "/products/ai-framework.svg",
-                "/products/ai-framework.svg",
-                "/products/ai-framework.svg",
-                "/products/ai-framework.svg",
-              ],
-            },
             className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
           },
           {
             title: "Watch Framework Demo",
             description:
               "See how our AI Framework enables rapid development and deployment of enterprise AI solutions.",
-            skeleton: "youtube",
-            skeletonProps: {
-              youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
-            },
             className:
               "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
           },
@@ -318,7 +273,6 @@ export const products: Product[] = [
             title: "Enterprise Scale",
             description:
               "Deploy and scale your AI solutions across enterprise infrastructure with high performance and reliability.",
-            skeleton: "globe",
             className: "col-span-1 lg:col-span-3 border-b lg:border-none",
           },
         ],
@@ -408,10 +362,6 @@ export const products: Product[] = [
             title: "Intelligent Knowledge Search",
             description:
               "Search across your entire knowledge base with natural language queries and semantic understanding.",
-            skeleton: "image",
-            skeletonProps: {
-              imageUrl: "/products/zakra.svg",
-            },
             className:
               "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
           },
@@ -419,26 +369,12 @@ export const products: Product[] = [
             title: "Knowledge Graph Visualization",
             description:
               "Visualize connections between concepts, documents, and people in your knowledge base.",
-            skeleton: "gallery",
-            skeletonProps: {
-              galleryImages: [
-                "/products/zakra.svg",
-                "/products/zakra.svg",
-                "/products/zakra.svg",
-                "/products/zakra.svg",
-              ],
-            },
             className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
           },
           {
             title: "Watch Zakra in Action",
             description:
               "See how Zakra transforms information retrieval and knowledge management for your organization.",
-            skeleton: "youtube",
-            skeletonProps: {
-              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
-              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
-            },
             className:
               "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
           },
@@ -446,7 +382,6 @@ export const products: Product[] = [
             title: "Multi-Source Integration",
             description:
               "Connect and search across documents, databases, wikis, and knowledge repositories seamlessly.",
-            skeleton: "globe",
             className: "col-span-1 lg:col-span-3 border-b lg:border-none",
           },
         ],
@@ -536,10 +471,6 @@ export const products: Product[] = [
             title: "24/7 Customer Support",
             description:
               "Provide instant, intelligent customer support around the clock with natural language understanding.",
-            skeleton: "image",
-            skeletonProps: {
-              imageUrl: "/products/jawib.svg",
-            },
             className:
               "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
           },
@@ -547,26 +478,12 @@ export const products: Product[] = [
             title: "Multi-Channel Engagement",
             description:
               "Engage customers across chat, email, phone, and social media with consistent experiences.",
-            skeleton: "gallery",
-            skeletonProps: {
-              galleryImages: [
-                "/products/jawib.svg",
-                "/products/jawib.svg",
-                "/products/jawib.svg",
-                "/products/jawib.svg",
-              ],
-            },
             className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
           },
           {
             title: "Watch Jawib Demo",
             description:
               "See how Jawib transforms customer service with AI-powered automation and intelligent responses.",
-            skeleton: "youtube",
-            skeletonProps: {
-              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
-              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
-            },
             className:
               "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
           },
@@ -574,7 +491,6 @@ export const products: Product[] = [
             title: "Global Support Network",
             description:
               "Scale your customer service operations globally with multi-language support and regional deployment.",
-            skeleton: "globe",
             className: "col-span-1 lg:col-span-3 border-b lg:border-none",
           },
         ],
@@ -664,10 +580,6 @@ export const products: Product[] = [
             title: "Native Arabic Processing",
             description:
               "Deep understanding of Modern Standard Arabic, regional dialects, and cultural nuances for accurate communication.",
-            skeleton: "image",
-            skeletonProps: {
-              imageUrl: "/products/fasih.svg",
-            },
             className:
               "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
           },
@@ -675,26 +587,12 @@ export const products: Product[] = [
             title: "Multi-Dialect Support",
             description:
               "Recognize and process various Arabic dialects with high accuracy across different regions.",
-            skeleton: "gallery",
-            skeletonProps: {
-              galleryImages: [
-                "/products/fasih.svg",
-                "/products/fasih.svg",
-                "/products/fasih.svg",
-                "/products/fasih.svg",
-              ],
-            },
             className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
           },
           {
             title: "Watch Fasih Overview",
             description:
               "See how Fasih delivers accurate, culturally-aware Arabic language processing for your applications.",
-            skeleton: "youtube",
-            skeletonProps: {
-              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
-              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
-            },
             className:
               "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
           },
@@ -702,7 +600,6 @@ export const products: Product[] = [
             title: "Global Arabic Support",
             description:
               "Deploy Arabic language capabilities across global applications with regional dialect support.",
-            skeleton: "globe",
             className: "col-span-1 lg:col-span-3 border-b lg:border-none",
           },
         ],
@@ -792,10 +689,6 @@ export const products: Product[] = [
             title: "Legacy System Integration",
             description:
               "Connect to any legacy system, database, or API without requiring modifications to existing infrastructure.",
-            skeleton: "image",
-            skeletonProps: {
-              imageUrl: "/products/domain-expansion.svg",
-            },
             className:
               "col-span-1 lg:col-span-4 border-b lg:border-r border-white-opacity-20",
           },
@@ -803,26 +696,12 @@ export const products: Product[] = [
             title: "Universal Connectors",
             description:
               "Pre-built connectors for common legacy systems with support for custom integrations and protocols.",
-            skeleton: "gallery",
-            skeletonProps: {
-              galleryImages: [
-                "/products/domain-expansion.svg",
-                "/products/domain-expansion.svg",
-                "/products/domain-expansion.svg",
-                "/products/domain-expansion.svg",
-              ],
-            },
             className: "border-b col-span-1 lg:col-span-2 border-white-opacity-20",
           },
           {
             title: "Watch Integration Demo",
             description:
               "See how Domain Expansion bridges the gap between legacy infrastructure and modern AI solutions.",
-            skeleton: "youtube",
-            skeletonProps: {
-              youtubeUrl: "https://www.youtube.com/watch?v=ED2H_y6dmC8",
-              youtubeThumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop",
-            },
             className:
               "col-span-1 lg:col-span-3 lg:border-r border-white-opacity-20",
           },
@@ -830,7 +709,6 @@ export const products: Product[] = [
             title: "Global Deployment",
             description:
               "Deploy integrations across multiple locations with cloud infrastructure and enterprise-grade reliability.",
-            skeleton: "globe",
             className: "col-span-1 lg:col-span-3 border-b lg:border-none",
           },
         ],

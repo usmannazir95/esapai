@@ -1,12 +1,33 @@
+import type { Metadata } from "next";
 import { AboutHero } from "@/components/sections/hero/about-hero";
 import { Team } from "@/components/sections/about/team";
+import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
+import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
+import { StructuredDataComponent } from "@/components/seo/structured-data";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "About Us",
+  description:
+    "Learn about ESAP AI - Leading the next wave of global innovation by creating AI-powered tools and platforms that make work simpler, faster, and smarter.",
+  path: "/about",
+});
 
 export default function AboutPage() {
+  const structuredData = [
+    generateBreadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "About Us", url: "/about" },
+    ]),
+  ];
+
   return (
-    <main className="relative">
-      <AboutHero />
-      <Team />
-    </main>
+    <>
+      <StructuredDataComponent data={structuredData} />
+      <main className="relative">
+        <AboutHero />
+        <Team />
+      </main>
+    </>
   );
 }
 

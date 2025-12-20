@@ -1,24 +1,11 @@
 "use client";
 
 import React from "react";
-import { FeatureCard } from "@/components/ui/feature-card";
-import { FeatureTitle } from "@/components/ui/feature-title";
-import { FeatureDescription } from "@/components/ui/feature-description";
-import { FeatureSkeletonImage } from "@/components/ui/feature-skeleton-image";
-import { FeatureSkeletonGallery } from "@/components/ui/feature-skeleton-gallery";
-import { FeatureSkeletonYouTube } from "@/components/ui/feature-skeleton-youtube";
-import { FeatureSkeletonGlobe } from "@/components/ui/feature-skeleton-globe";
+import { FeatureCard, FeatureTitle, FeatureDescription } from "@/components/ui";
 
 export interface ProductFeatureItem {
   title: string;
   description: string;
-  skeleton?: "image" | "gallery" | "youtube" | "globe";
-  skeletonProps?: {
-    imageUrl?: string;
-    galleryImages?: string[];
-    youtubeUrl?: string;
-    youtubeThumbnail?: string;
-  };
   className?: string;
 }
 
@@ -75,41 +62,10 @@ export function ProductFeatures({
               feature.className ||
               defaultClassNames[index % defaultClassNames.length];
 
-            const renderSkeleton = () => {
-              if (!feature.skeleton) return null;
-
-              switch (feature.skeleton) {
-                case "image":
-                  return (
-                    <FeatureSkeletonImage
-                      imageUrl={feature.skeletonProps?.imageUrl}
-                    />
-                  );
-                case "gallery":
-                  return (
-                    <FeatureSkeletonGallery
-                      images={feature.skeletonProps?.galleryImages}
-                    />
-                  );
-                case "youtube":
-                  return (
-                    <FeatureSkeletonYouTube
-                      youtubeUrl={feature.skeletonProps?.youtubeUrl}
-                      thumbnail={feature.skeletonProps?.youtubeThumbnail}
-                    />
-                  );
-                case "globe":
-                  return <FeatureSkeletonGlobe />;
-                default:
-                  return null;
-              }
-            };
-
             return (
               <FeatureCard key={feature.title} className={featureClassName}>
                 <FeatureTitle>{feature.title}</FeatureTitle>
                 <FeatureDescription>{feature.description}</FeatureDescription>
-                {renderSkeleton()}
               </FeatureCard>
             );
           })}

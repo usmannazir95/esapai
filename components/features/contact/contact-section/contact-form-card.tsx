@@ -43,14 +43,14 @@ export const ContactFormCard = forwardRef<
     <div className="lg:col-span-2 w-full">
       <div
         ref={ref}
-        className="contact-form-card p-5 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl"
+        className="contact-form-card p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 rounded-2xl md:rounded-3xl"
       >
-        <form onSubmit={onSubmit} className="space-y-6">
+        <form onSubmit={onSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
           {/* Full Name Field */}
-          <div data-gsap="contact-form-item" className="space-y-2">
+          <div data-gsap="contact-form-item" className="space-y-1.5 sm:space-y-2">
             <label
               htmlFor="fullName"
-              className="text-white-opacity-70 text-xs md:text-sm font-semibold tracking-wide block"
+              className="text-white-opacity-70 text-xs sm:text-sm font-semibold tracking-wide block"
             >
               Full Name
             </label>
@@ -62,15 +62,15 @@ export const ContactFormCard = forwardRef<
               onChange={onInputChange}
               placeholder="John Doe"
               required
-              className="contact-input w-full px-4 py-3 md:py-3.5 text-light-gray"
+              className="contact-input w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base text-light-gray min-h-[44px]"
             />
           </div>
 
           {/* Email Field */}
-          <div data-gsap="contact-form-item" className="space-y-2">
+          <div data-gsap="contact-form-item" className="space-y-1.5 sm:space-y-2">
             <label
               htmlFor="email"
-              className="text-white-opacity-70 text-xs md:text-sm font-semibold tracking-wide block"
+              className="text-white-opacity-70 text-xs sm:text-sm font-semibold tracking-wide block"
             >
               Email
             </label>
@@ -82,15 +82,15 @@ export const ContactFormCard = forwardRef<
               onChange={onInputChange}
               placeholder="name@company.com"
               required
-              className="contact-input w-full px-4 py-3 md:py-3.5 text-light-gray"
+              className="contact-input w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base text-light-gray min-h-[44px]"
             />
           </div>
 
           {/* Message Field */}
-          <div data-gsap="contact-form-item" className="space-y-2">
+          <div data-gsap="contact-form-item" className="space-y-1.5 sm:space-y-2">
             <label
               htmlFor="message"
-              className="text-white-opacity-70 text-xs md:text-sm font-semibold tracking-wide block"
+              className="text-white-opacity-70 text-xs sm:text-sm font-semibold tracking-wide block"
             >
               Message
             </label>
@@ -102,7 +102,7 @@ export const ContactFormCard = forwardRef<
               placeholder="How can we help you?"
               required
               rows={5}
-              className="contact-input w-full px-4 py-3 md:py-3.5 text-light-gray resize-none"
+              className="contact-input w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base text-light-gray resize-none"
             />
           </div>
 
@@ -112,7 +112,7 @@ export const ContactFormCard = forwardRef<
               type="submit"
               variant="primary"
               disabled={!agreedToTerms || isSubmitting}
-              className="w-full py-6 rounded-[40px] text-base md:text-lg font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all"
+              className="w-full py-4 sm:py-5 md:py-6 px-8 sm:px-10 md:px-12 rounded-[32px] sm:rounded-[40px] text-sm sm:text-base md:text-lg font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all min-h-[44px] sm:min-h-[48px]"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
@@ -133,18 +133,18 @@ export const ContactFormCard = forwardRef<
           )}
 
           {/* Terms and Conditions */}
-          <div data-gsap="contact-form-item" className="flex items-start gap-3 pt-2">
+          <div data-gsap="contact-form-item" className="flex items-start gap-2 sm:gap-3 pt-1 sm:pt-2">
             <input
               type="checkbox"
               id="terms"
               checked={agreedToTerms}
               onChange={(e) => onAgreedToTermsChange(e.target.checked)}
               required
-              className="mt-1 w-5 h-5 rounded border-white-opacity-20 bg-white-opacity-10 text-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0 cursor-pointer accent-primary"
+              className="mt-1 w-4 h-4 sm:w-5 sm:h-5 rounded border-white-opacity-20 bg-white-opacity-10 text-primary focus:ring-2 focus:ring-primary/20 focus:ring-offset-0 cursor-pointer accent-primary min-w-[20px] min-h-[20px] sm:min-w-[20px] sm:min-h-[20px]"
             />
             <label
               htmlFor="terms"
-              className="text-light-gray-90 text-sm md:text-base cursor-pointer"
+              className="text-light-gray-90 text-xs sm:text-sm md:text-base cursor-pointer leading-relaxed"
             >
               By submitting, I agree to the{" "}
               <a

@@ -26,9 +26,9 @@ const containerMaxWidthClasses = {
 
 const paddingClasses = {
   none: "",
-  sm: "py-8 sm:py-10 px-4",
-  md: "py-12 sm:py-16 md:py-20 px-4",
-  lg: "py-16 sm:py-24 md:py-32 px-4",
+  sm: "py-6 sm:py-8 md:py-10 px-4 sm:px-6",
+  md: "py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8",
+  lg: "py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12",
 };
 
 const backgroundClasses = {
@@ -71,7 +71,7 @@ export const Section = React.forwardRef<HTMLElement, SectionProps>(
       >
         <div
           className={cn(
-            "relative container mx-auto z-10",
+            "relative container mx-auto z-10 px-4 sm:px-6 md:px-8",
             containerMaxWidthClasses[containerMaxWidth],
             containerClassName
           )}

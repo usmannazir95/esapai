@@ -259,9 +259,6 @@ export function ContactSection() {
       const socialIcons = leftColumnRef.current.querySelectorAll<HTMLElement>(
         '[data-gsap="contact-social-icon"]'
       );
-      const socialFloatTargets = leftColumnRef.current.querySelectorAll<HTMLElement>(
-        '[data-gsap="contact-social-float"]'
-      );
 
       const tl = gsap.timeline();
       tl.to(leftItems, {
@@ -282,43 +279,6 @@ export function ContactSection() {
             stagger: 0.06,
           },
           "-=0.25"
-        )
-        .add(
-          () => {
-            // Start floating after a short delay (and only once).
-            // Important: float targets are inner wrappers so hover scale on <a> is unaffected.
-            if (prefersReducedMotion()) return;
-            if (socialFloatTweensRef.current.length > 0) return;
-            if (socialFloatTargets.length === 0) return;
-
-            const tweens: gsap.core.Tween[] = [];
-            socialFloatTargets.forEach((el) => {
-              // Subtle variance per icon for a more organic feel
-              const amplitude = gsap.utils.random(6, 10);
-              const duration = gsap.utils.random(2.2, 3.2);
-              const phaseDelay = gsap.utils.random(0, 0.4);
-
-              const tween = gsap.to(el, {
-                y: -amplitude,
-                duration,
-                ease: "sine.inOut",
-                repeat: -1,
-                yoyo: true,
-                delay: 1.0 + phaseDelay, // "after a certain timer"
-                force3D: true,
-                paused: true, // start after the delayedPlay call below
-              });
-              tweens.push(tween);
-            });
-
-            socialFloatTweensRef.current = tweens;
-
-            // Play all float tweens together after the configured delay
-            gsap.delayedCall(1.0, () => {
-              socialFloatTweensRef.current.forEach((tween) => tween.play());
-            });
-          },
-          "+=0.05"
         );
     },
     { scope: sectionRef, dependencies: [isLeftInView] }
@@ -343,9 +303,6 @@ export function ContactSection() {
         const socialIcons = leftColumnRef.current.querySelectorAll<HTMLElement>(
           '[data-gsap="contact-social-icon"]'
         );
-        const socialFloatTargets = leftColumnRef.current.querySelectorAll<HTMLElement>(
-          '[data-gsap="contact-social-float"]'
-        );
 
         leftHasAnimatedRef.current = true;
 
@@ -368,39 +325,6 @@ export function ContactSection() {
               stagger: 0.06,
             },
             "-=0.25"
-          )
-          .add(
-            () => {
-              if (prefersReducedMotion()) return;
-              if (socialFloatTweensRef.current.length > 0) return;
-              if (socialFloatTargets.length === 0) return;
-
-              const tweens: gsap.core.Tween[] = [];
-              socialFloatTargets.forEach((el) => {
-                const amplitude = gsap.utils.random(6, 10);
-                const duration = gsap.utils.random(2.2, 3.2);
-                const phaseDelay = gsap.utils.random(0, 0.4);
-
-                const tween = gsap.to(el, {
-                  y: -amplitude,
-                  duration,
-                  ease: "sine.inOut",
-                  repeat: -1,
-                  yoyo: true,
-                  delay: 1.0 + phaseDelay,
-                  force3D: true,
-                  paused: true,
-                });
-                tweens.push(tween);
-              });
-
-              socialFloatTweensRef.current = tweens;
-
-              gsap.delayedCall(1.0, () => {
-                socialFloatTweensRef.current.forEach((tween) => tween.play());
-              });
-            },
-            "+=0.05"
           );
       }
     };
@@ -412,18 +336,6 @@ export function ContactSection() {
     return () => clearTimeout(timeoutId);
   }, [isLeftInView]);
 
-  // Pause/resume floating icons based on visibility
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const tweens = socialFloatTweensRef.current;
-    if (tweens.length === 0) return;
-
-    if (!isLeftInView) {
-      tweens.forEach((tween) => tween.pause());
-    } else {
-      tweens.forEach((tween) => tween.resume());
-    }
-  }, [isLeftInView]);
 
   // Safety fallback: Ensure content is visible after a delay if animations haven't triggered
   useEffect(() => {
@@ -462,13 +374,13 @@ export function ContactSection() {
       ref={(el) => {
         sectionRef.current = el;
       }}
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20"
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-12 sm:pb-16 md:pb-20"
     >
       <ContactBackdrop />
 
-      <div className="relative z-10 container mx-auto px-4 py-8 md:py-12">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8 md:py-10 lg:py-12">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start lg:items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-start lg:items-center">
             <ContactLeftColumn
               ref={(node) => {
                 leftColumnRef.current = node;

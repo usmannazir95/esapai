@@ -196,9 +196,9 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-7xl mx-auto">
           {/* Main Footer Content */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-8 md:mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-8 sm:mb-10 md:mb-12">
             {/* Logo and Description */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <Link 
                 ref={logoRef}
                 href="/" 
@@ -211,27 +211,27 @@ export function Footer() {
                   alt="ESAP Logo"
                   width={100}
                   height={32}
-                  className="h-auto"
+                  className="h-auto w-auto max-w-[80px] sm:max-w-[100px]"
                 />
               </Link>
-              <p ref={descriptionRef} className="text-light-gray-90 text-sm md:text-base max-w-xs">
+              <p ref={descriptionRef} className="text-light-gray-90 text-xs sm:text-sm md:text-base max-w-xs">
                 Smartly Built for What&apos;s Next. Where Innovation Meets
                 Productivity.
               </p>
             </div>
 
             {/* Navigation Links */}
-            <div ref={navSectionRef} className="space-y-4">
-              <h3 className="text-primary font-semibold text-base md:text-lg mb-4">
+            <div ref={navSectionRef} className="space-y-3 sm:space-y-4">
+              <h3 className="text-primary font-semibold text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
                 Quick Links
               </h3>
-              <nav className="flex flex-col gap-3">
+              <nav className="flex flex-col gap-2 sm:gap-3">
                 {navigationLinks.map((link, index) => (
                   <Link
                     key={link.href}
                     ref={(el) => { navLinksRefs.current[index] = el; }}
                     href={link.href}
-                    className="text-light-gray-90 hover:text-primary text-sm md:text-base w-fit relative"
+                    className="text-light-gray-90 hover:text-primary text-xs sm:text-sm md:text-base w-fit relative"
                     onMouseEnter={() => handleLinkHover(index, true)}
                     onMouseLeave={() => handleLinkHover(index, false)}
                   >
@@ -242,11 +242,11 @@ export function Footer() {
             </div>
 
             {/* Social Media */}
-            <div ref={socialSectionRef} className="space-y-4">
-              <h3 className="text-primary font-semibold text-base md:text-lg mb-4">
+            <div ref={socialSectionRef} className="space-y-3 sm:space-y-4">
+              <h3 className="text-primary font-semibold text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
                 Connect With Us
               </h3>
-              <div className="flex items-center gap-4 flex-wrap">
+              <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
                 {socialIcons.map((icon, index) => (
                   <a
                     key={icon.name}
@@ -254,7 +254,7 @@ export function Footer() {
                     href={icon.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group w-10 h-10 flex items-center justify-center rounded-full bg-white-opacity-10 border border-white-opacity-25 transition-shadow duration-300"
+                    className="group w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-white-opacity-10 border border-white-opacity-25 transition-shadow duration-300"
                     style={{ willChange: "transform, background-color" }}
                     aria-label={icon.name}
                     onMouseEnter={() => handleSocialHover(index, true)}
@@ -265,7 +265,7 @@ export function Footer() {
                       alt={icon.name}
                       width={20}
                       height={20}
-                      className="w-5 h-5"
+                      className="w-4 h-4 sm:w-5 sm:h-5"
                     />
                   </a>
                 ))}
@@ -274,12 +274,12 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div ref={bottomBarRef} className="pt-8 border-t border-white-opacity-20">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-light-gray-90 text-xs md:text-sm text-center md:text-left">
+          <div ref={bottomBarRef} className="pt-6 sm:pt-8 border-t border-white-opacity-20">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+              <p className="text-light-gray-90 text-xs sm:text-sm text-center sm:text-left">
                 © {new Date().getFullYear()} ESAP. All rights reserved.
               </p>
-              <div className="flex items-center gap-6 text-xs md:text-sm">
+              <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm">
                 <Link
                   href="/privacy"
                   className="text-light-gray-90 hover:text-primary transition-colors"

@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { LegalPage, LegalSection, LegalParagraph, LegalList } from "@/components/pages/legal-page";
+import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions | ESAP AI",
-  description: "ESAP AI Terms & Conditions - Read our terms of service for using our AI platform and services.",
-};
+export const metadata: Metadata = generatePageMetadata({
+  title: "Terms & Conditions",
+  description:
+    "ESAP AI Terms & Conditions - Read our terms of service for using our AI platform and services. Understand your rights and responsibilities.",
+  path: "/terms",
+});
 
 export default function TermsPage() {
   const lastUpdated = "December 2025";

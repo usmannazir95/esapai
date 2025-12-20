@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { LazySection } from "@/components/ui/lazy-section";
+import { generateHomeMetadata } from "@/lib/seo/metadata";
+
+export const metadata: Metadata = generateHomeMetadata();
 
 // Hero section loads immediately (above the fold, critical for LCP)
 const HeroSection = dynamic(

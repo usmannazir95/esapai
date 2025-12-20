@@ -8,7 +8,7 @@ interface FeatureCardProps {
 
 export function FeatureCard({ children, className }: FeatureCardProps) {
   return (
-    <div className={cn(`p-4 sm:p-8 relative overflow-hidden`, className)}>
+    <div className={cn(`p-4 sm:p-6 md:p-8 relative overflow-hidden`, className)}>
       {children}
     </div>
   );

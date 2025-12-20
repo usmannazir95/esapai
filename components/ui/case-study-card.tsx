@@ -17,37 +17,37 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
   return (
     <Link href={`/case-study/${caseStudy.slug}`} className="block h-full">
       <SpotlightCard className="h-full">
-        <div className="p-5 md:p-6 h-full flex flex-col">
+        <div className="p-4 sm:p-5 md:p-6 h-full flex flex-col">
           {/* Thumbnail Image */}
           {thumbnailImage && (
-            <div className="relative w-full h-48 md:h-56 mb-5 rounded-lg overflow-hidden">
+            <div className="relative w-full h-40 sm:h-44 md:h-48 lg:h-56 mb-3 sm:mb-4 md:mb-5 rounded-lg overflow-hidden">
               <Image
                 src={thumbnailImage.url}
                 alt={thumbnailImage.alt || caseStudy.title}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
             </div>
           )}
 
           {/* Title */}
-          <h3 className="text-xl md:text-2xl font-bold mb-3 text-gradient-radial-white">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 text-gradient-radial-white">
             {caseStudy.title}
           </h3>
 
           {/* Description */}
-          <p className="text-sm md:text-base text-light-gray-90 leading-relaxed mb-5 flex-1">
+          <p className="text-xs sm:text-sm md:text-base text-light-gray-90 leading-relaxed mb-4 sm:mb-5 flex-1">
             {excerpt}
           </p>
 
           {/* Tags */}
           {displayTags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
               {displayTags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 text-xs md:text-sm rounded-full bg-dark border border-primary/30 text-primary"
+                  className="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs md:text-sm rounded-full bg-dark border border-primary/30 text-primary"
                 >
                   {tag}
                 </span>
