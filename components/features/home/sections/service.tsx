@@ -14,7 +14,7 @@ import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
-import Brain from "@/components/sections/shared/brain";
+import Brain from "@/components/shared/brain";
 
 const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
   ssr: false,

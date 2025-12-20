@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
-import Frame from "@/components/sections/shared/frame";
+import Frame from "@/components/shared/frame";
 import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
-import { ProductHaloFlow } from "@/components/sections/hero/product-halo-flow";
+import { ProductHaloFlow } from "@/components/shared/product-halo-flow";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
-import GridFloorWrapper from "@/components/sections/shared/grid-floor-wrapper";
+import GridFloorWrapper from "@/components/shared/grid-floor-wrapper";
 import type { ProductHeroProps } from "@/types/props";
 
 /**

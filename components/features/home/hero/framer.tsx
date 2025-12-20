@@ -1,4 +1,4 @@
-export { default } from "@/components/sections/hero/framer";
+export { default } from "@/components/shared/framer";
 
 
 

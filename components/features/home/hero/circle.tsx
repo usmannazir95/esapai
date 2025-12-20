@@ -1,3 +1,3 @@
-export { default } from "@/components/sections/hero/circle";
+export { default } from "@/components/shared/circle";
 
 

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import Frame from "@/components/sections/shared/frame";
+import Frame from "@/components/shared/frame";
 import dynamic from "next/dynamic";
 import type { GlobeConfig } from "@/components/ui/globe";
 

@@ -11,15 +11,15 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
-import Robot from "@/components/sections/shared/robot";
+import Robot from "@/components/shared/robot";
 
 const ConcaveFloor = dynamic(
-  () => import("@/components/sections/shared/concave-floor"),
+  () => import("@/components/shared/concave-floor"),
   { ssr: false }
 );
 
 const SpaceBackground = dynamic(
-  () => import("@/components/sections/shared/space-background"),
+  () => import("@/components/shared/space-background"),
   { ssr: false }
 );
 

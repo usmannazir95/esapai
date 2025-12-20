@@ -1,6 +1,6 @@
 "use client";
 
-import Frame from "@/components/sections/shared/frame";
+import Frame from "@/components/shared/frame";
 
 export function ContactBackdrop() {
   return (

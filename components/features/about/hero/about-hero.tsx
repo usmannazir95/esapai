@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-import Frame from "@/components/sections/shared/frame";
+import Frame from "@/components/shared/frame";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 

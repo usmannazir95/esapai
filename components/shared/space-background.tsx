@@ -4,7 +4,11 @@ import React, { useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stars, Sparkles } from "@react-three/drei";
 import { getPerformanceTier, getAdaptiveQuality } from '@/lib/utils/performance-utils';
-import type { SpaceBackgroundProps } from "@/types/props";
+
+interface SpaceBackgroundProps {
+  className?: string;
+  hideSparkles?: boolean;
+}
 
 // Theme Colors
 const GRID_COLOR_SECONDARY = "#13F584"; // Primary Green

@@ -7,7 +7,7 @@ export const metadata: Metadata = generateHomeMetadata();
 
 // Hero section loads immediately (above the fold, critical for LCP)
 const HeroSection = dynamic(
-  () => import("@/components/sections/hero/hero").then((mod) => ({ default: mod.Hero })),
+  () => import("@/components/features/home/hero").then((mod) => ({ default: mod.Hero })),
   {
     // Hero should load immediately, no SSR delay
   }
@@ -15,19 +15,19 @@ const HeroSection = dynamic(
 
 // Below-the-fold sections - lazy loaded with code splitting
 const MissionSection = dynamic(
-  () => import("@/components/sections/about/mission").then((mod) => ({ default: mod.Mission })),
+  () => import("@/components/features/about/sections/mission").then((mod) => ({ default: mod.Mission })),
 );
 
 const VisionSection = dynamic(
-  () => import("@/components/sections/about/vision").then((mod) => ({ default: mod.Vision })),
+  () => import("@/components/features/about/sections/vision").then((mod) => ({ default: mod.Vision })),
 );
 
 const ServiceSection = dynamic(
-  () => import("@/components/sections/features/home/service").then((mod) => ({ default: mod.Service })),
+  () => import("@/components/features/home/sections/service").then((mod) => ({ default: mod.Service })),
 );
 
 const ProductShowcaseSection = dynamic(
-  () => import("@/components/sections/features/home/product-showcase").then((mod) => ({ default: mod.ProductShowcase })),
+  () => import("@/components/features/home/sections/product-showcase").then((mod) => ({ default: mod.ProductShowcase })),
 );
 
 export default function Home() {
