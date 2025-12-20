@@ -1,7 +1,10 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-interface SectionProps {
+export type SectionProps = Omit<
+  React.ComponentPropsWithoutRef<"section">,
+  "className" | "children"
+> & {
   children: React.ReactNode;
   className?: string;
   containerClassName?: string;
@@ -9,7 +12,7 @@ interface SectionProps {
   background?: "dark" | "transparent" | string;
   padding?: "none" | "sm" | "md" | "lg";
   overflow?: "hidden" | "visible";
-}
+};
 
 const containerMaxWidthClasses = {
   sm: "max-w-sm",
@@ -33,42 +36,50 @@ const backgroundClasses = {
   transparent: "bg-transparent",
 };
 
-export function Section({
-  children,
-  className = "",
-  containerClassName = "",
-  containerMaxWidth = "7xl",
-  background = "dark",
-  padding = "md",
-  overflow = "hidden",
-}: SectionProps) {
-  const backgroundClass =
-    typeof background === "string" && background in backgroundClasses
-      ? backgroundClasses[background as keyof typeof backgroundClasses]
-      : background === "dark"
-      ? "bg-dark"
-      : "";
+export const Section = React.forwardRef<HTMLElement, SectionProps>(
+  function Section(
+    {
+      children,
+      className = "",
+      containerClassName = "",
+      containerMaxWidth = "7xl",
+      background = "dark",
+      padding = "md",
+      overflow = "hidden",
+      ...props
+    },
+    ref
+  ) {
+    const backgroundClass =
+      typeof background === "string" && background in backgroundClasses
+        ? backgroundClasses[background as keyof typeof backgroundClasses]
+        : background === "dark"
+        ? "bg-dark"
+        : "";
 
-  return (
-    <section
-      className={cn(
-        "relative w-full",
-        paddingClasses[padding],
-        overflow === "hidden" ? "overflow-hidden" : "overflow-visible",
-        backgroundClass,
-        className
-      )}
-    >
-      <div
+    return (
+      <section
+        ref={ref}
+        {...props}
         className={cn(
-          "relative container mx-auto z-10",
-          containerMaxWidthClasses[containerMaxWidth],
-          containerClassName
+          "relative w-full",
+          paddingClasses[padding],
+          overflow === "hidden" ? "overflow-hidden" : "overflow-visible",
+          backgroundClass,
+          className
         )}
       >
-        {children}
-      </div>
-    </section>
-  );
-}
+        <div
+          className={cn(
+            "relative container mx-auto z-10",
+            containerMaxWidthClasses[containerMaxWidth],
+            containerClassName
+          )}
+        >
+          {children}
+        </div>
+      </section>
+    );
+  }
+);
 

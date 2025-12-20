@@ -42,7 +42,7 @@ export default async function CaseStudiesPage() {
 
       {/* Case Studies Grid - Lazy loaded (below the fold) */}
       <LazySection minHeight="800px">
-        <Section>
+        <Section className="case-studies-glow">
           <SectionHeader
             title="Explore Our Case Studies"
             subtitle="Discover how ESAP AI transforms businesses through innovative AI solutions and real-world implementations."
@@ -64,10 +64,20 @@ export default async function CaseStudiesPage() {
                     key={caseStudy._id}
                     className={
                       index === 0
-                        ? ""
-                        : "mt-14 pt-14 border-t border-white/10"
+                        ? "relative isolate"
+                        : "relative isolate mt-14 pt-14 border-t border-white/10"
                     }
                   >
+                    {/* Glow background to highlight each case study (visual only) */}
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -left-28 top-10 -z-10 h-64 w-64 rounded-full bg-primary/20 blur-3xl opacity-70"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-24 bottom-10 -z-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl opacity-60"
+                    />
+
                     {caseStudy.featured && (
                       <div className="mb-3">
                         <span className="inline-flex items-center rounded-full bg-primary/10 border border-primary/30 px-3 py-1 text-xs uppercase tracking-wide text-primary">
@@ -153,7 +163,7 @@ export default async function CaseStudiesPage() {
               className="rounded-[40px] px-8 py-6 text-lg font-semibold"
               asChild
             >
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/contact">Contact</Link>
             </Button>
           </div>
         </Section>

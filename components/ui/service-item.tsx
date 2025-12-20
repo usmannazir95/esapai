@@ -1,15 +1,26 @@
 import React from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface ServiceItemProps {
   title: string | React.ReactNode;
   description: string;
   iconPosition: "left" | "right";
-  positionStyle: {
-    left: string;
-    top: string;
-    transform?: string;
-  };
+  /**
+   * Layout mode:
+   * - `stacked`: normal document flow (no absolute positioning)
+   * - `absolute`: positioned around a center point
+   */
+  layout?: "stacked" | "absolute";
+  /**
+   * Prefer classes for positioning to avoid inline styles.
+   * Example: `left-[calc(50%_-_450px)] top-[50%] -translate-x-1/2 -translate-y-1/2`
+   */
+  positionClassName?: string;
+  /**
+   * Back-compat: some sections still pass inline positioning styles.
+   */
+  positionStyle?: React.CSSProperties;
   descriptionClassName?: string;
   iconSrc?: string;
   iconAlt?: string;
@@ -19,6 +30,8 @@ export function ServiceItem({
   title,
   description,
   iconPosition,
+  layout,
+  positionClassName,
   positionStyle,
   descriptionClassName = "",
   iconSrc = "/landing/service/serviceicon.svg",
@@ -27,12 +40,13 @@ export function ServiceItem({
   const textAlignment = iconPosition === "left" ? "text-left" : "text-right";
   const iconOrder = iconPosition === "left";
   
-  // Check if this is a stacked layout (no transform in positionStyle)
-  const isStacked = positionStyle.transform === 'none';
+  const resolvedLayout =
+    layout ?? (positionStyle?.transform === "none" ? "stacked" : "absolute");
+  const isStacked = resolvedLayout === "stacked";
 
   return (
     <div 
-      className={isStacked ? "relative w-full" : "absolute"} 
+      className={cn(isStacked ? "relative w-full" : "absolute", positionClassName)}
       style={positionStyle}
     >
       <div className={`relative ${isStacked ? 'p-4 sm:p-6 w-full' : 'p-4 md:p-6 lg:p-8 min-w-[320px] sm:min-w-[360px] md:min-w-[400px] max-w-[420px]'} ${isStacked ? 'min-h-0' : 'h-[240px]'} flex flex-col justify-center`}>
