@@ -194,7 +194,7 @@ export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
           }
         >
           <YouTubeVideoSection
-            videoId={content.youtubeVideo?.videoId ?? "ED2H_y6dmC8"}
+            videoId={content.youtubeVideo?.videoId ?? "oAuaVWvw0lM"}
             title={content.youtubeVideo?.title}
           />
         </Suspense>

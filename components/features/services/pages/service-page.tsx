@@ -187,7 +187,7 @@ export function ServicePage({ slug, initialService }: ServicePageClientProps) {
           }
         >
           <YouTubeVideoSection
-            videoId={youtubeVideoContent?.videoId ?? "dQw4w9WgXcQ"}
+            videoId={youtubeVideoContent?.videoId ?? "hPkB_DBwnfU"}
             title={youtubeVideoContent?.title}
           />
         </Suspense>
