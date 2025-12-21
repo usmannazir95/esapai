@@ -25,7 +25,14 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = generateHomeMetadata();
+export const metadata: Metadata = {
+  ...generateHomeMetadata(),
+  icons: {
+    icon: "/fav.svg",
+    shortcut: "/fav.svg",
+    apple: "/fav.svg",
+  },
+};
 
 export default function RootLayout({
   children,
