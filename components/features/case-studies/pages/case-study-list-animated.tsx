@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useInView } from "motion/react";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
@@ -22,7 +21,7 @@ interface CaseStudyListAnimatedProps {
 
 export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
@@ -85,12 +84,25 @@ export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProp
         const button = card.querySelector<HTMLElement>(".case-study-button");
 
         // Set initial states
-        gsap.set([image, title, excerpt, button], { opacity: 0 });
-        gsap.set(image, { scale: 1.1, y: 20 });
-        gsap.set(title, { y: 20 });
-        gsap.set(excerpt, { y: 15 });
-        gsap.set(button, { y: 10, scale: 0.95 });
-        gsap.set(tags, { opacity: 0, scale: 0.8 });
+        const elementsToAnimate = [image, title, excerpt, button].filter(Boolean) as HTMLElement[];
+        if (elementsToAnimate.length > 0) {
+          gsap.set(elementsToAnimate, { opacity: 0 });
+        }
+        if (image) {
+          gsap.set(image, { scale: 1.1, y: 20 });
+        }
+        if (title) {
+          gsap.set(title, { y: 20 });
+        }
+        if (excerpt) {
+          gsap.set(excerpt, { y: 15 });
+        }
+        if (button) {
+          gsap.set(button, { y: 10, scale: 0.95 });
+        }
+        if (tags.length > 0) {
+          gsap.set(tags, { opacity: 0, scale: 0.8 });
+        }
 
         // Use intersection observer to trigger animation
         const observer = new IntersectionObserver(

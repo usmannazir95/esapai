@@ -17,6 +17,7 @@ function TimelineEntry({ entry, entryRef, index }: TimelineEntryProps & { index:
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const imagesRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -30,7 +31,7 @@ function TimelineEntry({ entry, entryRef, index }: TimelineEntryProps & { index:
   // Animate entry when it comes into view
   useGSAP(
     () => {
-      if (prefersReducedMotion() || !entryRef.current) return;
+      if (prefersReducedMotion() || !containerRef.current) return;
 
       // Set initial states
       if (dateRef.current) gsap.set(dateRef.current, { opacity: 0, x: -20 });
@@ -127,21 +128,27 @@ function TimelineEntry({ entry, entryRef, index }: TimelineEntryProps & { index:
         { threshold: 0.2, rootMargin: "0px 0px -100px 0px" }
       );
 
-      if (entryRef.current) {
-        observer.observe(entryRef.current);
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
       }
 
       return () => {
-        if (entryRef.current) {
-          observer.unobserve(entryRef.current);
+        if (containerRef.current) {
+          observer.unobserve(containerRef.current);
         }
       };
     },
-    { scope: entryRef, dependencies: [entry] }
+    { scope: containerRef, dependencies: [entry] }
   );
 
   return (
-    <div ref={entryRef} className="relative flex gap-4 sm:gap-6 md:gap-8 lg:gap-12 mb-8 sm:mb-10 md:mb-12 last:mb-0">
+    <div
+      ref={(el) => {
+        containerRef.current = el;
+        entryRef(el);
+      }}
+      className="relative flex gap-4 sm:gap-6 md:gap-8 lg:gap-12 mb-8 sm:mb-10 md:mb-12 last:mb-0"
+    >
       {/* Date on Left */}
       <div className="flex-shrink-0 w-24 sm:w-28 md:w-32 lg:w-40">
         <div ref={dateRef} className="text-xs sm:text-sm md:text-base text-light-gray-90 font-medium">
