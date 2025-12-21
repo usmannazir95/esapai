@@ -13,7 +13,6 @@ export const ContactFormCard = forwardRef<
     formData: ContactFormData;
     agreedToTerms: boolean;
     isSubmitting: boolean;
-    submissionMessage: string;
     submissionState: SubmissionState;
     onInputChange: (
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,7 +25,6 @@ export const ContactFormCard = forwardRef<
     formData,
     agreedToTerms,
     isSubmitting,
-    submissionMessage,
     submissionState,
     onInputChange,
     onSubmit,
@@ -107,25 +105,11 @@ export const ContactFormCard = forwardRef<
               type="submit"
               variant="primary"
               disabled={!agreedToTerms || isSubmitting}
-              className="w-full py-4 sm:py-5 md:py-6 px-10 sm:px-12 md:px-16 rounded-[32px] sm:rounded-[40px] text-sm sm:text-base md:text-lg font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all min-h-[44px] sm:min-h-[48px]"
+              className="w-full py-4 sm:py-5 md:py-6 px-10 sm:px-12 md:px-16 rounded-[32px] sm:rounded-[40px] text-sm sm:text-base md:text-lg font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all min-h-[44px] sm:min-h-[48px] flex items-center justify-center gap-2"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </div>
-
-          {submissionMessage && (
-            <p
-              className={`text-sm ${
-                submissionState === "error"
-                  ? "text-red-400"
-                  : submissionState === "success"
-                    ? "text-primary"
-                    : "text-light-gray-90"
-              }`}
-            >
-              {submissionMessage}
-            </p>
-          )}
 
           {/* Terms and Conditions */}
           <div data-gsap="contact-form-item" className="flex items-start gap-2 sm:gap-3 pt-1 sm:pt-2">

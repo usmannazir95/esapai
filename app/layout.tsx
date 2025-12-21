@@ -9,6 +9,7 @@ import { WebVitalsProvider } from "@/components/providers/web-vitals-provider";
 import { CookieConsentProvider } from "@/components/providers/cookie-consent-context";
 import { CookieConsentBanner } from "@/components/ui/cookie-consent-banner";
 import { GoogleAnalyticsProvider } from "@/components/providers/google-analytics-provider";
+import { ToastProvider } from "@/components/ui/toast";
 import { generateHomeMetadata } from "@/lib/seo/metadata";
 import { generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
@@ -53,19 +54,21 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <StructuredDataComponent data={structuredData} />
-        <CookieConsentProvider>
-          <WebVitalsProvider>
-            <ProductMenuProvider>
-              <ServiceMenuProvider>
-                <Navbar />
-                <main className="flex-1">{children}</main>
-                <Footer />
-                <CookieConsentBanner />
-              </ServiceMenuProvider>
-            </ProductMenuProvider>
-          </WebVitalsProvider>
-          <GoogleAnalyticsProvider gaId={gaId} />
-        </CookieConsentProvider>
+        <ToastProvider>
+          <CookieConsentProvider>
+            <WebVitalsProvider>
+              <ProductMenuProvider>
+                <ServiceMenuProvider>
+                  <Navbar />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                  <CookieConsentBanner />
+                </ServiceMenuProvider>
+              </ProductMenuProvider>
+            </WebVitalsProvider>
+            <GoogleAnalyticsProvider gaId={gaId} />
+          </CookieConsentProvider>
+        </ToastProvider>
       </body>
     </html>
   );
