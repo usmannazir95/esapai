@@ -1,5 +1,6 @@
 import { client } from "@/lib/sanity/client";
 import { urlFor } from "@/lib/sanity/image";
+import { validateImageUrl } from "@/lib/security/url-validator";
 import type {
   TimelineEntry,
   CaseStudy,
@@ -37,7 +38,7 @@ const CASE_STUDY_BY_SLUG_QUERY = `*[_type == "caseStudy" && slug.current == $slu
 
 
 /**
- * Transform Sanity image references to URLs
+ * Transform Sanity image references to URLs with validation
  */
 function transformImages(
   images: SanityImage[] | undefined | null
@@ -47,14 +48,33 @@ function transformImages(
   }
   return images
     .filter((image) => image && image.asset)
-    .map((image) => ({
-      url: urlFor(image).width(1200).height(800).url(),
-      alt: image.alt || "",
-    }));
+    .map((image) => {
+      const generatedUrl = urlFor(image).width(1200).height(800).url();
+      const validation = validateImageUrl(generatedUrl);
+      
+      if (validation.isValid) {
+        return {
+          url: validation.url,
+          alt: image.alt || "",
+        };
+      }
+      
+      // If validation fails, return empty string (will trigger fallback)
+      // Log in development only
+      if (process.env.NODE_ENV === "development") {
+        console.warn("Invalid image URL detected:", validation.error, generatedUrl);
+      }
+      
+      return {
+        url: "",
+        alt: image.alt || "",
+      };
+    })
+    .filter((img) => img.url !== ""); // Remove invalid URLs
 }
 
 /**
- * Transform a single Sanity image reference to a URL
+ * Transform a single Sanity image reference to a URL with validation
  */
 function transformImage(
   image: SanityImage | undefined | null
@@ -64,8 +84,19 @@ function transformImage(
   }
 
   // 16:9 crop for listing thumbnails
-  const url = urlFor(image).width(1200).height(675).fit("crop").url();
-  return { url, alt: image.alt || "" };
+  const generatedUrl = urlFor(image).width(1200).height(675).fit("crop").url();
+  const validation = validateImageUrl(generatedUrl);
+  
+  if (validation.isValid) {
+    return { url: validation.url, alt: image.alt || "" };
+  }
+  
+  // If validation fails, log in development and return null
+  if (process.env.NODE_ENV === "development") {
+    console.warn("Invalid image URL detected:", validation.error, generatedUrl);
+  }
+  
+  return null;
 }
 
 /**
