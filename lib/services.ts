@@ -48,7 +48,7 @@ export const services: Service[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "hPkB_DBwnfU",
         title: "End-to-End AI Integration Overview",
       },
     },
@@ -98,7 +98,7 @@ export const services: Service[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "hPkB_DBwnfU",
         title: "Enterprise Automation Strategy",
       },
     },
@@ -148,7 +148,7 @@ export const services: Service[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "hPkB_DBwnfU",
         title: "FaaS Platform Demo",
       },
     },
@@ -198,7 +198,7 @@ export const services: Service[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "hPkB_DBwnfU",
         title: "Tailored AI Solutions",
       },
     },
@@ -248,7 +248,7 @@ export const services: Service[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "hPkB_DBwnfU",
         title: "Industry-Specific AI Excellence",
       },
     },
@@ -298,7 +298,7 @@ export const services: Service[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "hPkB_DBwnfU",
         title: "ESAP AI Innovation Lab",
       },
     },

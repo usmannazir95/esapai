@@ -82,7 +82,7 @@ export const products: Product[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "oAuaVWvw0lM",
         title: "Voice ERP in Action",
       },
       performance: {
@@ -191,7 +191,7 @@ export const products: Product[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "dQw4w9WgXcQ",
+        videoId: "oAuaVWvw0lM",
         title: "AI Framework in Action",
       },
       performance: {
@@ -300,7 +300,7 @@ export const products: Product[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "oAuaVWvw0lM",
         title: "Zakra Knowledge Agent Demo",
       },
       performance: {
@@ -409,7 +409,7 @@ export const products: Product[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "oAuaVWvw0lM",
         title: "Jawib Customer Service Agent Demo",
       },
       performance: {
@@ -518,7 +518,7 @@ export const products: Product[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "oAuaVWvw0lM",
         title: "Fasih Arabic LLM Overview",
       },
       performance: {
@@ -627,7 +627,7 @@ export const products: Product[] = [
         ],
       },
       youtubeVideo: {
-        videoId: "ED2H_y6dmC8",
+        videoId: "oAuaVWvw0lM",
         title: "Domain Expansion Integration Demo",
       },
       performance: {

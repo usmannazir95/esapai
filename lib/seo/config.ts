@@ -41,21 +41,26 @@ export const SEO_CONFIG = {
     description:
       "ESAP AI leads the way in embedding AI into daily workflows, creating intelligent infrastructure for tomorrow.",
     sameAs: [
-      // Add social media profiles here when available
-      // "https://www.linkedin.com/company/esap-ai",
-      // "https://twitter.com/esapai",
+      "https://www.facebook.com/esapai.official/",
+      "https://x.com/esap_ai",
+      "https://www.linkedin.com/company/esapai/",
+      "https://www.instagram.com/esapai.official/",
+      "https://www.youtube.com/channel/UC7LyRbfXwb7at1gCQpUMzGg",
     ],
   },
 
   /**
    * Default Open Graph image
    */
-  defaultOgImage: "https://www.esap.ai/og-image.jpg", // Update with actual OG image path
+  defaultOgImage: (() => {
+    const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.esap.ai/").replace(/\/$/, "");
+    return `${baseUrl}/og-image.png`;
+  })(),
 
   /**
    * Twitter handle (without @)
    */
-  twitterHandle: "", // Update when available
+  twitterHandle: "esap_ai",
 
   /**
    * Default language
