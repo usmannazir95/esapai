@@ -68,7 +68,7 @@ export default async function CaseStudySlugPage({ params }: CaseStudySlugPagePro
     }),
     generateBreadcrumbSchema([
       { name: "Home", url: "/" },
-      { name: "Case Studies", url: "/case-study" },
+      { name: "Case Study", url: "/case-study" },
       { name: caseStudy.title, url: `/case-study/${slug}` },
     ]),
   ];

@@ -145,10 +145,10 @@ export function Hero() {
         sectionRef.current = el;
         setIntersectionRef(el);
       }}
-      className="relative w-full min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-8 sm:pb-16 md:pb-24 lg:pb-32 pt-20 sm:pt-24 md:pt-0"
+      className="relative w-full min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
     >
       <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden">
-        <div ref={backdropRef} className="absolute inset-0 gsap-fade-in-optimized">
+        <div ref={backdropRef} className="absolute inset-0 gsap-fade-in-optimized overflow-hidden">
           <FramerBackdrop className="w-[120%] max-w-none min-h-full translate-x-[-10%] -translate-y-[35%] md:translate-y-[-5%]" />
         </div>
         <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background/80" />
@@ -180,7 +180,7 @@ export function Hero() {
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">
         {/* Tagline Badge */}
         <div
           ref={badgeRef}
