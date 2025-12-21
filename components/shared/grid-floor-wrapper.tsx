@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 // Dynamic import with SSR disabled to prevent double loading
 const GridFloorComponent = dynamic(
-  () => import("./grid-floor").then((mod) => ({ default: mod.default })),
+  () => import("@/components/three/instanced-grid-floor").then((mod) => ({ default: mod.default })),
   {
     ssr: false,
     loading: () => (

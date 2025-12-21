@@ -215,6 +215,7 @@ export interface ServiceItemProps {
   iconSrc?: string;
   iconAlt?: string;
   className?: string;
+  href?: string;
 }
 
 export interface MissionCardProps {
@@ -256,6 +257,7 @@ export interface SectionHeaderProps {
   className?: string;
   titleClassName?: string;
   subtitleClassName?: string;
+  hasGreenGlow?: boolean;
 }
 
 export interface Icon {

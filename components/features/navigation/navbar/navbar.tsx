@@ -247,9 +247,9 @@ export function Navbar() {
                   isActive={isActive("/about")}
                 />
                 <NavLinkItem
-                  href="/case-study"
-                  label="Case Study"
-                  isActive={isActive("/case-study")}
+                  href="/case-studies"
+                  label="Case Studies"
+                  isActive={isActive("/case-studies")}
                 />
                 <NavLinkItem
                   href="/contact"
@@ -381,16 +381,16 @@ export function Navbar() {
             </Link>
 
             <Link
-              href="/case-study"
+              href="/case-studies"
               onClick={() => setIsMobileMenuOpen(false)}
               className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${
-                isActive("/case-study")
+                isActive("/case-studies")
                   ? "is-active text-primary"
                   : "text-light-gray hover:text-primary"
               }`}
             >
               <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-base sm:text-lg font-medium">Case Study</span>
+              <span className="relative z-10 text-base sm:text-lg font-medium">Case Studies</span>
             </Link>
 
             <Link

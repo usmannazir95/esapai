@@ -61,14 +61,14 @@ export function CookieConsentBanner() {
                 <Button
                   onClick={rejectCookies}
                   variant="outline"
-                  className="bg-white-opacity-10 border-white-opacity-20 text-light-gray hover:bg-white-opacity-15 rounded-full px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 h-auto min-h-[40px] sm:min-h-[44px] text-xs sm:text-sm whitespace-nowrap"
+                  className="bg-white-opacity-10 border-white-opacity-20 text-light-gray hover:bg-white-opacity-15 rounded-full px-8 sm:px-10 md:px-12 py-2.5 sm:py-3 h-auto min-h-[40px] sm:min-h-[44px] text-xs sm:text-sm whitespace-nowrap"
                 >
                   Reject
                 </Button>
                 <Button
                   onClick={acceptCookies}
                   variant="primary"
-                  className="rounded-full px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 h-auto font-semibold min-h-[40px] sm:min-h-[44px] text-xs sm:text-sm whitespace-nowrap"
+                  className="rounded-full px-8 sm:px-10 md:px-12 py-2.5 sm:py-3 h-auto font-semibold min-h-[40px] sm:min-h-[44px] text-xs sm:text-sm whitespace-nowrap"
                 >
                   Accept All
                 </Button>

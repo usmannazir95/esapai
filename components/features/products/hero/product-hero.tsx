@@ -8,7 +8,7 @@ import Frame from "@/components/shared/frame";
 import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
 import { ProductHaloFlow } from "@/components/shared/product-halo-flow";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
-import GridFloorWrapper from "@/components/shared/grid-floor-wrapper";
+import GridFloor from "@/components/shared/grid-floor";
 import type { ProductHeroProps } from "@/types/props";
 
 /**
@@ -53,13 +53,13 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
                     <div className="absolute inset-0 w-full h-full opacity-60 min-h-[400px] bg-transparent" />
                   }
                 >
-                  <GridFloorWrapper className="opacity-60" perspective="dramatic" />
+                  <GridFloor className="opacity-60" perspective="dramatic" />
                 </LazyThreeWrapper>
               </div>
             </div>
 
             <div className="absolute inset-0 pointer-events-none [background-image:radial-gradient(ellipse_at_center,transparent_0%,transparent_30%,rgba(0,3,0,0.2)_50%,rgba(0,3,0,0.4)_70%,rgba(0,3,0,0.6)_100%)]" />
-            <div className="absolute top-0 left-0 right-0 h-[12%] pointer-events-none [background-image:linear-gradient(to_bottom,rgba(0,3,0,0.8)_0%,rgba(0,3,0,0.3)_60%,transparent_100%)]" />
+            <div className="absolute top-0 left-0 right-0 h-[15%] pointer-events-none [background-image:linear-gradient(to_bottom,rgba(0,3,0,0.85)_0%,rgba(0,3,0,0.4)_40%,rgba(0,3,0,0.15)_70%,transparent_100%)]" />
             <div className="absolute bottom-0 left-0 right-0 h-[15%] pointer-events-none [background-image:linear-gradient(to_top,rgba(0,3,0,0.9)_0%,rgba(0,3,0,0.4)_60%,transparent_100%)]" />
             <div className="absolute top-0 bottom-0 left-0 w-[2%] pointer-events-none [background-image:linear-gradient(to_right,rgba(0,3,0,0.5)_0%,transparent_100%)]" />
             <div className="absolute top-0 bottom-0 right-0 w-[2%] pointer-events-none [background-image:linear-gradient(to_left,rgba(0,3,0,0.5)_0%,transparent_100%)]" />
@@ -93,7 +93,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
               <Button
                 variant="primary"
                 size="lg"
-                className="rounded-[32px] sm:rounded-[40px] px-5 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-w-[140px] sm:min-w-[160px] min-h-[44px] sm:min-h-[48px]"
+                className="rounded-[32px] sm:rounded-[40px] px-10 sm:px-12 md:px-16 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-w-[140px] sm:min-w-[160px] min-h-[44px] sm:min-h-[48px]"
                 asChild
               >
                 <Link href="#explore">Explore Solution</Link>

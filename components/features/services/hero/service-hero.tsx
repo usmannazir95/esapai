@@ -448,7 +448,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
               <Button 
                 variant="primary" 
                 size="lg" 
-                className="rounded-[40px] px-6 py-4 md:px-8 md:py-6 text-base md:text-lg font-semibold min-w-[160px]" 
+                className="rounded-[40px] px-10 py-4 md:px-16 md:py-6 text-base md:text-lg font-semibold min-w-[160px]" 
                 asChild
               >
                 <Link href="#explore">Explore Solution</Link>
