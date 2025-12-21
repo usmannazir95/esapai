@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { ProductMenuProvider } from "@/components/layout/product-menu-context";
-import { ServiceMenuProvider } from "@/components/layout/service-menu-context";
+import { Navbar } from "@/components/features/navigation/navbar";
+import { Footer } from "@/components/features/navigation/footer";
+import { ProductMenuProvider } from "@/components/features/navigation/menus/product-menu-context";
+import { ServiceMenuProvider } from "@/components/features/navigation/menus/service-menu-context";
 import { WebVitalsProvider } from "@/components/providers/web-vitals-provider";
 import { CookieConsentProvider } from "@/components/providers/cookie-consent-context";
 import { CookieConsentBanner } from "@/components/ui/cookie-consent-banner";

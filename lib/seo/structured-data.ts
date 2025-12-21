@@ -15,6 +15,17 @@ export type {
   ServiceSchemaOptions,
 };
 
+export type CollectionPageSchemaOptions = {
+  name: string;
+  description: string;
+  url: string;
+  items: Array<{
+    headline: string;
+    url: string;
+    image?: string;
+  }>;
+};
+
 /**
  * Generate Organization structured data (JSON-LD)
  */
@@ -198,4 +209,34 @@ export function generateServiceSchema(
   }
 
   return schema;
+}
+
+/**
+ * Generate CollectionPage structured data (JSON-LD) for list pages
+ */
+export function generateCollectionPageSchema(
+  options: CollectionPageSchemaOptions
+): StructuredData {
+  const { name, description, url, items } = options;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url: getFullUrl(url),
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Article",
+          headline: item.headline,
+          url: getFullUrl(item.url),
+          ...(item.image && { image: getFullUrl(item.image) }),
+        },
+      })),
+    },
+  };
 }

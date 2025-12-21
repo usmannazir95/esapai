@@ -1,13 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
+import { useSharedCardObserver } from "@/lib/hooks/use-case-study-card-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
+import { sanitizeText } from "@/lib/utils/sanitize";
 import Frame from "@/components/shared/frame";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
@@ -17,6 +19,13 @@ import type { CaseStudyWithUrls } from "@/types/case-study";
 
 interface CaseStudyListAnimatedProps {
   caseStudies: CaseStudyWithUrls[];
+}
+
+interface CaseStudyCardProps {
+  caseStudy: CaseStudyWithUrls;
+  index: number;
+  onImageError: (id: string) => void;
+  imageErrors: Set<string>;
 }
 
 export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProps) {
@@ -68,130 +77,15 @@ export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProp
     { scope: heroRef }
   );
 
-  // Case study cards animations
-  useGSAP(
-    () => {
-      if (prefersReducedMotion() || !isInView) return;
-      if (!cardsContainerRef.current) return;
+  // Track image loading errors
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
-      const cards = cardsContainerRef.current.querySelectorAll<HTMLElement>("article");
+  const handleImageError = (id: string) => {
+    setImageErrors((prev) => new Set(prev).add(id));
+  };
 
-      cards.forEach((card) => {
-        const image = card.querySelector<HTMLElement>(".case-study-image");
-        const title = card.querySelector<HTMLElement>("h2");
-        const excerpt = card.querySelector<HTMLElement>("p");
-        const tags = card.querySelectorAll<HTMLElement>(".case-study-tag");
-        const button = card.querySelector<HTMLElement>(".case-study-button");
-
-        // Set initial states
-        const elementsToAnimate = [image, title, excerpt, button].filter(Boolean) as HTMLElement[];
-        if (elementsToAnimate.length > 0) {
-          gsap.set(elementsToAnimate, { opacity: 0 });
-        }
-        if (image) {
-          gsap.set(image, { scale: 1.1, y: 20 });
-        }
-        if (title) {
-          gsap.set(title, { y: 20 });
-        }
-        if (excerpt) {
-          gsap.set(excerpt, { y: 15 });
-        }
-        if (button) {
-          gsap.set(button, { y: 10, scale: 0.95 });
-        }
-        if (tags.length > 0) {
-          gsap.set(tags, { opacity: 0, scale: 0.8 });
-        }
-
-        // Use intersection observer to trigger animation
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const tl = gsap.timeline();
-
-                // Image reveal with scale
-                if (image) {
-                  tl.to(image, {
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power2.out",
-                  });
-                }
-
-                // Title fade in
-                if (title) {
-                  tl.to(
-                    title,
-                    {
-                      opacity: 1,
-                      y: 0,
-                      duration: 0.7,
-                      ease: "power2.out",
-                    },
-                    "-=0.5"
-                  );
-                }
-
-                // Tags stagger
-                if (tags.length > 0) {
-                  tl.to(
-                    tags,
-                    {
-                      opacity: 1,
-                      scale: 1,
-                      duration: 0.5,
-                      stagger: 0.1,
-                      ease: "back.out(1.2)",
-                    },
-                    "-=0.4"
-                  );
-                }
-
-                // Excerpt fade in
-                if (excerpt) {
-                  tl.to(
-                    excerpt,
-                    {
-                      opacity: 1,
-                      y: 0,
-                      duration: 0.6,
-                      ease: "power2.out",
-                    },
-                    "-=0.3"
-                  );
-                }
-
-                // Button scale in
-                if (button) {
-                  tl.to(
-                    button,
-                    {
-                      opacity: 1,
-                      y: 0,
-                      scale: 1,
-                      duration: 0.5,
-                      ease: "back.out(1.4)",
-                    },
-                    "-=0.2"
-                  );
-                }
-
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.2, rootMargin: "0px 0px -100px 0px" }
-        );
-
-        observer.observe(card);
-      });
-    },
-    { scope: cardsContainerRef, dependencies: [isInView, caseStudies] }
-  );
+  // Case study cards animations - using shared observer for better performance
+  useSharedCardObserver(cardsContainerRef, isInView && !prefersReducedMotion());
 
   return (
     <main className="relative" ref={sectionRef}>
@@ -245,102 +139,29 @@ export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProp
           />
 
           {caseStudies.length > 0 ? (
-            <div ref={cardsContainerRef} className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-              {caseStudies.map((caseStudy, index) => {
-                const thumbnail = caseStudy.thumbnail ?? caseStudy.heroImages?.[0];
-                const displayTags = (caseStudy.tags ?? []).slice(0, 3);
-                const excerpt =
-                  caseStudy.subtitle.length > 140
-                    ? `${caseStudy.subtitle.slice(0, 140)}…`
-                    : caseStudy.subtitle;
-
-                return (
-                  <article
-                    key={caseStudy._id}
-                    className={
-                      index === 0
-                        ? "relative isolate"
-                        : "relative isolate mt-10 sm:mt-12 md:mt-14 pt-10 sm:pt-12 md:pt-14 border-t border-white/10"
-                    }
-                  >
-                    {/* Glow background to highlight each case study (visual only) */}
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -left-28 top-10 -z-10 h-64 w-64 rounded-full bg-primary/20 blur-3xl opacity-70"
-                    />
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -right-24 bottom-10 -z-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl opacity-60"
-                    />
-
-                    {caseStudy.featured && (
-                      <div className="mb-2 sm:mb-3">
-                        <span className="inline-flex items-center rounded-full bg-primary/10 border border-primary/30 px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs uppercase tracking-wide text-primary">
-                          Featured
-                        </span>
-                      </div>
-                    )}
-
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient-radial-white mb-4 sm:mb-5 md:mb-6">
-                      {caseStudy.title}
-                    </h2>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-center">
-                      {/* Left: image + tags */}
-                      <div>
-                        <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden case-study-image">
-                          {thumbnail ? (
-                            <Image
-                              src={thumbnail.url}
-                              alt={thumbnail.alt || caseStudy.title}
-                              fill
-                              className="object-cover"
-                              sizes="(max-width: 1024px) 100vw, 50vw"
-                              priority={index === 0}
-                            />
-                          ) : (
-                            <div className="absolute inset-0 bg-white/5" />
-                          )}
-                        </div>
-
-                        {displayTags.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
-                            {displayTags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="case-study-tag px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white-opacity-10 border border-white-opacity-20 text-xs sm:text-sm text-light-gray-90"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Right: excerpt + button */}
-                      <div className="max-w-xl">
-                        <p className="text-light-gray-90 text-sm sm:text-base md:text-lg leading-relaxed mb-5 sm:mb-6">
-                          {excerpt}
-                        </p>
-
-                        <Button
-                          variant="surface"
-                          size="lg"
-                          className="case-study-button case-study-view-btn relative z-10 rounded-[32px] sm:rounded-[40px] px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
-                          asChild
-                        >
-                          <Link href={`/case-study/${caseStudy.slug}`}>
-                            View
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
+            <div
+              ref={cardsContainerRef}
+              className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8"
+              role="list"
+              aria-label="Case studies"
+            >
+              {caseStudies.map((caseStudy, index) => (
+                <CaseStudyCard
+                  key={caseStudy._id}
+                  caseStudy={caseStudy}
+                  index={index}
+                  onImageError={handleImageError}
+                  imageErrors={imageErrors}
+                />
+              ))}
             </div>
           ) : (
-            <div className="text-center py-16">
+            <div
+              className="text-center py-16"
+              role="status"
+              aria-live="polite"
+              aria-label="No case studies available"
+            >
               <p className="text-lg text-light-gray-90 mb-6">
                 No case studies available yet.
               </p>
@@ -366,3 +187,127 @@ export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProp
     </main>
   );
 }
+
+/**
+ * Memoized case study card component to prevent unnecessary re-renders
+ */
+const CaseStudyCard = memo(
+  ({ caseStudy, index, onImageError, imageErrors }: CaseStudyCardProps) => {
+    const thumbnail = caseStudy.thumbnail ?? caseStudy.heroImages?.[0];
+    const displayTags = (caseStudy.tags ?? []).slice(0, 3);
+    const excerpt =
+      caseStudy.subtitle.length > 140
+        ? `${caseStudy.subtitle.slice(0, 140)}…`
+        : caseStudy.subtitle;
+
+    const hasImageError = imageErrors.has(caseStudy._id);
+    const imageUrl = hasImageError
+      ? `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect fill='%23131313' width='800' height='450'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%2313f584' font-size='72' font-family='Arial'%3E${encodeURIComponent(caseStudy.title.charAt(0))}%3C/text%3E%3C/svg%3E`
+      : thumbnail?.url;
+
+    return (
+      <article
+        role="listitem"
+        className={
+          index === 0
+            ? "relative isolate"
+            : "relative isolate mt-10 sm:mt-12 md:mt-14 pt-10 sm:pt-12 md:pt-14 border-t border-white/10"
+        }
+      >
+        {/* Glow background to highlight each case study (visual only) */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-28 top-10 -z-10 h-64 w-64 rounded-full bg-primary/20 blur-3xl opacity-70"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 bottom-10 -z-10 h-56 w-56 rounded-full bg-primary/10 blur-3xl opacity-60"
+        />
+
+        {caseStudy.featured && (
+          <div className="mb-2 sm:mb-3">
+            <span className="inline-flex items-center rounded-full bg-primary/10 border border-primary/30 px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs uppercase tracking-wide text-primary">
+              Featured
+            </span>
+          </div>
+        )}
+
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient-radial-white mb-4 sm:mb-5 md:mb-6">
+          {caseStudy.title}
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-14 items-center">
+          {/* Left: image + tags */}
+          <div>
+            <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden case-study-image">
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt={sanitizeText(thumbnail?.alt || caseStudy.title, 200)}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority={index === 0}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  onError={() => {
+                    if (!hasImageError) {
+                      onImageError(caseStudy._id);
+                    }
+                  }}
+                />
+              ) : (
+                <div className="absolute inset-0 bg-white/5" aria-hidden="true" />
+              )}
+            </div>
+
+            {displayTags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-3 sm:mt-4" role="list" aria-label="Case study tags">
+                {displayTags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="case-study-tag px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white-opacity-10 border border-white-opacity-20 text-xs sm:text-sm text-light-gray-90"
+                    role="listitem"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Right: excerpt + button */}
+          <div className="max-w-xl">
+            <p className="text-light-gray-90 text-sm sm:text-base md:text-lg leading-relaxed mb-5 sm:mb-6">
+              {excerpt}
+            </p>
+
+            <Button
+              variant="surface"
+              size="lg"
+              className="case-study-button case-study-view-btn relative z-10 rounded-[32px] sm:rounded-[40px] px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
+              asChild
+            >
+              <Link
+                href={`/case-study/${caseStudy.slug}`}
+                aria-label={`View case study: ${caseStudy.title}`}
+              >
+                View
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </article>
+    );
+  },
+  (prevProps, nextProps) => {
+    // Only re-render if the case study data actually changed
+    return (
+      prevProps.caseStudy._id === nextProps.caseStudy._id &&
+      prevProps.index === nextProps.index &&
+      prevProps.imageErrors.size === nextProps.imageErrors.size &&
+      !nextProps.imageErrors.has(prevProps.caseStudy._id)
+    );
+  }
+);
+
+CaseStudyCard.displayName = "CaseStudyCard";

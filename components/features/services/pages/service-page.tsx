@@ -195,5 +195,3 @@ export function ServicePage({ slug, initialService }: ServicePageClientProps) {
     </div>
   );
 }
-
-

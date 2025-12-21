@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getServiceBySlug, services } from "@/lib/services";
-import { ServicePage } from "@/components/pages/service/service-page";
+import { ServicePage } from "@/components/features/services/pages/service-page";
 import { generateServiceMetadata } from "@/lib/seo/metadata";
 import { generateServiceSchema } from "@/lib/seo/structured-data";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";

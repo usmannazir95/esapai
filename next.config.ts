@@ -54,6 +54,26 @@ const nextConfig: NextConfig = {
 
   // Security and performance headers
   async headers() {
+    // Build CSP header based on environment
+    const isDevelopment = process.env.NODE_ENV === "development";
+    const cspMode = isDevelopment ? "Content-Security-Policy-Report-Only" : "Content-Security-Policy";
+    
+    // CSP directives
+    const cspDirectives = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-eval needed for some libraries in dev
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "img-src 'self' data: https://cdn.sanity.io https://images.unsplash.com https://assets.aceternity.com",
+      "font-src 'self' data: https://fonts.gstatic.com",
+      "connect-src 'self' https://api.web3forms.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.sanity.io https://*.arcjet.com",
+      "frame-src 'none'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'",
+      "upgrade-insecure-requests",
+    ].join("; ");
+
     return [
       {
         source: "/:path*",
@@ -81,6 +101,14 @@ const nextConfig: NextConfig = {
           {
             key: "Referrer-Policy",
             value: "origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+          },
+          {
+            key: cspMode,
+            value: cspDirectives,
           },
         ],
       },

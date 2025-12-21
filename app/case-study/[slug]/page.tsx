@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCaseStudyBySlug, getCaseStudies } from "@/lib/case-studies";
-import { CaseStudyPage } from "@/components/pages/case-study/case-study-page";
+import { CaseStudyPage } from "@/components/features/case-studies/pages/case-study-page";
 import { generateCaseStudyMetadata } from "@/lib/seo/metadata";
 import { generateArticleSchema } from "@/lib/seo/structured-data";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";

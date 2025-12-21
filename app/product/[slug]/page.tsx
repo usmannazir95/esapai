@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductBySlug, products } from "@/lib/products";
-import { ProductPage } from "@/components/pages/product/product-page";
+import { ProductPage } from "@/components/features/products/pages/product-page";
 import { generateProductMetadata } from "@/lib/seo/metadata";
 import { generateProductSchema } from "@/lib/seo/structured-data";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";

@@ -35,17 +35,56 @@ pnpm install
 Create a `.env.local` file in the root directory with the following variables:
 
 ```env
-# Sanity CMS Configuration
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
-NEXT_PUBLIC_SANITY_DATASET=production
+# ============================================
+# SERVER-SIDE ONLY (NOT exposed to browser)
+# ============================================
+# These variables are NEVER prefixed with NEXT_PUBLIC_
+# They are only available in API routes and server components
+
+# Security - Arcjet (REQUIRED for production)
+# Get your API key from https://arcjet.com
+# ⚠️ SECRET: Never expose this to the browser
+ARCJET_KEY=your_arcjet_api_key_here
+
+# Sanity CMS - Read Token (REQUIRED)
+# ⚠️ SECRET: Never expose this to the browser
 SANITY_API_READ_TOKEN=your_read_token
 
-# Google Analytics (optional)
+# Contact Form - Web3Forms (REQUIRED)
+# Get your access key from https://web3forms.com
+# ⚠️ SECRET: Never expose this to the browser
+WEB3FORMS_ACCESS_KEY=your_web3forms_access_key
+
+# ============================================
+# CLIENT-SIDE (Exposed to browser via NEXT_PUBLIC_)
+# ============================================
+# These variables are safe to expose publicly
+# Vercel will show a warning - this is expected and safe for these values
+
+# Sanity CMS - Project ID (REQUIRED)
+# ✅ SAFE: Sanity project IDs are public identifiers
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+
+# Sanity CMS - Dataset (REQUIRED)
+# ✅ SAFE: Dataset name is public (e.g., "production")
+NEXT_PUBLIC_SANITY_DATASET=production
+
+# Google Analytics (OPTIONAL)
+# ✅ SAFE: Google Analytics IDs are meant to be public
 NEXT_PUBLIC_GA_ID=your_ga_id
 
-# Next.js Configuration
+# Next.js Configuration (OPTIONAL)
+# ✅ SAFE: Site URL is public information
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
+
+**Security Notes:**
+- **Never use `NEXT_PUBLIC_` prefix for secrets**: API keys, tokens, and access keys must NOT be prefixed with `NEXT_PUBLIC_`
+- **Vercel Warning**: Vercel will warn about `NEXT_PUBLIC_` variables - this is expected. All our `NEXT_PUBLIC_` variables are safe to expose (project IDs, public URLs, etc.)
+- **Server-side secrets**: `ARCJET_KEY`, `SANITY_API_READ_TOKEN`, and `WEB3FORMS_ACCESS_KEY` are server-side only and never exposed to the browser
+- **Never commit `.env.local`** to version control
+- **Use different keys** for development and production
+- **Rotate keys regularly** for security
 
 4. Run the development server:
 ```bash
