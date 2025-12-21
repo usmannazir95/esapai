@@ -216,6 +216,3 @@ export function ProductPage({ slug, initialProduct }: ProductPageClientProps) {
     </div>
   );
 }
-
-
-

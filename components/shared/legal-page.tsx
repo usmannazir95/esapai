@@ -90,4 +90,3 @@ export function LegalList({ items, ordered = false }: LegalListProps) {
     </ListTag>
   );
 }
-

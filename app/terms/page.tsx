@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LegalPage, LegalSection, LegalParagraph, LegalList } from "@/components/pages/legal-page";
+import { LegalPage, LegalSection, LegalParagraph, LegalList } from "@/components/shared/legal-page";
 import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = generatePageMetadata({
