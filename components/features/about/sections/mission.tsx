@@ -130,7 +130,7 @@ export function Mission({
   );
 
   return (
-    <Section className="pb-6 sm:pb-8 md:pb-10">
+    <Section className="pt-8 sm:pt-12 md:pt-16 lg:pt-20 xl:pt-24 pb-6 sm:pb-8 md:pb-10">
       <div
         ref={(node) => {
           sectionRef.current = node;

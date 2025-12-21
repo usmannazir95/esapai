@@ -91,7 +91,7 @@ export default function NotFound() {
               href="/case-study"
               className="text-primary hover:text-primary-opacity-90 transition-colors text-sm sm:text-base min-h-[44px] sm:min-h-[40px] flex items-center justify-center"
             >
-              Case Studies
+              Case Study
             </Link>
             <Link
               href="/contact"

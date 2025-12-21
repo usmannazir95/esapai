@@ -1,13 +1,107 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import type { CaseStudyWithUrls } from "@/types/case-study";
 import type { CaseStudyHeroProps } from "@/types/props";
 
-
 export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const tagsRef = useRef<HTMLDivElement>(null);
+  const imagesRef = useRef<HTMLDivElement>(null);
+
+  const anim = useGSAPAnimations(sectionRef);
+  const { setRef: setIntersectionRef, isInView } = useIntersectionAnimation({
+    threshold: 0.1,
+    rootMargin: "50px",
+  });
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+
+      const tl = anim.createTimeline();
+
+      // Title animation - slide up and fade in
+      if (titleRef.current) {
+        gsap.set(titleRef.current, { opacity: 0, y: 40 });
+        tl.to(titleRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+        });
+      }
+
+      // Subtitle animation
+      if (subtitleRef.current) {
+        gsap.set(subtitleRef.current, { opacity: 0, y: 30 });
+        tl.to(
+          subtitleRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "-=0.5"
+        );
+      }
+
+      // Tags stagger animation
+      if (tagsRef.current && caseStudy.tags && caseStudy.tags.length > 0) {
+        const tagElements = tagsRef.current.querySelectorAll<HTMLElement>("span");
+        gsap.set(tagElements, { opacity: 0, scale: 0.8, y: 10 });
+        tl.to(
+          tagElements,
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "back.out(1.4)",
+          },
+          "-=0.4"
+        );
+      }
+
+      // Hero images reveal animation
+      if (imagesRef.current && caseStudy.heroImages && caseStudy.heroImages.length >= 2) {
+        const imageContainers = imagesRef.current.querySelectorAll<HTMLElement>(".hero-image-container");
+        gsap.set(imageContainers, { opacity: 0, scale: 1.1, y: 30 });
+        tl.to(
+          imageContainers,
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power2.out",
+          },
+          "-=0.3"
+        );
+      }
+    },
+    { scope: sectionRef, dependencies: [isInView, caseStudy] }
+  );
+
   return (
-    <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-24 pb-16 md:pt-32 md:pb-20">
+    <section
+      ref={(el) => {
+        sectionRef.current = el;
+        setIntersectionRef(el as HTMLElement);
+      }}
+      className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-24 pb-16 md:pt-32 md:pb-20"
+    >
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute inset-0 opacity-30">
@@ -19,18 +113,24 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
       <div className="relative z-10 container mx-auto px-4">
         <div className="max-w-6xl mx-auto w-full">
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight text-gradient-primary">
+          <h1
+            ref={titleRef}
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight text-gradient-primary"
+          >
             {caseStudy.title}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl lg:text-2xl text-light-gray-90 mb-8 max-w-4xl">
+          <p
+            ref={subtitleRef}
+            className="text-lg md:text-xl lg:text-2xl text-light-gray-90 mb-8 max-w-4xl"
+          >
             {caseStudy.subtitle}
           </p>
 
           {/* Tags */}
           {caseStudy.tags && caseStudy.tags.length > 0 && (
-            <div className="flex flex-wrap gap-3 mb-12">
+            <div ref={tagsRef} className="flex flex-wrap gap-3 mb-12">
               {caseStudy.tags.map((tag, index) => (
                 <span
                   key={index}
@@ -44,11 +144,11 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
 
           {/* Hero Images */}
           {caseStudy.heroImages && caseStudy.heroImages.length >= 2 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div ref={imagesRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {caseStudy.heroImages.slice(0, 2).map((image, index) => (
                 <div
                   key={index}
-                  className="relative aspect-video rounded-lg overflow-hidden"
+                  className="hero-image-container relative aspect-video rounded-lg overflow-hidden"
                 >
                   <Image
                     src={image.url}
