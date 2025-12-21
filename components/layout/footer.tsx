@@ -35,7 +35,7 @@ const socialIcons = [
 const navigationLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "Case Study", href: "/case-study" },
+  { label: "Case Studies", href: "/case-studies" },
   { label: "Contact", href: "/contact" },
 ];
 

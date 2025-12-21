@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import type { AutomationFeature } from "@/types/product";
@@ -40,20 +41,31 @@ export function AutomationHub({
   subtitle = defaultSubtitle,
   features = defaultFeatures,
 }: AutomationHubProps = {}) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
   return (
-    <Section className="relative">
-      <div className="absolute inset-0 z-0 opacity-30">
+    <Section ref={sectionRef} className="relative">
+      <div ref={glowRef} className="absolute inset-0 z-0 opacity-30">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary opacity-10 blur-[120px] rounded-full" />
       </div>
 
-      <SectionHeader
-        title={title}
-        titleClassName="text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
-        subtitle={subtitle}
-        subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
-      />
+      <div ref={headerRef}>
+        <SectionHeader
+          title={title}
+          titleClassName="text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+          subtitle={subtitle}
+          subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
+          hasGreenGlow={true}
+        />
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
+      <div
+        ref={cardsContainerRef}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10"
+      >
         {features.map((feature, index) => {
           const zigZagOffsets = [
             "lg:translate-y-0",
@@ -90,6 +102,7 @@ function FeatureCard({ title, description, className, index }: AutomationHubFeat
 
   return (
     <motion.div
+      data-gsap="automation-card"
       className={cn(
         "relative overflow-hidden transition-transform duration-500 ease-out",
         className

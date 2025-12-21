@@ -16,7 +16,7 @@ import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import Brain from "@/components/shared/brain";
 
-const FloorGrid = dynamic(() => import("@/components/three/floor-grid"), {
+const ShaderFloorGrid = dynamic(() => import("@/components/three/shader-floor-grid"), {
   ssr: false,
 });
 
@@ -345,6 +345,7 @@ export function Service() {
         <SectionHeader
           title="AI Services & Solutions"
           subtitle="From strategic consulting to complete integration, we offer end-to-end AI services that transform your business operations and drive innovation."
+          hasGreenGlow={true}
         />
 
         {/* MOBILE & TABLET LAYOUT (< 1024px) */}
@@ -420,7 +421,7 @@ export function Service() {
                     gl={{ alpha: true }}
                   >
                     <ambientLight intensity={0.1} />
-                    <FloorGrid />
+                    <ShaderFloorGrid />
                   </Canvas>
                 </LazyThreeWrapper>
               </div>

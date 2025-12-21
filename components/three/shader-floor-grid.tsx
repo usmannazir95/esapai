@@ -64,7 +64,7 @@ const fragmentShader = `
   }
 `;
 
-const FloorGrid: React.FC = () => {
+const ShaderFloorGrid: React.FC = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   
   // Performance optimizations
@@ -107,4 +107,4 @@ const FloorGrid: React.FC = () => {
   );
 };
 
-export default FloorGrid;
+export default ShaderFloorGrid;

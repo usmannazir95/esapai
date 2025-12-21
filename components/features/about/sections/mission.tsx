@@ -137,7 +137,7 @@ export function Mission({
           setIntersectionRef(node);
         }}
       >
-        <SectionHeader title={title} subtitle={subtitle} />
+        <SectionHeader title={title} subtitle={subtitle} hasGreenGlow={true} />
 
         <div
           ref={cardsContainerRef}

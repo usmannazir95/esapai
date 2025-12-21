@@ -227,7 +227,7 @@ export function Hero() {
         <div ref={buttonRef} className="gsap-scale-in-optimized">
           <Button
             variant="primary"
-            className="text-xs sm:text-sm md:text-base lg:text-lg px-8 sm:px-10 md:px-12 lg:px-14 py-3 sm:py-4 md:py-5 lg:py-6 rounded-[32px] sm:rounded-[40px] font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all min-h-[44px] sm:min-h-[48px]"
+            className="text-xs sm:text-sm md:text-base lg:text-lg px-10 sm:px-12 md:px-16 lg:px-20 py-3 sm:py-4 md:py-5 lg:py-6 rounded-[32px] sm:rounded-[40px] font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all min-h-[44px] sm:min-h-[48px]"
           >
             Get Started
           </Button>
