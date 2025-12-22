@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
+import Box from "@/components/shared/box";
 
 // Lazy-load heavy SVG components to reduce initial bundle size
 // These are decorative and don't affect LCP
@@ -121,11 +122,91 @@ export function Hero() {
           }
         }
         if (iconsRef.current) {
-          const floatTween = anim.float(iconsRef.current, { delay: 0.8 });
-          if (floatTween) {
-            floatTween.paused(!isInView);
-            continuousAnimationsRef.current.push(floatTween);
-          }
+          // Spread hexagons further apart to avoid overlapping the circle
+          // Left side hexagons
+          gsap.set(iconsRef.current.querySelectorAll('.hexagon-4, .hexagon-5, .hexagon-6'), { x: -80 });
+          // Right side hexagons
+          gsap.set(iconsRef.current.querySelectorAll('.hexagon-1, .hexagon-2, .hexagon-3'), { x: 80 });
+
+          // Individual animations for each of the 6 hexagons - using relative values to keep the offset
+
+          // Hexagon 1 - Gentle diagonal float (Right)
+          const hex1 = gsap.to(iconsRef.current.querySelector('.hexagon-1'), {
+            y: "-=15",
+            x: "+=10",
+            duration: 5,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: 0,
+          });
+          continuousAnimationsRef.current.push(hex1);
+
+          // Hexagon 2 - Vertical bounce (Right)
+          const hex2 = gsap.to(iconsRef.current.querySelector('.hexagon-2'), {
+            y: "-=20",
+            duration: 4,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: 0.5,
+          });
+          continuousAnimationsRef.current.push(hex2);
+
+          // Hexagon 3 - Circular motion with rotation (Right)
+          const hex3 = gsap.to(iconsRef.current.querySelector('.hexagon-3'), {
+            y: "-=12",
+            x: "-=8",
+            rotation: 3,
+            duration: 6,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: 1,
+          });
+          continuousAnimationsRef.current.push(hex3);
+
+          // Hexagon 4 - Horizontal sway (Left)
+          const hex4 = gsap.to(iconsRef.current.querySelector('.hexagon-4'), {
+            x: "-=15",
+            y: "-=8",
+            duration: 5.5,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: 0.3,
+          });
+          continuousAnimationsRef.current.push(hex4);
+
+          // Hexagon 5 - Figure-8 pattern with rotation (Left)
+          const hex5 = gsap.to(iconsRef.current.querySelector('.hexagon-5'), {
+            y: "-=18",
+            x: "+=12",
+            rotation: -2,
+            duration: 7,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: 0.8,
+          });
+          continuousAnimationsRef.current.push(hex5);
+
+          // Hexagon 6 - Subtle pulse with scale (Left)
+          const hex6 = gsap.to(iconsRef.current.querySelector('.hexagon-6'), {
+            y: "-=10",
+            scale: 1.05,
+            duration: 4.5,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            delay: 1.2,
+          });
+          continuousAnimationsRef.current.push(hex6);
+
+          // Pause all animations if not in view
+          [hex1, hex2, hex3, hex4, hex5, hex6].forEach(
+            (anim) => anim.paused(!isInView)
+          );
         }
       }
 
@@ -170,24 +251,16 @@ export function Hero() {
         className="absolute top-[30%] sm:top-[35%] md:top-[45%] lg:top-[48%] left-1/2 -translate-x-1/2 z-0 pointer-events-none animate-optimized"
       >
         <div ref={circleGlowRef} className="relative">
-          <Circle className="w-[180px] sm:w-[250px] md:w-[350px] lg:w-[400px] xl:w-[450px] max-w-[450px] h-auto" />
+          <Circle className="w-[250px] sm:w-[350px] md:w-[450px] lg:w-[550px] xl:w-[600px] max-w-[600px] h-auto" />
         </div>
       </div>
 
-      {/* Hexagonal Icons (box.svg) - floating with glow - Hidden on mobile/tablet */}
+      {/* Hexagonal Icons (Box component) - floating with glow - Hidden on mobile/tablet */}
       <div
         ref={iconsRef}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden xl:block gsap-fade-in-optimized animate-optimized"
       >
-        <Image
-          src="/landing/box.svg"
-          alt="Hexagonal icons decoration"
-          width={1200}
-          height={480}
-          className="max-w-[1200px] xl:max-w-[1400px] w-auto h-auto opacity-60 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.2)]"
-          priority
-          sizes="(max-width: 1280px) 100vw, 1400px"
-        />
+        <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-60 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.2)]" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">
