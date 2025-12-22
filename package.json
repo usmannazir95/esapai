@@ -53,5 +53,11 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "webpack-bundle-analyzer": "^5.0.1"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "not op_mini all",
+    "not dead"
+  ]
 }
