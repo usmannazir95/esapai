@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -10,8 +11,17 @@ import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 
-import FramerBackdrop from "./framer";
-import Circle from "./circle";
+// Lazy-load heavy SVG components to reduce initial bundle size
+// These are decorative and don't affect LCP
+const FramerBackdrop = dynamic(() => import("./framer"), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0" />
+});
+
+const Circle = dynamic(() => import("./circle"), {
+  ssr: false,
+  loading: () => <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+});
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);

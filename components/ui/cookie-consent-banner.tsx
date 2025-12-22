@@ -12,10 +12,10 @@ export function CookieConsentBanner() {
   useEffect(() => {
     // Only show banner if consent is pending
     if (consentStatus === "pending") {
-      // Small delay to ensure smooth animation
+      // Delay to ensure it doesn't interfere with LCP
       const timer = setTimeout(() => {
         setIsVisible(true);
-      }, 500);
+      }, 2500);
       return () => clearTimeout(timer);
     } else {
       setIsVisible(false);
@@ -28,9 +28,8 @@ export function CookieConsentBanner() {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
-      }`}
+      className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
+        }`}
     >
       <div className="container mx-auto px-3 sm:px-4 pb-3 sm:pb-4 md:pb-6">
         <div className="relative rounded-xl sm:rounded-2xl border border-white-opacity-20 bg-white-opacity-10 backdrop-blur-lg p-4 sm:p-5 md:p-6 lg:p-8 shadow-2xl max-w-3xl mx-auto">
@@ -46,7 +45,7 @@ export function CookieConsentBanner() {
                   Cookie Consent
                 </h3>
                 <p className="text-xs sm:text-sm md:text-base text-white-opacity-70 leading-relaxed">
-                  We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
+                  We use cookies to enhance your browsing experience, analyze site traffic, and personalize content.
                   By clicking &quot;Accept All&quot;, you consent to our use of cookies.{" "}
                   <Link
                     href="/privacy"
