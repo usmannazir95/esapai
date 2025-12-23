@@ -128,24 +128,47 @@ export function Hero() {
           // Right side hexagons
           gsap.set(iconsRef.current.querySelectorAll('.hexagon-1, .hexagon-2, .hexagon-3'), { x: 80 });
 
-          // Individual animations for each of the 6 hexagons - using relative values to keep the offset
+          // Set initial states for smooth entrance animation
+          gsap.set(iconsRef.current.querySelectorAll('[class^="hexagon-"]'), {
+            opacity: 0,
+            scale: 0.8,
+          });
 
-          // Hexagon 1 - Gentle diagonal float (Right)
+          // Smooth staggered entrance animation
+          tl.to(
+            iconsRef.current.querySelectorAll('[class^="hexagon-"]'),
+            {
+              opacity: 0.75,
+              scale: 1,
+              duration: 1,
+              ease: "power2.out",
+              stagger: {
+                each: 0.15,
+                from: "random",
+              },
+            },
+            "-=0.3"
+          );
+
+          // Individual animations for each of the 6 hexagons - enhanced with more variety
+
+          // Hexagon 1 - Enhanced diagonal float (Right)
           const hex1 = gsap.to(iconsRef.current.querySelector('.hexagon-1'), {
-            y: "-=15",
-            x: "+=10",
-            duration: 5,
-            ease: "sine.inOut",
+            y: "-=20",
+            x: "+=15",
+            duration: 5.5,
+            ease: "power1.inOut",
             repeat: -1,
             yoyo: true,
             delay: 0,
           });
           continuousAnimationsRef.current.push(hex1);
 
-          // Hexagon 2 - Vertical bounce (Right)
+          // Hexagon 2 - Enhanced vertical bounce with horizontal drift (Right)
           const hex2 = gsap.to(iconsRef.current.querySelector('.hexagon-2'), {
-            y: "-=20",
-            duration: 4,
+            y: "-=25",
+            x: "+=5",
+            duration: 6,
             ease: "sine.inOut",
             repeat: -1,
             yoyo: true,
@@ -153,24 +176,24 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex2);
 
-          // Hexagon 3 - Circular motion with rotation (Right)
+          // Hexagon 3 - Enhanced circular motion with scale (Right)
           const hex3 = gsap.to(iconsRef.current.querySelector('.hexagon-3'), {
-            y: "-=12",
-            x: "-=8",
-            rotation: 3,
-            duration: 6,
-            ease: "sine.inOut",
+            y: "-=18",
+            x: "-=12",
+            scale: 1.04,
+            duration: 6.5,
+            ease: "power2.inOut",
             repeat: -1,
             yoyo: true,
             delay: 1,
           });
           continuousAnimationsRef.current.push(hex3);
 
-          // Hexagon 4 - Horizontal sway (Left)
+          // Hexagon 4 - Enhanced horizontal sway (Left)
           const hex4 = gsap.to(iconsRef.current.querySelector('.hexagon-4'), {
-            x: "-=15",
-            y: "-=8",
-            duration: 5.5,
+            x: "-=20",
+            y: "-=10",
+            duration: 6,
             ease: "sine.inOut",
             repeat: -1,
             yoyo: true,
@@ -178,30 +201,65 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex4);
 
-          // Hexagon 5 - Figure-8 pattern with rotation (Left)
+          // Hexagon 5 - Enhanced figure-8 pattern (Left)
           const hex5 = gsap.to(iconsRef.current.querySelector('.hexagon-5'), {
-            y: "-=18",
-            x: "+=12",
-            rotation: -2,
+            y: "-=22",
+            x: "+=15",
             duration: 7,
-            ease: "sine.inOut",
+            ease: "power1.inOut",
             repeat: -1,
             yoyo: true,
             delay: 0.8,
           });
           continuousAnimationsRef.current.push(hex5);
 
-          // Hexagon 6 - Subtle pulse with scale (Left)
+          // Hexagon 6 - Enhanced pulse with scale (Left)
           const hex6 = gsap.to(iconsRef.current.querySelector('.hexagon-6'), {
-            y: "-=10",
-            scale: 1.05,
-            duration: 4.5,
-            ease: "sine.inOut",
+            y: "-=15",
+            scale: 1.08,
+            duration: 5,
+            ease: "power2.inOut",
             repeat: -1,
             yoyo: true,
             delay: 1.2,
           });
           continuousAnimationsRef.current.push(hex6);
+
+          // Random green light effect that sweeps across hexagons
+          const createRandomLightEffect = () => {
+            const hexagonSelectors = ['.hexagon-1', '.hexagon-2', '.hexagon-3', '.hexagon-4', '.hexagon-5', '.hexagon-6'];
+
+            const applyLightEffect = () => {
+              // Pick a random hexagon
+              const randomIndex = Math.floor(Math.random() * hexagonSelectors.length);
+              const randomHexagon = iconsRef.current!.querySelector(hexagonSelectors[randomIndex]);
+
+              if (randomHexagon) {
+                // Create a bright green light flash
+                gsap.to(randomHexagon, {
+                  filter: "brightness(1.5) drop-shadow(0 0 20px rgba(19,245,132,0.8))",
+                  duration: 0.4,
+                  ease: "power2.out",
+                  onComplete: () => {
+                    gsap.to(randomHexagon, {
+                      filter: "brightness(1) drop-shadow(0 0 0px rgba(19,245,132,0))",
+                      duration: 0.6,
+                      ease: "power2.in",
+                    });
+                  }
+                });
+              }
+
+              // Schedule next random light effect (between 2-5 seconds)
+              const nextDelay = 2000 + Math.random() * 3000;
+              setTimeout(applyLightEffect, nextDelay);
+            };
+
+            // Start the random light effect after entrance animation completes
+            setTimeout(applyLightEffect, 2000);
+          };
+
+          createRandomLightEffect();
 
           // Pause all animations if not in view
           [hex1, hex2, hex3, hex4, hex5, hex6].forEach(
@@ -260,7 +318,7 @@ export function Hero() {
         ref={iconsRef}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden xl:block gsap-fade-in-optimized animate-optimized"
       >
-        <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-60 filter drop-shadow-[0_0_20px_rgba(19,245,132,0.2)]" />
+        <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-75 filter drop-shadow-[0_0_25px_rgba(19,245,132,0.3)] drop-shadow-[0_0_50px_rgba(19,245,132,0.15)]" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">

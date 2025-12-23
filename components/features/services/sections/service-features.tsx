@@ -92,7 +92,7 @@ function FeatureNode({ data }: { data: FeatureBlockProps }) {
 
 function CentralNodeIcon() {
   const uniqueId = useId();
-  
+
   return (
     <svg
       width="80"
@@ -115,7 +115,7 @@ function CentralNodeIcon() {
           <stop offset="100%" stopColor="rgba(19, 245, 132, 0.3)" />
         </radialGradient>
       </defs>
-      
+
       <circle
         cx="40"
         cy="40"
@@ -171,7 +171,7 @@ function ConnectionDotsMarkers() {
       if (svg.querySelector('#connection-dot-start')) return;
 
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-      
+
       const markerStart = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
       markerStart.setAttribute('id', 'connection-dot-start');
       markerStart.setAttribute('markerWidth', '8');
@@ -179,7 +179,7 @@ function ConnectionDotsMarkers() {
       markerStart.setAttribute('refX', '4');
       markerStart.setAttribute('refY', '4');
       markerStart.setAttribute('markerUnits', 'userSpaceOnUse');
-      
+
       const circleStart = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       circleStart.setAttribute('cx', '4');
       circleStart.setAttribute('cy', '4');
@@ -188,7 +188,7 @@ function ConnectionDotsMarkers() {
       circleStart.setAttribute('stroke', 'rgba(19, 245, 132, 1)');
       circleStart.setAttribute('stroke-width', '2');
       markerStart.appendChild(circleStart);
-      
+
       const markerEnd = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
       markerEnd.setAttribute('id', 'connection-dot-end');
       markerEnd.setAttribute('markerWidth', '8');
@@ -196,7 +196,7 @@ function ConnectionDotsMarkers() {
       markerEnd.setAttribute('refX', '4');
       markerEnd.setAttribute('refY', '4');
       markerEnd.setAttribute('markerUnits', 'userSpaceOnUse');
-      
+
       const circleEnd = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       circleEnd.setAttribute('cx', '4');
       circleEnd.setAttribute('cy', '4');
@@ -205,7 +205,7 @@ function ConnectionDotsMarkers() {
       circleEnd.setAttribute('stroke', 'rgba(19, 245, 132, 1)');
       circleEnd.setAttribute('stroke-width', '2');
       markerEnd.appendChild(circleEnd);
-      
+
       defs.appendChild(markerStart);
       defs.appendChild(markerEnd);
       svg.insertBefore(defs, svg.firstChild);
@@ -214,7 +214,7 @@ function ConnectionDotsMarkers() {
     // Try to add markers immediately and also after a short delay
     addMarkers();
     const timeout = setTimeout(addMarkers, 100);
-    
+
     return () => clearTimeout(timeout);
   }, []);
 
@@ -236,7 +236,7 @@ export function ServiceFeatures({
     // Central node at the center - responsive positioning
     const centerX = typeof window !== 'undefined' && window.innerWidth >= 1280 ? 600 : 500;
     const centerY = typeof window !== 'undefined' && window.innerWidth >= 1280 ? 400 : 350;
-    
+
     nodesList.push({
       id: "central",
       type: "central",
@@ -268,7 +268,7 @@ export function ServiceFeatures({
       };
 
       const nodeId = `feature-${index}`;
-      
+
       nodesList.push({
         id: nodeId,
         type: "feature",
@@ -348,15 +348,14 @@ export function ServiceFeatures({
         title={title}
         subtitle={subtitle}
         subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
-        hasGreenGlow={true}
       />
 
       {/* Mobile/Tablet View - Vertically Stacked Cards */}
       <div className="block lg:hidden max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pb-8 sm:pb-10 md:pb-12">
         <div className="flex flex-col gap-4 sm:gap-5 md:gap-6">
           {features.map((feature, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="product-card p-5 sm:p-6 md:p-7 lg:p-8 rounded-[32px] sm:rounded-[36px] md:rounded-[40px] group transition-all duration-300 hover:shadow-glow-primary-feature"
             >
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-gradient-radial-white">
@@ -373,7 +372,8 @@ export function ServiceFeatures({
       {/* Desktop View - Interactive Graph */}
       <div className="hidden lg:block relative w-full h-[600px] lg:h-[700px] xl:h-[800px] 2xl:h-[900px] max-w-7xl mx-auto service-features-flow">
         <ConnectionDotsMarkers />
-        <style dangerouslySetInnerHTML={{ __html: `
+        <style dangerouslySetInnerHTML={{
+          __html: `
           .service-features-flow {
             touch-action: pan-y;
           }

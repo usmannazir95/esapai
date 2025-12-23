@@ -171,7 +171,7 @@ export function Service() {
       }
 
       // Set transform origin only after element is properly sized and positioned
-      gsap.set(ellipseRef.current, { 
+      gsap.set(ellipseRef.current, {
         transformOrigin: "50% 50%",
         x: 0,
         y: 0,
@@ -205,7 +205,7 @@ export function Service() {
 
     const checkAndCenter = () => {
       if (!ellipseRef.current) return;
-      
+
       const container = ellipseRef.current.parentElement;
       if (!container) return;
 
@@ -220,7 +220,7 @@ export function Service() {
       // Check if image is loaded and has dimensions
       const isImageReady = img && img.complete && img.naturalWidth > 0;
       const ellipseRect = ellipseRef.current.getBoundingClientRect();
-      
+
       if (isImageReady && ellipseRect.width > 0 && ellipseRect.height > 0) {
         setImageLoaded(true);
         // Ensure proper centering - the CSS classes should handle this, but reset any GSAP transforms
@@ -231,7 +231,7 @@ export function Service() {
             y: 0,
             clearProps: "x,y,transform",
           });
-          
+
           // Set transform origin for rotation after a frame to ensure layout is stable
           requestAnimationFrame(() => {
             if (ellipseRef.current) {
@@ -250,7 +250,7 @@ export function Service() {
     // Initial check after DOM is ready
     rafId = requestAnimationFrame(() => {
       checkAndCenter();
-      
+
       // Listen for image load
       if (img) {
         if (img.complete && img.naturalWidth > 0) {
@@ -265,7 +265,7 @@ export function Service() {
           img.addEventListener('error', handleLoad, { once: true });
         }
       }
-      
+
       // Fallback: check after a delay to handle edge cases
       timeoutId = setTimeout(() => {
         if (!imageLoaded) {
@@ -345,7 +345,6 @@ export function Service() {
         <SectionHeader
           title="AI Services & Solutions"
           subtitle="From strategic consulting to complete integration, we offer end-to-end AI services that transform your business operations and drive innovation."
-          hasGreenGlow={true}
         />
 
         {/* MOBILE & TABLET LAYOUT (< 1024px) */}
