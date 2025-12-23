@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +7,10 @@ import type { GlobeConfig } from "@/components/ui/globe";
 
 const World = dynamic(
   () => import("@/components/ui/globe").then((mod) => mod.World),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full" aria-hidden="true" />,
+  }
 );
 
 // Theme-matched globe configuration
