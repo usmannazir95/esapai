@@ -230,6 +230,8 @@ export function Vision() {
   return (
     <div className="relative w-full overflow-hidden">
       <SpaceBackground />
+      {/* Seamless blend with next section */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 md:h-40 bg-gradient-to-b from-transparent to-[--color-dark] pointer-events-none z-0" />
       <Section background="transparent" className="pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10">
         <div
           ref={(el) => {
