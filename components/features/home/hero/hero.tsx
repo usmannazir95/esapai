@@ -285,10 +285,10 @@ export function Hero() {
         <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 overflow-hidden">
           <h1
             ref={titleRef}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight w-full gsap-slide-up-optimized"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-3 sm:mb-4 md:mb-6 leading-tight w-full gsap-slide-up-optimized"
           >
             <span className="block text-white">AI-Powered Solutions</span>
-            <span className="block text-gradient-primary mt-1 sm:mt-2">
+            <span className="block text-primary mt-1 sm:mt-2">
               For Modern Enterprises
             </span>
           </h1>

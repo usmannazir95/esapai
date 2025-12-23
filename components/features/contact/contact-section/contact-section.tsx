@@ -233,10 +233,10 @@ export function ContactSection() {
 
     const checkAndAnimate = () => {
       if (!formCardRef.current || hasAnimatedRef.current) return;
-      
+
       const rect = formCardRef.current.getBoundingClientRect();
       const isCurrentlyVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      
+
       if (isCurrentlyVisible || isInView) {
         // Trigger animation manually if element is already visible
         const items = formCardRef.current.querySelectorAll<HTMLElement>(
@@ -269,7 +269,7 @@ export function ContactSection() {
     // Check immediately and after a short delay to handle navigation cases
     checkAndAnimate();
     const timeoutId = setTimeout(checkAndAnimate, 100);
-    
+
     return () => clearTimeout(timeoutId);
   }, [isInView]);
 
@@ -326,10 +326,10 @@ export function ContactSection() {
 
     const checkAndAnimate = () => {
       if (!leftColumnRef.current || leftHasAnimatedRef.current) return;
-      
+
       const rect = leftColumnRef.current.getBoundingClientRect();
       const isCurrentlyVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      
+
       if (isCurrentlyVisible || isLeftInView) {
         const leftItems = leftColumnRef.current.querySelectorAll<HTMLElement>(
           '[data-gsap="contact-left-item"]'
@@ -366,7 +366,7 @@ export function ContactSection() {
     // Check immediately and after a short delay to handle navigation cases
     checkAndAnimate();
     const timeoutId = setTimeout(checkAndAnimate, 100);
-    
+
     return () => clearTimeout(timeoutId);
   }, [isLeftInView]);
 
