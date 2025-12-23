@@ -20,7 +20,7 @@ export function DropdownMenu({
 
   return (
     <div
-      className={`${dropdownClass} fixed top-14 left-1/2 -translate-x-1/2 mt-3 w-[78vw] max-w-3xl shadow-lg z-50`}
+      className={`${dropdownClass} absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[78vw] max-w-3xl shadow-lg z-[70] pointer-events-auto`}
     >
       <div className="p-4 md:p-6 relative z-10">
         <div className="grid gap-4 md:grid-cols-[0.9fr,1.4fr] md:gap-6">

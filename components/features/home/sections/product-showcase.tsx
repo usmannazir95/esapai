@@ -184,7 +184,6 @@ export function ProductShowcase() {
         <SectionHeader
           title="Our Product Suite"
           subtitle="Discover our comprehensive range of AI-powered solutions designed to transform your business operations and drive innovation."
-          hasGreenGlow={true}
         />
 
         <div

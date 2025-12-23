@@ -58,7 +58,6 @@ export function AutomationHub({
           titleClassName="text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
           subtitle={subtitle}
           subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
-          hasGreenGlow={true}
         />
       </div>
 

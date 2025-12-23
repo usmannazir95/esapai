@@ -184,7 +184,7 @@ export function Navbar() {
             minWidth: isScrolled ? "800px" : "100%",
           }}
           className={cn(
-            "relative z-[60] mx-auto hidden flex-row items-center justify-between self-start pointer-events-auto overflow-hidden md:flex",
+            "relative z-[60] mx-auto hidden flex-row items-center justify-between self-start pointer-events-auto md:flex",
             isScrolled ? "bg-white/10" : "bg-white-opacity-10"
           )}
         >

@@ -257,7 +257,6 @@ export interface SectionHeaderProps {
   className?: string;
   titleClassName?: string;
   subtitleClassName?: string;
-  hasGreenGlow?: boolean;
 }
 
 export interface Icon {
