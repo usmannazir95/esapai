@@ -229,6 +229,7 @@ export interface MissionCardProps {
 export interface TeamCardProps {
   member: TeamMember;
   isLarge?: boolean;
+  isWide?: boolean;
   className?: string;
 }
 

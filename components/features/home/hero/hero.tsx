@@ -35,6 +35,7 @@ export function Hero() {
   const subtitleRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
   const continuousAnimationsRef = useRef<gsap.core.Tween[]>([]);
+  const lightEffectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const anim = useGSAPAnimations(sectionRef);
 
@@ -230,9 +231,11 @@ export function Hero() {
             const hexagonSelectors = ['.hexagon-1', '.hexagon-2', '.hexagon-3', '.hexagon-4', '.hexagon-5', '.hexagon-6'];
 
             const applyLightEffect = () => {
+              if (!iconsRef.current) return;
+
               // Pick a random hexagon
               const randomIndex = Math.floor(Math.random() * hexagonSelectors.length);
-              const randomHexagon = iconsRef.current!.querySelector(hexagonSelectors[randomIndex]);
+              const randomHexagon = iconsRef.current.querySelector(hexagonSelectors[randomIndex]);
 
               if (randomHexagon) {
                 // Create a bright green light flash
@@ -252,11 +255,11 @@ export function Hero() {
 
               // Schedule next random light effect (between 2-5 seconds)
               const nextDelay = 2000 + Math.random() * 3000;
-              setTimeout(applyLightEffect, nextDelay);
+              lightEffectTimeoutRef.current = setTimeout(applyLightEffect, nextDelay);
             };
 
             // Start the random light effect after entrance animation completes
-            setTimeout(applyLightEffect, 2000);
+            lightEffectTimeoutRef.current = setTimeout(applyLightEffect, 2000);
           };
 
           createRandomLightEffect();
@@ -274,6 +277,10 @@ export function Hero() {
           tween?.kill();
         });
         continuousAnimationsRef.current = [];
+        if (lightEffectTimeoutRef.current) {
+          clearTimeout(lightEffectTimeoutRef.current);
+          lightEffectTimeoutRef.current = null;
+        }
       };
     },
     { scope: sectionRef }

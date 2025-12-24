@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { AboutHero } from "@/components/features/about/hero/about-hero";
 import { Team } from "@/components/features/about/sections/team";
 import { generateMetadata as generatePageMetadata } from "@/lib/seo/metadata";
 import { generateBreadcrumbSchema } from "@/lib/seo/structured-data";
@@ -24,7 +23,6 @@ export default function AboutPage() {
     <>
       <StructuredDataComponent data={structuredData} />
       <main className="relative">
-        <AboutHero />
         <Team />
       </main>
     </>

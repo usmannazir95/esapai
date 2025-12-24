@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 import { Section } from "@/components/ui/section";
-import { SectionHeader } from "@/components/ui/section-header";
+import Frame from "@/components/shared/frame";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 import { TeamCard, type TeamMember } from "@/components/ui/team-card";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
@@ -86,7 +86,9 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
 
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
+  const heroSubtitleRef = useRef<HTMLParagraphElement>(null);
+  const heroDescriptionRef = useRef<HTMLParagraphElement>(null);
   const topCardRef = useRef<HTMLDivElement>(null);
   const middleCardsRef = useRef<HTMLDivElement>(null);
   const bottomCardsRef = useRef<HTMLDivElement>(null);
@@ -117,15 +119,14 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
       if (prefersReducedMotion()) return;
       if (!contentRef.current) return;
 
-      if (headerRef.current) {
-        const titleElement = headerRef.current.querySelector("h2");
-        const subtitleElement = headerRef.current.querySelector("p");
-        if (titleElement) {
-          gsap.set(titleElement, { opacity: 0, y: -20 });
-        }
-        if (subtitleElement) {
-          gsap.set(subtitleElement, { opacity: 0, y: 10 });
-        }
+      if (heroTitleRef.current) {
+        gsap.set(heroTitleRef.current, { opacity: 0, y: -20 });
+      }
+      if (heroSubtitleRef.current) {
+        gsap.set(heroSubtitleRef.current, { opacity: 0, y: 10 });
+      }
+      if (heroDescriptionRef.current) {
+        gsap.set(heroDescriptionRef.current, { opacity: 0, y: 10 });
       }
 
       if (topCardRef.current) {
@@ -165,32 +166,40 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
 
       const tl = gsap.timeline();
 
-      // Animate header first
-      if (headerRef.current) {
-        const titleElement = headerRef.current.querySelector("h2");
-        const subtitleElement = headerRef.current.querySelector("p");
+      // Animate Hero content
+      if (heroTitleRef.current) {
+        tl.to(heroTitleRef.current, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      }
 
-        if (titleElement) {
-          tl.to(titleElement, {
+      if (heroSubtitleRef.current) {
+        tl.to(
+          heroSubtitleRef.current,
+          {
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-          });
-        }
+            duration: 0.7,
+            ease: "power2.out",
+          },
+          "-=0.4"
+        );
+      }
 
-        if (subtitleElement) {
-          tl.to(
-            subtitleElement,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: "power2.out",
-            },
-            "-=0.4"
-          );
-        }
+      if (heroDescriptionRef.current) {
+        tl.to(
+          heroDescriptionRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+          },
+          "-=0.3"
+        );
       }
 
       // Animate top card
@@ -265,32 +274,40 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
 
         const tl = gsap.timeline();
 
-        // Animate header first
-        if (headerRef.current) {
-          const titleElement = headerRef.current.querySelector("h2");
-          const subtitleElement = headerRef.current.querySelector("p");
+        // Animate Hero content
+        if (heroTitleRef.current) {
+          tl.to(heroTitleRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          });
+        }
 
-          if (titleElement) {
-            tl.to(titleElement, {
+        if (heroSubtitleRef.current) {
+          tl.to(
+            heroSubtitleRef.current,
+            {
               opacity: 1,
               y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-            });
-          }
+              duration: 0.7,
+              ease: "power2.out",
+            },
+            "-=0.4"
+          );
+        }
 
-          if (subtitleElement) {
-            tl.to(
-              subtitleElement,
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.7,
-                ease: "power2.out",
-              },
-              "-=0.4"
-            );
-          }
+        if (heroDescriptionRef.current) {
+          tl.to(
+            heroDescriptionRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "power2.out",
+            },
+            "-=0.3"
+          );
         }
 
         // Animate top card
@@ -362,15 +379,14 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
       if (contentRef.current && !hasAnimatedRef.current) {
         hasAnimatedRef.current = true;
 
-        if (headerRef.current) {
-          const titleElement = headerRef.current.querySelector("h2");
-          const subtitleElement = headerRef.current.querySelector("p");
-          if (titleElement) {
-            gsap.set(titleElement, { opacity: 1, y: 0 });
-          }
-          if (subtitleElement) {
-            gsap.set(subtitleElement, { opacity: 1, y: 0 });
-          }
+        if (heroTitleRef.current) {
+          gsap.set(heroTitleRef.current, { opacity: 1, y: 0 });
+        }
+        if (heroSubtitleRef.current) {
+          gsap.set(heroSubtitleRef.current, { opacity: 1, y: 0 });
+        }
+        if (heroDescriptionRef.current) {
+          gsap.set(heroDescriptionRef.current, { opacity: 1, y: 0 });
         }
 
         if (topCardRef.current) {
@@ -403,63 +419,94 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
         setIntersectionRef(el);
       }}
       padding="none"
+      containerMaxWidth="full"
+      containerClassName="max-w-none px-0 sm:px-0 md:px-0"
       className="relative overflow-hidden"
       onPointerDownCapture={handlePointerDownCapture}
     >
-      <div className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2">
-        <div className="relative h-full w-full">
-          <div className="absolute inset-0 [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)]">
-            <BackgroundRippleEffect
-              interactive={false}
-              mask={false}
-              cellSize={56}
-              triggerPoint={rippleTrigger}
-              triggerKey={rippleTriggerKey}
-              gridClassName="opacity-75"
-              className="[--cell-border-color:rgba(19,245,132,0.20)] [--cell-fill-color:rgba(19,245,132,0.012)] [--cell-shadow-color:rgba(19,245,132,0.18)] opacity-85"
-            />
-          </div>
-
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-dark/75 via-dark/10 to-dark/75" />
+      {/* Top Background Element (Frame) */}
+      <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden -z-10">
+        <div className="absolute inset-x-0 top-0 flex items-start justify-center opacity-35">
+          <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
         </div>
       </div>
 
-      <div ref={contentRef} className="relative z-10 py-10 sm:py-12 md:py-16 lg:py-20">
-        <div ref={headerRef}>
-          <SectionHeader
-            title="Our Team"
-            subtitle="Meet the visionaries driving innovation and transforming the future of AI-powered automation."
-            subtitleClassName="text-base sm:text-lg md:text-xl text-light-gray-90 max-w-3xl mx-auto px-4 mb-12 sm:mb-14 md:mb-16"
-          />
+      <div ref={contentRef} className="relative z-10 w-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-16 sm:pb-20 md:pb-24 lg:pb-32">
+        <div className="max-w-4xl mx-auto text-center mb-16 sm:mb-20 md:mb-24 lg:mb-28">
+          <h1
+            ref={heroTitleRef}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight text-gradient-primary"
+          >
+            About Us
+          </h1>
+
+          <div className="space-y-3 sm:space-y-4">
+            <p
+              ref={heroSubtitleRef}
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-light-gray-90"
+            >
+              Where Innovation Meets Productivity
+            </p>
+            <p
+              ref={heroDescriptionRef}
+              className="text-sm sm:text-base md:text-lg text-white-opacity-70 max-w-3xl mx-auto px-4 sm:px-6"
+            >
+              Driven by agents, powered by automation, built for what&apos;s next.
+              We&apos;re a team of visionaries dedicated to transforming how
+              businesses operate through cutting-edge AI technology.
+            </p>
+          </div>
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-          {topMember && (
-            <div ref={topCardRef} className="flex justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
-              <TeamCard member={topMember} isLarge />
-            </div>
-          )}
+        <div className="relative">
+          {/* Background Elements */}
+          <div className="absolute inset-0 pointer-events-none select-none overflow-hidden -z-10">
 
-          <div
-            ref={middleCardsRef}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 mb-6 sm:mb-8 md:mb-10 lg:mb-12 justify-items-center"
-          >
-            {middleMembers.map((member) => (
-              <div key={member.id} data-gsap="team-card">
-                <TeamCard member={member} />
-              </div>
-            ))}
+            {/* Ripple Effect */}
+            <div className="absolute inset-0 [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)]">
+              <BackgroundRippleEffect
+                interactive={false}
+                mask={false}
+                cellSize={56}
+                triggerPoint={rippleTrigger}
+                triggerKey={rippleTriggerKey}
+                gridClassName="opacity-75"
+                className="[--cell-border-color:rgba(19,245,132,0.20)] [--cell-fill-color:rgba(19,245,132,0.012)] [--cell-shadow-color:rgba(19,245,132,0.18)] opacity-85"
+              />
+            </div>
+
+            {/* Gradients */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-dark via-transparent to-dark/80" />
           </div>
 
-          <div
-            ref={bottomCardsRef}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 justify-items-center"
-          >
-            {bottomMembers.map((member) => (
-              <div key={member.id} data-gsap="team-card">
-                <TeamCard member={member} />
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+            {topMember && (
+              <div ref={topCardRef} className="flex justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+                <TeamCard member={topMember} isLarge isWide />
               </div>
-            ))}
+            )}
+
+            <div
+              ref={middleCardsRef}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 mb-6 sm:mb-8 md:mb-10 lg:mb-12 justify-items-center"
+            >
+              {middleMembers.map((member) => (
+                <div key={member.id} data-gsap="team-card">
+                  <TeamCard member={member} />
+                </div>
+              ))}
+            </div>
+
+            <div
+              ref={bottomCardsRef}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 justify-items-center"
+            >
+              {bottomMembers.map((member) => (
+                <div key={member.id} data-gsap="team-card">
+                  <TeamCard member={member} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
