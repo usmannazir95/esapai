@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import dynamic from "next/dynamic";
 import type { CaseStudyWithUrls } from "@/types/case-study";
 import { useCaseStudyContent } from "@/lib/hooks/use-case-study-content";
@@ -9,12 +10,6 @@ import { CaseStudyHero } from "../hero/case-study-hero";
 import { GlobalLoader } from "@/components/ui/global-loader";
 import type { CaseStudyPageClientProps } from "@/types/page";
 
-const LazySection = dynamic(() =>
-  import("@/components/ui/lazy-section").then((mod) => ({
-    default: mod.LazySection,
-  }))
-);
-
 export function CaseStudyPage({
   slug,
   initialCaseStudy,
@@ -22,6 +17,8 @@ export function CaseStudyPage({
   const { caseStudy, loading, isFetching, error } = useCaseStudyContent(slug, {
     initialCaseStudy,
   });
+
+  const sectionRef = useRef<HTMLElement>(null);
 
   if (loading && !caseStudy) {
     return <GlobalLoader message="Loading case study" subMessage="Fetching case study details" />;
@@ -43,17 +40,26 @@ export function CaseStudyPage({
         </div>
       )}
 
-      {/* Hero Section */}
-      <CaseStudyHero caseStudy={hydratedCaseStudy} />
+      <Section
+        ref={sectionRef}
+        padding="none"
+        containerMaxWidth="full"
+        containerClassName="max-w-none px-0 sm:px-0 md:px-0"
+        className="relative overflow-hidden"
+      >
+        {/* Content Container */}
+        <div className="relative z-10 w-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-16 sm:pb-20 md:pb-24 lg:pb-32">
+          {/* Hero Content */}
+          <CaseStudyHero caseStudy={hydratedCaseStudy} />
 
-      {/* Timeline Section */}
-      <LazySection minHeight="800px">
-        <Section>
-          <div className="max-w-6xl mx-auto px-4">
-            <Timeline timeline={hydratedCaseStudy.timeline} />
+          {/* Timeline Section embedded seamlessly */}
+          <div className="relative">
+            <div className="max-w-6xl mx-auto px-4">
+              <Timeline timeline={hydratedCaseStudy.timeline} />
+            </div>
           </div>
-        </Section>
-      </LazySection>
+        </div>
+      </Section>
     </div>
   );
 }

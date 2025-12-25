@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 import { products } from "@/lib/products";
@@ -11,268 +12,299 @@ import { cn } from "@/lib/utils";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { prefersReducedMotion } from "@/lib/utils/performance-utils";
-import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
-import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
-import type { CardContentRefs } from "@/types/props";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function ProductShowcase() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const cardContentRefs = useRef<CardContentRefs[]>([]);
-
-  const anim = useGSAPAnimations(sectionRef as React.RefObject<HTMLElement>);
-
-  const { setRef: setIntersectionRef, isInView } = useIntersectionAnimation({
-    threshold: 0.1,
-    rootMargin: "100px",
-  });
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   useGSAP(
     () => {
-      if (!isInView || prefersReducedMotion() || !sectionRef.current) return;
+      if (!triggerRef.current || !containerRef.current) return;
 
-      const tl = anim.createTimeline();
+      const totalCards = products.length;
 
-      const titleElement = sectionRef.current.querySelector("h2");
-      const subtitleElement = sectionRef.current.querySelector("p");
-
-      if (titleElement) {
-        gsap.set(titleElement, { opacity: 0, y: -20 });
-      }
-      if (subtitleElement) {
-        gsap.set(subtitleElement, { opacity: 0, y: 10 });
-      }
-
-      if (titleElement) {
-        tl.to(titleElement, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: "back.out(1.2)",
-        });
-      }
-
-      if (subtitleElement) {
-        tl.to(
-          subtitleElement,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power2.out",
-          },
-          "-=0.4"
-        );
-      }
-
-      if (cardRefs.current.length > 0) {
-        cardRefs.current.forEach((card, index) => {
-          if (!card) return;
-
-          const direction = index % 3;
-          const startY = 100;
-          const startScale = 0.8;
-          const startOpacity = 0;
-
-          let startX = 0;
-          let startRotationY = 0;
-          let startRotationX = 0;
-
-          if (direction === 0) {
-            startX = -150;
-            startRotationY = -25;
-          } else if (direction === 1) {
-            startX = 150;
-            startRotationY = 25;
-          } else {
-            startRotationX = 10;
-          }
-
+      // Initial positioning: The "Stack"
+      cardRefs.current.forEach((card, i) => {
+        if (card) {
           gsap.set(card, {
-            opacity: startOpacity,
-            x: startX,
-            y: startY,
-            scale: startScale,
-            rotationY: startRotationY,
-            rotationX: startRotationX,
-            force3D: true,
+            y: i * -12, // Offset upwards
+            scale: 1 - i * 0.04,
+            rotateX: i * 0.5,
+            zIndex: totalCards - i,
+            filter: `brightness(${1 - i * 0.15})`,
+            transformOrigin: "bottom center",
           });
+        }
+      });
 
-          const contentRefs = cardContentRefs.current[index];
-          if (contentRefs) {
-            contentRefs.icon && gsap.set(contentRefs.icon, { opacity: 0, scale: 0.5, y: 20 });
-            contentRefs.title && gsap.set(contentRefs.title, { opacity: 0, y: 15 });
-            contentRefs.description && gsap.set(contentRefs.description, { opacity: 0, y: 10 });
-            contentRefs.cta && gsap.set(contentRefs.cta, { opacity: 0, scale: 0.9 });
-          }
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: triggerRef.current,
+          start: "top top",
+          end: `+=${totalCards * 100}%`,
+          pin: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            const segment = 1 / (totalCards - 1);
+            // Using round instead of floor makes the indicator switch 
+            // at the 50% mark of each card's transition, which feels more accurate.
+            const rawIndex = Math.min(
+              Math.round(self.progress / segment),
+              totalCards - 1
+            );
+            setCurrentCardIndex(rawIndex);
+          },
+        },
+      });
 
-          const cardDelay = 0.3 + index * 0.15;
-          tl.to(
-            card,
-            {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              scale: 1,
-              rotationY: 0,
-              rotationX: 0,
-              duration: 0.8,
-              ease: "back.out(1.4)",
-              force3D: true,
-            },
-            cardDelay
-          );
+      // Animate the cards to exit one by one
+      for (let i = 0; i < totalCards - 1; i++) {
+        const exitDirection = i % 2 === 0 ? -1.3 : 1.3;
+        const rotation = i % 2 === 0 ? -8 : 8;
 
-          const contentDelay = cardDelay + 0.3;
-          if (contentRefs?.icon) {
+        const currentCard = cardRefs.current[i];
+        const nextCards = cardRefs.current.slice(i + 1);
+
+        // Card exit sequence
+        tl.to(
+          currentCard,
+          {
+            xPercent: exitDirection * 100,
+            y: -100,
+            opacity: 0,
+            scale: 0.85,
+            rotateZ: rotation,
+            duration: 1,
+            ease: "power2.inOut",
+          },
+          i
+        );
+
+        // Remaining stack movement
+        nextCards.forEach((card, idx) => {
+          if (card) {
             tl.to(
-              contentRefs.icon,
-              { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" },
-              contentDelay
+              card,
+              {
+                y: idx * -12,
+                scale: 1 - idx * 0.04,
+                filter: `brightness(${1 - idx * 0.15})`,
+                duration: 1,
+                ease: "power2.inOut",
+              },
+              i
             );
           }
-          if (contentRefs?.title) {
-            tl.to(
-              contentRefs.title,
-              { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-              contentDelay + 0.1
-            );
-          }
-          if (contentRefs?.description) {
-            tl.to(
-              contentRefs.description,
-              { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-              contentDelay + 0.2
-            );
-          }
-          if (contentRefs?.cta) {
-            tl.to(
-              contentRefs.cta,
-              { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" },
-              contentDelay + 0.3
-            );
-          }
-
-          const glowTimeline = gsap.timeline({ delay: cardDelay });
-          glowTimeline
-            .to(card, {
-              boxShadow: "0 0 30px rgba(19, 245, 132, 0.4)",
-              duration: 0.3,
-              ease: "power2.out",
-            })
-            .to(card, {
-              boxShadow: "0 0 0px rgba(19, 245, 132, 0)",
-              duration: 0.5,
-              ease: "power2.in",
-            });
         });
       }
+
+      return () => {
+        ScrollTrigger.getAll().forEach((st) => st.kill());
+        tl.kill();
+      };
     },
-    { scope: sectionRef, dependencies: [isInView] }
+    { scope: triggerRef }
   );
 
   return (
-    <Section background="dark" padding="md" className="pt-6 sm:pt-8 md:pt-10">
-      <div
-        ref={(node) => {
-          sectionRef.current = node;
-          setIntersectionRef(node);
-        }}
-      >
-        <SectionHeader
-          title="Our Product Suite"
-          subtitle="Discover our comprehensive range of AI-powered solutions designed to transform your business operations and drive innovation."
-        />
-
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 max-w-7xl mx-auto px-4 sm:px-6 [perspective:1000px] [transform-style:preserve-3d]"
-        >
-          {products.map((product, index) => {
-            const iconSrc = product.icon ?? product.content?.hero?.centerIcon;
-            const iconAlt =
-              product.content?.hero?.centerIconAlt ?? `${product.name} icon`;
-
-            if (!cardContentRefs.current[index]) {
-              cardContentRefs.current[index] = {
-                icon: null,
-                title: null,
-                description: null,
-                cta: null,
-              };
-            }
-
-            return (
-              <Link
+    <section
+      ref={triggerRef}
+      className="relative w-full h-[600vh] bg-transparent overflow-visible"
+    >
+      <div className="sticky top-0 w-full h-screen flex flex-col overflow-hidden">
+        {/* Extreme Right Fixed Sidebar - Minimalist Product Names */}
+        <div className="absolute right-0 top-0 bottom-0 z-[100] hidden lg:flex flex-col justify-center px-4 md:px-8 select-none pointer-events-none">
+          <div className="flex flex-col items-end gap-10">
+            {products.map((product, idx) => (
+              <div
                 key={product.id}
-                href={`/product/${product.slug}`}
-                className="block h-full [will-change:transform]"
-                ref={(el) => {
-                  cardRefs.current[index] = el;
-                }}
+                className="flex items-center gap-6"
               >
-                <SpotlightCard className="h-full">
-                  <div className="p-4 sm:p-5 md:p-6 lg:p-8 h-full flex flex-col">
-                    {iconSrc && (
-                      <div
-                        className="relative w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 mb-3 sm:mb-4 md:mb-5 lg:mb-6 flex items-center justify-center"
-                        ref={(el) => {
-                          if (cardContentRefs.current[index]) {
-                            cardContentRefs.current[index].icon = el;
-                          }
-                        }}
-                      >
-                        <Image
-                          src={iconSrc}
-                          alt={iconAlt}
-                          width={80}
-                          height={80}
-                          className="w-full h-full object-contain filter-glow-primary"
-                        />
-                      </div>
-                    )}
-
-                    <h3
-                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 text-gradient-radial-white"
-                      ref={(el) => {
-                        if (cardContentRefs.current[index]) {
-                          cardContentRefs.current[index].title = el;
-                        }
-                      }}
-                    >
-                      {product.name}
-                    </h3>
-
-                    <p
-                      className="text-xs sm:text-sm md:text-base lg:text-lg text-light-gray-90 leading-relaxed mb-3 sm:mb-4 md:mb-5 lg:mb-6 flex-1"
-                      ref={(el) => {
-                        if (cardContentRefs.current[index]) {
-                          cardContentRefs.current[index].description = el;
-                        }
-                      }}
-                    >
-                      {product.description}
-                    </p>
-
-                    <div
-                      className={cn("btn-surface text-xs sm:text-sm md:text-base font-semibold mt-auto w-fit transition-all min-h-[36px] sm:min-h-[40px]")}
-                      ref={(el) => {
-                        if (cardContentRefs.current[index]) {
-                          cardContentRefs.current[index].cta = el;
-                        }
-                      }}
-                    >
-                      <span>Learn More</span>
-                    </div>
-                  </div>
-                </SpotlightCard>
-              </Link>
-            );
-          })}
+                <span
+                  className={cn(
+                    "text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-700 text-right backdrop-blur-sm px-2 py-1",
+                    currentCardIndex === idx
+                      ? "text-[#13F584] scale-110 drop-shadow-[0_0_10px_rgba(19,245,132,0.6)] opacity-100"
+                      : "text-white/30 opacity-60"
+                  )}
+                >
+                  {product.name}
+                </span>
+                <div
+                  className={cn(
+                    "w-1 transition-all duration-700 rounded-full",
+                    currentCardIndex === idx
+                      ? "h-10 bg-[#13F584] shadow-[0_0_20px_rgba(19,245,132,0.8)]"
+                      : "h-2 bg-white/20"
+                  )}
+                />
+              </div>
+            ))}
+          </div>
         </div>
+
+        <div className="pt-32 shrink-0">
+          <SectionHeader
+            title="Our Product Suite"
+            subtitle="Discover our comprehensive range of AI-powered solutions designed to transform your business operations."
+          />
+        </div>
+
+        {/* Main viewport */}
+        <div className="relative flex-1 w-full flex items-center justify-center">
+
+          {/* Card Container */}
+          <div
+            ref={containerRef}
+            className="relative w-full max-w-[1000px] h-[500px] px-4"
+          >
+            {products.map((product, index) => {
+              const iconSrc = product.icon ?? product.content?.hero?.centerIcon;
+              const iconAlt =
+                product.content?.hero?.centerIconAlt ?? `${product.name} icon`;
+
+              return (
+                <div
+                  key={product.id}
+                  ref={(el) => {
+                    cardRefs.current[index] = el;
+                  }}
+                  className="absolute inset-0 w-full h-full p-4"
+                >
+                  <SpotlightCard className="h-full border-white/10 bg-[#0F0F0F] bg-gradient-to-br from-[#151515] to-[#0A0A0A] group overflow-hidden shadow-[0_0_50px_rgba(19,245,132,0.05)] transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_0_80px_rgba(19,245,132,0.15)]">
+
+                    {/* Interactive Glow Background */}
+                    <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary-500/10 via-transparent to-primary-500/5 opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none z-0">
+                      <div className="absolute inset-0 [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+                    </div>
+
+                    <div className="relative h-full flex flex-col md:flex-row items-center p-8 md:p-12 gap-12 z-10">
+
+                      {/* Left Side: Content */}
+                      <div className="flex-1 text-left space-y-8">
+                        <div className="space-y-4">
+                          <div className="flex items-center gap-6">
+                            {iconSrc && (
+                              <div className="relative w-16 h-16 flex items-center justify-center">
+                                <Image
+                                  src={iconSrc}
+                                  alt={iconAlt}
+                                  width={64}
+                                  height={64}
+                                  className="object-contain filter-glow-primary"
+                                />
+                              </div>
+                            )}
+                            <span className="text-base font-mono text-white/40 tracking-[0.2em] uppercase pt-2">
+                              / Product_{index.toString().padStart(3, "0")}
+                            </span>
+                          </div>
+                          <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight drop-shadow-2xl">
+                            {product.name}
+                          </h3>
+                        </div>
+
+                        <p className="text-xl md:text-2xl text-white/80 font-medium leading-relaxed max-w-lg">
+                          {product.description}
+                        </p>
+
+                        <Link href={`/product/${product.slug}`} className="inline-block mt-8">
+                          <div
+                            className="group/btn relative inline-flex items-center gap-4 px-8 py-3 bg-[#13F584] rounded-full overflow-hidden transition-all duration-500 hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(19,245,132,0.4)] cursor-pointer"
+                          >
+                            {/* Inner Shimmer Sweep */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] transition-transform duration-1000"></div>
+
+                            <span className="relative z-10 text-base font-black uppercase tracking-widest text-black">
+                              Explore
+                            </span>
+
+                            <div className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black text-[#13F584] transition-all duration-500 group-hover:rotate-[360deg] group-hover:scale-110">
+                              <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="3"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
+
+                      {/* Right Side: Tilted Video Placeholder / Graphic */}
+                      <div className="flex-1 relative w-full h-full flex items-center justify-center [perspective:1500px]">
+                        <div className="relative w-[90%] aspect-video bg-neutral-900/80 border border-white/20 rounded-2xl overflow-hidden shadow-[20px_40px_80px_rgba(0,0,0,0.8)] [transform:rotateY(-25deg)_rotateX(15deg)_rotateZ(-2deg)] group-hover:[transform:rotateY(-15deg)_rotateX(10deg)_rotateZ(-1deg)] transition-transform duration-700 ease-out flex items-center justify-center">
+                          {/* Inner Glow */}
+                          <div className="absolute inset-0 bg-gradient-to-tr from-primary-500/20 via-transparent to-white/5 opacity-50"></div>
+
+                          {/* Video UI Overlay Mockup */}
+                          <div className="absolute inset-0 p-6 flex flex-col justify-between">
+                            <div className="flex justify-between items-start opacity-40">
+                              <div className="flex gap-2">
+                                <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                              </div>
+                              <div className="h-4 w-24 bg-white/10 rounded-full"></div>
+                            </div>
+
+                            <div className="flex-1 flex items-center justify-center">
+                              <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-xl border border-white/20 group-hover:scale-110 transition-transform duration-500">
+                                <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-white border-b-8 border-b-transparent translate-x-1"></div>
+                              </div>
+                            </div>
+
+                            <div className="space-y-3 opacity-30">
+                              <div className="h-2 w-full bg-white/10 rounded-full"></div>
+                              <div className="h-2 w-2/3 bg-white/10 rounded-full"></div>
+                            </div>
+                          </div>
+
+                          {/* Large Icon Reflection/Glow */}
+                          {iconSrc && (
+                            <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-700 flex items-center justify-center blur-3xl">
+                              <Image
+                                src={iconSrc}
+                                alt=""
+                                width={200}
+                                height={200}
+                                className="object-contain"
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Floating Elements Around the Tilted Screen */}
+                        <div className="absolute top-10 right-0 w-32 h-32 bg-primary-500/10 blur-3xl rounded-full"></div>
+                        <div className="absolute bottom-10 left-0 w-40 h-40 bg-primary-500/20 blur-[100px] rounded-full"></div>
+                      </div>
+                    </div>
+                  </SpotlightCard>
+                </div>
+              );
+            })}
+          </div>
+
+
+        </div>
+
+
       </div>
-    </Section>
+    </section>
   );
 }
 

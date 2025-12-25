@@ -6,6 +6,7 @@ const Box = (props: React.SVGProps<SVGSVGElement>) => (
         viewBox="-200 -50 1770 647"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        style={{ overflow: "visible" }}
         {...props}
     >
         {/* Hexagon 1 - Complete box with all elements */}

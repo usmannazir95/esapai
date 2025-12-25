@@ -95,27 +95,19 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
   );
 
   return (
-    <section
+    <div
       ref={(el) => {
-        sectionRef.current = el;
-        setIntersectionRef(el as HTMLElement);
+        sectionRef.current = el as any;
+        setIntersectionRef(el as any);
       }}
-      className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark pt-24 pb-16 md:pt-32 md:pb-20"
+      className="relative z-10 w-full mb-12 sm:mb-16 md:mb-20 lg:mb-24"
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-primary opacity-10 blur-[140px] rounded-full" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/50 via-transparent to-dark/80" />
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto w-full">
           {/* Title */}
           <h1
             ref={titleRef}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight text-gradient-primary"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight text-gradient-primary"
           >
             {caseStudy.title}
           </h1>
@@ -164,7 +156,7 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

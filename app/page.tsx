@@ -30,25 +30,31 @@ const ProductShowcaseSection = dynamic(
   () => import("@/components/features/home/sections/product-showcase").then((mod) => ({ default: mod.ProductShowcase })),
 );
 
+const TrustedPartnersSection = dynamic(
+  () => import("@/components/features/home/sections/trusted-partners").then((mod) => ({ default: mod.TrustedPartners })),
+);
+
 export default function Home() {
   return (
     <main className="relative">
       {/* Hero loads immediately - critical for LCP and above the fold */}
       <HeroSection />
-      
+
+      <TrustedPartnersSection />
+
       {/* Below-the-fold sections load progressively as user scrolls */}
       <LazySection minHeight="600px">
         <MissionSection />
       </LazySection>
-      
+
       <LazySection minHeight="600px">
         <VisionSection />
       </LazySection>
-      
+
       <LazySection minHeight="800px">
         <ServiceSection />
       </LazySection>
-      
+
       <LazySection minHeight="600px">
         <ProductShowcaseSection />
       </LazySection>

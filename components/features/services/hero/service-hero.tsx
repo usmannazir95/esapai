@@ -410,7 +410,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
   const firstPart = titleWords.join(' ');
 
   return (
-    <section className="relative overflow-hidden bg-dark pt-32 pb-20 md:pt-40 md:pb-32">
+    <section className="relative w-full min-h-[90vh] md:min-h-screen flex flex-col justify-center overflow-hidden bg-dark pt-32 pb-12 md:pt-20 md:pb-0">
       {/* Background Layers */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         {/* Frame Background */}
@@ -420,24 +420,24 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center">
-        <div className="max-w-6xl mx-auto w-full">
+      <div className="relative z-10 container mx-auto px-4 flex flex-col justify-center grow">
+        <div className="max-w-6xl mx-auto w-full flex flex-col items-center justify-center">
           {/* Text Content Section */}
-          <div className="text-center mb-8 md:mb-10">
+          <div className="text-center mb-4 md:mb-6 mt-4 md:mt-0">
             {/* Main Title - Full Width Container */}
-            <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden mb-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight w-full">
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden mb-3 md:mb-5">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight w-full">
                 {firstPart && <span className="block text-white">{firstPart}</span>}
-                <span className="block text-gradient-primary mt-2">{lastWord}</span>
+                <span className="block text-gradient-primary mt-1 md:mt-2">{lastWord}</span>
               </h1>
             </div>
 
             {/* Subtitle/Description */}
-            <div className="mb-6 md:mb-8 space-y-2">
+            <div className="mb-4 space-y-2">
               {subtitle.map((line, index) => (
-                <p 
-                  key={index} 
-                  className="text-base md:text-lg lg:text-xl text-light-gray-90"
+                <p
+                  key={index}
+                  className="text-sm md:text-lg lg:text-xl text-light-gray-90"
                 >
                   {line}
                 </p>
@@ -446,10 +446,10 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5">
-              <Button 
-                variant="primary" 
-                size="lg" 
-                className="rounded-[40px] px-10 py-4 md:px-16 md:py-6 text-base md:text-lg font-semibold min-w-[160px]" 
+              <Button
+                variant="primary"
+                size="lg"
+                className="rounded-[40px] px-8 py-3 md:px-12 md:py-4 text-base md:text-lg font-semibold min-w-[160px]"
                 asChild
               >
                 <Link href="#explore">Explore Solution</Link>
@@ -458,8 +458,8 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
           </div>
 
           {/* Globe Section */}
-          <div className="relative z-20 flex items-center justify-center">
-            <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] relative">
+          <div className="relative z-20 flex items-center justify-center w-full">
+            <div className="w-full h-[250px] md:h-[350px] lg:h-[450px] relative">
               <World globeConfig={globeConfig} data={globeData} />
             </div>
           </div>

@@ -39,40 +39,31 @@ const MOBILE_ITEMS = [
         Integration
       </>
     ),
-    description: "Complete AI agent integration from strategy to deployment",
     iconPosition: "left" as const,
   },
   {
     key: "strategy",
     title: "Enterprise Automation Strategy",
-    description:
-      "Strategic consulting to identify and implement automation opportunities",
     iconPosition: "right" as const,
   },
   {
     key: "faas",
     title: "Framework-as-a-Service",
-    description: "Managed AI framework platform with cloud infrastructure",
     iconPosition: "left" as const,
   },
   {
     key: "tailored",
     title: "Tailored AI Solutions",
-    description: "Custom AI solutions designed for your specific business needs",
     iconPosition: "right" as const,
   },
   {
     key: "industry",
     title: "Industry-Specific Excellence",
-    description:
-      "Specialized AI solutions for healthcare, finance, and manufacturing",
     iconPosition: "left" as const,
   },
   {
     key: "lab",
     title: "Innovation & Research Lab",
-    description:
-      "Cutting-edge AI research and development for next-gen solutions",
     iconPosition: "right" as const,
   },
 ] as const;
@@ -86,53 +77,44 @@ const DESKTOP_ITEMS = [
         Integration
       </>
     ),
-    description: "Complete AI agent integration from strategy to deployment",
     iconPosition: "right" as const,
     positionClassName:
-      "left-[calc(50%_-_450px)] top-[calc(50%_-_280px)] -translate-x-1/2 -translate-y-1/2",
+      "left-[calc(50%_-_360px)] top-[calc(50%_-_210px)] -translate-x-1/2 -translate-y-1/2",
   },
   {
     key: "strategy",
     title: "Enterprise Automation Strategy",
-    description:
-      "Strategic consulting to identify and implement automation opportunities",
     iconPosition: "right" as const,
     positionClassName:
-      "left-[calc(50%_-_500px)] top-1/2 -translate-x-1/2 -translate-y-1/2",
+      "left-[calc(50%_-_400px)] top-1/2 -translate-x-1/2 -translate-y-1/2",
   },
   {
     key: "faas",
     title: "Framework-as-a-Service",
-    description: "Managed AI framework platform with cloud infrastructure",
     iconPosition: "right" as const,
     positionClassName:
-      "left-[calc(50%_-_450px)] top-[calc(50%_+_280px)] -translate-x-1/2 -translate-y-1/2",
+      "left-[calc(50%_-_360px)] top-[calc(50%_+_210px)] -translate-x-1/2 -translate-y-1/2",
   },
   {
     key: "tailored",
     title: "Tailored AI Solutions",
-    description: "Custom AI solutions designed for your specific business needs",
     iconPosition: "left" as const,
     positionClassName:
-      "left-[calc(50%_+_450px)] top-[calc(50%_-_280px)] -translate-x-1/2 -translate-y-1/2",
+      "left-[calc(50%_+_360px)] top-[calc(50%_-_210px)] -translate-x-1/2 -translate-y-1/2",
   },
   {
     key: "industry",
     title: "Industry-Specific Excellence",
-    description:
-      "Specialized AI solutions for healthcare, finance, and manufacturing",
     iconPosition: "left" as const,
     positionClassName:
-      "left-[calc(50%_+_500px)] top-1/2 -translate-x-1/2 -translate-y-1/2",
+      "left-[calc(50%_+_400px)] top-1/2 -translate-x-1/2 -translate-y-1/2",
   },
   {
     key: "lab",
     title: "Innovation & Research Lab",
-    description:
-      "Cutting-edge AI research and development for next-gen solutions",
     iconPosition: "left" as const,
     positionClassName:
-      "left-[calc(50%_+_450px)] top-[calc(50%_+_280px)] -translate-x-1/2 -translate-y-1/2",
+      "left-[calc(50%_+_360px)] top-[calc(50%_+_210px)] -translate-x-1/2 -translate-y-1/2",
   },
 ] as const;
 
@@ -354,7 +336,6 @@ export function Service() {
               <ServiceItem
                 key={item.key}
                 title={item.title}
-                description={item.description}
                 iconPosition={item.iconPosition}
                 layout="stacked"
                 href={`/service/${SERVICE_SLUG_MAP[item.key]}`}
@@ -365,11 +346,11 @@ export function Service() {
 
         {/* DESKTOP LAYOUT (≥ 1024px) - Circular */}
         <div className="hidden lg:block">
-          <div className="relative w-full min-h-[700px] xl:min-h-[800px] 2xl:min-h-[900px] flex items-center justify-center py-12 lg:py-16 xl:py-20 -mt-12 lg:-mt-16 overflow-visible">
+          <div className="relative w-full min-h-[500px] xl:min-h-[550px] 2xl:min-h-[600px] flex items-center justify-center py-8 lg:py-10 xl:py-12 -mt-8 lg:-mt-10 overflow-visible">
             {/* Ellipse around the brain - Rotating */}
             <div
               ref={ellipseRef}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none w-[600px] h-[600px] xl:w-[650px] xl:h-[650px] will-change-transform"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none w-[450px] h-[450px] xl:w-[500px] xl:h-[500px] will-change-transform"
             >
               <div ref={ellipseContainerRef} className="w-full h-full">
                 <Image
@@ -385,7 +366,7 @@ export function Service() {
 
             {/* Central Brain */}
             <div className="relative z-20 animate-float overflow-visible">
-              <Brain className="w-full h-full max-w-[300px] lg:max-w-[350px] xl:max-w-[400px] 2xl:max-w-[450px] object-contain" />
+              <Brain className="w-full h-full max-w-[150px] lg:max-w-[180px] xl:max-w-[210px] 2xl:max-w-[240px] object-contain" />
             </div>
 
             {/* Service Modules - Circular Arrangement */}
@@ -395,7 +376,6 @@ export function Service() {
                   <ServiceItem
                     key={item.key}
                     title={item.title}
-                    description={item.description}
                     iconPosition={item.iconPosition}
                     layout="absolute"
                     positionClassName={item.positionClassName}
@@ -409,7 +389,7 @@ export function Service() {
       </div>
 
       {/* Floor Grid Pattern - Only on desktop for performance */}
-      <div className="hidden lg:block relative w-full z-0 pointer-events-none h-[360px] mt-auto overflow-hidden">
+      <div className="hidden lg:block relative w-full z-0 pointer-events-none h-[220px] mt-auto overflow-hidden">
         <div className="absolute inset-0 w-full h-full left-0 right-0">
           <div className="absolute inset-0 w-full h-full left-0 right-0 relative overflow-hidden">
             <div className="absolute inset-0 w-full h-full left-0 right-0 pointer-events-auto">

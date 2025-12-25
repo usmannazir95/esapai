@@ -206,7 +206,7 @@ export interface HoverEffectItem {
 
 export interface ServiceItemProps {
   title: string | ReactNode;
-  description: string;
+  description?: string;
   iconPosition: "left" | "right";
   layout?: "stacked" | "absolute";
   positionClassName?: string;
@@ -229,6 +229,7 @@ export interface MissionCardProps {
 export interface TeamCardProps {
   member: TeamMember;
   isLarge?: boolean;
+  isWide?: boolean;
   className?: string;
 }
 

@@ -74,7 +74,7 @@ export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProp
         );
       }
     },
-    { scope: heroRef }
+    { scope: sectionRef }
   );
 
   // Track image loading errors
@@ -89,101 +89,90 @@ export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProp
 
   return (
     <main className="relative" ref={sectionRef}>
-      {/* Hero Section */}
-      <section
-        ref={(el) => {
-          heroRef.current = el;
-          setIntersectionRef(el as HTMLElement);
+      <Section
+        ref={(el: HTMLElement | null) => {
+          setIntersectionRef(el);
         }}
-        className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-dark"
+        padding="none"
+        containerMaxWidth="full"
+        containerClassName="max-w-none px-0 sm:px-0 md:px-0"
+        className="relative overflow-hidden"
       >
-        {/* Animated Frame Background */}
-        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center opacity-40">
+        {/* Top Background Element (Frame) */}
+        <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden -z-10">
+          <div className="absolute inset-x-0 top-0 flex items-start justify-center opacity-35">
             <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
           </div>
-
-          {/* Background gradient glow */}
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary opacity-10 blur-[120px] rounded-full" />
-          </div>
-
-          {/* Contrast overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark/50 via-transparent to-dark/80" />
         </div>
 
-        {/* Main Content */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 flex flex-col items-center text-center max-w-4xl">
-          <h1
-            ref={titleRef}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight text-gradient-primary"
-          >
-            Case Study
-          </h1>
-          <p
-            ref={subtitleRef}
-            className="text-base sm:text-lg md:text-xl text-light-gray-90 max-w-2xl mx-auto px-2 sm:px-4"
-          >
-            Where Innovation Meets Productivity Driven by agents Powered by automation Built for what&apos;s next
-          </p>
-        </div>
-      </section>
-
-      {/* Case Studies Grid - Lazy loaded (below the fold) */}
-      <LazySection minHeight="800px">
-        <Section className="case-studies-glow">
-          <SectionHeader
-            title="Explore Our Case Study"
-            subtitle="Discover how ESAP AI transforms businesses through innovative AI solutions and real-world implementations."
-            subtitleClassName="text-base md:text-lg lg:text-xl text-light-gray-90 max-w-5xl mx-auto px-4 mb-16"
-          />
-
-          {caseStudies.length > 0 ? (
-            <div
-              ref={cardsContainerRef}
-              className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8"
-              role="list"
-              aria-label="Case studies"
+        {/* Unified Content Container */}
+        <div className="relative z-10 w-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-16 sm:pb-20 md:pb-24 lg:pb-32">
+          {/* Hero Content */}
+          <div className="max-w-4xl mx-auto text-center mb-16 sm:mb-20 md:mb-24 lg:mb-28">
+            <h1
+              ref={titleRef}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight text-gradient-primary"
             >
-              {caseStudies.map((caseStudy, index) => (
-                <CaseStudyCard
-                  key={caseStudy._id}
-                  caseStudy={caseStudy}
-                  index={index}
-                  onImageError={handleImageError}
-                  imageErrors={imageErrors}
-                />
-              ))}
-            </div>
-          ) : (
-            <div
-              className="text-center py-16"
-              role="status"
-              aria-live="polite"
-              aria-label="No case studies available"
+              Case Study
+            </h1>
+            <p
+              ref={subtitleRef}
+              className="text-base sm:text-lg md:text-xl text-light-gray-90 max-w-2xl mx-auto px-4 sm:px-6"
             >
-              <p className="text-lg text-light-gray-90 mb-6">
-                No case studies available yet.
-              </p>
-            </div>
-          )}
-
-          {/* CTA Section */}
-          <div className="mt-12 sm:mt-14 md:mt-16 text-center">
-            <p className="text-base sm:text-lg md:text-xl text-light-gray-90 mb-5 sm:mb-6 px-4">
-              Interested in learning more about our solutions?
+              Where Innovation Meets Productivity Driven by agents Powered by
+              automation Built for what&apos;s next
             </p>
-            <Button
-              variant="primary"
-              size="lg"
-              className="rounded-[32px] sm:rounded-[40px] px-10 sm:px-12 md:px-16 lg:px-20 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
-              asChild
-            >
-              <Link href="/contact">Contact</Link>
-            </Button>
           </div>
-        </Section>
-      </LazySection>
+
+          {/* Grid Content */}
+          <div className="case-studies-glow">
+            {caseStudies.length > 0 ? (
+              <div
+                ref={cardsContainerRef}
+                className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8"
+                role="list"
+                aria-label="Case studies"
+              >
+                {caseStudies.map((caseStudy, index) => (
+                  <CaseStudyCard
+                    key={caseStudy._id}
+                    caseStudy={caseStudy}
+                    index={index}
+                    onImageError={handleImageError}
+                    imageErrors={imageErrors}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div
+                className="text-center py-16"
+                role="status"
+                aria-live="polite"
+                aria-label="No case studies available"
+              >
+                <p className="text-lg text-light-gray-90 mb-6">
+                  No case studies available yet.
+                </p>
+              </div>
+            )}
+
+            {/* CTA Section */}
+            <div className="mt-12 sm:mt-14 md:mt-16 text-center">
+              <p className="text-base sm:text-lg md:text-xl text-light-gray-90 mb-5 sm:mb-6 px-4">
+                Interested in learning more about our solutions?
+              </p>
+              <Button
+                variant="primary"
+                size="lg"
+                className="rounded-[32px] sm:rounded-[40px] px-10 sm:px-12 md:px-16 lg:px-20 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
+                asChild
+              >
+                <Link href="/contact">Contact</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Section>
     </main>
   );
 }
