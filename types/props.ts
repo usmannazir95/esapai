@@ -223,6 +223,7 @@ export interface MissionCardProps {
   description: string;
   imageSrc?: string;
   imageAlt?: string;
+  icon?: React.ElementType;
   className?: string;
 }
 

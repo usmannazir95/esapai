@@ -7,45 +7,41 @@ export function MissionCard({
   description,
   imageSrc = "/landing/mission/mission.svg",
   imageAlt = "Mission illustration",
+  icon: Icon,
   className = "",
-}: MissionCardProps) {
+}: any) {
   return (
     <div className={`mission-card relative overflow-hidden h-full flex flex-col ${className}`}>
-      {/* Card Frame - fits entire card */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="relative w-full h-full">
-          <Image
-            src="/landing/cardframe.svg"
-            alt="Card frame"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      </div>
+      {/* Animated Border Trail */}
+      <div className="mission-card-border" />
+
+      {/* Decorative Corner Glow */}
+      <div className="absolute -top-12 -right-12 w-24 h-24 bg-primary/10 blur-[40px] rounded-full pointer-events-none z-0" />
+      <div className="absolute -bottom-12 -left-12 w-24 h-24 bg-primary/5 blur-[40px] rounded-full pointer-events-none z-0" />
 
       {/* Content */}
-      <div className="relative p-8 h-full flex flex-col z-10">
-        {/* Card Title */}
-        <h3 className="text-2xl font-bold mb-4 text-gradient-radial-white">
+      <div className="relative p-6 h-full flex flex-col z-10">
+        <h3 className="text-xl font-bold text-gradient-radial-white leading-tight mb-4">
           {title}
         </h3>
 
         {/* Card Description */}
-        <p className="text-base text-white-opacity-70 mb-6 grow">
+        <p className="text-[14px] text-white-opacity-70 grow leading-relaxed">
           {description}
         </p>
 
-        {/* Mission Graphic */}
-        <div className="relative w-full h-48 flex items-center justify-center">
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            width={200}
-            height={200}
-            className="w-full h-full max-w-[180px] max-h-[180px] object-contain"
-          />
-        </div>
+        {/* Large Bottom Icon */}
+        {Icon && (
+          <div className="mt-4 flex justify-center pb-2">
+            <div className="relative group/icon transition-all duration-500 hover:scale-110">
+              {/* Intensified Glow Layer */}
+              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-12 w-12 bg-primary/40 blur-[24px] rounded-full pointer-events-none" />
+              <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-primary/30 blur-[12px] rounded-full pointer-events-none" />
+
+              <Icon size={40} className="text-primary relative z-10 opacity-90 filter brightness-[1.2] transition-transform duration-500" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
