@@ -48,9 +48,9 @@ export function Footer() {
   const socialSectionRef = useRef<HTMLDivElement>(null);
   const socialIconsRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const bottomBarRef = useRef<HTMLDivElement>(null);
-  
+
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
-  
+
   // GSAP Entrance Animations
   useGSAP(() => {
     if (!isInView || prefersReducedMotion()) {
@@ -66,21 +66,21 @@ export function Footer() {
       if (bottomBarRef.current) gsap.set(bottomBarRef.current, { opacity: 1 });
       return;
     }
-    
+
     const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-    
+
     // Logo section - fade + slide up
     if (logoRef.current) {
       gsap.set(logoRef.current, { opacity: 0, y: 20 });
       tl.to(logoRef.current, { opacity: 1, y: 0, duration: 0.6 }, 0);
     }
-    
+
     // Description - fade in
     if (descriptionRef.current) {
       gsap.set(descriptionRef.current, { opacity: 0 });
       tl.to(descriptionRef.current, { opacity: 1, duration: 0.6 }, 0.1);
     }
-    
+
     // Navigation section - staggered links
     if (navSectionRef.current) {
       const links = navLinksRefs.current.filter(Boolean);
@@ -94,7 +94,7 @@ export function Footer() {
         stagger: 0.05,
       }, 0.2);
     }
-    
+
     // Social section - staggered icons
     if (socialSectionRef.current) {
       const icons = socialIconsRefs.current.filter(Boolean);
@@ -108,21 +108,21 @@ export function Footer() {
         stagger: 0.08,
       }, 0.4);
     }
-    
+
     // Bottom bar - fade in last
     if (bottomBarRef.current) {
       gsap.set(bottomBarRef.current, { opacity: 0 });
       tl.to(bottomBarRef.current, { opacity: 1, duration: 0.6 }, 0.6);
     }
   }, { scope: footerRef, dependencies: [isInView] });
-  
+
   // Hover effect for navigation links - animated underline
   const handleLinkHover = (index: number, isEntering: boolean) => {
     if (prefersReducedMotion()) return;
-    
+
     const link = navLinksRefs.current[index];
     if (!link) return;
-    
+
     if (isEntering) {
       gsap.to(link, {
         color: "#13F584",
@@ -137,14 +137,14 @@ export function Footer() {
       });
     }
   };
-  
+
   // Hover effect for social icons - scale, glow, rotation
   const handleSocialHover = (index: number, isEntering: boolean) => {
     if (prefersReducedMotion()) return;
-    
+
     const icon = socialIconsRefs.current[index];
     if (!icon) return;
-    
+
     if (isEntering) {
       gsap.to(icon, {
         scale: 1.1,
@@ -165,11 +165,11 @@ export function Footer() {
       });
     }
   };
-  
+
   // Logo hover effect
   const handleLogoHover = (isEntering: boolean) => {
     if (prefersReducedMotion() || !logoRef.current) return;
-    
+
     if (isEntering) {
       gsap.to(logoRef.current, {
         scale: 1.05,
@@ -186,9 +186,9 @@ export function Footer() {
       });
     }
   };
-  
+
   return (
-    <footer 
+    <footer
       ref={footerRef}
       className="w-full mt-auto border-top-white-opacity-20 footer-background"
     >
@@ -198,9 +198,9 @@ export function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-8 sm:mb-10 md:mb-12">
             {/* Logo and Description */}
             <div className="space-y-3 sm:space-y-4">
-              <Link 
+              <Link
                 ref={logoRef}
-                href="/" 
+                href="/"
                 className="inline-block"
                 onMouseEnter={() => handleLogoHover(true)}
                 onMouseLeave={() => handleLogoHover(false)}

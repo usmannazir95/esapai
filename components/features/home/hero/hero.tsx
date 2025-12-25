@@ -58,7 +58,7 @@ export function Hero() {
         .to(
           iconsRef.current,
           {
-            opacity: 0.6,
+            opacity: 1,
             duration: 0.6,
             ease: "power2.out",
           },
@@ -139,7 +139,7 @@ export function Hero() {
           tl.to(
             iconsRef.current.querySelectorAll('[class^="hexagon-"]'),
             {
-              opacity: 0.75,
+              opacity: 1,
               scale: 1,
               duration: 1,
               ease: "power2.out",
@@ -153,11 +153,12 @@ export function Hero() {
 
           // Individual animations for each of the 6 hexagons - enhanced with more variety
 
-          // Hexagon 1 - Enhanced diagonal float (Right)
+          // Hexagon 1 - Intensified diagonal float (Right)
           const hex1 = gsap.to(iconsRef.current.querySelector('.hexagon-1'), {
-            y: "-=20",
-            x: "+=15",
-            duration: 5.5,
+            y: "-=40",
+            x: "+=30",
+            rotation: 12,
+            duration: 4.5,
             ease: "power1.inOut",
             repeat: -1,
             yoyo: true,
@@ -165,11 +166,12 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex1);
 
-          // Hexagon 2 - Enhanced vertical bounce with horizontal drift (Right)
+          // Hexagon 2 - Intensified vertical bounce with horizontal drift (Right)
           const hex2 = gsap.to(iconsRef.current.querySelector('.hexagon-2'), {
-            y: "-=25",
-            x: "+=5",
-            duration: 6,
+            y: "-=50",
+            x: "+=10",
+            rotation: -8,
+            duration: 5,
             ease: "sine.inOut",
             repeat: -1,
             yoyo: true,
@@ -177,12 +179,12 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex2);
 
-          // Hexagon 3 - Enhanced circular motion with scale (Right)
+          // Hexagon 3 - Intensified circular motion (Right)
           const hex3 = gsap.to(iconsRef.current.querySelector('.hexagon-3'), {
-            y: "-=18",
-            x: "-=12",
-            scale: 1.04,
-            duration: 6.5,
+            y: "-=35",
+            x: "-=25",
+            rotation: 15,
+            duration: 5.5,
             ease: "power2.inOut",
             repeat: -1,
             yoyo: true,
@@ -190,11 +192,12 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex3);
 
-          // Hexagon 4 - Enhanced horizontal sway (Left)
+          // Hexagon 4 - Intensified horizontal sway (Left)
           const hex4 = gsap.to(iconsRef.current.querySelector('.hexagon-4'), {
-            x: "-=20",
-            y: "-=10",
-            duration: 6,
+            x: "-=40",
+            y: "-=20",
+            rotation: -10,
+            duration: 4.8,
             ease: "sine.inOut",
             repeat: -1,
             yoyo: true,
@@ -202,11 +205,12 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex4);
 
-          // Hexagon 5 - Enhanced figure-8 pattern (Left)
+          // Hexagon 5 - Intensified figure-8 pattern (Left)
           const hex5 = gsap.to(iconsRef.current.querySelector('.hexagon-5'), {
-            y: "-=22",
-            x: "+=15",
-            duration: 7,
+            y: "-=45",
+            x: "+=30",
+            rotation: 18,
+            duration: 5.8,
             ease: "power1.inOut",
             repeat: -1,
             yoyo: true,
@@ -214,11 +218,11 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex5);
 
-          // Hexagon 6 - Enhanced pulse with scale (Left)
+          // Hexagon 6 - Intensified pulse movement (Left)
           const hex6 = gsap.to(iconsRef.current.querySelector('.hexagon-6'), {
-            y: "-=15",
-            scale: 1.08,
-            duration: 5,
+            y: "-=30",
+            rotation: -12,
+            duration: 4,
             ease: "power2.inOut",
             repeat: -1,
             yoyo: true,
@@ -226,46 +230,22 @@ export function Hero() {
           });
           continuousAnimationsRef.current.push(hex6);
 
-          // Random green light effect that sweeps across hexagons
-          const createRandomLightEffect = () => {
-            const hexagonSelectors = ['.hexagon-1', '.hexagon-2', '.hexagon-3', '.hexagon-4', '.hexagon-5', '.hexagon-6'];
-
-            const applyLightEffect = () => {
-              if (!iconsRef.current) return;
-
-              // Pick a random hexagon
-              const randomIndex = Math.floor(Math.random() * hexagonSelectors.length);
-              const randomHexagon = iconsRef.current.querySelector(hexagonSelectors[randomIndex]);
-
-              if (randomHexagon) {
-                // Create a bright green light flash
-                gsap.to(randomHexagon, {
-                  filter: "brightness(1.5) drop-shadow(0 0 20px rgba(19,245,132,0.8))",
-                  duration: 0.4,
-                  ease: "power2.out",
-                  onComplete: () => {
-                    gsap.to(randomHexagon, {
-                      filter: "brightness(1) drop-shadow(0 0 0px rgba(19,245,132,0))",
-                      duration: 0.6,
-                      ease: "power2.in",
-                    });
-                  }
-                });
-              }
-
-              // Schedule next random light effect (between 2-5 seconds)
-              const nextDelay = 2000 + Math.random() * 3000;
-              lightEffectTimeoutRef.current = setTimeout(applyLightEffect, nextDelay);
-            };
-
-            // Start the random light effect after entrance animation completes
-            lightEffectTimeoutRef.current = setTimeout(applyLightEffect, 2000);
-          };
-
-          createRandomLightEffect();
+          // Refined Pulsing Glow Animation for individual hexagons
+          const hexagonGlow = gsap.to(iconsRef.current.querySelectorAll('[class^="hexagon-"]'), {
+            filter: "drop-shadow(0 0 15px rgba(19,245,132,0.6)) drop-shadow(0 0 30px rgba(19,245,132,0.3))",
+            duration: 3,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+            stagger: {
+              each: 0.3,
+              from: "random"
+            }
+          });
+          continuousAnimationsRef.current.push(hexagonGlow);
 
           // Pause all animations if not in view
-          [hex1, hex2, hex3, hex4, hex5, hex6].forEach(
+          [hex1, hex2, hex3, hex4, hex5, hex6, hexagonGlow].forEach(
             (anim) => anim.paused(!isInView)
           );
         }
@@ -325,7 +305,7 @@ export function Hero() {
         ref={iconsRef}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden xl:block gsap-fade-in-optimized animate-optimized"
       >
-        <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-75 filter drop-shadow-[0_0_25px_rgba(19,245,132,0.3)] drop-shadow-[0_0_50px_rgba(19,245,132,0.15)]" />
+        <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-100 filter drop-shadow-[0_0_30px_rgba(19,245,132,0.6)] drop-shadow-[0_0_60px_rgba(19,245,132,0.3)] brightness-[1.2]" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">
@@ -353,7 +333,7 @@ export function Hero() {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-3 sm:mb-4 md:mb-6 leading-tight w-full gsap-slide-up-optimized"
           >
             <span className="block text-white">AI-Powered Solutions</span>
-            <span className="block text-primary mt-1 sm:mt-2">
+            <span className="block text-primary mt-1 sm:mt-2 animate-text-glow brightness-[1.3]">
               For Modern Enterprises
             </span>
           </h1>

@@ -39,40 +39,31 @@ const MOBILE_ITEMS = [
         Integration
       </>
     ),
-    description: "Complete AI agent integration from strategy to deployment",
     iconPosition: "left" as const,
   },
   {
     key: "strategy",
     title: "Enterprise Automation Strategy",
-    description:
-      "Strategic consulting to identify and implement automation opportunities",
     iconPosition: "right" as const,
   },
   {
     key: "faas",
     title: "Framework-as-a-Service",
-    description: "Managed AI framework platform with cloud infrastructure",
     iconPosition: "left" as const,
   },
   {
     key: "tailored",
     title: "Tailored AI Solutions",
-    description: "Custom AI solutions designed for your specific business needs",
     iconPosition: "right" as const,
   },
   {
     key: "industry",
     title: "Industry-Specific Excellence",
-    description:
-      "Specialized AI solutions for healthcare, finance, and manufacturing",
     iconPosition: "left" as const,
   },
   {
     key: "lab",
     title: "Innovation & Research Lab",
-    description:
-      "Cutting-edge AI research and development for next-gen solutions",
     iconPosition: "right" as const,
   },
 ] as const;
@@ -86,7 +77,6 @@ const DESKTOP_ITEMS = [
         Integration
       </>
     ),
-    description: "Complete AI agent integration from strategy to deployment",
     iconPosition: "right" as const,
     positionClassName:
       "left-[calc(50%_-_360px)] top-[calc(50%_-_210px)] -translate-x-1/2 -translate-y-1/2",
@@ -94,8 +84,6 @@ const DESKTOP_ITEMS = [
   {
     key: "strategy",
     title: "Enterprise Automation Strategy",
-    description:
-      "Strategic consulting to identify and implement automation opportunities",
     iconPosition: "right" as const,
     positionClassName:
       "left-[calc(50%_-_400px)] top-1/2 -translate-x-1/2 -translate-y-1/2",
@@ -103,7 +91,6 @@ const DESKTOP_ITEMS = [
   {
     key: "faas",
     title: "Framework-as-a-Service",
-    description: "Managed AI framework platform with cloud infrastructure",
     iconPosition: "right" as const,
     positionClassName:
       "left-[calc(50%_-_360px)] top-[calc(50%_+_210px)] -translate-x-1/2 -translate-y-1/2",
@@ -111,7 +98,6 @@ const DESKTOP_ITEMS = [
   {
     key: "tailored",
     title: "Tailored AI Solutions",
-    description: "Custom AI solutions designed for your specific business needs",
     iconPosition: "left" as const,
     positionClassName:
       "left-[calc(50%_+_360px)] top-[calc(50%_-_210px)] -translate-x-1/2 -translate-y-1/2",
@@ -119,8 +105,6 @@ const DESKTOP_ITEMS = [
   {
     key: "industry",
     title: "Industry-Specific Excellence",
-    description:
-      "Specialized AI solutions for healthcare, finance, and manufacturing",
     iconPosition: "left" as const,
     positionClassName:
       "left-[calc(50%_+_400px)] top-1/2 -translate-x-1/2 -translate-y-1/2",
@@ -128,8 +112,6 @@ const DESKTOP_ITEMS = [
   {
     key: "lab",
     title: "Innovation & Research Lab",
-    description:
-      "Cutting-edge AI research and development for next-gen solutions",
     iconPosition: "left" as const,
     positionClassName:
       "left-[calc(50%_+_360px)] top-[calc(50%_+_210px)] -translate-x-1/2 -translate-y-1/2",
@@ -354,7 +336,6 @@ export function Service() {
               <ServiceItem
                 key={item.key}
                 title={item.title}
-                description={item.description}
                 iconPosition={item.iconPosition}
                 layout="stacked"
                 href={`/service/${SERVICE_SLUG_MAP[item.key]}`}
@@ -395,7 +376,6 @@ export function Service() {
                   <ServiceItem
                     key={item.key}
                     title={item.title}
-                    description={item.description}
                     iconPosition={item.iconPosition}
                     layout="absolute"
                     positionClassName={item.positionClassName}
