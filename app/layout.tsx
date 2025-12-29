@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rajdhani } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google"; // Changed font
 import "./globals.css";
 import { Navbar } from "@/components/features/navigation/navbar";
 import { Footer } from "@/components/features/navigation/footer";
@@ -15,10 +15,10 @@ import { generateHomeMetadata } from "@/lib/seo/metadata";
 import { generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
 
-const rajdhani = Rajdhani({
-  weight: ["300", "400", "500", "600", "700"],
+const jakarta = Plus_Jakarta_Sans({
+  weight: ["300", "400", "500", "600", "700", "800"], // Added 800 just in case
   subsets: ["latin"],
-  variable: "--font-rajdhani",
+  variable: "--font-jakarta", // Updated variable name
   display: "swap",
 });
 
@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${rajdhani.variable} font-rajdhani antialiased flex flex-col min-h-screen`}
+        className={`${jakarta.variable} font-jakarta antialiased flex flex-col min-h-screen`}
       >
         <StructuredDataComponent data={structuredData} />
         <ToastProvider>

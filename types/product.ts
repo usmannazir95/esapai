@@ -5,6 +5,7 @@
 export interface MissionCard {
   title: string;
   description: string;
+  icon?: any; // Generic type to allow component or string
 }
 
 export interface AutomationFeature {

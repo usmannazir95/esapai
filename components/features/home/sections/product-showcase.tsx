@@ -103,7 +103,6 @@ export function ProductShowcase() {
       }
 
       return () => {
-        ScrollTrigger.getAll().forEach((st) => st.kill());
         tl.kill();
       };
     },
@@ -113,9 +112,9 @@ export function ProductShowcase() {
   return (
     <section
       ref={triggerRef}
-      className="relative w-full h-[600vh] bg-transparent overflow-visible"
+      className="relative w-full h-screen bg-transparent overflow-visible"
     >
-      <div className="sticky top-0 w-full h-screen flex flex-col overflow-hidden">
+      <div className="w-full h-screen flex flex-col overflow-hidden">
         {/* Extreme Right Fixed Sidebar - Minimalist Product Names */}
         <div className="absolute right-0 top-0 bottom-0 z-[100] hidden lg:flex flex-col justify-center px-4 md:px-8 select-none pointer-events-none">
           <div className="flex flex-col items-end gap-10">

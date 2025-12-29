@@ -16,12 +16,6 @@ const PARTNERS = [
 export function TrustedPartners() {
     return (
         <section className="w-full py-12 overflow-hidden">
-            <div className="container mx-auto px-4 mb-8 text-center">
-                <h2 className="text-sm font-medium uppercase tracking-[0.2em] text-primary/80">
-                    Trusted by Industry Leaders
-                </h2>
-            </div>
-
             <div className="relative flex overflow-hidden">
                 {/* Marquee Row */}
                 <div className="flex animate-marquee whitespace-nowrap py-4">
