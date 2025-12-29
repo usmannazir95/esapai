@@ -14,10 +14,7 @@ import Box from "@/components/shared/box";
 
 // Lazy-load heavy SVG components to reduce initial bundle size
 // These are decorative and don't affect LCP
-const FramerBackdrop = dynamic(() => import("./framer"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0" />
-});
+// FramerBackdrop removed as requested, but file kept in project
 
 const Circle = dynamic(() => import("./circle"), {
   ssr: false,
@@ -26,7 +23,7 @@ const Circle = dynamic(() => import("./circle"), {
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
+  // backdropRef removed
   const circleContainerRef = useRef<HTMLDivElement>(null);
   const circleGlowRef = useRef<HTMLDivElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
@@ -50,20 +47,14 @@ export function Hero() {
       const tl = anim.createTimeline();
 
       // Entrance animations - GSAP reads initial states from CSS classes
-      tl.to(backdropRef.current, {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-      })
-        .to(
-          iconsRef.current,
-          {
-            opacity: 1,
-            duration: 0.6,
-            ease: "power2.out",
-          },
-          "-=0.5"
-        )
+      tl.to(
+        iconsRef.current,
+        {
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        }
+      )
         .to(
           badgeRef.current,
           {
@@ -284,9 +275,6 @@ export function Hero() {
       className="relative w-full min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
     >
       <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden">
-        <div ref={backdropRef} className="absolute inset-0 gsap-fade-in-optimized overflow-hidden">
-          <FramerBackdrop className="w-[120%] max-w-none min-h-full translate-x-[-10%] -translate-y-[35%] md:translate-y-[-5%]" />
-        </div>
         <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background/80" />
       </div>
 

@@ -13,7 +13,8 @@
     /* Neutral Colors */
     --color-white: rgba(255, 255, 255, 1);
     --color-black: rgba(0, 0, 0, 1);
-    --color-dark: rgba(0, 3, 0, 1);
+    --color-dark: #050505;
+    /* Updated background color */
     --color-light-gray: rgba(245, 245, 245, 1);
     --color-light-gray-90: rgba(245, 245, 245, 0.9);
     --color-white-opacity-10: rgba(255, 255, 255, 0.1);
@@ -50,12 +51,12 @@
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
-    font-family: var(--font-rajdhani), sans-serif;
+    font-family: var(--font-jakarta), sans-serif;
   }
 }
 
-.font-rajdhani {
-  font-family: var(--font-rajdhani), sans-serif;
+.font-jakarta {
+  font-family: var(--font-jakarta), sans-serif;
 }
 
 @layer utilities {
