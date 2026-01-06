@@ -325,8 +325,9 @@ export function Service() {
     >
       <div className="relative container mx-auto max-w-7xl z-10">
         <SectionHeader
+          badge="AI CAPABILITIES"
           title="AI Services & Solutions"
-          subtitle="From strategic consulting to complete integration, we offer end-to-end AI services that transform your business operations and drive innovation."
+          subtitle="End-to-end AI services to transform operations and drive innovation."
         />
 
         {/* MOBILE & TABLET LAYOUT (< 1024px) */}

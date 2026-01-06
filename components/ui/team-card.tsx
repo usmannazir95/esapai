@@ -56,13 +56,13 @@ export function TeamCard({ member, isLarge = false, isWide = false, className = 
 
           <div className="space-y-1.5 sm:space-y-2">
             <h3 className={cn(
-              "font-semibold text-white drop-shadow-[0_4px_20px_rgba(14,255,164,0.25)]",
+              "font-semibold text-premium-gradient drop-shadow-[0_4px_20px_rgba(14,255,164,0.25)]",
               isWide ? "text-2xl sm:text-3xl md:text-4xl lg:text-5xl" : "text-xl sm:text-2xl md:text-3xl"
             )}>
               {member.name}
             </h3>
             <p className={cn(
-              "leading-relaxed text-light-gray-90",
+              "leading-relaxed text-premium-body",
               isWide ? "text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl" : "text-xs sm:text-sm md:text-base"
             )}>
               {member.description}

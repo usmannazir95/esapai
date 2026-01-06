@@ -43,13 +43,13 @@ export function ServiceItem({
             {/* Text Content */}
             <div className="flex flex-col gap-2 md:gap-3 flex-1 min-w-0">
               <h3
-                className={`text-base sm:text-lg md:text-xl font-semibold text-gradient-radial-white leading-relaxed ${textAlignment}`}
+                className={`text-base sm:text-lg md:text-xl font-semibold text-premium-gradient leading-relaxed ${textAlignment}`}
               >
                 {title}
               </h3>
               {description && (
                 <p
-                  className={`text-sm md:text-base text-white-opacity-70 leading-relaxed ${textAlignment} ${descriptionClassName}`}
+                  className={`text-sm md:text-base text-premium-body leading-relaxed ${textAlignment} ${descriptionClassName}`}
                 >
                   {description}
                 </p>
@@ -61,13 +61,13 @@ export function ServiceItem({
             {/* Text Content */}
             <div className="flex flex-col gap-2 md:gap-3 flex-1 min-w-0">
               <h3
-                className={`text-base sm:text-lg md:text-xl font-semibold text-gradient-radial-white leading-relaxed ${textAlignment}`}
+                className={`text-base sm:text-lg md:text-xl font-semibold text-premium-gradient leading-relaxed ${textAlignment}`}
               >
                 {title}
               </h3>
               {description && (
                 <p
-                  className={`text-sm md:text-base text-white-opacity-70 leading-relaxed ${textAlignment} ${descriptionClassName}`}
+                  className={`text-sm md:text-base text-premium-body leading-relaxed ${textAlignment} ${descriptionClassName}`}
                 >
                   {description}
                 </p>

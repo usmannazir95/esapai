@@ -21,12 +21,12 @@ export function MissionCard({
 
       {/* Content */}
       <div className="relative p-6 h-full flex flex-col z-10">
-        <h3 className="text-xl font-bold text-gradient-radial-white leading-tight mb-4">
+        <h3 className="text-xl font-bold text-premium-gradient leading-tight mb-4">
           {title}
         </h3>
 
         {/* Card Description */}
-        <p className="text-[14px] text-white-opacity-70 grow leading-relaxed">
+        <p className="text-[14px] text-premium-body grow leading-relaxed">
           {description}
         </p>
 

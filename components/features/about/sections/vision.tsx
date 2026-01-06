@@ -241,8 +241,9 @@ export function Vision() {
           className={cn(!prefersReducedMotion() && "[will-change:transform]")}
         >
           <SectionHeader
+            badge="OUR VISION"
             title="Our Vision"
-            subtitle="We envision a future where AI seamlessly integrates into every aspect of business operations. Our mission is to make advanced AI technology accessible, practical, and transformative for enterprises of all sizes."
+            subtitle="Seamlessly integrating advanced AI to transform enterprises of all sizes."
           />
 
           <div className="relative w-full flex items-center justify-center py-4 sm:py-6 md:py-8 lg:py-10 z-0">

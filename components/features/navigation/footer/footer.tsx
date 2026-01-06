@@ -221,7 +221,7 @@ export function Footer() {
 
             {/* Navigation Links */}
             <div ref={navSectionRef} className="space-y-3 sm:space-y-4">
-              <h3 className="text-primary font-semibold text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
+              <h3 className="text-premium-gradient font-semibold text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
                 Quick Links
               </h3>
               <nav className="flex flex-col gap-2 sm:gap-3">
@@ -230,7 +230,7 @@ export function Footer() {
                     key={link.href}
                     ref={(el) => { navLinksRefs.current[index] = el; }}
                     href={link.href}
-                    className="text-light-gray-90 hover:text-primary text-xs sm:text-sm md:text-base w-fit relative"
+                    className="text-premium-body hover:text-primary text-xs sm:text-sm md:text-base w-fit relative"
                     onMouseEnter={() => handleLinkHover(index, true)}
                     onMouseLeave={() => handleLinkHover(index, false)}
                   >
@@ -242,7 +242,7 @@ export function Footer() {
 
             {/* Social Media */}
             <div ref={socialSectionRef} className="space-y-3 sm:space-y-4">
-              <h3 className="text-primary font-semibold text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
+              <h3 className="text-premium-gradient font-semibold text-sm sm:text-base md:text-lg mb-3 sm:mb-4">
                 Connect With Us
               </h3>
               <div className="flex items-center gap-3 sm:gap-4 flex-wrap">

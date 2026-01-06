@@ -209,6 +209,21 @@
     color: transparent;
   }
 
+  /* Premium Metallic Text Utilities */
+  .text-premium-gradient {
+    background: linear-gradient(180deg, #FFFFFF 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .text-premium-body {
+    color: #a1a1aa;
+    /* zinc-400 */
+  }
+
+
   /* Color Utility Classes */
   .text-primary {
     color: var(--color-primary);
