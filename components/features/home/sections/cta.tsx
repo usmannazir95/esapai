@@ -2,22 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
 
 export function CTASection() {
     const sectionRef = useRef<HTMLElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
 
     // Star Warp Animation
@@ -107,40 +98,12 @@ export function CTASection() {
         };
     }, [isHovered]);
 
-    // Entrance Interactions
-    useGSAP(
-        () => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top 60%", // Trigger earlier
-                    toggleActions: "play none none reverse",
-                },
-            });
 
-            tl.from(".cta-content", {
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power3.out",
-            });
-
-            tl.from(".cta-button", {
-                scale: 0.8,
-                opacity: 0,
-                duration: 0.5,
-                ease: "back.out(1.7)",
-            }, "-=0.4");
-
-        },
-        { scope: sectionRef }
-    );
 
     return (
         <section
             ref={sectionRef}
-            className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-black"
+            className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-[var(--color-bg-deep)]"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -150,50 +113,42 @@ export function CTASection() {
                 className="absolute inset-0 z-0 w-full h-full block"
             />
 
-            {/* Radial Gradient Overlay for Text Readability */}
-            <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/50 to-black z-10 pointer-events-none" />
-
             {/* Content */}
-            <div ref={contentRef} className="relative z-20 text-center px-4 max-w-4xl mx-auto">
-                <div className="cta-content inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-medium mb-6 backdrop-blur-md">
-                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <span>The Future of Enterprise AI</span>
-                </div>
-
-                <h2 className="cta-content text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 leading-tight">
-                    Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-primary bg-[200%_auto] animate-shine">Launch</span>?
-                </h2>
-
-                <p className="cta-content text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Join the innovators who are reshaping their industries with autonomous agents.
-                    Deployment takes minutes, scaling is infinite.
-                </p>
-
-                <div className="cta-content flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-                    <Link href="/auth/register">
+            <div className="relative z-20 container mx-auto px-4 sm:px-6 text-center">
+                <div className="max-w-4xl mx-auto">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+                        <span className="text-white">Ready to Transform </span>
+                        <span className="text-primary">Your Business?</span>
+                    </h2>
+                    <p className="text-base sm:text-lg md:text-xl text-zinc-400 mb-8 md:mb-10 max-w-2xl mx-auto font-mono tracking-tight">
+                        Join hundreds of enterprises leveraging AI-powered automation to drive growth, efficiency, and innovation.
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
                         <Button
                             variant="primary"
                             size="lg"
-                            className="cta-button h-14 px-8 text-base group relative overflow-hidden"
+                            asChild
                         >
-                            <span className="relative z-10 flex items-center gap-2">
-                                Get Started Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </span>
-                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                            <Link href="/contact" className="flex items-center gap-2">
+                                Start Building Now
+                                <ArrowRight className="w-4 h-4" />
+                            </Link>
                         </Button>
-                    </Link>
-
-                    <Link href="/contact">
                         <Button
                             variant="outline"
                             size="lg"
-                            className="cta-button h-14 px-8 text-base border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 text-white"
+                            asChild
                         >
-                            Talk to Sales
+                            <Link href="/products">
+                                Explore Products
+                            </Link>
                         </Button>
-                    </Link>
+                    </div>
                 </div>
             </div>
+
+            {/* Radial Gradient Overlay */}
+            <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/50 to-black z-10 pointer-events-none" />
         </section>
     );
 }

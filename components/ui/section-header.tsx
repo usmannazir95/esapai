@@ -23,6 +23,7 @@ export function SectionHeader({
   const containerRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const accentLineRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   useGSAP(
@@ -57,6 +58,24 @@ export function SectionHeader({
         );
       }
 
+      // Animated accent line - draws from center outward
+      if (accentLineRef.current) {
+        tl.fromTo(
+          accentLineRef.current,
+          {
+            scaleX: 0,
+            opacity: 0,
+          },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "-=0.4"
+        );
+      }
+
       if (subtitleRef.current) {
         tl.from(
           subtitleRef.current,
@@ -66,7 +85,7 @@ export function SectionHeader({
             duration: 0.8,
             ease: "power3.out",
           },
-          "-=0.6"
+          "-=0.5"
         );
       }
     },
@@ -87,8 +106,16 @@ export function SectionHeader({
       ref={containerRef}
       className={cn("relative z-10 flex flex-col mb-12 sm:mb-16", alignClass, className)}
     >
-      {/* Ambient Backdrop - Subtle Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[150%] bg-primary/5 blur-[80px] rounded-full pointer-events-none -z-10 opacity-60" />
+      {/* Enhanced Ambient Glow - Stronger green radial gradient */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-10"
+        style={{
+          width: '140%',
+          height: '200%',
+          background: 'radial-gradient(ellipse 50% 35% at 50% 40%, rgba(19, 245, 132, 0.15) 0%, rgba(19, 245, 132, 0.08) 30%, rgba(19, 245, 132, 0.02) 60%, transparent 80%)',
+          filter: 'blur(60px)',
+        }}
+      />
 
       {/* Kinetic Gradient Badge */}
       {badge && (
@@ -105,23 +132,38 @@ export function SectionHeader({
         </div>
       )}
 
-      {/* Main Title */}
-      <h2
-        ref={titleRef}
-        className={cn(
-          "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-premium-gradient tracking-tight drop-shadow-lg",
-          titleClassName
-        )}
-      >
-        {title}
-      </h2>
+      {/* Main Title with Glow */}
+      <div className="relative">
+        <h2
+          ref={titleRef}
+          className={cn(
+            "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white tracking-tight",
+            titleClassName
+          )}
+        >
+          {title}
+        </h2>
+
+        {/* Animated Accent Line */}
+        <div
+          ref={accentLineRef}
+          className={cn(
+            "mt-4 sm:mt-5 h-[2px] w-24 sm:w-32 md:w-40 origin-center",
+            align === "center" ? "mx-auto" : align === "left" ? "mr-auto" : "ml-auto"
+          )}
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(19, 245, 132, 0.8) 20%, rgba(19, 245, 132, 1) 50%, rgba(19, 245, 132, 0.8) 80%, transparent 100%)',
+            boxShadow: '0 0 20px rgba(19, 245, 132, 0.5), 0 0 40px rgba(19, 245, 132, 0.3)',
+          }}
+        />
+      </div>
 
       {/* Subtitle */}
       {subtitle && (
         <p
           ref={subtitleRef}
           className={cn(
-            "mt-4 sm:mt-6 text-base sm:text-lg md:text-xl lg:text-xl text-premium-body leading-relaxed max-w-3xl",
+            "mt-5 sm:mt-7 text-base sm:text-lg md:text-xl lg:text-xl text-premium-body leading-relaxed max-w-3xl font-mono tracking-tight",
             mxClass,
             subtitleClassName
           )}

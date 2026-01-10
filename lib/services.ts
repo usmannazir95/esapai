@@ -11,14 +11,14 @@ export const services: Service[] = [
     content: {
       hero: {
         subtitle: [
-          "Complete AI agent integration solutions for your enterprise",
-          "From strategy to deployment, we handle every aspect of your AI transformation",
+          "Complete AI integration solutions",
+          "From strategy to deployment",
         ],
       },
       features: {
-        title: "Comprehensive Integration Services",
+        title: "Integration Services",
         subtitle:
-          "We provide end-to-end AI agent integration that transforms your business operations with intelligent automation and seamless connectivity.",
+          "Transform operations with intelligent automation.",
         items: [
           {
             title: "Strategic Planning & Assessment",
@@ -61,14 +61,14 @@ export const services: Service[] = [
     content: {
       hero: {
         subtitle: [
-          "Strategic automation consulting to transform your enterprise",
-          "Expert guidance to identify, prioritize, and implement automation opportunities",
+          "Strategic automation consulting",
+          "Guidance to implement automation",
         ],
       },
       features: {
-        title: "Strategic Automation Expertise",
+        title: "Automation Expertise",
         subtitle:
-          "Work with our automation experts to develop comprehensive strategies that maximize ROI and operational efficiency.",
+          "Strategies to maximize ROI and efficiency.",
         items: [
           {
             title: "Automation Opportunity Assessment",
@@ -111,14 +111,14 @@ export const services: Service[] = [
     content: {
       hero: {
         subtitle: [
-          "Managed AI framework platform for rapid deployment",
-          "Focus on innovation while we handle infrastructure, scaling, and maintenance",
+          "Managed AI framework platform",
+          "Focus on innovation, we handle scaling",
         ],
       },
       features: {
-        title: "Fully Managed AI Framework Service",
+        title: "Managed Framework",
         subtitle:
-          "Deploy and scale AI agents without infrastructure management. Our platform handles everything from deployment to monitoring.",
+          "Deploy and scale agents without infrastructure headaches.",
         items: [
           {
             title: "Cloud-Native Infrastructure",
@@ -161,14 +161,14 @@ export const services: Service[] = [
     content: {
       hero: {
         subtitle: [
-          "Custom AI solutions designed specifically for your business",
-          "Every solution is built from the ground up to address your unique challenges",
+          "Custom AI business solutions",
+          "Built to address your unique challenges",
         ],
       },
       features: {
-        title: "Bespoke AI Solutions",
+        title: "Bespoke Solutions",
         subtitle:
-          "We don't offer one-size-fits-all solutions. Every AI system we build is custom-designed for your specific business needs and goals.",
+          "Custom-designed AI systems for your specific goals.",
         items: [
           {
             title: "Deep Requirements Analysis",
@@ -211,14 +211,14 @@ export const services: Service[] = [
     content: {
       hero: {
         subtitle: [
-          "AI solutions specialized for your industry",
-          "Domain expertise combined with cutting-edge AI technology",
+          "Industry-specialized AI",
+          "Domain expertise meets technology",
         ],
       },
       features: {
-        title: "Industry-Specific AI Expertise",
+        title: "Industry Expertise",
         subtitle:
-          "Our solutions are built with deep understanding of industry-specific challenges, regulations, and best practices.",
+          "Deep understanding of industry-specific challenges.",
         items: [
           {
             title: "Healthcare AI Solutions",
@@ -261,14 +261,14 @@ export const services: Service[] = [
     content: {
       hero: {
         subtitle: [
-          "Cutting-edge AI research and development",
-          "Pushing the boundaries of what's possible with artificial intelligence",
+          "Cutting-edge AI R&D",
+          "Pushing boundaries of AI",
         ],
       },
       features: {
-        title: "Advanced AI Research & Development",
+        title: "Advanced R&D",
         subtitle:
-          "Our innovation lab explores the frontiers of AI technology, developing next-generation solutions and capabilities.",
+          "Exploring the frontiers of AI technology.",
         items: [
           {
             title: "Research & Development",

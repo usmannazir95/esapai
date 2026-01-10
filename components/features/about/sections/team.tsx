@@ -491,7 +491,7 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 mb-6 sm:mb-8 md:mb-10 lg:mb-12 justify-items-center"
             >
               {middleMembers.map((member) => (
-                <div key={member.id} data-gsap="team-card">
+                <div key={member.id} data-gsap="team-card" className="h-full">
                   <TeamCard member={member} />
                 </div>
               ))}
@@ -502,7 +502,7 @@ export function Team({ members = defaultTeamMembers }: TeamProps) {
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8 justify-items-center"
             >
               {bottomMembers.map((member) => (
-                <div key={member.id} data-gsap="team-card">
+                <div key={member.id} data-gsap="team-card" className="h-full">
                   <TeamCard member={member} />
                 </div>
               ))}

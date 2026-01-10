@@ -119,8 +119,10 @@ export function ServicesHero() {
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 flex flex-col items-center text-center max-w-4xl">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight text-gradient-primary">
-          Our Services
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight">
+          <span className="text-white">
+            Our Services
+          </span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-light-gray-90 max-w-2xl mx-auto px-2 sm:px-4">
           Comprehensive AI solutions and services to help you transform your business with intelligent automation

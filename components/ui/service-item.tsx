@@ -24,7 +24,7 @@ export function ServiceItem({
   const isStacked = resolvedLayout === "stacked";
 
   const content = (
-    <div className={`relative ${isStacked ? 'p-4 sm:p-6 w-full' : 'p-4 md:p-6 lg:p-8 min-w-[320px] sm:min-w-[360px] md:min-w-[400px] max-w-[420px]'} ${isStacked ? 'min-h-0' : 'h-[240px]'} flex flex-col justify-center ${href ? 'cursor-pointer transition-opacity hover:opacity-90' : ''}`}>
+    <div className={`relative ${isStacked ? 'p-4 sm:p-6 w-full' : 'p-4 md:p-6 lg:p-8 min-w-[320px] sm:min-w-[360px] md:min-w-[400px] max-w-[420px]'} ${isStacked ? 'min-h-0' : 'h-[240px]'} flex flex-col justify-center glass-cyber rounded-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(19,245,132,0.2)] ${href ? 'cursor-pointer hover:opacity-100' : ''}`}>
       <div className="flex flex-row items-center gap-4 sm:gap-5 md:gap-6 lg:gap-8">
         {iconOrder ? (
           <>

@@ -241,7 +241,6 @@ export function Vision() {
           className={cn(!prefersReducedMotion() && "[will-change:transform]")}
         >
           <SectionHeader
-            badge="OUR VISION"
             title="Our Vision"
             subtitle="Seamlessly integrating advanced AI to transform enterprises of all sizes."
           />

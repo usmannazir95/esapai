@@ -21,12 +21,13 @@ export function MissionCard({
 
       {/* Content */}
       <div className="relative p-6 h-full flex flex-col z-10">
-        <h3 className="text-xl font-bold text-premium-gradient leading-tight mb-4">
+        {/* Premium Title - Bold white with subtle text shadow */}
+        <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight mb-4 tracking-tight drop-shadow-[0_0_10px_rgba(19,245,132,0.15)]">
           {title}
         </h3>
 
-        {/* Card Description */}
-        <p className="text-[14px] text-premium-body grow leading-relaxed">
+        {/* Card Description - Light gray with better contrast */}
+        <p className="text-sm sm:text-[15px] text-zinc-300 grow leading-relaxed font-medium">
           {description}
         </p>
 
@@ -46,4 +47,3 @@ export function MissionCard({
     </div>
   );
 }
-

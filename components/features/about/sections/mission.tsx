@@ -153,7 +153,6 @@ export function Mission({
     <Section ref={sectionRef} className="relative min-h-screen overflow-hidden flex flex-col pt-16">
       <div className="container mx-auto px-4 relative z-20">
         <SectionHeader
-          badge="CORE MISSION"
           title={title}
           subtitle={subtitle}
         />

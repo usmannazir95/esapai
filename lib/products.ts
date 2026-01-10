@@ -26,16 +26,16 @@ export const products: Product[] = [
     content: {
       hero: {
         subtitle: [
-          "Voice-Activated Enterprise Resource Planning for Modern SMEs",
-          "Transform your business operations with AI-powered voice commands",
+          "Voice-Activated ERP for Modern SMEs",
+          "AI-powered voice commands for business",
         ],
         centerIcon: "/products/voiceerp.svg",
         centerIconAlt: "Voice ERP Icon",
       },
       mission: {
-        title: "Revolutionize Your Business Operations",
+        title: "Revolutionize Your Operations",
         subtitle:
-          "Our Voice-Activated AI ERP empowers small and medium enterprises with intelligent automation, seamless integration, and natural voice interaction. Manage your entire business through intuitive voice commands while maintaining enterprise-grade security and reliability.",
+          "Intelligent automation and natural voice interaction for SMEs. Manage everything through voice while ensuring security.",
         cards: [
           {
             title: "Voice-First Interface",
@@ -55,9 +55,9 @@ export const products: Product[] = [
         ],
       },
       automationHub: {
-        title: "Intelligent Automation Hub",
+        title: "Intelligent Automation",
         subtitle:
-          "Comprehensive automation capabilities that streamline your business processes from inventory management to financial reporting.",
+          "Streamline processes from chemical inventory to finance.",
         features: [
           {
             title: "Adaptive Legacy Bridge",
@@ -93,9 +93,9 @@ export const products: Product[] = [
         ],
       },
       aceternityFeatures: {
-        title: "Comprehensive ERP Features",
+        title: "Core ERP Features",
         subtitle:
-          "Explore the powerful capabilities that make our Voice-Activated AI ERP the perfect solution for modern businesses.",
+          "Powerful capabilities for modern businesses.",
         features: [
           {
             title: "Track Business Operations",
@@ -135,16 +135,16 @@ export const products: Product[] = [
     content: {
       hero: {
         subtitle: [
-          "Build powerful AI agents and automation workflows",
-          "Scalable framework for enterprise AI solutions",
+          "Build powerful AI agents",
+          "Scalable enterprise solutions",
         ],
         centerIcon: "/products/ai-framework.svg",
         centerIconAlt: "AI Framework Icon",
       },
       mission: {
-        title: "Empower Your Development Team",
+        title: "Empower Your Team",
         subtitle:
-          "A comprehensive framework that enables rapid development and deployment of AI-powered applications and automation systems. Build, deploy, and scale AI agents with enterprise-grade reliability and performance.",
+          "Rapidly build and deploy AI agents. Enterprise-grade reliability and performance.",
         cards: [
           {
             title: "Modular Architecture",
@@ -164,9 +164,9 @@ export const products: Product[] = [
         ],
       },
       automationHub: {
-        title: "Powerful Automation Capabilities",
+        title: "Automation Capabilities",
         subtitle:
-          "Create sophisticated automation workflows with our intuitive framework and extensive tooling library.",
+          "Sophisticated workflows with intuitive tooling.",
         features: [
           {
             title: "Agent Orchestration",
@@ -202,9 +202,9 @@ export const products: Product[] = [
         ],
       },
       aceternityFeatures: {
-        title: "AI Framework Capabilities",
+        title: "Framework Capabilities",
         subtitle:
-          "Discover the powerful features that make our AI Framework the ideal solution for building and deploying intelligent automation systems.",
+          "Features for building intelligent systems.",
         features: [
           {
             title: "Build AI Agents",
@@ -244,16 +244,16 @@ export const products: Product[] = [
     content: {
       hero: {
         subtitle: [
-          "Intelligent Knowledge Management at Your Fingertips",
-          "Transform information into actionable insights with AI-powered knowledge retrieval",
+          "Intelligent Knowledge Management",
+          "Actionable insights from your data",
         ],
         centerIcon: "/products/zakra.svg",
         centerIconAlt: "Zakra Knowledge Agent Icon",
       },
       mission: {
-        title: "Unlock the Power of Your Knowledge Base",
+        title: "Unlock Your Knowledge",
         subtitle:
-          "Zakra is your intelligent knowledge assistant that understands context, retrieves relevant information instantly, and provides accurate answers from your organization's knowledge base. Make every piece of information accessible and actionable.",
+          "Instant, context-aware answers from your knowledge base. Make information accessible.",
         cards: [
           {
             title: "Intelligent Search",
@@ -273,9 +273,9 @@ export const products: Product[] = [
         ],
       },
       automationHub: {
-        title: "Advanced Knowledge Capabilities",
+        title: "Knowledge Capabilities",
         subtitle:
-          "Powerful features that make knowledge management effortless and intelligent.",
+          "Effortless and intelligent knowledge management.",
         features: [
           {
             title: "Semantic Search",
@@ -311,9 +311,9 @@ export const products: Product[] = [
         ],
       },
       aceternityFeatures: {
-        title: "Zakra Knowledge Features",
+        title: "Zakra Features",
         subtitle:
-          "Explore the intelligent capabilities that make Zakra your ultimate knowledge management solution.",
+          "Intelligent knowledge management solutions.",
         features: [
           {
             title: "Intelligent Knowledge Search",
@@ -353,16 +353,16 @@ export const products: Product[] = [
     content: {
       hero: {
         subtitle: [
-          "24/7 AI-Powered Customer Support",
-          "Deliver exceptional customer experiences with intelligent automation",
+          "24/7 AI Support",
+          "Exceptional customer experiences",
         ],
         centerIcon: "/products/jawib.svg",
         centerIconAlt: "Jawib Customer Service Agent Icon",
       },
       mission: {
-        title: "Elevate Your Customer Service Experience",
+        title: "Elevate Service",
         subtitle:
-          "Jawib is an intelligent customer service agent that handles inquiries, resolves issues, and provides personalized support around the clock. Reduce response times, improve satisfaction, and scale your customer service operations effortlessly.",
+          "Intelligent agent for 24/7 personalized support. Improve satisfaction and scale operations.",
         cards: [
           {
             title: "24/7 Availability",
@@ -382,9 +382,9 @@ export const products: Product[] = [
         ],
       },
       automationHub: {
-        title: "Comprehensive Customer Service Features",
+        title: "Service Features",
         subtitle:
-          "Advanced capabilities that transform how you interact with and support your customers.",
+          "Transform customer interactions.",
         features: [
           {
             title: "Natural Language Understanding",
@@ -420,9 +420,9 @@ export const products: Product[] = [
         ],
       },
       aceternityFeatures: {
-        title: "Jawib Customer Service Features",
+        title: "Jawib Features",
         subtitle:
-          "Discover the comprehensive features that make Jawib the perfect solution for exceptional customer service.",
+          "Solutions for exceptional service.",
         features: [
           {
             title: "24/7 Customer Support",
@@ -462,16 +462,16 @@ export const products: Product[] = [
     content: {
       hero: {
         subtitle: [
-          "Native Arabic Language Model",
-          "Advanced AI built specifically for Arabic language understanding and generation",
+          "Native Arabic AI",
+          "Built for Arabic understanding",
         ],
         centerIcon: "/products/fasih.svg",
         centerIconAlt: "Fasih Arabic LLM Icon",
       },
       mission: {
-        title: "Bridging the Arabic Language AI Gap",
+        title: "Bridging the AI Gap",
         subtitle:
-          "Fasih is a large language model specifically trained on Arabic language, dialects, and cultural context. Delivering accurate, culturally-aware Arabic language processing for applications requiring native Arabic understanding.",
+          "Trained on Arabic language and dialects. Accurate, culturally-aware processing.",
         cards: [
           {
             title: "Native Arabic Understanding",
@@ -491,9 +491,9 @@ export const products: Product[] = [
         ],
       },
       automationHub: {
-        title: "Advanced Arabic Language Capabilities",
+        title: "Arabic Capabilities",
         subtitle:
-          "Comprehensive features designed for Arabic language processing and generation.",
+          "Processing and generation for Arabic.",
         features: [
           {
             title: "Text Generation",
@@ -529,9 +529,9 @@ export const products: Product[] = [
         ],
       },
       aceternityFeatures: {
-        title: "Fasih Arabic LLM Features",
+        title: "Fasih Features",
         subtitle:
-          "Explore the advanced capabilities that make Fasih the leading native Arabic language model.",
+          "Leading native Arabic language model.",
         features: [
           {
             title: "Native Arabic Processing",
@@ -571,16 +571,16 @@ export const products: Product[] = [
     content: {
       hero: {
         subtitle: [
-          "Seamlessly Connect Legacy Systems",
-          "Bridge the gap between legacy infrastructure and modern AI-powered solutions",
+          "Connect Legacy Systems",
+          "Bridge legacy and modern AI",
         ],
         centerIcon: "/products/domain-expansion.svg",
         centerIconAlt: "Domain Expansion Icon",
       },
       mission: {
-        title: "Modernize Without Replacing",
+        title: "Modernize Seamlessly",
         subtitle:
-          "Domain Expansion enables seamless integration between your existing legacy systems and modern AI technologies. Extend the capabilities of your current infrastructure without costly migrations or complete overhauls.",
+          "Integrate legacy systems with modern AI. Extend capabilities without costly implementation.",
         cards: [
           {
             title: "Legacy System Integration",
@@ -600,9 +600,9 @@ export const products: Product[] = [
         ],
       },
       automationHub: {
-        title: "Comprehensive Integration Capabilities",
+        title: "Integration Capabilities",
         subtitle:
-          "Powerful tools and connectors that make legacy system integration simple and reliable.",
+          "Simple and reliable legacy integration.",
         features: [
           {
             title: "Universal Connectors",
@@ -638,9 +638,9 @@ export const products: Product[] = [
         ],
       },
       aceternityFeatures: {
-        title: "Domain Expansion Integration Features",
+        title: "Integration Features",
         subtitle:
-          "Discover how Domain Expansion seamlessly connects legacy systems with modern AI-powered solutions.",
+          "Connect legacy systems with AI solutions.",
         features: [
           {
             title: "Legacy System Integration",

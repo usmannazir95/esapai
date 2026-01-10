@@ -92,6 +92,9 @@ importers:
       sanity:
         specifier: ^5.0.0
         version: 5.0.0(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.6))(@types/node@20.19.25)(@types/react-dom@19.2.3(@types/react@19.2.6))(@types/react@19.2.6)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(styled-components@6.1.19(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)(yaml@2.8.2)
+      split-type:
+        specifier: ^0.3.4
+        version: 0.3.4
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.4.0
@@ -6142,6 +6145,9 @@ packages:
   speakingurl@14.0.1:
     resolution: {integrity: sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==}
     engines: {node: '>=0.10.0'}
+
+  split-type@0.3.4:
+    resolution: {integrity: sha512-otEk9vnD8qwfLsk3Lx0gz+qRkNIJCx0mlyL47ImP/DjMuV39d75Lpfwjn9fHteDRz0aoOblSzQjSNT9+Sswxcg==}
 
   split2@4.2.0:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
@@ -13805,6 +13811,8 @@ snapshots:
   spdx-license-ids@3.0.22: {}
 
   speakingurl@14.0.1: {}
+
+  split-type@0.3.4: {}
 
   split2@4.2.0: {}
 

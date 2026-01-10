@@ -321,11 +321,10 @@ export function Service() {
         sectionRef.current = node;
         setIntersectionRef(node);
       }}
-      className="relative w-full pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10 px-4 overflow-hidden bg-dark render-optimized"
+      className="relative w-full pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10 px-4 overflow-hidden bg-transparent render-optimized"
     >
       <div className="relative container mx-auto max-w-7xl z-10">
         <SectionHeader
-          badge="AI CAPABILITIES"
           title="AI Services & Solutions"
           subtitle="End-to-end AI services to transform operations and drive innovation."
         />

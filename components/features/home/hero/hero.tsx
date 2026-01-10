@@ -1,134 +1,376 @@
 "use client";
 
-import React, { useRef } from "react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, ChevronRight, Globe as GlobeIcon } from "lucide-react";
-import Link from "next/link";
-import dynamic from "next/dynamic";
 
-const HeroLogoAnimation = dynamic(
-    () => import("./hero-logo-animation").then((mod) => mod.HeroLogoAnimation),
-    { ssr: false }
-);
+import { Button } from "@/components/ui/button";
+import { TypewriterTitle } from "@/components/ui/typewriter-title";
+import { HeroBadge } from "@/components/ui/hero-badge";
+import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
+import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
+import { prefersReducedMotion } from "@/lib/utils/performance-utils";
+import Box from "@/components/shared/box";
+import { motion } from "motion/react";
 
-export const Hero = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const leftColRef = useRef<HTMLDivElement>(null);
-    const rightColRef = useRef<HTMLDivElement>(null);
-    const titleLinesRef = useRef<(HTMLSpanElement | null)[]>([]);
+// Lazy-load heavy SVG components to reduce initial bundle size
+// These are decorative and don't affect LCP
+// FramerBackdrop removed as requested, but file kept in project
 
-    useGSAP(() => {
-        const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+const Circle = dynamic(() => import("./circle"), {
+    ssr: false,
+    loading: () => <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+});
 
-        // Initial Set
-        gsap.set(containerRef.current, { visibility: "visible" });
-        gsap.set(titleLinesRef.current, { y: 100, autoAlpha: 0, rotateX: -20 });
-        gsap.set(".hero-fade-in", { y: 20, autoAlpha: 0 });
-        gsap.set(rightColRef.current, { scale: 0.8, autoAlpha: 0 });
+export function Hero() {
+    const sectionRef = useRef<HTMLElement>(null);
+    // backdropRef removed
+    const circleContainerRef = useRef<HTMLDivElement>(null);
+    const circleGlowRef = useRef<HTMLDivElement>(null);
+    const iconsRef = useRef<HTMLDivElement>(null);
+    const badgeRef = useRef<HTMLDivElement>(null);
+    const subtitleRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLDivElement>(null);
+    const continuousAnimationsRef = useRef<gsap.core.Tween[]>([]);
+    const lightEffectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-        // Animation Sequence
-        tl.to(rightColRef.current, {
-            scale: 1,
-            autoAlpha: 1,
-            duration: 1.5,
-            ease: "power3.out"
-        })
-            .to(titleLinesRef.current, {
-                y: 0,
-                rotateX: 0,
-                autoAlpha: 1,
-                stagger: 0.1,
-                duration: 1.2,
-                ease: "power3.out"
-            }, "-=1.2")
-            .to(".hero-fade-in", {
-                y: 0,
-                autoAlpha: 1,
-                stagger: 0.1,
-                duration: 0.8
-            }, "-=0.8");
+    const anim = useGSAPAnimations(sectionRef);
 
-    }, { scope: containerRef });
+    // Intersection observer to pause animations when off-screen
+    const { setRef: setIntersectionRef, isInView } = useIntersectionAnimation({
+        threshold: 0.1,
+        rootMargin: "100px",
+    });
+
+    useGSAP(
+        () => {
+            const tl = anim.createTimeline();
+
+            // Entrance animations - GSAP reads initial states from CSS classes
+            tl.to(
+                iconsRef.current,
+                {
+                    opacity: 1,
+                    duration: 0.6,
+                    ease: "power2.out",
+                }
+            )
+                .to(
+                    badgeRef.current,
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out",
+                    },
+                    "-=0.4"
+                )
+                // Title animation is now handled by KineticText component
+                .to(
+                    subtitleRef.current,
+                    {
+                        opacity: 1,
+                        duration: 0.6,
+                        ease: "power2.out",
+                    },
+                    "-=0.4"
+                )
+                .to(
+                    buttonRef.current,
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.5,
+                        ease: "power2.out",
+                    },
+                    "-=0.3"
+                );
+
+            // Continuous animations (start after entrance sequence completes)
+            if (!prefersReducedMotion()) {
+                if (circleContainerRef.current) {
+                    const breathingTween = anim.breathing(circleContainerRef.current, {
+                        delay: 0.8,
+                    });
+                    if (breathingTween) {
+                        breathingTween.paused(!isInView);
+                        continuousAnimationsRef.current.push(breathingTween);
+                    }
+                }
+                if (circleGlowRef.current) {
+                    const glowTween = anim.glow(circleGlowRef.current, { delay: 0.8 });
+                    if (glowTween) {
+                        glowTween.paused(!isInView);
+                        continuousAnimationsRef.current.push(glowTween);
+                    }
+                }
+                if (iconsRef.current) {
+                    // Spread hexagons further apart to avoid overlapping the circle
+                    // Left side hexagons
+                    gsap.set(iconsRef.current.querySelectorAll('.hexagon-4, .hexagon-5, .hexagon-6'), { x: -80 });
+                    // Right side hexagons
+                    gsap.set(iconsRef.current.querySelectorAll('.hexagon-1, .hexagon-2, .hexagon-3'), { x: 80 });
+
+                    // Set initial states for smooth entrance animation
+                    gsap.set(iconsRef.current.querySelectorAll('[class^="hexagon-"]'), {
+                        opacity: 0,
+                        scale: 0.8,
+                    });
+
+                    // Smooth staggered entrance animation
+                    tl.to(
+                        iconsRef.current.querySelectorAll('[class^="hexagon-"]'),
+                        {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 1,
+                            ease: "power2.out",
+                            stagger: {
+                                each: 0.15,
+                                from: "random",
+                            },
+                        },
+                        "-=0.3"
+                    );
+
+                    // Individual animations for each of the 6 hexagons - enhanced with more variety
+
+                    // Hexagon 1 - Intensified diagonal float (Right)
+                    const hex1 = gsap.to(iconsRef.current.querySelector('.hexagon-1'), {
+                        y: "-=40",
+                        x: "+=30",
+                        rotation: 12,
+                        duration: 4.5,
+                        ease: "power1.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 0,
+                    });
+                    continuousAnimationsRef.current.push(hex1);
+
+                    // Hexagon 2 - Intensified vertical bounce with horizontal drift (Right)
+                    const hex2 = gsap.to(iconsRef.current.querySelector('.hexagon-2'), {
+                        y: "-=50",
+                        x: "+=10",
+                        rotation: -8,
+                        duration: 5,
+                        ease: "sine.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 0.5,
+                    });
+                    continuousAnimationsRef.current.push(hex2);
+
+                    // Hexagon 3 - Intensified circular motion (Right)
+                    const hex3 = gsap.to(iconsRef.current.querySelector('.hexagon-3'), {
+                        y: "-=35",
+                        x: "-=25",
+                        rotation: 15,
+                        duration: 5.5,
+                        ease: "power2.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 1,
+                    });
+                    continuousAnimationsRef.current.push(hex3);
+
+                    // Hexagon 4 - Intensified horizontal sway (Left)
+                    const hex4 = gsap.to(iconsRef.current.querySelector('.hexagon-4'), {
+                        x: "-=40",
+                        y: "-=20",
+                        rotation: -10,
+                        duration: 4.8,
+                        ease: "sine.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 0.3,
+                    });
+                    continuousAnimationsRef.current.push(hex4);
+
+                    // Hexagon 5 - Intensified figure-8 pattern (Left)
+                    const hex5 = gsap.to(iconsRef.current.querySelector('.hexagon-5'), {
+                        y: "-=45",
+                        x: "+=30",
+                        rotation: 18,
+                        duration: 5.8,
+                        ease: "power1.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 0.8,
+                    });
+                    continuousAnimationsRef.current.push(hex5);
+
+                    // Hexagon 6 - Intensified pulse movement (Left)
+                    const hex6 = gsap.to(iconsRef.current.querySelector('.hexagon-6'), {
+                        y: "-=30",
+                        rotation: -12,
+                        duration: 4,
+                        ease: "power2.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        delay: 1.2,
+                    });
+                    continuousAnimationsRef.current.push(hex6);
+
+                    // Refined Pulsing Glow Animation for individual hexagons
+                    const hexagonGlow = gsap.to(iconsRef.current.querySelectorAll('[class^="hexagon-"]'), {
+                        filter: "drop-shadow(0 0 15px rgba(19,245,132,0.6)) drop-shadow(0 0 30px rgba(19,245,132,0.3))",
+                        duration: 3,
+                        ease: "sine.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        stagger: {
+                            each: 0.3,
+                            from: "random"
+                        }
+                    });
+                    continuousAnimationsRef.current.push(hexagonGlow);
+
+                    // Pause all animations if not in view
+                    [hex1, hex2, hex3, hex4, hex5, hex6, hexagonGlow].forEach(
+                        (anim) => anim.paused(!isInView)
+                    );
+                }
+            }
+
+            // Cleanup function
+            return () => {
+                continuousAnimationsRef.current.forEach((tween) => {
+                    tween?.kill();
+                });
+                continuousAnimationsRef.current = [];
+                if (lightEffectTimeoutRef.current) {
+                    clearTimeout(lightEffectTimeoutRef.current);
+                    lightEffectTimeoutRef.current = null;
+                }
+            };
+        },
+        { scope: sectionRef }
+    );
+
+    // Pause/resume animations based on viewport visibility
+    useEffect(() => {
+        if (!isInView || prefersReducedMotion()) {
+            continuousAnimationsRef.current.forEach((tween) => tween?.pause());
+        } else {
+            continuousAnimationsRef.current.forEach((tween) => tween?.resume());
+        }
+    }, [isInView]);
 
     return (
         <section
-            ref={containerRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050505] invisible pt-24 md:pt-32"
+            ref={(el) => {
+                sectionRef.current = el;
+                setIntersectionRef(el);
+            }}
+            className="relative w-full min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
         >
-            {/* Background Grid/Mesh */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_90%)] pointer-events-none" />
+            {/* Video Background */}
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover z-[-2]"
+            >
+                <source src="/012_1.mp4" type="video/mp4" />
+            </video>
 
-            <div className="container relative z-10 px-4 md:px-6 w-full">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            {/* Dark overlay to make video appear as shadow */}
+            <div className="absolute inset-0 bg-black/75 z-[-1] pointer-events-none" />
 
-                    {/* Left Column: Content */}
-                    <div ref={leftColRef} className="flex flex-col items-start text-left lg:max-w-xl">
-                        {/* Status Badge */}
-                        <div className="hero-fade-in hero-badge mb-8 cursor-pointer group">
-                            <div className="hero-badge-exclusive">
-                                <span className="hero-badge-exclusive-text">NEW</span>
-                            </div>
-                            <div className="hero-badge-text">
-                                <span className="hero-badge-text-content group-hover:text-white transition-colors">
-                                    ESAP AI v2.0 is now live
-                                </span>
-                                <ChevronRight className="w-4 h-4 text-[var(--color-primary)] group-hover:translate-x-0.5 transition-transform" />
-                            </div>
-                        </div>
+            {/* Video Fade-out Overlay - Bottom gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-[-1] pointer-events-none" />
 
-                        {/* Kinetic Typography Title */}
-                        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.1] text-white overflow-hidden">
-                            <span className="block overflow-hidden">
-                                <span ref={el => { if (el) titleLinesRef.current[0] = el }} className="block">EMPOWERING</span>
-                            </span>
-                            <span className="block overflow-hidden">
-                                <span ref={el => { if (el) titleLinesRef.current[1] = el }} className="block text-white/40">BUSINESSES WITH</span>
-                            </span>
-                            <span className="block overflow-hidden">
-                                <span ref={el => { if (el) titleLinesRef.current[2] = el }} className="block text-[var(--color-primary)]">INTELLIGENT AI</span>
-                            </span>
-                        </h1>
+            {/* Additional subtle overlay for contrast */}
+            <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden">
+                <div className="absolute inset-0 bg-linear-to-b from-background/30 via-transparent to-transparent" />
+            </div>
 
-                        {/* Description */}
-                        <p className="hero-fade-in text-lg text-white/60 mb-10 max-w-md leading-relaxed">
-                            Specializing in enterprise AI solutions, voice-activated ERP systems, and agentic integrations to transform your daily workflows.
-                        </p>
+            {/* Circle behind content - animated glow and breathing effect */}
+            <div
+                ref={circleContainerRef}
+                className="absolute top-[30%] sm:top-[35%] md:top-[45%] lg:top-[48%] left-1/2 -translate-x-1/2 z-0 pointer-events-none animate-optimized"
+            >
+                <div ref={circleGlowRef} className="relative">
+                    <Circle className="w-[250px] sm:w-[350px] md:w-[450px] lg:w-[550px] xl:w-[600px] max-w-[600px] h-auto brightness-[1.8] drop-shadow-[0_0_40px_rgba(0,165,81,0.8)] drop-shadow-[0_0_80px_rgba(0,165,81,0.6)] drop-shadow-[0_0_120px_rgba(0,165,81,0.4)]" />
+                </div>
+            </div>
 
-                        {/* Actions */}
-                        <div className="hero-fade-in flex flex-wrap gap-4">
-                            <Link href="/signup">
-                                <button className="group relative px-8 py-4 bg-[var(--color-primary)] text-black font-bold text-lg rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95">
-                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="relative flex items-center gap-2">
-                                        Start Deploying
-                                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                    </span>
-                                </button>
-                            </Link>
+            {/* Hexagonal Icons (Box component) - floating with glow - Hidden on mobile/tablet */}
+            <div
+                ref={iconsRef}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden xl:block gsap-fade-in-optimized animate-optimized"
+            >
+                <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-100 filter drop-shadow-[0_0_30px_rgba(19,245,132,0.6)] drop-shadow-[0_0_60px_rgba(19,245,132,0.3)] brightness-[1.2]" />
+            </div>
 
-                            <button className="px-8 py-4 bg-white/5 border border-white/10 text-white font-medium text-lg rounded-full hover:bg-white/10 transition-colors backdrop-blur-sm flex items-center gap-2">
-                                <GlobeIcon className="w-5 h-5" />
-                                View Network
-                            </button>
-                        </div>
-
-
+            <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">
+                {/* Tagline Badge */}
+                <div
+                    ref={badgeRef}
+                    className="hero-badge relative max-w-5xl gsap-slide-up-optimized scale-90 sm:scale-95 md:scale-100 mb-4 sm:mb-6 md:mb-8 overflow-hidden"
+                >
+                    {/* Animated beam effect */}
+                    <motion.div
+                        className="absolute inset-0 w-[200%] z-10 pointer-events-none"
+                        style={{
+                            background: 'linear-gradient(90deg, transparent 0%, transparent 45%, rgba(255, 255, 255, 0.15) 50%, transparent 55%, transparent 100%)',
+                        }}
+                        animate={{ x: ['-100%', '100%'] }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
+                    />
+                    <div className="hero-badge-exclusive">
+                        <span className="hero-badge-exclusive-text font-mono text-[9px] sm:text-[10px] md:text-xs tracking-wide">
+                            Exclusive
+                        </span>
                     </div>
-
-                    {/* Right Column: 3D Logo Animation */}
-                    <div ref={rightColRef} className="relative w-full h-[500px] lg:h-[700px] flex items-center justify-center lg:justify-end">
-                        {/* Glow Effect behind logo */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle,rgba(19,245,132,0.15)_0%,transparent_70%)] pointer-events-none blur-3xl" />
-
-                        {/* The 3D Logo */}
-                        <div className="w-full h-full max-w-[600px] relative z-10">
-                            <HeroLogoAnimation className="w-full h-full" />
-                        </div>
+                    <div className="hero-badge-text">
+                        <span className="hero-badge-text-content font-mono text-[10px] sm:text-[11px] md:text-sm tracking-wide">
+                            Tomorrow&apos;s Edge, Built Today
+                        </span>
                     </div>
+                </div>
 
+                {/* Main Title - Kinetic Typography */}
+                <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 overflow-hidden">
+                    <TypewriterTitle
+                        title="AI-Powered Solutions"
+                        splitMode="secondLine"
+                        secondLine="For Modern Enterprises"
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-3 sm:mb-4 md:mb-6 leading-tight w-full"
+                        align="center"
+                        mainTextClassName="mt-1 sm:mt-2"
+                    />
+                </div>
+
+                {/* Subtitle/Description */}
+                <div
+                    ref={subtitleRef}
+                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white/80 font-mono max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
+                >
+                    <p>
+                        Transform your business with intelligent automation, voice-activated
+                        systems,
+                    </p>
+                    <p>and AI agents that drive productivity and innovation</p>
+                </div>
+
+                {/* CTA Button */}
+                <div ref={buttonRef} className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto gsap-scale-in-optimized">
+                    <Button
+                        variant="primary"
+                        size="lg"
+                    >
+                        Get Started
+                    </Button>
                 </div>
             </div>
         </section>
     );
-};
+}
+
+
+

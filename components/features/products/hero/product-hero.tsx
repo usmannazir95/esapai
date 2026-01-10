@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { TypewriterTitle } from "@/components/ui/typewriter-title";
+import { HeroBadge } from "@/components/ui/hero-badge";
 import Frame from "@/components/shared/frame";
 import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
 import { ProductHaloFlow } from "@/components/shared/product-halo-flow";
@@ -74,9 +76,15 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center">
         <div className="max-w-6xl mx-auto w-full">
           <div className="text-center mb-6 sm:mb-8 md:mb-10">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight text-gradient-primary">
-              {title}
-            </h1>
+            <div className="flex justify-center mb-4 sm:mb-6">
+              <HeroBadge text="Innovative Product" />
+            </div>
+            <TypewriterTitle
+              title={title}
+              splitMode="lastWord"
+              className="mb-3 sm:mb-4 md:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+              align="center"
+            />
 
             <div className="mb-5 sm:mb-6 md:mb-8 space-y-1.5 sm:space-y-2">
               {subtitle.map((line, index) => (
@@ -89,16 +97,14 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-5">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
               <Button
                 variant="primary"
                 size="lg"
-                className="rounded-[32px] sm:rounded-[40px] px-10 sm:px-12 md:px-16 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-w-[140px] sm:min-w-[160px] min-h-[44px] sm:min-h-[48px]"
                 asChild
               >
                 <Link href="#explore">Explore Solution</Link>
               </Button>
-
             </div>
           </div>
 
