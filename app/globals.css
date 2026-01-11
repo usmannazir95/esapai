@@ -46,11 +46,7 @@
 
   body {
     background-color: var(--color-bg-deep);
-    background-image:
-      linear-gradient(var(--color-cyber-grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-cyber-grid) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-attachment: fixed;
+    overflow-x: hidden;
   }
 
   ::selection {
@@ -524,39 +520,43 @@
   /* Mission Card - Futuristic Glowing Style */
   .mission-card {
     position: relative;
-    background: rgba(2, 3, 5, 0.65);
-    /* Glassier background */
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(19, 245, 132, 0.1);
-    border-radius: 20px;
+    /* Premium Obsidian Gradient - Fully Opaque */
+    background: linear-gradient(180deg, #0e0e0e 0%, #050505 100%);
+    /* Remove backdrop filter as it's opaque now, saves performance */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     height: 100%;
     display: flex;
     flex-direction: column;
     box-shadow:
-      0 0 20px -10px rgba(19, 245, 132, 0.1),
-      inset 0 0 40px rgba(0, 0, 0, 0.8);
+      0 0 0 1px rgba(0, 0, 0, 1),
+      0 10px 40px -10px rgba(0, 0, 0, 1);
+    z-index: 10;
   }
 
   .mission-card svg {
-    filter: drop-shadow(0 0 8px rgba(19, 245, 132, 0.5));
+    filter: drop-shadow(0 0 8px rgba(19, 245, 132, 0.6));
   }
 
   /* Animated Border Trail Wrapper */
   .mission-card-border {
     position: absolute;
     inset: 0;
-    padding: 1px;
-    /* The "border" thickness */
-    border-radius: 20px;
-    background: rgba(19, 245, 132, 0.05);
-    /* Very subtle base border */
+    padding: 1.5px;
+    /* Slightly thicker for visibility */
+    border-radius: 24px;
+    background: transparent;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
     -webkit-mask-composite: xor;
+    mask-composite: exclude;
     pointer-events: none;
     z-index: 5;
+    opacity: 0.6;
+    /* Subtle base visibility */
+    transition: opacity 0.4s ease;
   }
 
   .mission-card-border::before {
@@ -564,13 +564,13 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 150%;
-    height: 150%;
+    width: 200%;
+    height: 200%;
     transform: translate(-50%, -50%);
     background: conic-gradient(from 0deg,
         transparent 0deg,
         transparent 280deg,
-        rgba(19, 245, 132, 0.1) 300deg,
+        rgba(19, 245, 132, 0.1) 320deg,
         var(--color-primary) 360deg);
     animation: rotate-border 4s linear infinite;
   }
@@ -585,19 +585,24 @@
     }
   }
 
+  /* Hover State - Scale Lift and Glow Intensify */
   .mission-card:hover {
-    background: rgba(2, 3, 5, 0.8);
-    border-color: rgba(19, 245, 132, 0.3);
+    transform: translateY(-5px) scale(1.02);
+    background: linear-gradient(180deg, #151515 0%, #080808 100%);
+    border-color: rgba(19, 245, 132, 0.25);
     box-shadow:
-      0 0 50px -10px rgba(19, 245, 132, 0.25),
-      0 20px 40px -15px rgba(0, 0, 0, 1),
-      inset 0 0 30px rgba(19, 245, 132, 0.05);
-    z-index: 1000 !important;
+      0 0 0 1px rgba(19, 245, 132, 0.1),
+      0 20px 50px -15px rgba(0, 0, 0, 1),
+      0 0 40px rgba(19, 245, 132, 0.1);
+    z-index: 50;
+  }
+
+  .mission-card:hover .mission-card-border {
+    opacity: 1;
   }
 
   .mission-card:hover .mission-card-border::before {
     animation-duration: 2s;
-    /* Faster on hover */
     background: conic-gradient(from 0deg,
         transparent 0deg,
         transparent 260deg,
@@ -1207,5 +1212,52 @@
     will-change: opacity;
   }
 
+  /* ========================================
+     SERVICE BENTO GRID
+     ======================================== */
+
+  .service-bento-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    /* Crisp, visible grid lines */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Matching outer border */
+    border-radius: 10px;
+    /* matched rounded corners */
+  }
+
+  @media (min-width: 640px) {
+    .service-bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .service-bento-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Shimmer animation for hover */
+  @keyframes shimmer-slow {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  .animate-shimmer-slow {
+    animation: shimmer-slow 3s ease-in-out infinite;
+  }
+
+  /* Smooth transition timing */
+  .duration-400 {
+    transition-duration: 400ms;
+  }
 
 }

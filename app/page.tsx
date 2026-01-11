@@ -32,6 +32,10 @@ const CTASection = dynamic(
   () => import("@/components/features/home/sections/cta").then((mod) => ({ default: mod.CTASection })),
 );
 
+const TerminalDemoSection = dynamic(
+  () => import("@/components/features/home/sections/terminal-demo").then((mod) => ({ default: mod.TerminalDemoSection })),
+);
+
 
 
 export default function Home() {
@@ -66,7 +70,9 @@ export default function Home() {
         <ProductShowcaseSection />
       </LazySection>
 
-
+      <LazySection minHeight="200vh">
+        <TerminalDemoSection />
+      </LazySection>
 
       <LazySection minHeight="600px">
         <CTASection />

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { TypewriterTitle } from "@/components/ui/typewriter-title";
 import { HeroBadge } from "@/components/ui/hero-badge";
 import Frame from "@/components/shared/frame";
@@ -76,9 +77,6 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center">
         <div className="max-w-6xl mx-auto w-full">
           <div className="text-center mb-6 sm:mb-8 md:mb-10">
-            <div className="flex justify-center mb-4 sm:mb-6">
-              <HeroBadge text="Innovative Product" />
-            </div>
             <TypewriterTitle
               title={title}
               splitMode="lastWord"
@@ -103,7 +101,20 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
                 size="lg"
                 asChild
               >
-                <Link href="#explore">Explore Solution</Link>
+                <Link href="#explore" className="flex items-center gap-2">
+                  Explore Solution
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                asChild
+              >
+                <Link href="#features" className="flex items-center gap-2">
+                  View Features
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
               </Button>
             </div>
           </div>

@@ -174,7 +174,7 @@ export function ProductShowcase() {
                   }}
                   className="absolute inset-0 w-full h-full p-4"
                 >
-                  <SpotlightCard className="h-full glass-cyber-strong group overflow-hidden transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_0_80px_rgba(19,245,132,0.15)]">
+                  <SpotlightCard className="h-full glass-cyber-strong !bg-[#050505] group overflow-hidden transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_0_80px_rgba(19,245,132,0.15)]">
 
                     {/* Interactive Glow Background */}
                     <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary-500/10 via-transparent to-primary-500/5 opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>

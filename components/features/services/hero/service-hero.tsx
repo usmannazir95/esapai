@@ -113,14 +113,6 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
 
           {/* Left Side: Content */}
           <div className="lg:col-span-6 xl:col-span-7 flex flex-col items-start text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <HeroBadge text="Advanced Solutions" className="mb-6" />
-            </motion.div>
-
             <TypewriterTitle
               title={title}
               splitMode="lastWord"

@@ -106,16 +106,7 @@ export function SectionHeader({
       ref={containerRef}
       className={cn("relative z-10 flex flex-col mb-12 sm:mb-16", alignClass, className)}
     >
-      {/* Enhanced Ambient Glow - Stronger green radial gradient */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-10"
-        style={{
-          width: '140%',
-          height: '200%',
-          background: 'radial-gradient(ellipse 50% 35% at 50% 40%, rgba(19, 245, 132, 0.15) 0%, rgba(19, 245, 132, 0.08) 30%, rgba(19, 245, 132, 0.02) 60%, transparent 80%)',
-          filter: 'blur(60px)',
-        }}
-      />
+
 
       {/* Kinetic Gradient Badge */}
       {badge && (
@@ -148,13 +139,9 @@ export function SectionHeader({
         <div
           ref={accentLineRef}
           className={cn(
-            "mt-4 sm:mt-5 h-[2px] w-24 sm:w-32 md:w-40 origin-center",
+            "mt-4 sm:mt-5 h-[2px] w-24 sm:w-32 md:w-40 origin-center bg-primary/80",
             align === "center" ? "mx-auto" : align === "left" ? "mr-auto" : "ml-auto"
           )}
-          style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(19, 245, 132, 0.8) 20%, rgba(19, 245, 132, 1) 50%, rgba(19, 245, 132, 0.8) 80%, transparent 100%)',
-            boxShadow: '0 0 20px rgba(19, 245, 132, 0.5), 0 0 40px rgba(19, 245, 132, 0.3)',
-          }}
         />
       </div>
 

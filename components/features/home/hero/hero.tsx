@@ -279,7 +279,7 @@ export function Hero() {
             </video>
 
             {/* Dark overlay to make video appear as shadow */}
-            <div className="absolute inset-0 bg-black/75 z-[-1] pointer-events-none" />
+            <div className="absolute inset-0 bg-black/85 z-[-1] pointer-events-none" />
 
             {/* Video Fade-out Overlay - Bottom gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-[-1] pointer-events-none" />
