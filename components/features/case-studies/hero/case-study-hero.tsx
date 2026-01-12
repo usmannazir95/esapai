@@ -107,9 +107,11 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
           {/* Title */}
           <h1
             ref={titleRef}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight text-gradient-primary"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight"
           >
-            {caseStudy.title}
+            <span className="text-white">
+              {caseStudy.title}
+            </span>
           </h1>
 
           {/* Subtitle */}

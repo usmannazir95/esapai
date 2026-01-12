@@ -12,7 +12,7 @@ interface SpaceBackgroundProps {
 
 // Theme Colors
 const GRID_COLOR_SECONDARY = "#13F584"; // Primary Green
-const BG_COLOR = "#000300"; // Dark Background
+const BG_COLOR = "transparent"; // Transparent Background for global neural lattice
 
 const SpaceBackground: React.FC<SpaceBackgroundProps> = ({ className = "", hideSparkles = false }) => {
   const performanceTier = useMemo(() => getPerformanceTier(), []);
@@ -22,16 +22,16 @@ const SpaceBackground: React.FC<SpaceBackgroundProps> = ({ className = "", hideS
     <div className={`w-full h-full absolute inset-0 -z-10 ${className}`} style={{ willChange: 'transform' }}>
       <Canvas
         dpr={quality.dpr as [number, number]}
-        gl={{ 
-          antialias: quality.antialias, 
-          alpha: true, 
+        gl={{
+          antialias: quality.antialias,
+          alpha: true,
           powerPreference: "high-performance",
         }}
         style={{ background: BG_COLOR }}
         camera={{ position: [0, 0, 20], fov: 60 }}
       >
         <ambientLight intensity={0.5} />
-        
+
         {!hideSparkles && (
           <group>
             {/* Stars and sparkles */}

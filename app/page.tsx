@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { LazySection } from "@/components/ui/lazy-section";
+import { Hero } from "@/components/features/home/hero";
 import { generateHomeMetadata } from "@/lib/seo/metadata";
+import dynamic from "next/dynamic";
 
 export const metadata: Metadata = generateHomeMetadata();
 
-// Hero section loads immediately (above the fold, critical for LCP)
-const HeroSection = dynamic(
-  () => import("@/components/features/home/hero").then((mod) => ({ default: mod.Hero })),
-  {
-    // Hero should load immediately, no SSR delay
-  }
-);
 
 // Below-the-fold sections - lazy loaded with code splitting
 const MissionSection = dynamic(
@@ -34,18 +28,38 @@ const TrustedPartnersSection = dynamic(
   () => import("@/components/features/home/sections/trusted-partners").then((mod) => ({ default: mod.TrustedPartners })),
 );
 
+const CTASection = dynamic(
+  () => import("@/components/features/home/sections/cta").then((mod) => ({ default: mod.CTASection })),
+);
+
+const TerminalDemoSection = dynamic(
+  () => import("@/components/features/home/sections/terminal-demo").then((mod) => ({ default: mod.TerminalDemoSection })),
+);
+
+
+
 export default function Home() {
   return (
     <main className="relative">
-      {/* Hero loads immediately - critical for LCP and above the fold */}
-      <HeroSection />
 
+
+
+
+
+      <Hero />
+
+      {/* Trusted Partners Ticker */}
       <TrustedPartnersSection />
+
+      {/* Process Visualization */}
+
+
 
       {/* Below-the-fold sections load progressively as user scrolls */}
       <LazySection minHeight="600px">
         <MissionSection />
       </LazySection>
+
 
       <LazySection minHeight="600px">
         <VisionSection />
@@ -57,6 +71,14 @@ export default function Home() {
 
       <LazySection minHeight="600px">
         <ProductShowcaseSection />
+      </LazySection>
+
+      <LazySection minHeight="200vh">
+        <TerminalDemoSection />
+      </LazySection>
+
+      <LazySection minHeight="600px">
+        <CTASection />
       </LazySection>
     </main>
   );

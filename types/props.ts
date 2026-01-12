@@ -256,6 +256,8 @@ export interface FeatureDescriptionProps {
 export interface SectionHeaderProps {
   title: string | ReactNode;
   subtitle?: string;
+  badge?: string;
+  align?: "center" | "left" | "right";
   className?: string;
   titleClassName?: string;
   subtitleClassName?: string;

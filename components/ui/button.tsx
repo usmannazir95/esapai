@@ -1,36 +1,40 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+"use client";
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap rounded-md text-xs sm:text-sm font-medium transition-all duration-[250ms] ease-out disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3 sm:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold transition-all duration-300 ease-out disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/btn",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary-opacity-90 hover:shadow-[0_0_30px_rgba(19,245,132,0.35),0_12px_32px_rgba(19,245,132,0.08),inset_0_0_24px_rgba(19,245,132,0.12)] hover:scale-[1.02] hover:-translate-y-0.5",
-        primary: "bg-primary text-[var(--color-primary-dark)] hover:bg-primary-opacity-90 rounded-[40px] hover:shadow-[0_0_30px_rgba(19,245,132,0.35),0_12px_32px_rgba(19,245,132,0.08),inset_0_0_24px_rgba(19,245,132,0.12)] hover:scale-[1.02] hover:-translate-y-0.5",
-        signup: "bg-white-opacity-10 border border-white-opacity-20 backdrop-blur-lg text-light-gray hover:bg-white-opacity-20 hover:border-white-opacity-30 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:backdrop-blur-xl rounded-[40px] h-16 px-8",
-        destructive:
-          "bg-destructive text-white hover:bg-destructive/90 hover:shadow-[0_0_25px_rgba(239,68,68,0.4)] hover:scale-[1.02] focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        default:
+          "bg-white text-black shadow-lg shadow-white/10 hover:shadow-[0_8px_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] relative overflow-hidden",
+        primary:
+          "bg-primary text-[var(--color-primary-dark)] font-mono tracking-wide shadow-[0_0_30px_rgba(19,245,132,0.4)] hover:shadow-[0_0_50px_rgba(19,245,132,0.6),0_0_100px_rgba(19,245,132,0.3)] hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-500 before:ease-out border border-white/20",
+        premium:
+          "bg-gradient-to-br from-primary via-[#4ADE80] to-[#8EFFC7] text-[var(--color-primary-dark)] shadow-[0_4px_15px_rgba(19,245,132,0.3)] hover:shadow-[0_8px_40px_rgba(19,245,132,0.5),0_0_60px_rgba(19,245,132,0.3)] hover:-translate-y-1 hover:scale-[1.03] active:scale-95 transition-all duration-500 relative overflow-hidden group/premium",
+        glass:
+          "bg-white/5 border border-white/10 text-white backdrop-blur-md hover:bg-white/15 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.1),inset_0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-0.5 active:scale-[0.98] relative overflow-hidden",
+        surface:
+          "bg-zinc-900/80 border border-white/10 text-zinc-300 hover:text-white hover:bg-zinc-800 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(19,245,132,0.1)] hover:-translate-y-0.5 active:scale-[0.98]",
         outline:
-          "border bg-background shadow-xs hover:border-primary/50 hover:shadow-[0_0_15px_rgba(19,245,132,0.2)] hover:bg-accent/50 hover:text-accent-foreground hover:scale-[1.02] dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-[0_0_15px_rgba(19,245,132,0.15)] hover:scale-[1.01]",
+          "bg-transparent border border-white/20 text-white hover:border-primary hover:text-primary hover:bg-primary/10 hover:shadow-[0_0_20px_rgba(19,245,132,0.15)] hover:-translate-y-0.5 active:scale-[0.98] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-primary/20 before:to-transparent before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-500",
         ghost:
-          "hover:bg-primary/10 hover:text-primary dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline hover:drop-shadow-[0_0_8px_rgba(19,245,132,0.6)]",
-        surface: "btn-surface rounded-[32px]",
-        "watch-demo": "!rounded-[40px] bg-[var(--neutral-neutral-210)] text-light-gray hover:text-white hover:bg-primary/20 hover:border-primary/30 hover:border hover:shadow-[0_0_20px_rgba(19,245,132,0.25)] transition-all",
+          "text-zinc-400 hover:text-white hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.05)] active:scale-[0.98]",
+        link:
+          "text-primary underline-offset-4 hover:underline hover:text-primary/80 transition-colors",
+        destructive:
+          "bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 hover:border-red-500/40 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] hover:-translate-y-0.5 active:scale-[0.98]",
       },
       size: {
-        default: "h-9 sm:h-10 px-3 sm:px-4 py-2 has-[>svg]:px-2.5 sm:has-[>svg]:px-3 min-h-[36px] sm:min-h-[40px]",
-        sm: "h-8 sm:h-9 rounded-md gap-1.5 px-2.5 sm:px-3 has-[>svg]:px-2 sm:has-[>svg]:px-2.5 min-h-[32px] sm:min-h-[36px]",
-        lg: "h-10 sm:h-11 md:h-12 rounded-md px-5 sm:px-6 has-[>svg]:px-3.5 sm:has-[>svg]:px-4 min-h-[40px] sm:min-h-[44px] md:min-h-[48px]",
-        icon: "size-9 sm:size-10",
-        "icon-sm": "size-8 sm:size-9",
-        "icon-lg": "size-10 sm:size-11 md:size-12",
+        default: "h-11 px-6",
+        sm: "h-9 px-4 text-xs",
+        lg: "h-14 px-8 text-base",
+        xl: "h-16 px-10 text-lg",
+        icon: "size-11",
       },
     },
     defaultVariants: {
@@ -38,27 +42,46 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
 
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
-
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
 }
 
-export { Button, buttonVariants }
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+
+    // When asChild is true, Slot requires a single child element.
+    // We pass children directly without wrapping.
+    if (asChild) {
+      return (
+        <Comp
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          {...props}
+        />
+      );
+    }
+
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      >
+        {variant === "premium" && (
+          <span className="absolute inset-0 block bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover/premium:animate-shimmer pointer-events-none" />
+        )}
+        <span className="relative z-10 flex items-center gap-2">
+          {props.children}
+        </span>
+      </Comp>
+    );
+  }
+);
+Button.displayName = "Button";
+
+export { Button, buttonVariants };

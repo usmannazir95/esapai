@@ -22,7 +22,7 @@ const paddingClasses = {
 };
 
 const backgroundClasses = {
-  dark: "bg-dark",
+  dark: "bg-transparent", // Changed from bg-dark to transparent for global background
   transparent: "bg-transparent",
 };
 
@@ -44,8 +44,8 @@ export const Section = React.forwardRef<HTMLElement, SectionProps>(
       typeof background === "string" && background in backgroundClasses
         ? backgroundClasses[background as keyof typeof backgroundClasses]
         : background === "dark"
-        ? "bg-dark"
-        : "";
+          ? "bg-transparent" // Updated to transparent to show global grid
+          : "";
 
     return (
       <section

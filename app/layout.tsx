@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google"; // Changed font
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google"; // Changed font
 import "./globals.css";
 import { Navbar } from "@/components/features/navigation/navbar";
 import { Footer } from "@/components/features/navigation/footer";
@@ -14,11 +14,19 @@ import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provi
 import { generateHomeMetadata } from "@/lib/seo/metadata";
 import { generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
+import { BackgroundLayout } from "@/components/ui/background/background-layout";
 
 const jakarta = Plus_Jakarta_Sans({
-  weight: ["300", "400", "500", "600", "700", "800"], // Added 800 just in case
+  weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
-  variable: "--font-jakarta", // Updated variable name
+  variable: "--font-jakarta",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -47,8 +55,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jakarta.variable} font-jakarta antialiased flex flex-col min-h-screen`}
+        className={`${jakarta.variable} ${jetbrainsMono.variable} font-jakarta antialiased flex flex-col min-h-screen`}
       >
+        <BackgroundLayout />
         <StructuredDataComponent data={structuredData} />
         <ToastProvider>
           <CookieConsentProvider>

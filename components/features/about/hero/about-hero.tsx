@@ -208,9 +208,11 @@ export function AboutHero() {
         <div className="max-w-4xl mx-auto text-center">
           <h1
             ref={titleRef}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight text-gradient-primary"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-5 md:mb-6 leading-tight"
           >
-            About Us
+            <span className="text-white">
+              About Us
+            </span>
           </h1>
 
           <div className="mb-8 sm:mb-10 space-y-3 sm:space-y-4">

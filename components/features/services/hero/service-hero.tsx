@@ -1,9 +1,15 @@
+"use client";
+
+import React from "react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { TypewriterTitle } from "@/components/ui/typewriter-title";
+import { HeroBadge } from "@/components/ui/hero-badge";
 import Link from "next/link";
-import Frame from "@/components/shared/frame";
 import dynamic from "next/dynamic";
+import { motion } from "motion/react";
 import type { GlobeConfig } from "@/components/ui/globe";
+import type { ServiceHeroProps } from "@/types/props";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 const World = dynamic(
   () => import("@/components/ui/globe").then((mod) => mod.World),
@@ -37,7 +43,7 @@ const globeConfig: GlobeConfig = {
   autoRotateSpeed: 0.5,
 };
 
-// Global network connections data - extensive worldwide coverage
+// Global network connections data
 const globeData = [
   {
     order: 1,
@@ -58,15 +64,6 @@ const globeData = [
     color: "#13F584",
   },
   {
-    order: 1,
-    startLat: -19.885592,
-    startLng: -43.951191,
-    endLat: -1.303396,
-    endLng: 36.852443,
-    arcAlt: 0.5,
-    color: "#13F584",
-  },
-  {
     order: 2,
     startLat: 1.3521,
     startLng: 103.8198,
@@ -81,15 +78,6 @@ const globeData = [
     startLng: -0.1276,
     endLat: 3.139,
     endLng: 101.6869,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 2,
-    startLat: -15.785493,
-    startLng: -47.909029,
-    endLat: 36.162809,
-    endLng: -115.119411,
     arcAlt: 0.3,
     color: "#13F584",
   },
@@ -111,358 +99,251 @@ const globeData = [
     arcAlt: 0.3,
     color: "#13F584",
   },
-  {
-    order: 3,
-    startLat: -6.2088,
-    startLng: 106.8456,
-    endLat: 51.5072,
-    endLng: -0.1276,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 4,
-    startLat: 11.986597,
-    startLng: 8.571831,
-    endLat: -15.595412,
-    endLng: -56.05918,
-    arcAlt: 0.5,
-    color: "#13F584",
-  },
-  {
-    order: 4,
-    startLat: -34.6037,
-    startLng: -58.3816,
-    endLat: 22.3193,
-    endLng: 114.1694,
-    arcAlt: 0.7,
-    color: "#13F584",
-  },
-  {
-    order: 4,
-    startLat: 51.5072,
-    startLng: -0.1276,
-    endLat: 48.8566,
-    endLng: -2.3522,
-    arcAlt: 0.1,
-    color: "#13F584",
-  },
-  {
-    order: 5,
-    startLat: 14.5995,
-    startLng: 120.9842,
-    endLat: 51.5072,
-    endLng: -0.1276,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 5,
-    startLat: 1.3521,
-    startLng: 103.8198,
-    endLat: -33.8688,
-    endLng: 151.2093,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 5,
-    startLat: 34.0522,
-    startLng: -118.2437,
-    endLat: 48.8566,
-    endLng: -2.3522,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 6,
-    startLat: -15.432563,
-    startLng: 28.315853,
-    endLat: 1.094136,
-    endLng: -63.34546,
-    arcAlt: 0.7,
-    color: "#13F584",
-  },
-  {
-    order: 6,
-    startLat: 37.5665,
-    startLng: 126.978,
-    endLat: 35.6762,
-    endLng: 139.6503,
-    arcAlt: 0.1,
-    color: "#13F584",
-  },
-  {
-    order: 6,
-    startLat: 22.3193,
-    startLng: 114.1694,
-    endLat: 51.5072,
-    endLng: -0.1276,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 7,
-    startLat: -19.885592,
-    startLng: -43.951191,
-    endLat: -15.595412,
-    endLng: -56.05918,
-    arcAlt: 0.1,
-    color: "#13F584",
-  },
-  {
-    order: 7,
-    startLat: 48.8566,
-    startLng: -2.3522,
-    endLat: 52.52,
-    endLng: 13.405,
-    arcAlt: 0.1,
-    color: "#13F584",
-  },
-  {
-    order: 7,
-    startLat: 52.52,
-    startLng: 13.405,
-    endLat: 34.0522,
-    endLng: -118.2437,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 8,
-    startLat: -8.833221,
-    startLng: 13.264837,
-    endLat: -33.936138,
-    endLng: 18.436529,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 8,
-    startLat: 49.2827,
-    startLng: -123.1207,
-    endLat: 52.3676,
-    endLng: 4.9041,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 8,
-    startLat: 1.3521,
-    startLng: 103.8198,
-    endLat: 40.7128,
-    endLng: -74.006,
-    arcAlt: 0.5,
-    color: "#13F584",
-  },
-  {
-    order: 9,
-    startLat: 51.5072,
-    startLng: -0.1276,
-    endLat: 34.0522,
-    endLng: -118.2437,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 9,
-    startLat: 22.3193,
-    startLng: 114.1694,
-    endLat: -22.9068,
-    endLng: -43.1729,
-    arcAlt: 0.7,
-    color: "#13F584",
-  },
-  {
-    order: 9,
-    startLat: 1.3521,
-    startLng: 103.8198,
-    endLat: -34.6037,
-    endLng: -58.3816,
-    arcAlt: 0.5,
-    color: "#13F584",
-  },
-  {
-    order: 10,
-    startLat: -22.9068,
-    startLng: -43.1729,
-    endLat: 28.6139,
-    endLng: 77.209,
-    arcAlt: 0.7,
-    color: "#13F584",
-  },
-  {
-    order: 10,
-    startLat: 34.0522,
-    startLng: -118.2437,
-    endLat: 31.2304,
-    endLng: 121.4737,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 10,
-    startLat: -6.2088,
-    startLng: 106.8456,
-    endLat: 52.3676,
-    endLng: 4.9041,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 11,
-    startLat: 41.9028,
-    startLng: 12.4964,
-    endLat: 34.0522,
-    endLng: -118.2437,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 11,
-    startLat: -6.2088,
-    startLng: 106.8456,
-    endLat: 31.2304,
-    endLng: 121.4737,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 11,
-    startLat: 22.3193,
-    startLng: 114.1694,
-    endLat: 1.3521,
-    endLng: 103.8198,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 12,
-    startLat: 34.0522,
-    startLng: -118.2437,
-    endLat: 37.7749,
-    endLng: -122.4194,
-    arcAlt: 0.1,
-    color: "#13F584",
-  },
-  {
-    order: 12,
-    startLat: 35.6762,
-    startLng: 139.6503,
-    endLat: 22.3193,
-    endLng: 114.1694,
-    arcAlt: 0.2,
-    color: "#13F584",
-  },
-  {
-    order: 12,
-    startLat: 22.3193,
-    startLng: 114.1694,
-    endLat: 34.0522,
-    endLng: -118.2437,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 13,
-    startLat: 52.52,
-    startLng: 13.405,
-    endLat: 22.3193,
-    endLng: 114.1694,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 13,
-    startLat: 11.986597,
-    startLng: 8.571831,
-    endLat: 35.6762,
-    endLng: 139.6503,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
-  {
-    order: 13,
-    startLat: -22.9068,
-    startLng: -43.1729,
-    endLat: -34.6037,
-    endLng: -58.3816,
-    arcAlt: 0.1,
-    color: "#13F584",
-  },
-  {
-    order: 14,
-    startLat: -33.936138,
-    startLng: 18.436529,
-    endLat: 21.395643,
-    endLng: 39.883798,
-    arcAlt: 0.3,
-    color: "#13F584",
-  },
 ];
 
-import type { ServiceHeroProps } from "@/types/props";
-
 export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
-  // Split title into parts - last word gets gradient, rest is white
-  const titleWords = title.split(' ');
-  const lastWord = titleWords.pop() || '';
-  const firstPart = titleWords.join(' ');
-
   return (
-    <section className="relative w-full min-h-[90vh] md:min-h-screen flex flex-col justify-center overflow-hidden bg-dark pt-32 pb-12 md:pt-20 md:pb-0">
-      {/* Background Layers */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        {/* Frame Background */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-40">
-          <Frame className="w-full h-full max-w-[1200px] max-h-[1600px] object-contain" />
-        </div>
+    <section className="relative w-full min-h-screen flex items-center overflow-hidden bg-dark pt-24 md:pt-32 pb-20">
+      {/* Refined Background Elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/5 blur-[100px] rounded-full" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(19,245,132,0.03),transparent_50%)]" />
       </div>
 
-      {/* Content Container */}
-      <div className="relative z-10 container mx-auto px-4 flex flex-col justify-center grow">
-        <div className="max-w-6xl mx-auto w-full flex flex-col items-center justify-center">
-          {/* Text Content Section */}
-          <div className="text-center mb-4 md:mb-6 mt-4 md:mt-0">
-            {/* Main Title - Full Width Container */}
-            <div className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8 overflow-hidden mb-3 md:mb-5">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight w-full">
-                {firstPart && <span className="block text-white">{firstPart}</span>}
-                <span className="block text-gradient-primary mt-1 md:mt-2">{lastWord}</span>
-              </h1>
-            </div>
+      <div className="container relative z-10 mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-            {/* Subtitle/Description */}
-            <div className="mb-4 space-y-2">
+          {/* Left Side: Content */}
+          <div className="lg:col-span-6 xl:col-span-7 flex flex-col items-start text-left">
+            <TypewriterTitle
+              title={title}
+              splitMode="lastWord"
+              className="mb-6"
+              align="left"
+            />
+
+            <div className="space-y-4 mb-8 md:mb-10 max-w-2xl">
               {subtitle.map((line, index) => (
-                <p
+                <motion.p
                   key={index}
-                  className="text-sm md:text-lg lg:text-xl text-light-gray-90"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                  className="text-base md:text-lg lg:text-xl text-white/80 font-medium"
                 >
                   {line}
-                </p>
+                </motion.p>
               ))}
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-5">
+            <div className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto">
               <Button
                 variant="primary"
                 size="lg"
-                className="rounded-[40px] px-8 py-3 md:px-12 md:py-4 text-base md:text-lg font-semibold min-w-[160px]"
                 asChild
               >
-                <Link href="#explore">Explore Solution</Link>
+                <Link href="#solutions" className="flex items-center gap-2">
+                  Get Started
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                asChild
+              >
+                <Link href="#how-it-works" className="flex items-center gap-2">
+                  View Features
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
               </Button>
             </div>
+
+
           </div>
 
-          {/* Globe Section */}
-          <div className="relative z-20 flex items-center justify-center w-full">
-            <div className="w-full h-[250px] md:h-[350px] lg:h-[450px] relative">
+          {/* Right Side: Globe Visual */}
+          <div className="lg:col-span-6 xl:col-span-5 relative flex justify-center items-center py-10 lg:py-0">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.4 }}
+              className="relative w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] lg:w-[600px] lg:h-[600px]"
+            >
+              {/* Outer Glow for Globe */}
+              <div className="absolute inset-x-0 bottom-1/4 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent blur-md opacity-30" />
+              <div className="absolute inset-0 bg-primary/5 blur-[100px] rounded-full animate-pulse-slow" />
+
               <World globeConfig={globeConfig} data={globeData} />
-            </div>
+
+              {/* Top-Right: Neural Link Status Panel */}
+              <div className="absolute -top-4 -right-4 w-44 select-none">
+                {/* Animated corner frame */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 176 140" fill="none">
+                  <motion.path
+                    d="M176 8 L176 0 L140 0"
+                    stroke="rgba(19, 245, 132, 0.6)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                  />
+                  <motion.path
+                    d="M176 0 L176 100"
+                    stroke="rgba(19, 245, 132, 0.3)"
+                    strokeWidth="1"
+                    strokeDasharray="4 4"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 2, delay: 0.5 }}
+                  />
+                </svg>
+
+                <div className="relative p-4 font-mono text-[10px] space-y-2">
+                  {/* Status indicator */}
+                  <div className="flex items-center gap-2">
+                    <motion.div
+                      className="w-2 h-2 rounded-full bg-primary"
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        boxShadow: [
+                          "0 0 0 0 rgba(19, 245, 132, 0.4)",
+                          "0 0 0 6px rgba(19, 245, 132, 0)",
+                          "0 0 0 0 rgba(19, 245, 132, 0)"
+                        ]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <motion.span
+                      className="text-primary"
+                      animate={{ opacity: [1, 0.5, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      ONLINE
+                    </motion.span>
+                  </div>
+
+                  {/* Cycling data lines */}
+                  <div className="text-white/60">
+                    <motion.div
+                      animate={{ opacity: [0.4, 1, 0.4] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    >
+                      LAT: 22.3193°N
+                    </motion.div>
+                    <motion.div
+                      animate={{ opacity: [0.4, 1, 0.4] }}
+                      transition={{ duration: 3, repeat: Infinity, delay: 0.3 }}
+                    >
+                      LNG: 114.1694°E
+                    </motion.div>
+                  </div>
+
+                  {/* Signal strength bars */}
+                  <div className="flex items-end gap-0.5 h-3 mt-2">
+                    {[0.3, 0.5, 0.7, 0.9, 1].map((height, i) => (
+                      <motion.div
+                        key={i}
+                        className="w-1 bg-primary rounded-sm"
+                        animate={{
+                          height: [`${height * 100}%`, `${height * 60}%`, `${height * 100}%`],
+                          opacity: [0.6, 1, 0.6]
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          delay: i * 0.1
+                        }}
+                        style={{ height: `${height * 100}%` }}
+                      />
+                    ))}
+                    <span className="text-white/60 ml-2 text-[8px]">SIG</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom-Left: Network Activity Monitor */}
+              <div className="absolute -bottom-4 -left-4 w-44 select-none">
+                {/* Animated corner frame */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 176 120" fill="none">
+                  <motion.path
+                    d="M0 112 L0 120 L36 120"
+                    stroke="rgba(19, 245, 132, 0.6)"
+                    strokeWidth="1"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                  />
+                  <motion.path
+                    d="M0 120 L0 20"
+                    stroke="rgba(19, 245, 132, 0.3)"
+                    strokeWidth="1"
+                    strokeDasharray="4 4"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 2, delay: 0.5 }}
+                  />
+                </svg>
+
+                <div className="relative p-4 font-mono text-[10px]">
+                  {/* Activity label */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <motion.div
+                      className="w-1 h-1 bg-primary rounded-full"
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.5, repeat: Infinity }}
+                    />
+                    <span className="text-white/50">NET_ACTIVITY</span>
+                  </div>
+
+                  {/* Animated waveform */}
+                  <div className="flex items-center gap-px h-6 mb-2">
+                    {Array.from({ length: 20 }).map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="w-1 bg-primary/60 rounded-sm"
+                        animate={{
+                          height: [
+                            `${Math.random() * 60 + 20}%`,
+                            `${Math.random() * 80 + 20}%`,
+                            `${Math.random() * 40 + 10}%`,
+                            `${Math.random() * 70 + 30}%`
+                          ]
+                        }}
+                        transition={{
+                          duration: 0.8 + Math.random() * 0.4,
+                          repeat: Infinity,
+                          delay: i * 0.05
+                        }}
+                        style={{ height: "40%" }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Scanning line */}
+                  <div className="relative h-1 bg-zinc-800/50 rounded-full overflow-hidden">
+                    <motion.div
+                      className="absolute inset-y-0 w-8 bg-gradient-to-r from-transparent via-primary to-transparent"
+                      animate={{ x: ["-100%", "calc(100% + 176px)"] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    />
+                  </div>
+
+                  {/* Data throughput */}
+                  <motion.div
+                    className="text-white/60 mt-2 flex justify-between"
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <span>TX: 2.4Gb/s</span>
+                    <span>RX: 1.8Gb/s</span>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
           </div>
+
         </div>
       </div>
     </section>

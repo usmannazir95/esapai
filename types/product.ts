@@ -29,6 +29,7 @@ export interface ProductContent {
     subtitle?: string[];
     centerIcon?: string;
     centerIconAlt?: string;
+    demoVideo?: string;
   };
   mission?: {
     title?: string;

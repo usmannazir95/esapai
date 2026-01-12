@@ -34,13 +34,19 @@ export function LazySection({
       // Small delay to ensure smooth transition
       const timer = setTimeout(() => {
         setShouldLoad(true);
+        // Important: Refresh ScrollTrigger after content is loaded to update layout positions
+        import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+          setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 100);
+        });
       }, 50);
       return () => clearTimeout(timer);
     }
   }, [isInView]);
 
   const DefaultFallback = () => (
-    <div 
+    <div
       className={cn("relative w-full", className)}
       style={{ minHeight }}
       aria-hidden="true"

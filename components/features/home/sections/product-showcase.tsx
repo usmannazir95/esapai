@@ -146,15 +146,16 @@ export function ProductShowcase() {
           </div>
         </div>
 
-        <div className="pt-32 shrink-0">
+        <div className="pt-20 shrink-0">
           <SectionHeader
             title="Our Product Suite"
             subtitle="Discover our comprehensive range of AI-powered solutions designed to transform your business operations."
+            className="mb-4"
           />
         </div>
 
         {/* Main viewport */}
-        <div className="relative flex-1 w-full flex items-center justify-center">
+        <div className="relative flex-1 w-full flex items-start justify-center pt-0">
 
           {/* Card Container */}
           <div
@@ -174,7 +175,7 @@ export function ProductShowcase() {
                   }}
                   className="absolute inset-0 w-full h-full p-4"
                 >
-                  <SpotlightCard className="h-full border-white/10 bg-[#0F0F0F] bg-gradient-to-br from-[#151515] to-[#0A0A0A] group overflow-hidden shadow-[0_0_50px_rgba(19,245,132,0.05)] transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_0_80px_rgba(19,245,132,0.15)]">
+                  <SpotlightCard className="h-full glass-cyber-strong !bg-[#050505] group overflow-hidden transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_0_80px_rgba(19,245,132,0.15)]">
 
                     {/* Interactive Glow Background */}
                     <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary-500/10 via-transparent to-primary-500/5 opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -247,34 +248,51 @@ export function ProductShowcase() {
                       {/* Right Side: Tilted Video Placeholder / Graphic */}
                       <div className="flex-1 relative w-full h-full flex items-center justify-center [perspective:1500px]">
                         <div className="relative w-[90%] aspect-video bg-neutral-900/80 border border-white/20 rounded-2xl overflow-hidden shadow-[20px_40px_80px_rgba(0,0,0,0.8)] [transform:rotateY(-25deg)_rotateX(15deg)_rotateZ(-2deg)] group-hover:[transform:rotateY(-15deg)_rotateX(10deg)_rotateZ(-1deg)] transition-transform duration-700 ease-out flex items-center justify-center">
-                          {/* Inner Glow */}
-                          <div className="absolute inset-0 bg-gradient-to-tr from-primary-500/20 via-transparent to-white/5 opacity-50"></div>
+                          {product.content?.hero?.demoVideo ? (
+                            <div className="relative w-full h-full">
+                              <video
+                                src={product.content.hero.demoVideo}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="w-full h-full object-cover"
+                              />
+                              {/* Overlay for cinematic feel */}
+                              <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent pointer-events-none" />
+                            </div>
+                          ) : (
+                            <>
+                              {/* Inner Glow */}
+                              <div className="absolute inset-0 bg-gradient-to-tr from-primary-500/20 via-transparent to-white/5 opacity-50"></div>
 
-                          {/* Video UI Overlay Mockup */}
-                          <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                            <div className="flex justify-between items-start opacity-40">
-                              <div className="flex gap-2">
-                                <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                              {/* Video UI Overlay Mockup */}
+                              <div className="absolute inset-0 p-6 flex flex-col justify-between">
+                                <div className="flex justify-between items-start opacity-40">
+                                  <div className="flex gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                                  </div>
+                                  <div className="h-4 w-24 bg-white/10 rounded-full"></div>
+                                </div>
+
+                                <div className="flex-1 flex items-center justify-center">
+                                  <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-xl border border-white/20 group-hover:scale-110 transition-transform duration-500">
+                                    <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-white border-b-8 border-b-transparent translate-x-1"></div>
+                                  </div>
+                                </div>
+
+                                <div className="space-y-3 opacity-30">
+                                  <div className="h-2 w-full bg-white/10 rounded-full"></div>
+                                  <div className="h-2 w-2/3 bg-white/10 rounded-full"></div>
+                                </div>
                               </div>
-                              <div className="h-4 w-24 bg-white/10 rounded-full"></div>
-                            </div>
+                            </>
+                          )}
 
-                            <div className="flex-1 flex items-center justify-center">
-                              <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-xl border border-white/20 group-hover:scale-110 transition-transform duration-500">
-                                <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-white border-b-8 border-b-transparent translate-x-1"></div>
-                              </div>
-                            </div>
-
-                            <div className="space-y-3 opacity-30">
-                              <div className="h-2 w-full bg-white/10 rounded-full"></div>
-                              <div className="h-2 w-2/3 bg-white/10 rounded-full"></div>
-                            </div>
-                          </div>
-
-                          {/* Large Icon Reflection/Glow */}
-                          {iconSrc && (
+                          {/* Large Icon Reflection/Glow (only if no video) */}
+                          {iconSrc && !product.content?.hero?.demoVideo && (
                             <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-700 flex items-center justify-center blur-3xl">
                               <Image
                                 src={iconSrc}

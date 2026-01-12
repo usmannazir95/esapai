@@ -1,12 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
-import { cn } from "@/lib/utils";
+import { useScroll, useMotionValueEvent } from "motion/react";
 
 import { products } from "@/lib/products";
 import { services } from "@/lib/services";
@@ -17,7 +15,16 @@ import { ServiceDropdownMenu } from "../menus/service-dropdown-menu";
 import { useProductMenu } from "../menus/product-menu-context";
 import { useServiceMenu } from "../menus/service-menu-context";
 import { MobileAccordion, type MobileMenuItem } from "./mobile-accordion";
-import { Button } from "@/components/ui/button";
+
+import {
+  Navbar as ResizableUiNavbar,
+  NavBody,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
 
 function NavLinkItem({
   href,
@@ -35,7 +42,7 @@ function NavLinkItem({
   return (
     <Link
       href={href}
-      className={`nav-link-group relative group whitespace-nowrap cursor-pointer px-3 py-2 rounded-lg transition-all duration-300 ${isActive ? "is-active text-primary" : "text-light-gray hover:text-primary"
+      className={`nav-link-group relative group whitespace-nowrap cursor-pointer px-4 py-2 text-sm font-medium transition-all duration-300 ${isActive ? "is-active text-[var(--color-primary)]" : "text-light-gray hover:text-[var(--color-primary)]"
         } ${className}`}
       onClick={onClick}
     >
@@ -59,7 +66,7 @@ function NavDropdownTrigger({
   return (
     <button
       onClick={onClick}
-      className={`nav-link-group relative group whitespace-nowrap flex items-center gap-1 cursor-pointer px-3 py-2 rounded-lg transition-all duration-300 ${isActive ? "is-active text-primary" : "text-light-gray hover:text-primary"
+      className={`nav-link-group relative group whitespace-nowrap flex items-center gap-1 cursor-pointer px-4 py-2 text-sm font-medium transition-all duration-300 ${isActive ? "is-active text-[var(--color-primary)]" : "text-light-gray hover:text-[var(--color-primary)]"
         }`}
       aria-expanded={isOpen}
     >
@@ -82,6 +89,7 @@ export function Navbar() {
 
   // Resizable navbar state
   const { scrollY } = useScroll();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isScrolled, setIsScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -161,217 +169,82 @@ export function Navbar() {
   })) satisfies MobileMenuItem[];
 
   return (
-    <>
-      <div className="fixed top-0 left-0 right-0 z-50 w-full pointer-events-none">
-        {/* Desktop Navbar */}
-        <motion.div
-          initial={false}
-          animate={{
-            backdropFilter: isScrolled ? "blur(10px)" : "blur(8px)",
-            boxShadow: isScrolled
-              ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
-              : "none",
-            width: isScrolled ? "55%" : "100%",
-            y: isScrolled ? 20 : 0,
-            borderRadius: isScrolled ? "50px" : "0px",
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 40,
-          }}
-          style={{
-            minWidth: isScrolled ? "800px" : "100%",
-          }}
-          className={cn(
-            "relative z-[60] mx-auto hidden flex-row items-center justify-between self-start pointer-events-auto md:flex",
-            isScrolled ? "bg-white/10" : "bg-white-opacity-10"
-          )}
+    <ResizableUiNavbar className="fixed inset-x-0 top-5 z-50">
+      {/* Desktop Navbar */}
+      <NavBody>
+        {/* Logo */}
+        <NavbarLogo />
+
+        {/* Desktop Navigation Links */}
+        <div className="hidden lg:flex items-center gap-2 justify-center absolute left-1/2 -translate-x-1/2">
+          <NavLinkItem
+            href="/"
+            label="Home"
+            isActive={isActive("/")}
+          />
+
+          {/* Product Dropdown */}
+          <div className="relative" ref={productDropdownRef}>
+            <NavDropdownTrigger
+              label="Product"
+              isActive={productActive}
+              isOpen={isProductOpen}
+              onClick={() => setIsProductOpen(!isProductOpen)}
+            />
+            <ProductDropdownMenu />
+          </div>
+
+          {/* Service Dropdown */}
+          <div className="relative" ref={serviceDropdownRef}>
+            <NavDropdownTrigger
+              label="Service"
+              isActive={serviceActive}
+              isOpen={isServiceOpen}
+              onClick={() => setIsServiceOpen(!isServiceOpen)}
+            />
+            <ServiceDropdownMenu />
+          </div>
+
+          <NavLinkItem
+            href="/about"
+            label="About Us"
+            isActive={isActive("/about")}
+          />
+          <NavLinkItem
+            href="/case-study"
+            label="Case Study"
+            isActive={isActive("/case-study")}
+          />
+        </div>
+
+        {/* Contact Button */}
+        <NavbarButton href="/contact" variant="primary">
+          Contact Us
+        </NavbarButton>
+      </NavBody>
+
+      {/* Mobile Navbar */}
+      <MobileNav>
+        <div className="flex w-full items-center justify-between px-4 py-2">
+          <NavbarLogo />
+          <MobileNavToggle
+            isOpen={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          />
+        </div>
+
+        <MobileNavMenu
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
         >
-          <div className={cn(
-            "w-full flex items-center justify-between mx-auto px-6 py-3",
-            isScrolled ? "max-w-none" : "max-w-7xl"
-          )}>
-            {/* Logo */}
-            <div className="flex-1 flex items-center">
-              <Link
-                href="/"
-                className="flex items-center gap-2 shrink-0 cursor-pointer"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Image
-                  src="/logo/esaplogo.svg"
-                  alt="ESAP Logo"
-                  width={65}
-                  height={21}
-                  className="h-auto w-auto max-w-[45px] sm:max-w-[55px] md:max-w-[65px]"
-                />
-              </Link>
-            </div>
-
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center gap-4 lg:gap-6 justify-center">
-              <NavLinkItem
-                href="/"
-                label="Home"
-                isActive={isActive("/")}
-              />
-
-              {/* Product Dropdown */}
-              <div className="relative" ref={productDropdownRef}>
-                <NavDropdownTrigger
-                  label="Product"
-                  isActive={productActive}
-                  isOpen={isProductOpen}
-                  onClick={() => setIsProductOpen(!isProductOpen)}
-                />
-                <ProductDropdownMenu />
-              </div>
-
-              {/* Service Dropdown */}
-              <div className="relative" ref={serviceDropdownRef}>
-                <NavDropdownTrigger
-                  label="Service"
-                  isActive={serviceActive}
-                  isOpen={isServiceOpen}
-                  onClick={() => setIsServiceOpen(!isServiceOpen)}
-                />
-                <ServiceDropdownMenu />
-              </div>
-
-              <NavLinkItem
-                href="/about"
-                label="About Us"
-                isActive={isActive("/about")}
-              />
-              <NavLinkItem
-                href="/case-study"
-                label="Case Study"
-                isActive={isActive("/case-study")}
-              />
-            </div>
-
-            {/* Contact Button */}
-            <div className="flex-1 flex items-center justify-end">
-              <Button
-                variant="primary"
-                className="text-md md:text-lg px-12 md:px-16 py-4 md:py-5 rounded-full font-semibold shadow-lg shadow-primary-30 hover:shadow-primary-50 transition-all"
-              >
-                <Link href="/contact">Contact Us</Link>
-              </Button>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Mobile Navbar */}
-        <motion.div
-          initial={false}
-          animate={{
-            backdropFilter: isScrolled ? "blur(10px)" : "blur(8px)",
-            boxShadow: isScrolled
-              ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
-              : "none",
-            width: isScrolled ? "90%" : "100%",
-            borderRadius: isScrolled ? "2rem" : "0px",
-            y: isScrolled ? 20 : 0,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 40,
-          }}
-          className={cn(
-            "relative z-50 mx-auto flex w-full flex-col items-center justify-between pointer-events-auto md:hidden overflow-hidden",
-            isScrolled ? "bg-white/10" : "bg-white-opacity-10"
-          )}
-        >
-          <div className="w-full flex items-center justify-between px-4 py-3">
-            <Link
-              href="/"
-              className="flex items-center gap-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Image
-                src="/logo/esaplogo.svg"
-                alt="ESAP Logo"
-                width={65}
-                height={21}
-                className="h-auto"
-              />
-            </Link>
-            <button
-              onClick={() => {
-                if (!isMobileMenuOpen) {
-                  setIsMobileProductsOpen(false);
-                  setIsMobileServicesOpen(false);
-                }
-                setIsMobileMenuOpen(!isMobileMenuOpen);
-              }}
-              className="flex items-center justify-center w-10 h-10 rounded-lg text-light-gray hover:text-primary transition-colors duration-300"
-              aria-label="Toggle mobile menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? (
-                <X className="size-6" />
-              ) : (
-                <Menu className="size-6" />
-              )}
-            </button>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-          }`}
-        onClick={() => setIsMobileMenuOpen(false)}
-      >
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`fixed top-0 right-0 z-50 w-full max-w-xs sm:max-w-sm h-full bg-white-opacity-10 backdrop-blur-lg shadow-2xl md:hidden transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-      >
-        <div className="flex flex-col h-full">
-          {/* Mobile Menu Header */}
-          <div className="flex items-center justify-between p-4 sm:p-5 md:p-6 border-b border-white/10">
-            <Link
-              href="/"
-              className="flex items-center gap-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Image
-                src="/logo/esaplogo.svg"
-                alt="ESAP Logo"
-                width={65}
-                height={21}
-                className="h-auto"
-              />
-            </Link>
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg text-light-gray hover:text-primary transition-colors duration-300"
-              aria-label="Close mobile menu"
-            >
-              <X className="size-6" />
-            </button>
-          </div>
-
-          {/* Mobile Menu Links */}
-          <nav className="flex flex-col flex-1 p-4 sm:p-5 md:p-6 overflow-y-auto">
+          <div className="flex flex-col w-full gap-2">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${isActive("/")
-                ? "is-active text-primary"
-                : "text-light-gray hover:text-primary"
+              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 ${isActive("/") ? "bg-zinc-100 dark:bg-zinc-800 text-[var(--color-primary)]" : "text-zinc-600 dark:text-zinc-400"
                 }`}
             >
-              <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-base sm:text-lg font-medium">Home</span>
+              <span className="relative z-10 text-base font-medium">Home</span>
             </Link>
 
             <MobileAccordion
@@ -405,39 +278,33 @@ export function Navbar() {
             <Link
               href="/about"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${isActive("/about")
-                ? "is-active text-primary"
-                : "text-light-gray hover:text-primary"
+              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 ${isActive("/about") ? "bg-zinc-100 dark:bg-zinc-800 text-[var(--color-primary)]" : "text-zinc-600 dark:text-zinc-400"
                 }`}
             >
-              <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-base sm:text-lg font-medium">About Us</span>
+              <span className="relative z-10 text-base font-medium">About Us</span>
             </Link>
 
             <Link
               href="/case-study"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`nav-link-group relative group px-4 py-3 sm:py-3.5 rounded-lg transition-all duration-300 mb-2 ${isActive("/case-study")
-                ? "is-active text-primary"
-                : "text-light-gray hover:text-primary"
+              className={`nav-link-group relative group px-4 py-3 rounded-lg transition-all duration-300 ${isActive("/case-study") ? "bg-zinc-100 dark:bg-zinc-800 text-[var(--color-primary)]" : "text-zinc-600 dark:text-zinc-400"
                 }`}
             >
-              <span className="nav-glow" aria-hidden="true" />
-              <span className="relative z-10 text-base sm:text-lg font-medium">Case Study</span>
+              <span className="relative z-10 text-base font-medium">Case Study</span>
             </Link>
 
-            <Button
-              asChild
+            <NavbarButton
+              href="/contact"
               variant="primary"
-              className="w-full mt-4 h-12"
+              className="w-full mt-4"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <Link href="/contact">Contact Us</Link>
-            </Button>
-          </nav>
-        </div>
-      </div>
-    </>
+              Contact Us
+            </NavbarButton>
+          </div>
+        </MobileNavMenu>
+      </MobileNav>
+    </ResizableUiNavbar>
   );
 }
 

@@ -13,14 +13,14 @@ export function TeamCard({ member, isLarge = false, isWide = false, className = 
   return (
     <div
       className={cn(
-        "group relative w-full",
+        "group relative w-full h-full",
         isWide ? "max-w-4xl" : (isLarge ? "max-w-sm sm:max-w-md" : "max-w-xs sm:max-w-sm flex-1"),
         className
       )}
     >
       <div className={cn(
-        "relative overflow-hidden rounded-[32px] border border-white/10 bg-linear-to-br from-[#0f241a] via-[#0b1712] to-[#050a08] shadow-[0_40px_80px_rgba(12,255,165,0.08)] transition-transform duration-500 group-hover:-translate-y-1",
-        isWide && "flex flex-col md:flex-row min-h-[450px]"
+        "relative overflow-hidden rounded-[32px] border border-white/10 bg-linear-to-br from-[#0f241a] via-[#0b1712] to-[#050a08] shadow-[0_40px_80px_rgba(12,255,165,0.08)] transition-transform duration-500 group-hover:-translate-y-1 flex flex-col h-full",
+        isWide && "md:flex-row min-h-[450px]"
       )}>
         {/* Top Image */}
         <div className={cn(
@@ -48,7 +48,7 @@ export function TeamCard({ member, isLarge = false, isWide = false, className = 
         {/* Content */}
         <div className={cn(
           "relative px-6 sm:px-8 md:px-10 pt-6 sm:pt-8 md:pt-10 pb-8 sm:pb-10 md:pb-12 space-y-4 sm:space-y-6 bg-linear-to-b from-[#0d271b]/80 via-[#0a1b14]/70 to-[#06130d]/90",
-          isWide ? "w-full md:w-[50%] flex flex-col justify-center py-10 md:py-16" : ""
+          isWide ? "w-full md:w-[50%] flex flex-col justify-center py-10 md:py-16" : "flex-1"
         )}>
           <span className="inline-flex items-center rounded-full border border-[#1EF38A]/40 bg-[#1EF38A]/10 px-3 sm:px-4 py-1 text-xs sm:text-sm font-semibold text-[#1EF38A] shadow-[0_0_24px_rgba(30,243,138,0.45)] w-fit">
             {member.role}
@@ -56,13 +56,13 @@ export function TeamCard({ member, isLarge = false, isWide = false, className = 
 
           <div className="space-y-1.5 sm:space-y-2">
             <h3 className={cn(
-              "font-semibold text-white drop-shadow-[0_4px_20px_rgba(14,255,164,0.25)]",
+              "font-semibold text-premium-gradient drop-shadow-[0_4px_20px_rgba(14,255,164,0.25)]",
               isWide ? "text-2xl sm:text-3xl md:text-4xl lg:text-5xl" : "text-xl sm:text-2xl md:text-3xl"
             )}>
               {member.name}
             </h3>
             <p className={cn(
-              "leading-relaxed text-light-gray-90",
+              "leading-relaxed text-premium-body",
               isWide ? "text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl" : "text-xs sm:text-sm md:text-base"
             )}>
               {member.description}
