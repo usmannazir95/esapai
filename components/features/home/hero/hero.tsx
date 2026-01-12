@@ -15,9 +15,7 @@ import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import Box from "@/components/shared/box";
 import { motion } from "motion/react";
 
-// Lazy-load heavy SVG components to reduce initial bundle size
-// These are decorative and don't affect LCP
-// FramerBackdrop removed as requested, but file kept in project
+
 
 const Circle = dynamic(() => import("./circle"), {
     ssr: false,
