@@ -267,19 +267,9 @@ export function Hero() {
             }}
             className="relative w-full min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
         >
-            {/* Video Background Removed for Global Neural Background */}
-            {/* <video ... /> */}
 
-            {/* Dark overlay to make video appear as shadow - Reduced for global background */}
-            <div className="absolute inset-0 bg-black/40 z-[-1] pointer-events-none" />
 
-            {/* Video Fade-out Overlay - Bottom gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-[-1] pointer-events-none" />
 
-            {/* Additional subtle overlay for contrast */}
-            <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden">
-                <div className="absolute inset-0 bg-linear-to-b from-background/30 via-transparent to-transparent" />
-            </div>
 
             {/* Circle behind content - animated glow and breathing effect */}
             <div
