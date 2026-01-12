@@ -23,8 +23,10 @@ export function CTASection() {
         let stars: { x: number; y: number; z: number; o: number }[] = [];
         let width = 0;
         let height = 0;
-        const cx = width / 2;
-        const cy = height / 2;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const cx = 0;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const cy = 0;
 
         const initStars = () => {
             stars = [];
@@ -103,14 +105,15 @@ export function CTASection() {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-[var(--color-bg-deep)]"
+            // Seamless blend: Fully transparent to show global background + Warp on top
+            className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-transparent"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Canvas Background */}
+            {/* Canvas Background - z-0 */}
             <canvas
                 ref={canvasRef}
-                className="absolute inset-0 z-0 w-full h-full block"
+                className="absolute inset-0 z-0 w-full h-full block opacity-80" // Slightly transparent to blend better
             />
 
             {/* Content */}
@@ -147,8 +150,7 @@ export function CTASection() {
                 </div>
             </div>
 
-            {/* Radial Gradient Overlay */}
-            <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/50 to-black z-10 pointer-events-none" />
+
         </section>
     );
 }

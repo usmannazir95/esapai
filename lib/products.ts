@@ -31,6 +31,7 @@ export const products: Product[] = [
         ],
         centerIcon: "/products/voiceerp.svg",
         centerIconAlt: "Voice ERP Icon",
+        demoVideo: "/WKB 1.mp4",
       },
       mission: {
         title: "Revolutionize Your Operations",
@@ -140,6 +141,7 @@ export const products: Product[] = [
         ],
         centerIcon: "/products/ai-framework.svg",
         centerIconAlt: "AI Framework Icon",
+        demoVideo: "/WKB 1.mp4",
       },
       mission: {
         title: "Empower Your Team",
@@ -249,6 +251,7 @@ export const products: Product[] = [
         ],
         centerIcon: "/products/zakra.svg",
         centerIconAlt: "Zakra Knowledge Agent Icon",
+        demoVideo: "/WKB 1.mp4",
       },
       mission: {
         title: "Unlock Your Knowledge",
@@ -358,6 +361,7 @@ export const products: Product[] = [
         ],
         centerIcon: "/products/jawib.svg",
         centerIconAlt: "Jawib Customer Service Agent Icon",
+        demoVideo: "/WKB 1.mp4",
       },
       mission: {
         title: "Elevate Service",
@@ -467,6 +471,7 @@ export const products: Product[] = [
         ],
         centerIcon: "/products/fasih.svg",
         centerIconAlt: "Fasih Arabic LLM Icon",
+        demoVideo: "/WKB 1.mp4",
       },
       mission: {
         title: "Bridging the AI Gap",
@@ -576,6 +581,7 @@ export const products: Product[] = [
         ],
         centerIcon: "/products/domain-expansion.svg",
         centerIconAlt: "Domain Expansion Icon",
+        demoVideo: "/WKB 1.mp4",
       },
       mission: {
         title: "Modernize Seamlessly",

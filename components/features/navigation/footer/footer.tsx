@@ -273,7 +273,7 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div ref={bottomBarRef} className="pt-6 sm:pt-8 border-t border-white-opacity-20">
+          <div ref={bottomBarRef} className="pt-6 sm:pt-8">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
               <p className="text-light-gray-90 text-xs sm:text-sm text-center sm:text-left">
                 © {new Date().getFullYear()} ESAP. All rights reserved.

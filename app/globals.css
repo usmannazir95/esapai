@@ -46,7 +46,10 @@
 
   body {
     background-color: var(--color-bg-deep);
+    /* Fallback */
     overflow-x: hidden;
+    position: relative;
+    /* Ensure context for absolute children */
   }
 
   ::selection {
@@ -259,9 +262,10 @@
 
   /* Standardized Text Styles (Removing static gradients) */
 
+  /* Standardized Text Styles (Removing static gradients) */
+
   .text-premium-body {
-    color: #a1a1aa;
-    /* zinc-400 */
+    color: rgba(255, 255, 255, 0.9);
   }
 
 
@@ -271,11 +275,11 @@
   }
 
   .text-light-gray {
-    color: var(--color-light-gray);
+    color: rgba(255, 255, 255, 1);
   }
 
   .text-light-gray-90 {
-    color: var(--color-light-gray-90);
+    color: rgba(255, 255, 255, 0.9);
   }
 
   .text-white-opacity-70 {

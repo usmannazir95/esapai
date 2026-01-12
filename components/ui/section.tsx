@@ -22,7 +22,7 @@ const paddingClasses = {
 };
 
 const backgroundClasses = {
-  dark: "bg-dark",
+  dark: "bg-transparent", // Changed from bg-dark to transparent for global background
   transparent: "bg-transparent",
 };
 

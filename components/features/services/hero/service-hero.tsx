@@ -127,7 +127,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                  className="text-base md:text-lg lg:text-xl text-zinc-400 font-medium"
+                  className="text-base md:text-lg lg:text-xl text-white/80 font-medium"
                 >
                   {line}
                 </motion.p>
@@ -222,7 +222,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
                   </div>
 
                   {/* Cycling data lines */}
-                  <div className="text-zinc-500">
+                  <div className="text-white/60">
                     <motion.div
                       animate={{ opacity: [0.4, 1, 0.4] }}
                       transition={{ duration: 3, repeat: Infinity }}
@@ -255,7 +255,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
                         style={{ height: `${height * 100}%` }}
                       />
                     ))}
-                    <span className="text-zinc-600 ml-2 text-[8px]">SIG</span>
+                    <span className="text-white/60 ml-2 text-[8px]">SIG</span>
                   </div>
                 </div>
               </div>
@@ -291,7 +291,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
                       animate={{ opacity: [1, 0, 1] }}
                       transition={{ duration: 0.5, repeat: Infinity }}
                     />
-                    <span className="text-zinc-500">NET_ACTIVITY</span>
+                    <span className="text-white/50">NET_ACTIVITY</span>
                   </div>
 
                   {/* Animated waveform */}
@@ -329,7 +329,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
 
                   {/* Data throughput */}
                   <motion.div
-                    className="text-zinc-600 mt-2 flex justify-between"
+                    className="text-white/60 mt-2 flex justify-between"
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >

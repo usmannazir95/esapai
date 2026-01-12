@@ -62,7 +62,7 @@ export function TerminalDemoSection() {
     }, [smoothProgress]);
 
     return (
-        <section ref={containerRef} className="relative h-[300vh] bg-black">
+        <section ref={containerRef} className="relative h-[300vh] bg-transparent">
             <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden p-4">
 
                 {/* Background Ambient Glow */}

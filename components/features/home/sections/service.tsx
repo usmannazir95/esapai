@@ -36,6 +36,7 @@ const SERVICES = [
     href: "/service/end-to-end-integration",
     icon: Cpu,
     colSpan: "md:col-span-8",
+    videoSrc: "/WKB 1.mp4",
   },
   {
     index: "02",
@@ -47,6 +48,7 @@ const SERVICES = [
     href: "/service/enterprise-automation",
     icon: BarChart,
     colSpan: "md:col-span-4",
+    videoSrc: "/WKB 1.mp4",
   },
   // Row 2: Narrow Left (4) + Wide Right (8) - Zag
   {
@@ -59,6 +61,7 @@ const SERVICES = [
     href: "/service/faas",
     icon: Layers,
     colSpan: "md:col-span-4",
+    videoSrc: "/WKB 1.mp4",
   },
   {
     index: "04",
@@ -70,6 +73,7 @@ const SERVICES = [
     href: "/service/tailored-solutions",
     icon: Zap,
     colSpan: "md:col-span-8",
+    videoSrc: "/WKB 1.mp4",
   },
   // Row 3: Balanced (6 + 6) - Zig
   {
@@ -82,6 +86,7 @@ const SERVICES = [
     href: "/service/industry-excellence",
     icon: Globe,
     colSpan: "md:col-span-6",
+    videoSrc: "/WKB 1.mp4",
   },
   {
     index: "06",
@@ -93,28 +98,100 @@ const SERVICES = [
     href: "/service/innovation-lab",
     icon: Lightbulb,
     colSpan: "md:col-span-6",
+    videoSrc: "/WKB 1.mp4",
   },
 ];
 
+interface ServiceCardProps {
+  service: (typeof SERVICES)[0];
+  index: number;
+  setRef: (el: HTMLDivElement | null) => void;
+}
+
+function ServiceCard({ service, index, setRef }: ServiceCardProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((e) => {
+        // Handle autoplay restrictions (though muted should work)
+        console.warn("Video play failed", e);
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      // Optional: reset to start
+      // videoRef.current.currentTime = 0; 
+    }
+  };
+
+  return (
+    <div
+      ref={setRef}
+      className={cn(
+        service.colSpan,
+        "product-card group relative overflow-hidden transition-all duration-300 hover:shadow-glow-primary-feature cursor-pointer bg-black/60 backdrop-blur-sm"
+      )}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+
+
+      {/* Video Background */}
+      {service.videoSrc && (
+        <video
+          ref={videoRef}
+          src={service.videoSrc}
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-30 transition-opacity duration-700 ease-out z-0 mix-blend-screen"
+        />
+      )}
+
+      {/* Card Content - z-10 ensures it sits above video */}
+      <div className="relative z-10 flex flex-col p-6 sm:p-8 md:p-10 h-full">
+        {/* Header Row - Product Card Style */}
+        <div className="relative z-10 flex items-center gap-3 mb-8">
+          <div className="p-2.5 rounded-xl text-primary filter-glow-primary-small bg-black/50 backdrop-blur-sm border border-white/5">
+            <service.icon size={20} strokeWidth={1.5} />
+          </div>
+          <span className="text-sm font-mono tracking-[0.2em] text-white">
+            / SERVICE_{service.index}
+          </span>
+        </div>
+
+        {/* Main Content - Slides up on hover */}
+        <div className="relative z-10 mt-auto transform translate-y-12 group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)]">
+          {/* Title - Always Visible, moves up with content */}
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-500 ease-out max-w-[85%] md:max-w-[70%]">
+            {service.title}
+          </h3>
+
+          {/* Description - Fades in on Hover */}
+          <p className="text-white/90 leading-relaxed mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out delay-100 max-w-[90%] md:max-w-[65%]">
+            {service.description}
+          </p>
+
+          {/* Button - Fades in with Stagger */}
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out delay-200 inline-block">
+            <Button variant="primary" size="default">
+              EXPLORE
+              <ArrowRight size={16} />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Service() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  // Mouse tracking logic for the flowing spotlight border effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!gridRef.current) return;
-
-    cardsRef.current.forEach((card) => {
-      if (!card) return;
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      card.style.setProperty("--mouse-x", `${x}px`);
-      card.style.setProperty("--mouse-y", `${y}px`);
-    });
-  };
 
   useGSAP(
     () => {
@@ -144,7 +221,7 @@ export function Service() {
   return (
     <section
       ref={containerRef}
-      className={cn("relative w-full py-24 md:py-32 bg-[#020305] overflow-hidden")}
+      className={cn("relative w-full py-24 md:py-32 bg-transparent overflow-hidden")}
     >
       {/* Ambient Background Glows */}
       <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
@@ -159,73 +236,21 @@ export function Service() {
         />
 
         {/* Stable Bento Grid Container */}
-        <div
-          ref={gridRef}
-          onMouseMove={handleMouseMove}
-          className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8"
-        >
-          {SERVICES.map((service, index) => (
-            <div
-              key={service.id}
-              ref={(el) => {
-                cardsRef.current[index] = el;
-              }}
-              className={cn(
-                service.colSpan,
-                "product-card group relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-glow-primary-feature cursor-pointer"
-              )}
-            >
-              {/* Mouse-tracking border glow */}
-              <div
-                className="absolute inset-0 rounded-[32px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{
-                  background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(19, 245, 132, 0.4), transparent 40%)`,
+        <div className="rounded-[32px] border border-white/10 p-2 bg-white/[0.02]">
+          <div
+            className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4"
+          >
+            {SERVICES.map((service, index) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                index={index}
+                setRef={(el) => {
+                  cardsRef.current[index] = el;
                 }}
               />
-
-              {/* Inner spotlight effect */}
-              <div
-                className="absolute inset-[1px] rounded-[31px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{
-                  background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(19, 245, 132, 0.12), transparent 50%)`,
-                }}
-              />
-
-              {/* Card Content */}
-              <div className="relative flex flex-col p-6 sm:p-8 md:p-10">
-                {/* Header Row - Product Card Style */}
-                <div className="relative z-10 flex items-center gap-3 mb-8">
-                  <div className="p-2.5 rounded-xl text-primary filter-glow-primary-small">
-                    <service.icon size={20} strokeWidth={1.5} />
-                  </div>
-                  <span className="text-sm font-mono tracking-[0.2em] text-white/60">
-                    / SERVICE_{service.index}
-                  </span>
-                </div>
-
-                {/* Main Content - Slides up on hover */}
-                <div className="relative z-10 mt-auto transform translate-y-12 group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)]">
-                  {/* Title - Always Visible, moves up with content */}
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-500 ease-out">
-                    {service.title}
-                  </h3>
-
-                  {/* Description - Fades in on Hover */}
-                  <p className="text-light-gray-90 leading-relaxed mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out delay-100">
-                    {service.description}
-                  </p>
-
-                  {/* Button - Fades in with Stagger */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out delay-200 inline-block">
-                    <Button variant="primary" size="default">
-                      EXPLORE
-                      <ArrowRight size={16} />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

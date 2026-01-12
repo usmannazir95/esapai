@@ -14,6 +14,7 @@ import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provi
 import { generateHomeMetadata } from "@/lib/seo/metadata";
 import { generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
+import { BackgroundLayout } from "@/components/ui/background/background-layout";
 
 const jakarta = Plus_Jakarta_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -56,6 +57,7 @@ export default function RootLayout({
       <body
         className={`${jakarta.variable} ${jetbrainsMono.variable} font-jakarta antialiased flex flex-col min-h-screen`}
       >
+        <BackgroundLayout />
         <StructuredDataComponent data={structuredData} />
         <ToastProvider>
           <CookieConsentProvider>

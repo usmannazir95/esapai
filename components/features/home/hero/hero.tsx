@@ -267,19 +267,11 @@ export function Hero() {
             }}
             className="relative w-full min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
         >
-            {/* Video Background */}
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover z-[-2]"
-            >
-                <source src="/012_1.mp4" type="video/mp4" />
-            </video>
+            {/* Video Background Removed for Global Neural Background */}
+            {/* <video ... /> */}
 
-            {/* Dark overlay to make video appear as shadow */}
-            <div className="absolute inset-0 bg-black/85 z-[-1] pointer-events-none" />
+            {/* Dark overlay to make video appear as shadow - Reduced for global background */}
+            <div className="absolute inset-0 bg-black/40 z-[-1] pointer-events-none" />
 
             {/* Video Fade-out Overlay - Bottom gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-[-1] pointer-events-none" />
@@ -292,10 +284,10 @@ export function Hero() {
             {/* Circle behind content - animated glow and breathing effect */}
             <div
                 ref={circleContainerRef}
-                className="absolute top-[30%] sm:top-[35%] md:top-[45%] lg:top-[48%] left-1/2 -translate-x-1/2 z-0 pointer-events-none animate-optimized"
+                className="absolute top-[50%] sm:top-[55%] md:top-[60%] lg:top-[60%] left-1/2 -translate-x-1/2 z-0 pointer-events-none animate-optimized"
             >
                 <div ref={circleGlowRef} className="relative">
-                    <Circle className="w-[250px] sm:w-[350px] md:w-[450px] lg:w-[550px] xl:w-[600px] max-w-[600px] h-auto brightness-[1.8] drop-shadow-[0_0_40px_rgba(0,165,81,0.8)] drop-shadow-[0_0_80px_rgba(0,165,81,0.6)] drop-shadow-[0_0_120px_rgba(0,165,81,0.4)]" />
+                    <Circle className="w-[200px] sm:w-[280px] md:w-[350px] lg:w-[450px] xl:w-[450px] max-w-[450px] h-auto brightness-[1.8] drop-shadow-[0_0_40px_rgba(0,165,81,0.8)] drop-shadow-[0_0_80px_rgba(0,165,81,0.6)] drop-shadow-[0_0_120px_rgba(0,165,81,0.4)]" />
                 </div>
             </div>
 
@@ -349,7 +341,7 @@ export function Hero() {
                 {/* Subtitle/Description */}
                 <div
                     ref={subtitleRef}
-                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white/80 font-mono max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
+                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white font-mono max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
                 >
                     <p>
                         Transform your business with intelligent automation, voice-activated

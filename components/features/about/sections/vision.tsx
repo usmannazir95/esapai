@@ -28,7 +28,7 @@ export function Vision() {
   const robotRef = useRef<HTMLDivElement>(null);
   const robotWrapperRef = useRef<HTMLDivElement>(null);
   const dotCircleContainerRef = useRef<HTMLDivElement>(null);
-  const cursorAnimationTweenRef = useRef<gsap.core.Tween | null>(null);
+
 
   const anim = useGSAPAnimations(sectionRef as React.RefObject<HTMLElement>);
 
@@ -105,59 +105,28 @@ export function Vision() {
     { scope: sectionRef, dependencies: [isInView] }
   );
 
-  // Cursor follower effect for robot - Disabled on touch devices and reduced motion
+  // Continuous Floating Animation - Replaces Cursor Follower
   useGSAP(
     () => {
-      if (!robotWrapperRef.current || !sectionRef.current) return;
-      if (!isInView || prefersReducedMotion()) return;
-
-      const isTouchDevice =
-        "ontouchstart" in window || navigator.maxTouchPoints > 0;
-      if (isTouchDevice) return;
+      if (!robotWrapperRef.current || !isInView || prefersReducedMotion()) return;
 
       const wrapper = robotWrapperRef.current;
-      const section = sectionRef.current;
 
-      gsap.set(wrapper, {
-        x: 0,
-        y: 0,
+      // Reset any existing transforms
+      gsap.set(wrapper, { x: 0, y: 0 });
+
+      // Create continuous floating motion
+      gsap.to(wrapper, {
+        y: -20, // Float up
+        duration: 2,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
         force3D: true,
       });
 
-      const handleMouseMove = (e: MouseEvent) => {
-        if (!isInView) return;
-
-        const rect = section.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const relativeX = (e.clientX - centerX) / (rect.width / 2);
-        const relativeY = (e.clientY - centerY) / (rect.height / 2);
-
-        const screenWidth = window.innerWidth;
-        const maxMove = screenWidth < 768 ? 20 : screenWidth < 1024 ? 30 : 40;
-        const targetX = relativeX * maxMove;
-        const targetY = relativeY * maxMove;
-
-        cursorAnimationTweenRef.current?.kill();
-
-        cursorAnimationTweenRef.current = gsap.to(wrapper, {
-          x: targetX,
-          y: targetY,
-          duration: 0.6,
-          ease: "power2.out",
-          force3D: true,
-          overwrite: "auto",
-        });
-      };
-
-      section.addEventListener("mousemove", handleMouseMove);
-
       return () => {
-        section.removeEventListener("mousemove", handleMouseMove);
-        cursorAnimationTweenRef.current?.kill();
-        cursorAnimationTweenRef.current = null;
-        gsap.set(wrapper, { x: 0, y: 0 });
+        gsap.killTweensOf(wrapper);
       };
     },
     { scope: sectionRef, dependencies: [isInView] }
@@ -230,8 +199,8 @@ export function Vision() {
   return (
     <div className="relative w-full overflow-hidden">
       <SpaceBackground />
-      {/* Seamless blend with next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 md:h-40 bg-gradient-to-b from-transparent to-[--color-dark] pointer-events-none z-0" />
+      {/* Seamless blend with next section - Removed for global background visibility */}
+      {/* <div className="absolute bottom-0 left-0 right-0 h-24 sm:h-32 md:h-40 bg-gradient-to-b from-transparent to-[--color-dark] pointer-events-none z-0" /> */}
       <Section background="transparent" className="pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10">
         <div
           ref={(el) => {
