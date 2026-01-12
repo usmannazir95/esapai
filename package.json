@@ -66,5 +66,14 @@
     "not ie 11",
     "not op_mini all",
     "not dead"
-  ]
+  ],
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "@react-three/fiber": "9.0.0-alpha.8",
+        "react": "19.x",
+        "react-dom": "19.x"
+      }
+    }
+  }
 }
