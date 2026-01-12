@@ -115,7 +115,7 @@ export function SectionHeader({
           <div className="relative inline-flex overflow-hidden rounded-full p-[1px]">
             <div className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#13F584_50%,#000000_100%)] opacity-70" />
             <div className="relative inline-flex items-center justify-center rounded-full bg-black/80 backdrop-blur-3xl px-4 py-1.5">
-              <span className="text-[10px] sm:text-xs font-mono font-medium text-primary tracking-[0.2em] uppercase">
+              <span className="text-[10px] sm:text-xs font-medium text-primary tracking-[0.2em] uppercase">
                 // {badge}
               </span>
             </div>
@@ -150,7 +150,7 @@ export function SectionHeader({
         <p
           ref={subtitleRef}
           className={cn(
-            "mt-5 sm:mt-7 text-base sm:text-lg md:text-xl lg:text-xl text-premium-body leading-relaxed max-w-3xl font-mono tracking-tight",
+            "mt-5 sm:mt-7 text-base sm:text-lg md:text-xl lg:text-xl text-premium-body leading-relaxed max-w-3xl tracking-tight",
             mxClass,
             subtitleClassName
           )}

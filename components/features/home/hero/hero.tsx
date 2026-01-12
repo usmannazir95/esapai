@@ -267,19 +267,9 @@ export function Hero() {
             }}
             className="relative w-full min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
         >
-            {/* Video Background Removed for Global Neural Background */}
-            {/* <video ... /> */}
 
-            {/* Dark overlay to make video appear as shadow - Reduced for global background */}
-            <div className="absolute inset-0 bg-black/40 z-[-1] pointer-events-none" />
 
-            {/* Video Fade-out Overlay - Bottom gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-[-1] pointer-events-none" />
 
-            {/* Additional subtle overlay for contrast */}
-            <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none select-none overflow-hidden">
-                <div className="absolute inset-0 bg-linear-to-b from-background/30 via-transparent to-transparent" />
-            </div>
 
             {/* Circle behind content - animated glow and breathing effect */}
             <div
@@ -315,12 +305,12 @@ export function Hero() {
                         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
                     />
                     <div className="hero-badge-exclusive">
-                        <span className="hero-badge-exclusive-text font-mono text-[9px] sm:text-[10px] md:text-xs tracking-wide">
+                        <span className="hero-badge-exclusive-text text-[9px] sm:text-[10px] md:text-xs tracking-wide">
                             Exclusive
                         </span>
                     </div>
                     <div className="hero-badge-text">
-                        <span className="hero-badge-text-content font-mono text-[10px] sm:text-[11px] md:text-sm tracking-wide">
+                        <span className="hero-badge-text-content text-[10px] sm:text-[11px] md:text-sm tracking-wide">
                             Tomorrow&apos;s Edge, Built Today
                         </span>
                     </div>
@@ -341,7 +331,7 @@ export function Hero() {
                 {/* Subtitle/Description */}
                 <div
                     ref={subtitleRef}
-                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white font-mono max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
+                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
                 >
                     <p>
                         Transform your business with intelligent automation, voice-activated

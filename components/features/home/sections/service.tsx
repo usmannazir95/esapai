@@ -159,7 +159,7 @@ function ServiceCard({ service, index, setRef }: ServiceCardProps) {
           <div className="p-2.5 rounded-xl text-primary filter-glow-primary-small bg-black/50 backdrop-blur-sm border border-white/5">
             <service.icon size={20} strokeWidth={1.5} />
           </div>
-          <span className="text-sm font-mono tracking-[0.2em] text-white">
+          <span className="text-sm tracking-[0.2em] text-white">
             / SERVICE_{service.index}
           </span>
         </div>

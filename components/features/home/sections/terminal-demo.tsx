@@ -87,13 +87,13 @@ export function TerminalDemoSection() {
                         <div className="flex-1 text-center">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/5 border border-white/5">
                                 <Command className="w-3 h-3 text-white/40" />
-                                <span className="text-xs font-mono text-white/50">integrate-agent.ts</span>
+                                <span className="text-xs text-white/50">integrate-agent.ts</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Body */}
-                    <div className="p-6 md:p-8 font-mono text-base md:text-lg leading-relaxed h-[500px] overflow-hidden relative">
+                    <div className="p-6 md:p-8 text-base md:text-lg leading-relaxed h-[500px] overflow-hidden relative">
                         {/* Scanline Effect */}
                         <div className="absolute inset-0 bg-[url('/scanline.png')] opacity-[0.03] pointer-events-none" />
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#13F584]/[0.02] to-transparent pointer-events-none" />
