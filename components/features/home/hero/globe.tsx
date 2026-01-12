@@ -6,7 +6,7 @@ import { SpringValue, useSpring, animated } from "@react-spring/web";
 
 export const Globe = ({ className }: { className?: string }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const pointerInteracting = useRef(null);
+    const pointerInteracting = useRef<number | null>(null);
     const pointerInteractionMovement = useRef(0);
     const [{ r }, api] = useSpring(() => ({
         r: 0,
