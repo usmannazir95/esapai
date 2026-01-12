@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const nextConfig: NextConfig = {
   // TypeScript configuration
@@ -138,14 +139,13 @@ const nextConfig: NextConfig = {
   webpack: (config, { isServer }) => {
     // Bundle analyzer (enabled via ANALYZE=true env variable)
     if (process.env.ANALYZE === "true") {
-      const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
       config.plugins.push(
         new BundleAnalyzerPlugin({
           analyzerMode: "static",
           reportFilename: isServer
             ? "../analyze/server.html"
             : "./analyze/client.html",
-          openAnalyzer: true,
+          openAnalyzer: false,
         })
       );
     }

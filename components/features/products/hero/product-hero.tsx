@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight } from "lucide-react";
@@ -9,10 +10,18 @@ import { TypewriterTitle } from "@/components/ui/typewriter-title";
 import { HeroBadge } from "@/components/ui/hero-badge";
 import Frame from "@/components/shared/frame";
 import { InteractiveProductIconHalo } from "@/components/ui/interactive-product-icon-halo";
-import { ProductHaloFlow } from "@/components/shared/product-halo-flow";
 import { LazyThreeWrapper } from "@/components/three/lazy-three-wrapper";
 import GridFloor from "@/components/shared/grid-floor";
 import type { ProductHeroProps } from "@/types/props";
+
+const ProductHaloFlow = dynamic(
+  () =>
+    import("@/components/shared/product-halo-flow").then((m) => m.ProductHaloFlow),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full" aria-hidden="true" />,
+  }
+);
 
 /**
  * Maps product slugs to their corresponding icon files in the product_icons directory

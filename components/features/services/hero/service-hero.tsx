@@ -13,7 +13,10 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 
 const World = dynamic(
   () => import("@/components/ui/globe").then((mod) => mod.World),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full" aria-hidden="true" />,
+  }
 );
 
 // Theme-matched globe configuration
