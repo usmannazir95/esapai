@@ -160,7 +160,7 @@ export function Mission({
 
       <div
         ref={containerRef}
-        className="flex-grow w-full relative perspective-[1000px] preserve-3d mt-0 flex items-center justify-center min-h-[500px]"
+        className="flex-grow w-full relative perspective-[1000px] preserve-3d mt-20 flex items-center justify-center min-h-[500px]"
       >
         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[500px] md:h-[600px] w-full preserve-3d translate-x-[15px] md:translate-x-[40px]">
           {/* Central Globe Core */}

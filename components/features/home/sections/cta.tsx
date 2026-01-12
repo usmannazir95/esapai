@@ -114,6 +114,10 @@ export function CTASection() {
             <canvas
                 ref={canvasRef}
                 className="absolute inset-0 z-0 w-full h-full block opacity-80" // Slightly transparent to blend better
+                style={{
+                    maskImage: "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)",
+                    WebkitMaskImage: "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)"
+                }}
             />
 
             {/* Content */}
