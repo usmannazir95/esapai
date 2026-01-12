@@ -100,7 +100,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                 Reload Application
               </Button>
               <Button
-                variant="watch-demo"
+                variant="outline"
                 size="lg"
                 className="rounded-[40px] px-8 py-6 text-lg font-semibold min-w-[180px]"
                 onClick={reset}
