@@ -202,7 +202,7 @@ export function ProductShowcase() {
                                 />
                               </div>
                             )}
-                            <span className="text-base font-mono text-white/40 tracking-[0.2em] uppercase pt-2">
+                            <span className="text-base text-white/40 tracking-[0.2em] uppercase pt-2">
                               / Product_{index.toString().padStart(3, "0")}
                             </span>
                           </div>

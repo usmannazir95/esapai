@@ -315,12 +315,12 @@ export function Hero() {
                         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
                     />
                     <div className="hero-badge-exclusive">
-                        <span className="hero-badge-exclusive-text font-mono text-[9px] sm:text-[10px] md:text-xs tracking-wide">
+                        <span className="hero-badge-exclusive-text text-[9px] sm:text-[10px] md:text-xs tracking-wide">
                             Exclusive
                         </span>
                     </div>
                     <div className="hero-badge-text">
-                        <span className="hero-badge-text-content font-mono text-[10px] sm:text-[11px] md:text-sm tracking-wide">
+                        <span className="hero-badge-text-content text-[10px] sm:text-[11px] md:text-sm tracking-wide">
                             Tomorrow&apos;s Edge, Built Today
                         </span>
                     </div>
@@ -341,7 +341,7 @@ export function Hero() {
                 {/* Subtitle/Description */}
                 <div
                     ref={subtitleRef}
-                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white font-mono max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
+                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
                 >
                     <p>
                         Transform your business with intelligent automation, voice-activated

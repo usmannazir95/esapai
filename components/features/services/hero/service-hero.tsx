@@ -103,13 +103,10 @@ const globeData = [
 
 export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
   return (
-    <section className="relative w-full min-h-screen flex items-center overflow-hidden bg-dark pt-24 md:pt-32 pb-20">
-      {/* Refined Background Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/5 blur-[100px] rounded-full" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(19,245,132,0.03),transparent_50%)]" />
-      </div>
+    <section className="relative w-full min-h-screen flex items-center overflow-hidden pt-24 md:pt-32 pb-20">
+      {/* Dark overlay to match main Hero style */}
+      <div className="absolute inset-0 bg-black/40 z-[-1] pointer-events-none" />
+
 
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -200,7 +197,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
                   />
                 </svg>
 
-                <div className="relative p-4 font-mono text-[10px] space-y-2">
+                <div className="relative p-4 text-[10px]">
                   {/* Status indicator */}
                   <div className="flex items-center gap-2">
                     <motion.div
@@ -286,7 +283,7 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
                   />
                 </svg>
 
-                <div className="relative p-4 font-mono text-[10px]">
+                <div className="relative p-4 text-[10px]">
                   {/* Activity label */}
                   <div className="flex items-center gap-2 mb-3">
                     <motion.div

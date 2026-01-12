@@ -87,9 +87,7 @@
 
 
 
-.font-mono {
-  font-family: var(--font-mono), monospace;
-}
+
 
 @layer utilities {
   @keyframes float {

@@ -123,7 +123,7 @@ export function CTASection() {
                         <span className="text-white">Ready to Transform </span>
                         <span className="text-primary">Your Business?</span>
                     </h2>
-                    <p className="text-base sm:text-lg md:text-xl text-zinc-400 mb-8 md:mb-10 max-w-2xl mx-auto font-mono tracking-tight">
+                    <p className="text-base sm:text-lg md:text-xl text-zinc-400 mb-8 md:mb-10 max-w-2xl mx-auto tracking-tight">
                         Join hundreds of enterprises leveraging AI-powered automation to drive growth, efficiency, and innovation.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
