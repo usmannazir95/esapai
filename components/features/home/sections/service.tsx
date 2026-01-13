@@ -214,6 +214,30 @@ export function Service() {
         ease: "power3.out",
         clearProps: "all",
       });
+
+      // Smooth Header Reveal
+      const header = containerRef.current.querySelector('[data-testid="section-header"]');
+      if (header) {
+        gsap.fromTo(header,
+          {
+            opacity: 0,
+            y: 30,
+            filter: "blur(8px)"
+          },
+          {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              end: "top 60%",
+              scrub: 1,
+            },
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            ease: "power3.out",
+          }
+        );
+      }
     },
     { scope: containerRef }
   );
@@ -236,7 +260,7 @@ export function Service() {
         />
 
         {/* Stable Bento Grid Container */}
-        <div className="rounded-[32px] border border-white/10 p-2 bg-white/[0.02]">
+        <div className="">
           <div
             className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4"
           >

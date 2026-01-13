@@ -19,6 +19,7 @@ export function ProductShowcase() {
   const triggerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   useGSAP(
@@ -70,6 +71,7 @@ export function ProductShowcase() {
         const nextCards = cardRefs.current.slice(i + 1);
 
         // Card exit sequence
+        // Card exit sequence
         tl.to(
           currentCard,
           {
@@ -84,22 +86,49 @@ export function ProductShowcase() {
           i
         );
 
-        // Remaining stack movement
-        nextCards.forEach((card, idx) => {
-          if (card) {
-            tl.to(
-              card,
-              {
-                y: idx * -12,
-                scale: 1 - idx * 0.04,
-                filter: `brightness(${1 - idx * 0.15})`,
-                duration: 1,
-                ease: "power2.inOut",
-              },
-              i
-            );
+        // Remaining stack movement - Batched for performance
+        if (nextCards.length > 0) {
+          tl.to(
+            nextCards,
+            {
+              y: (idx) => idx * -12, // Function based value for stagger effect/offset
+              scale: (idx) => 1 - idx * 0.04,
+              filter: (idx) => `brightness(${1 - idx * 0.15})`,
+              duration: 1,
+              ease: "power2.inOut",
+              // We need to calculate the correct y/scale based on their NEW position in the stack (0 to N)
+              // But here nextCards[0] becomes the top.
+              // Logic check: When card i leaves, card i+1 becomes the new top (index 0 relative to stack).
+              // The `y` value needs to be calculated based on the index WITHIN the nextCards array.
+              // GSAP function-based values receive (index, target, targets).
+            },
+            i
+          );
+        }
+      }
+
+      // Smooth Header Reveal
+      const header = triggerRef.current.querySelector('[data-testid="section-header"]');
+      if (header) {
+        gsap.fromTo(header,
+          {
+            opacity: 0,
+            y: 30,
+            filter: "blur(8px)"
+          },
+          {
+            scrollTrigger: {
+              trigger: triggerRef.current,
+              start: "top 85%",
+              end: "top 60%",
+              scrub: 1,
+            },
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            ease: "power3.out",
           }
-        });
+        );
       }
 
       return () => {
@@ -108,6 +137,27 @@ export function ProductShowcase() {
     },
     { scope: triggerRef }
   );
+
+  // Manage video playback based on active card
+  useEffect(() => {
+    videoRefs.current.forEach((video, idx) => {
+      if (!video) return;
+      if (idx === currentCardIndex) {
+        // Play the active card's video
+        video.currentTime = 0; // Optional: restart video
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Auto-play might be blocked, handle silently
+            console.debug("Video autoplay blocked", error);
+          });
+        }
+      } else {
+        // Pause others
+        video.pause();
+      }
+    });
+  }, [currentCardIndex]);
 
   return (
     <section
@@ -251,8 +301,10 @@ export function ProductShowcase() {
                           {product.content?.hero?.demoVideo ? (
                             <div className="relative w-full h-full">
                               <video
+                                ref={(el) => {
+                                  videoRefs.current[index] = el;
+                                }}
                                 src={product.content.hero.demoVideo}
-                                autoPlay
                                 loop
                                 muted
                                 playsInline

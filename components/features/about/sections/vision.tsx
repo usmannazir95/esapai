@@ -79,7 +79,7 @@ export function Vision() {
         gsap.set(robotRef.current, { opacity: 0, y: 50, scale: 0.8 });
       }
       if (dotCircleContainerRef.current) {
-        gsap.set(dotCircleContainerRef.current, { opacity: 0 });
+        gsap.set(dotCircleContainerRef.current, { opacity: 0, y: 30 });
       }
 
       tl.to(
@@ -96,10 +96,11 @@ export function Vision() {
         dotCircleContainerRef.current,
         {
           opacity: 1,
-          duration: 0.6,
-          ease: "power2.out",
+          y: 0,
+          duration: 1.5,
+          ease: "sine.out",
         },
-        "-=0.3"
+        "-=0.5"
       );
     },
     { scope: sectionRef, dependencies: [isInView] }

@@ -6,7 +6,7 @@ import type { CaseStudyWithUrls } from "@/types/case-study";
 import { useCaseStudyContent } from "@/lib/hooks/use-case-study-content";
 import { Section } from "@/components/ui/section";
 import { Timeline } from "../sections/timeline";
-import { CaseStudyHero } from "../hero/case-study-hero";
+
 import { GlobalLoader } from "@/components/ui/global-loader";
 import type { CaseStudyPageClientProps } from "@/types/page";
 
@@ -50,7 +50,8 @@ export function CaseStudyPage({
         {/* Content Container */}
         <div className="relative z-10 w-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-16 sm:pb-20 md:pb-24 lg:pb-32">
           {/* Hero Content */}
-          <CaseStudyHero caseStudy={hydratedCaseStudy} />
+          {/* Hero Content Removed */}
+          {/* <CaseStudyHero caseStudy={hydratedCaseStudy} /> */}
 
           {/* Timeline Section embedded seamlessly */}
           <div className="relative">

@@ -3,6 +3,7 @@
 import { useRef, useState, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
@@ -156,20 +157,7 @@ export function CaseStudyListAnimated({ caseStudies }: CaseStudyListAnimatedProp
               </div>
             )}
 
-            {/* CTA Section */}
-            <div className="mt-12 sm:mt-14 md:mt-16 text-center">
-              <p className="text-base sm:text-lg md:text-xl text-light-gray-90 mb-5 sm:mb-6 px-4">
-                Interested in learning more about our solutions?
-              </p>
-              <Button
-                variant="primary"
-                size="lg"
-                className="rounded-[32px] sm:rounded-[40px] px-10 sm:px-12 md:px-16 lg:px-20 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
-                asChild
-              >
-                <Link href="/contact">Contact</Link>
-              </Button>
-            </div>
+            {/* CTA Section Removed */}
           </div>
         </div>
       </Section>
@@ -271,16 +259,18 @@ const CaseStudyCard = memo(
             </p>
 
             <Button
-              variant="surface"
+              variant="primary"
               size="lg"
-              className="case-study-button case-study-view-btn relative z-10 rounded-[32px] sm:rounded-[40px] px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg font-semibold min-h-[44px] sm:min-h-[48px]"
+              className="case-study-button relative z-10"
               asChild
             >
               <Link
                 href={`/case-study/${caseStudy.slug}`}
                 aria-label={`View case study: ${caseStudy.title}`}
+                className="flex items-center gap-2"
               >
                 View
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
           </div>
