@@ -98,7 +98,7 @@ export function Mission({
   );
 
   return (
-    <Section ref={sectionRef} className="relative min-h-screen flex flex-col pt-24 overflow-hidden">
+    <Section ref={sectionRef} className="relative min-h-screen flex flex-col pt-24 overflow-hidden z-20">
       <div className="container mx-auto px-4 relative z-20 mb-12">
         <SectionHeader
           title={title}

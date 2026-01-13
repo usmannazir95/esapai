@@ -320,8 +320,8 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
   /**
    * Create a timeline for sequenced animations
    */
-  const createTimeline = () => {
-    return gsap.timeline();
+  const createTimeline = (vars?: gsap.TimelineVars) => {
+    return gsap.timeline(vars);
   };
 
   /**
@@ -400,7 +400,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
     } = options;
 
     const pathsArray = Array.from(paths).slice(0, count);
-    
+
     if (pathsArray.length > 0) {
       return gsap.to(pathsArray, {
         opacity: () => opacityRange[0] + Math.random() * (opacityRange[1] - opacityRange[0]),
@@ -411,7 +411,7 @@ export function useGSAPAnimations(scope: RefObject<HTMLElement | SVGSVGElement |
         stagger,
       });
     }
-    
+
     return null;
   };
 
