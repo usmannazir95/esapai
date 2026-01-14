@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "@/components/ui/section-header";
+import { NeuralBackground as NeuralCanvas } from "@/components/ui/background/neural-canvas";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -35,8 +36,9 @@ const SERVICES = [
       "Deploy autonomous AI agents that seamlessly integrate with your existing systems to automate complex workflows and decision-making processes.",
     href: "/service/end-to-end-integration",
     icon: Cpu,
-    colSpan: "md:col-span-8",
+    colSpan: "md:col-span-7",
     videoSrc: "/WKB 1.mp4",
+    image: "/bentogird/agenticai.svg",
   },
   {
     index: "02",
@@ -47,8 +49,9 @@ const SERVICES = [
       "Strategic consulting to identify high-impact automation opportunities and design future-proof AI roadmaps.",
     href: "/service/enterprise-automation",
     icon: BarChart,
-    colSpan: "md:col-span-4",
+    colSpan: "md:col-span-5",
     videoSrc: "/WKB 1.mp4",
+    image: "/bentogird/enterprise.svg",
   },
   // Row 2: Narrow Left (4) + Wide Right (8) - Zag
   {
@@ -60,8 +63,9 @@ const SERVICES = [
       "Battle-tested AI frameworks and serverless infrastructure scaling to millions of requests.",
     href: "/service/faas",
     icon: Layers,
-    colSpan: "md:col-span-4",
+    colSpan: "md:col-span-5",
     videoSrc: "/WKB 1.mp4",
+    image: "/bentogird/faas.svg",
   },
   {
     index: "04",
@@ -72,8 +76,9 @@ const SERVICES = [
       "Custom-built AI architectures designed specifically for your unique business challenges and data.",
     href: "/service/tailored-solutions",
     icon: Zap,
-    colSpan: "md:col-span-8",
+    colSpan: "md:col-span-7",
     videoSrc: "/WKB 1.mp4",
+    image: "/bentogird/aisolution.svg",
   },
   // Row 3: Balanced (6 + 6) - Zig
   {
@@ -87,6 +92,7 @@ const SERVICES = [
     icon: Globe,
     colSpan: "md:col-span-6",
     videoSrc: "/WKB 1.mp4",
+    image: "/bentogird/industry.svg",
   },
   {
     index: "06",
@@ -99,6 +105,7 @@ const SERVICES = [
     icon: Lightbulb,
     colSpan: "md:col-span-6",
     videoSrc: "/WKB 1.mp4",
+    image: "/bentogird/ailab.svg",
   },
 ];
 
@@ -152,15 +159,23 @@ function ServiceCard({ service, index, setRef }: ServiceCardProps) {
         />
       )}
 
+      {/* Static Image Background (Visible when NOT hovered) */}
+      {service.image && (
+        <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-100 group-hover:opacity-0 transition-opacity duration-500 ease-out z-0">
+          <img
+            src={service.image}
+            alt=""
+            className="absolute right-0 top-1/2 -translate-y-1/2 h-[90%] w-auto object-contain object-right pr-6 md:pr-10"
+          />
+        </div>
+      )}
+
       {/* Card Content - z-10 ensures it sits above video */}
       <div className="relative z-10 flex flex-col p-6 sm:p-8 md:p-10 h-full">
         {/* Header Row - Product Card Style */}
-        <div className="relative z-10 flex items-center gap-3 mb-8">
-          <div className="p-2.5 rounded-xl text-primary filter-glow-primary-small bg-black/50 backdrop-blur-sm border border-white/5">
-            <service.icon size={20} strokeWidth={1.5} />
-          </div>
+        <div className="relative z-10 flex items-center mb-8">
           <span className="text-sm tracking-[0.2em] text-white">
-            / SERVICE_{service.index}
+            SERVICE_{service.index}
           </span>
         </div>
 
@@ -247,11 +262,17 @@ export function Service() {
   return (
     <section
       ref={containerRef}
-      className={cn("relative w-full py-24 md:py-32 bg-transparent overflow-hidden")}
+      className={cn("relative w-full py-24 md:py-32 bg-[#020305] z-20 overflow-hidden")}
+      style={{
+        maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+        WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)"
+      }}
     >
+      <NeuralCanvas className="absolute inset-0 z-0" />
+
       {/* Ambient Background Glows */}
-      <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-1/3 h-1/3 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="absolute bottom-0 right-1/4 w-1/3 h-1/3 bg-primary/5 blur-[100px] rounded-full pointer-events-none z-0" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeader

@@ -1,48 +1,74 @@
-import React from "react";
+import { cn } from "@/lib/utils";
+import { LucideIcon } from "lucide-react";
+
 import Image from "next/image";
-import type { MissionCardProps } from "@/types/props";
 
-export function MissionCard({
-  title,
-  description,
-  imageSrc = "/landing/mission/mission.svg",
-  imageAlt = "Mission illustration",
-  icon: Icon,
-  className = "",
-}: any) {
+interface MissionCardProps {
+  title: string;
+  description: string;
+  icon?: LucideIcon;
+  image?: string;
+  className?: string;
+  index?: number;
+}
+
+export function MissionCard({ title, description, icon: Icon, image, className }: MissionCardProps) {
   return (
-    <div className={`mission-card relative overflow-hidden h-full flex flex-col ${className}`}>
-      {/* Animated Border Trail */}
-      <div className="mission-card-border" />
+    <div className={cn(
+      "group relative flex flex-col justify-between h-full p-8 overflow-hidden",
+      "bg-[#050a05] rounded-[32px]",
+      "transition-all duration-500 hover:border-primary/40 hover:shadow-[0_0_50px_-15px_rgba(19,245,132,0.3)] hover:-translate-y-1",
+      className
+    )}>
+      {/* 
+         Green Grid Pattern Background 
+         - User Requested styles
+      */}
+      <div className="absolute inset-0 bg-grid-green opacity-40 mix-blend-plus-lighter pointer-events-none" />
 
-      {/* Decorative Corner Glow */}
-      <div className="absolute -top-12 -right-12 w-24 h-24 bg-primary/10 blur-[40px] rounded-full pointer-events-none z-0" />
-      <div className="absolute -bottom-12 -left-12 w-24 h-24 bg-primary/5 blur-[40px] rounded-full pointer-events-none z-0" />
+      {/* Radial Gradient overlay to create the 'light/glow' effect user asked for to avoid being too dark */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(19,245,132,0.15),transparent_70%)] opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      {/* Bottom gradient for depth */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+
+      {/* Bento Grid Image - Top */}
+      {image && (
+        <div className="relative w-full h-48 mb-6 -mt-4 flex items-center justify-center z-10 transition-transform duration-500 group-hover:scale-105">
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-contain p-2 drop-shadow-[0_0_15px_rgba(19,245,132,0.3)]"
+          />
+        </div>
+      )}
+
+      {/* Icon Section (Fallback if no image) */}
+      {!image && Icon && (
+        <div className="relative mb-6 z-10">
+          <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="relative w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-primary/10 text-white/70 group-hover:text-primary group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-500 shadow-[0_0_15px_-5px_rgba(19,245,132,0.2)]">
+            <Icon size={28} />
+          </div>
+        </div>
+      )}
 
       {/* Content */}
-      <div className="relative p-6 h-full flex flex-col z-10">
-        {/* Premium Title - Bold white with subtle text shadow */}
-        <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight mb-4 tracking-tight drop-shadow-[0_0_10px_rgba(19,245,132,0.15)]">
+      <div className="relative z-10 flex flex-col gap-3 mt-auto">
+        {/* Title - Large and bold */}
+        <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight group-hover:text-primary transition-colors duration-300 drop-shadow-lg">
           {title}
         </h3>
-
-        {/* Card Description - Light gray with better contrast */}
-        <p className="text-sm sm:text-[15px] text-zinc-300 grow leading-relaxed font-medium">
+        {/* Description - Lighter to avoid looking 'dark' */}
+        <p className="text-sm sm:text-base text-zinc-300 font-medium leading-relaxed group-hover:text-white transition-colors duration-300">
           {description}
         </p>
+      </div>
 
-        {/* Large Bottom Icon */}
-        {Icon && (
-          <div className="mt-4 flex justify-center pb-2">
-            <div className="relative group/icon transition-all duration-500 hover:scale-110">
-              {/* Intensified Glow Layer */}
-              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-12 w-12 bg-primary/40 blur-[24px] rounded-full pointer-events-none" />
-              <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-primary/30 blur-[12px] rounded-full pointer-events-none" />
-
-              <Icon size={40} className="text-primary relative z-10 opacity-90 filter brightness-[1.2] transition-transform duration-500" />
-            </div>
-          </div>
-        )}
+      {/* Decorative Corner Glow */}
+      <div className="absolute top-0 right-0 p-12 opacity-30 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none">
+        <div className="w-32 h-32 bg-primary/20 blur-[80px] rounded-full" />
       </div>
     </div>
   );

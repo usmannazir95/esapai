@@ -11,7 +11,13 @@ interface Particle {
     speedY: number;
 }
 
-export function NeuralBackground() {
+import { cn } from "@/lib/utils";
+
+interface NeuralBackgroundProps {
+    className?: string;
+}
+
+export function NeuralBackground({ className }: NeuralBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -99,7 +105,7 @@ export function NeuralBackground() {
     }, [isMobile]);
 
     return (
-        <div className="fixed inset-0 z-[-1] pointer-events-none bg-[#020305]">
+        <div className={cn("fixed inset-0 z-[-1] pointer-events-none bg-[#020305]", className)}>
             <canvas
                 ref={canvasRef}
                 className="absolute inset-0 w-full h-full block"
