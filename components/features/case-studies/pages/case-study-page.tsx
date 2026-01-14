@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import dynamic from "next/dynamic";
 import type { CaseStudyWithUrls } from "@/types/case-study";
+import { CaseStudyHero } from "../hero";
 import { useCaseStudyContent } from "@/lib/hooks/use-case-study-content";
 import { Section } from "@/components/ui/section";
 import { Timeline } from "../sections/timeline";
@@ -50,8 +51,7 @@ export function CaseStudyPage({
         {/* Content Container */}
         <div className="relative z-10 w-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-16 sm:pb-20 md:pb-24 lg:pb-32">
           {/* Hero Content */}
-          {/* Hero Content Removed */}
-          {/* <CaseStudyHero caseStudy={hydratedCaseStudy} /> */}
+          <CaseStudyHero caseStudy={hydratedCaseStudy} />
 
           {/* Timeline Section embedded seamlessly */}
           <div className="relative">
