@@ -34,37 +34,52 @@ export function GravityBubbles({ className }: { className?: string }) {
             bubblesRef.current.forEach((bubble, index) => {
                 if (!bubble) return;
 
-                // Random floating motion
-                // We use separate x and y tweens with different durations/eases to create non-repeating patterns
+                // Spring Drop Animation
+                // Starts from above and drops into place with elasticity
+                gsap.fromTo(
+                    bubble,
+                    {
+                        y: -1000,
+                        opacity: 0,
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 2.5,
+                        ease: "elastic.out(1, 0.3)",
+                        delay: index * 0.2, // Stagger effect
+                        onComplete: () => {
+                            // Start continuous floating after drop settles
 
-                // Y Motion (Gravity/Buoyancy)
-                gsap.to(bubble, {
-                    y: "random(-30, 30)",
-                    duration: "random(3, 6)",
-                    ease: "sine.inOut",
-                    repeat: -1,
-                    yoyo: true,
-                    delay: index * 0.2,
-                });
+                            // Y Motion (Gravity/Buoyancy)
+                            gsap.to(bubble, {
+                                y: "random(-30, 30)",
+                                duration: "random(3, 6)",
+                                ease: "sine.inOut",
+                                repeat: -1,
+                                yoyo: true,
+                            });
 
-                // X Motion (Drift)
-                gsap.to(bubble, {
-                    x: "random(-20, 20)",
-                    duration: "random(4, 7)",
-                    ease: "sine.inOut",
-                    repeat: -1,
-                    yoyo: true,
-                    delay: index * 0.1,
-                });
+                            // X Motion (Drift)
+                            gsap.to(bubble, {
+                                x: "random(-20, 20)",
+                                duration: "random(4, 7)",
+                                ease: "sine.inOut",
+                                repeat: -1,
+                                yoyo: true,
+                            });
 
-                // Slight Rotation
-                gsap.to(bubble, {
-                    rotation: "random(-10, 10)",
-                    duration: "random(5, 10)",
-                    ease: "sine.inOut",
-                    repeat: -1,
-                    yoyo: true,
-                });
+                            // Slight Rotation
+                            gsap.to(bubble, {
+                                rotation: "random(-10, 10)",
+                                duration: "random(5, 10)",
+                                ease: "sine.inOut",
+                                repeat: -1,
+                                yoyo: true,
+                            });
+                        },
+                    }
+                );
             });
         },
         { scope: containerRef }

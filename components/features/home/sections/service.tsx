@@ -195,6 +195,8 @@ export function Service() {
 
   useGSAP(
     () => {
+      if (!containerRef.current) return;
+
       const cards = cardsRef.current.filter(Boolean);
 
       const tl = gsap.timeline({
@@ -253,7 +255,7 @@ export function Service() {
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeader
-          title="Holistic Intelligence"
+          title="Our Services"
           subtitle="Explore our comprehensive suite of AI solutions designed to transform your enterprise."
           align="center"
           className="mb-20"
