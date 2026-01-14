@@ -523,98 +523,6 @@
       inset 0 0 24px rgba(19, 245, 132, 0.12);
   }
 
-  /* Mission Card - Futuristic Glowing Style */
-  .mission-card {
-    position: relative;
-    /* Premium Obsidian Gradient - Fully Opaque */
-    background: linear-gradient(180deg, #0e0e0e 0%, #050505 100%);
-    /* Remove backdrop filter as it's opaque now, saves performance */
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 1),
-      0 10px 40px -10px rgba(0, 0, 0, 1);
-    z-index: 10;
-  }
-
-  .mission-card svg {
-    filter: drop-shadow(0 0 8px rgba(19, 245, 132, 0.6));
-  }
-
-  /* Animated Border Trail Wrapper */
-  .mission-card-border {
-    position: absolute;
-    inset: 0;
-    padding: 1.5px;
-    /* Slightly thicker for visibility */
-    border-radius: 24px;
-    background: transparent;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 5;
-    opacity: 0.6;
-    /* Subtle base visibility */
-    transition: opacity 0.4s ease;
-  }
-
-  .mission-card-border::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200%;
-    height: 200%;
-    transform: translate(-50%, -50%);
-    background: conic-gradient(from 0deg,
-        transparent 0deg,
-        transparent 280deg,
-        rgba(19, 245, 132, 0.1) 320deg,
-        var(--color-primary) 360deg);
-    animation: rotate-border 4s linear infinite;
-  }
-
-  @keyframes rotate-border {
-    from {
-      transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    to {
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-  }
-
-  /* Hover State - Scale Lift and Glow Intensify */
-  .mission-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    background: linear-gradient(180deg, #151515 0%, #080808 100%);
-    border-color: rgba(19, 245, 132, 0.25);
-    box-shadow:
-      0 0 0 1px rgba(19, 245, 132, 0.1),
-      0 20px 50px -15px rgba(0, 0, 0, 1),
-      0 0 40px rgba(19, 245, 132, 0.1);
-    z-index: 50;
-  }
-
-  .mission-card:hover .mission-card-border {
-    opacity: 1;
-  }
-
-  .mission-card:hover .mission-card-border::before {
-    animation-duration: 2s;
-    background: conic-gradient(from 0deg,
-        transparent 0deg,
-        transparent 260deg,
-        var(--color-primary) 360deg);
-  }
-
   /* Product Card */
   .product-card {
     position: relative;
@@ -1264,6 +1172,35 @@
   /* Smooth transition timing */
   .duration-400 {
     transition-duration: 400ms;
+  }
+
+
+  /* Green Grid Pattern (User Requested) */
+  .bg-grid-green {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(19, 245, 132, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(19, 245, 132, 0.05) 1px, transparent 1px);
+  }
+
+  .bg-grid-green-strong {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(19, 245, 132, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(19, 245, 132, 0.08) 1px, transparent 1px);
+  }
+
+  /* Animated Grid Movement */
+  @keyframes grid-move {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: 40px 40px;
+    }
+  }
+
+  .animate-grid-slow {
+    animation: grid-move 20s linear infinite;
   }
 
 }

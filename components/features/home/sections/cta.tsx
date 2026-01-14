@@ -3,6 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +17,12 @@ export function CTASection() {
     const sectionRef = useRef<HTMLElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isHovered, setIsHovered] = useState(false);
+    const isHoveredRef = useRef(false);
+
+    // Sync ref with state
+    useEffect(() => {
+        isHoveredRef.current = isHovered;
+    }, [isHovered]);
 
     // Star Warp Animation
     useEffect(() => {
@@ -60,7 +73,11 @@ export function CTASection() {
             const cy = height / 2;
 
             // Speed factor based on hover
-            const speed = isHovered ? 15 : 2;
+            const targetSpeed = isHoveredRef.current ? 15 : 2;
+            const currentSpeed = (stars as any).speed || 2;
+            // Smooth speed transition
+            (stars as any).speed = currentSpeed + (targetSpeed - currentSpeed) * 0.1;
+            const speed = (stars as any).speed;
 
             stars.forEach((star) => {
                 // Move star closer
@@ -98,7 +115,36 @@ export function CTASection() {
             window.removeEventListener("resize", resize);
             cancelAnimationFrame(animationFrameId);
         };
-    }, [isHovered]);
+    }, []);
+
+    useGSAP(() => {
+        if (!sectionRef.current) return;
+
+        const content = sectionRef.current.querySelector(".container");
+        if (content) {
+            gsap.fromTo(content,
+                {
+                    opacity: 0,
+                    y: 60,
+                    scale: 0.9,
+                    filter: "blur(10px)"
+                },
+                {
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top 85%",
+                        end: "top 50%",
+                        scrub: 1.5,
+                    },
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    filter: "blur(0px)",
+                    ease: "expo.out",
+                }
+            );
+        }
+    }, { scope: sectionRef });
 
 
 

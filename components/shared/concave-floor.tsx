@@ -46,7 +46,7 @@ const pseudoRandom = (seed: number) => {
 
 const ConcentricRings: React.FC<{ intensity: number }> = memo(({ intensity }) => {
   const meshRef = useRef<THREE.InstancedMesh | null>(null);
-  
+
   // Adaptive particle count based on performance tier
   const performanceTier = useMemo(() => getPerformanceTier(), []);
   const quality = useMemo(() => getAdaptiveQuality(performanceTier), [performanceTier]);
@@ -83,7 +83,7 @@ const ConcentricRings: React.FC<{ intensity: number }> = memo(({ intensity }) =>
 
     return { particles: tempParticles, dummy: tempDummy, color: tempColor };
   }, [numRings, quality.particleCount]);
-  
+
   // Frame rate throttling
   const throttleFrame = useMemo(() => createFrameThrottle(quality.maxFPS), [quality.maxFPS]);
   useLayoutEffect(() => {
@@ -107,7 +107,7 @@ const ConcentricRings: React.FC<{ intensity: number }> = memo(({ intensity }) =>
     if (!meshRef.current) return;
 
     // Throttle frame updates based on performance tier
-    if (!throttleFrame(() => {})) return;
+    if (!throttleFrame(() => { })) return;
 
     const time = clock.getElapsedTime();
 
@@ -183,15 +183,15 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
   // Get performance tier and adaptive settings
   const performanceTier = useMemo(() => getPerformanceTier(), []);
   const quality = useMemo(() => getAdaptiveQuality(performanceTier), [performanceTier]);
-  
+
   return (
     <div className={`w-full h-full relative ${className}`} style={{ willChange: 'transform' }}>
       <Canvas
         dpr={quality.dpr as [number, number]}
-        gl={{ 
-          antialias: quality.antialias, 
-          alpha: true, 
-          toneMapping: THREE.ReinhardToneMapping, 
+        gl={{
+          antialias: quality.antialias,
+          alpha: true,
+          toneMapping: THREE.ReinhardToneMapping,
           toneMappingExposure: 1.1,
           powerPreference: "high-performance",
         }}
@@ -214,7 +214,7 @@ const ConcaveFloor: React.FC<ConcaveFloorProps> = ({ className = "", intensity =
         <spotLight position={[0, 20, 0]} angle={0.5} penumbra={0.5} intensity={1} color="#ffffff" />
 
         <group>
-          <WireframeFloor />
+
           <ConcentricRings intensity={intensity} />
         </group>
 

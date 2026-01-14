@@ -57,7 +57,10 @@ export const Globe = ({ className }: { className?: string }) => {
             },
         });
         setTimeout(() => (canvasRef.current!.style.opacity = "1"));
-        return () => globe.destroy();
+        return () => {
+            globe.destroy();
+            window.removeEventListener("resize", onResize);
+        };
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (

@@ -10,6 +10,7 @@ import { motion } from "motion/react";
 import type { GlobeConfig } from "@/components/ui/globe";
 import type { ServiceHeroProps } from "@/types/props";
 import { ArrowRight, ChevronRight } from "lucide-react";
+import Frame from "@/components/shared/frame";
 
 const World = dynamic(
   () => import("@/components/ui/globe").then((mod) => mod.World),
@@ -106,6 +107,11 @@ export function ServiceHero({ title, subtitle }: ServiceHeroProps) {
     <section className="relative w-full min-h-screen flex items-center overflow-hidden pt-24 md:pt-32 pb-20">
       {/* Dark overlay to match main Hero style */}
       <div className="absolute inset-0 bg-black/40 z-[-1] pointer-events-none" />
+
+      {/* Frame Background */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none overflow-hidden select-none">
+        <Frame className="w-full h-full max-w-[1400px] object-contain scale-125" />
+      </div>
 
 
       <div className="container relative z-10 mx-auto px-4 md:px-6">

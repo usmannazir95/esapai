@@ -236,15 +236,24 @@ export const NavbarLogo = () => {
   return (
     <Link
       href="/"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal"
     >
-      <Image
-        src="/logo/esaplogo.svg"
-        alt="ESAP Logo"
-        width={65}
-        height={21}
-        className="h-auto w-auto"
-      />
+      <div className="flex items-center gap-2">
+        <Image
+          src="/logo/mainlogo.png"
+          alt="Main Logo"
+          width={40}
+          height={40}
+          className="h-8 w-auto"
+        />
+        <Image
+          src="/logo/esaplogo.svg"
+          alt="ESAP Logo"
+          width={65}
+          height={21}
+          className="h-auto w-auto"
+        />
+      </div>
     </Link>
   );
 };
@@ -267,7 +276,7 @@ export const NavbarButton = ({
     | React.ComponentPropsWithoutRef<"button">
   )) => {
   const baseStyles =
-    "px-4 py-2 text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
+    "px-4 py-2 text-base font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 
   const variantStyles = {
     primary:

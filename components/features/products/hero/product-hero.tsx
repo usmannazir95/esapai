@@ -54,7 +54,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
   const iconAlt = centerIconAlt || `${title} Icon`;
 
   return (
-    <section className="relative w-full overflow-hidden bg-dark pt-20 sm:pt-24 md:pt-32 lg:pt-40 pb-12 sm:pb-16 md:pb-20 lg:pb-32">
+    <section className="relative w-full overflow-hidden bg-dark min-h-screen flex flex-col justify-center pt-24 pb-12">
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden w-full">
         <div className="absolute inset-0 w-full h-full left-0 right-0">
           <div className="absolute inset-0 w-full h-full left-0 right-0 relative overflow-hidden">
@@ -85,7 +85,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center">
         <div className="max-w-6xl mx-auto w-full">
-          <div className="text-center mb-6 sm:mb-8 md:mb-10">
+          <div className="text-center mb-6">
             <TypewriterTitle
               title={title}
               splitMode="lastWord"
@@ -93,7 +93,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
               align="center"
             />
 
-            <div className="mb-5 sm:mb-6 md:mb-8 space-y-1.5 sm:space-y-2">
+            <div className="mb-6 space-y-1.5 sm:space-y-2">
               {subtitle.map((line, index) => (
                 <p
                   key={index}
@@ -129,7 +129,7 @@ export function ProductHero({ title, subtitle, centerIcon, centerIconAlt, produc
           </div>
 
           <div className="relative z-20 flex items-center justify-center">
-            <div className="w-full h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px] relative">
+            <div className="w-full h-[40vh] min-h-[300px] max-h-[500px] relative">
               <ProductHaloFlow
                 haloScale={1.0}
                 centerNode={{

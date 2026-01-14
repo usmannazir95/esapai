@@ -219,7 +219,7 @@ export function Timeline({ timeline }: TimelineProps) {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 10%", "end 50%"],
+    offset: ["start 50%", "end 50%"],
   });
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
@@ -235,17 +235,6 @@ export function Timeline({ timeline }: TimelineProps) {
       className="relative max-w-5xl mx-auto px-4 sm:px-6 md:px-8"
     >
       <div ref={ref} className="relative space-y-0 pb-6 sm:pb-7 md:pb-8">
-        {timeline.map((entry, index) => (
-          <TimelineEntry
-            key={index}
-            entry={entry}
-            index={index}
-            entryRef={(el) => {
-              entryRefs.current[index] = el;
-            }}
-          />
-        ))}
-
         {/* Vertical track + animated progress (desktop) — mirrors components/ui/timeline.tsx */}
         {timeline.length > 1 && (
           <div
@@ -261,6 +250,20 @@ export function Timeline({ timeline }: TimelineProps) {
             />
           </div>
         )}
+
+        {timeline.map((entry, index) => (
+          <TimelineEntry
+            key={index}
+            entry={entry}
+            index={index}
+            entryRef={(el) => {
+              entryRefs.current[index] = el;
+            }}
+          />
+        ))}
+
+        {/* Vertical track + animated progress (desktop) — mirrors components/ui/timeline.tsx */}
+
       </div>
     </div>
   );

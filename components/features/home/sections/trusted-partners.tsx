@@ -1,6 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 const PARTNERS = [
     { name: "NVIDIA", logo: "/placeholder.svg" },
@@ -14,8 +21,36 @@ const PARTNERS = [
 ];
 
 export function TrustedPartners() {
+    const sectionRef = useRef<HTMLElement>(null);
+
+    useGSAP(() => {
+        if (!sectionRef.current) return;
+
+        gsap.fromTo(sectionRef.current,
+            {
+                opacity: 0,
+                y: 40,
+                scale: 0.95,
+                filter: "blur(4px)"
+            },
+            {
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 90%",
+                    end: "top 70%",
+                    scrub: 1.5,
+                },
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                ease: "expo.out",
+            }
+        );
+    }, { scope: sectionRef });
+
     return (
-        <section className="w-full py-12 overflow-hidden">
+        <section ref={sectionRef} className="w-full pt-20 pb-12 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 overflow-hidden">
             <div className="relative flex overflow-hidden">
                 {/* Marquee Row */}
                 <div className="flex animate-marquee whitespace-nowrap py-4">

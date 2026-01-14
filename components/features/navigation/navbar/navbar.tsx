@@ -42,7 +42,7 @@ function NavLinkItem({
   return (
     <Link
       href={href}
-      className={`nav-link-group relative group whitespace-nowrap cursor-pointer px-4 py-2 text-sm font-medium transition-all duration-300 ${isActive ? "is-active text-[var(--color-primary)]" : "text-light-gray hover:text-[var(--color-primary)]"
+      className={`nav-link-group relative group whitespace-nowrap cursor-pointer px-4 py-2 text-base font-medium transition-all duration-300 ${isActive ? "is-active text-[var(--color-primary)]" : "text-light-gray hover:text-[var(--color-primary)]"
         } ${className}`}
       onClick={onClick}
     >
@@ -66,7 +66,7 @@ function NavDropdownTrigger({
   return (
     <button
       onClick={onClick}
-      className={`nav-link-group relative group whitespace-nowrap flex items-center gap-1 cursor-pointer px-4 py-2 text-sm font-medium transition-all duration-300 ${isActive ? "is-active text-[var(--color-primary)]" : "text-light-gray hover:text-[var(--color-primary)]"
+      className={`nav-link-group relative group whitespace-nowrap flex items-center gap-1 cursor-pointer px-4 py-2 text-base font-medium transition-all duration-300 ${isActive ? "is-active text-[var(--color-primary)]" : "text-light-gray hover:text-[var(--color-primary)]"
         }`}
       aria-expanded={isOpen}
     >
@@ -169,7 +169,7 @@ export function Navbar() {
   })) satisfies MobileMenuItem[];
 
   return (
-    <ResizableUiNavbar className="fixed inset-x-0 top-5 z-50">
+    <ResizableUiNavbar className="fixed inset-x-0 top-2 z-50">
       {/* Desktop Navbar */}
       <NavBody>
         {/* Logo */}

@@ -13,6 +13,7 @@ import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import Box from "@/components/shared/box";
+import Frame from "@/components/shared/frame";
 import { motion } from "motion/react";
 
 
@@ -212,22 +213,9 @@ export function Hero() {
                     });
                     continuousAnimationsRef.current.push(hex6);
 
-                    // Refined Pulsing Glow Animation for individual hexagons
-                    const hexagonGlow = gsap.to(iconsRef.current.querySelectorAll('[class^="hexagon-"]'), {
-                        filter: "drop-shadow(0 0 15px rgba(19,245,132,0.6)) drop-shadow(0 0 30px rgba(19,245,132,0.3))",
-                        duration: 3,
-                        ease: "sine.inOut",
-                        repeat: -1,
-                        yoyo: true,
-                        stagger: {
-                            each: 0.3,
-                            from: "random"
-                        }
-                    });
-                    continuousAnimationsRef.current.push(hexagonGlow);
 
                     // Pause all animations if not in view
-                    [hex1, hex2, hex3, hex4, hex5, hex6, hexagonGlow].forEach(
+                    [hex1, hex2, hex3, hex4, hex5, hex6].forEach(
                         (anim) => anim.paused(!isInView)
                     );
                 }
@@ -263,11 +251,16 @@ export function Hero() {
                 sectionRef.current = el;
                 setIntersectionRef(el);
             }}
-            className="relative w-full min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
+            className="relative w-full z-30 min-h-0 sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden pb-6 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-40 pt-20 sm:pt-24 md:pt-0"
         >
 
 
 
+
+            {/* Frame Background - Added for depth */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none overflow-hidden select-none z-0">
+                <Frame className="w-full h-full max-w-[1500px] object-contain scale-110" />
+            </div>
 
             {/* Circle behind content - animated glow and breathing effect */}
             <div
@@ -284,7 +277,7 @@ export function Hero() {
                 ref={iconsRef}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-5 pointer-events-none hidden xl:block gsap-fade-in-optimized animate-optimized"
             >
-                <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-100 filter drop-shadow-[0_0_30px_rgba(19,245,132,0.6)] drop-shadow-[0_0_60px_rgba(19,245,132,0.3)] brightness-[1.2]" />
+                <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-100 brightness-[1.2]" />
             </div>
 
             <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">
