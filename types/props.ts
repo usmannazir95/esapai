@@ -116,6 +116,9 @@ export interface SpotlightCardProps {
   className?: string;
   spotlightColor?: string;
   glowColor?: string;
+  enableTilt?: boolean;
+  tiltIntensity?: number;
+  borderRadius?: string;
   onMouseMove?: (e: MouseEvent<HTMLDivElement>) => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;

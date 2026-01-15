@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { CharacterReveal } from "@/components/ui/character-reveal";
 
 import { cn } from "@/lib/utils";
 import { SectionHeader } from "@/components/ui/section-header";
@@ -121,7 +123,6 @@ function ServiceCard({ service, index, setRef }: ServiceCardProps) {
   const handleMouseEnter = () => {
     if (videoRef.current) {
       videoRef.current.play().catch((e) => {
-        // Handle autoplay restrictions (though muted should work)
         console.warn("Video play failed", e);
       });
     }
@@ -130,21 +131,30 @@ function ServiceCard({ service, index, setRef }: ServiceCardProps) {
   const handleMouseLeave = () => {
     if (videoRef.current) {
       videoRef.current.pause();
-      // Optional: reset to start
-      // videoRef.current.currentTime = 0; 
     }
   };
 
+  // Alternate animation direction based on index for visual interest
+  const animationDirection = index % 2 === 0 ? "left" : "right";
+
   return (
-    <div
-      ref={setRef}
-      className={cn(
-        service.colSpan,
-        "product-card group relative overflow-hidden transition-all duration-300 hover:shadow-glow-primary-feature cursor-pointer bg-black/60 backdrop-blur-sm"
-      )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <ScrollReveal
+      direction={animationDirection}
+      distance={60}
+      delay={index * 100}
+      duration={800}
+      threshold={0.1}
+      once={true}
+      className={service.colSpan}
     >
+      <div
+        ref={setRef}
+        className={cn(
+          "product-card group relative overflow-hidden transition-all duration-500 hover:shadow-glow-primary-feature cursor-pointer bg-black/60 backdrop-blur-sm glass-card-hover h-full"
+        )}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
 
 
       {/* Video Background */}
@@ -200,7 +210,8 @@ function ServiceCard({ service, index, setRef }: ServiceCardProps) {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </ScrollReveal>
   );
 }
 

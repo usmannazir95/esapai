@@ -114,7 +114,7 @@ export function TypewriterTitle({
 
     return (
         <h1 className={cn(
-            "text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight",
+            "font-heading text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[0.95] tracking-heading",
             alignmentClass,
             className
         )}>

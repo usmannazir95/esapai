@@ -104,6 +104,7 @@ export function SectionHeader({
   return (
     <div
       ref={containerRef}
+      data-testid="section-header"
       className={cn("relative z-10 flex flex-col mb-12 sm:mb-16", alignClass, className)}
     >
 
@@ -128,7 +129,7 @@ export function SectionHeader({
         <h2
           ref={titleRef}
           className={cn(
-            "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white tracking-tight",
+            "font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[0.95] text-gradient-white tracking-heading",
             titleClassName
           )}
         >
@@ -150,7 +151,7 @@ export function SectionHeader({
         <p
           ref={subtitleRef}
           className={cn(
-            "mt-5 sm:mt-7 text-base sm:text-lg md:text-xl lg:text-xl text-premium-body leading-relaxed max-w-3xl tracking-tight",
+            "font-body mt-5 sm:mt-7 text-base sm:text-lg md:text-xl lg:text-xl text-white/70 leading-relaxed max-w-3xl",
             mxClass,
             subtitleClassName
           )}

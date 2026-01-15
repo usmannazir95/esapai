@@ -85,7 +85,18 @@
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
-    font-family: var(--font-jakarta), sans-serif;
+  }
+
+  /* Typography - Headings use Space Grotesk */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-space-grotesk), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Body text uses Inter */
+  p, li {
+    font-family: var(--font-inter), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   }
 }
 
@@ -405,6 +416,215 @@
     border: 1px solid rgba(19, 245, 132, 0.25);
     box-shadow: 0 0 15px rgba(19, 245, 132, 0.1);
   }
+
+  /* ========================================
+     MODERN GLASSMORPHISM UTILITIES
+     Agency-inspired glass and transparency effects
+     ======================================== */
+
+  /* Base glass cards */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-card-dark {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Transparency hierarchy */
+  .bg-white-5 { background: rgba(255, 255, 255, 0.05); }
+  .bg-white-10 { background: rgba(255, 255, 255, 0.10); }
+  .bg-white-15 { background: rgba(255, 255, 255, 0.15); }
+  .text-white-30 { color: rgba(255, 255, 255, 0.30); }
+  .text-white-50 { color: rgba(255, 255, 255, 0.50); }
+  .text-white-70 { color: rgba(255, 255, 255, 0.70); }
+  .border-white-5 { border-color: rgba(255, 255, 255, 0.05); }
+  .border-white-10 { border-color: rgba(255, 255, 255, 0.10); }
+  .border-white-15 { border-color: rgba(255, 255, 255, 0.15); }
+
+  /* Glow effects system */
+  .glow-primary {
+    box-shadow: 0 0 40px rgba(19, 245, 132, 0.4);
+  }
+
+  .glow-primary-subtle {
+    box-shadow: 0 0 20px rgba(19, 245, 132, 0.2);
+  }
+
+  .glow-primary-strong {
+    box-shadow: 0 0 60px rgba(19, 245, 132, 0.5),
+                0 0 120px rgba(19, 245, 132, 0.3);
+  }
+
+  /* Breathing glow animation */
+  @keyframes glow-breathe {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(19, 245, 132, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(19, 245, 132, 0.5);
+    }
+  }
+
+  .glow-breathe {
+    animation: glow-breathe 3s ease-in-out infinite;
+  }
+
+  /* Floating animation variants */
+  @keyframes float-gentle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes float-dramatic {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(3deg); }
+  }
+
+  .animate-float-gentle {
+    animation: float-gentle 4s ease-in-out infinite;
+  }
+
+  .animate-float-dramatic {
+    animation: float-dramatic 5s ease-in-out infinite;
+  }
+
+  /* Connector lines utility */
+  .connector-line {
+    position: absolute;
+    background: linear-gradient(to bottom,
+      rgba(19, 245, 132, 0.3),
+      rgba(19, 245, 132, 0.1),
+      transparent);
+    width: 1px;
+  }
+
+  /* Clip-path reveal utility classes */
+  .clip-reveal-left { clip-path: inset(0 100% 0 0); }
+  .clip-reveal-right { clip-path: inset(0 0 0 100%); }
+  .clip-reveal-top { clip-path: inset(100% 0 0 0); }
+  .clip-reveal-bottom { clip-path: inset(0 0 100% 0); }
+  .clip-reveal-visible { clip-path: inset(0 0 0 0); }
+
+  /* Section stacking z-index system */
+  .z-section-hero { z-index: 10; }
+  .z-section-service { z-index: 20; }
+  .z-section-product { z-index: 30; }
+  .z-section-case-study { z-index: 40; }
+  .z-section-about { z-index: 50; }
+  .z-section-contact { z-index: 60; }
+
+  /* ========================================
+     AGENCY-STYLE TYPOGRAPHY UTILITIES
+     Modern, bold typography with tighter spacing
+     ======================================== */
+
+  /* Font family utilities */
+  .font-heading {
+    font-family: var(--font-space-grotesk), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .font-body {
+    font-family: var(--font-inter), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Hero display typography - massive impact */
+  .text-display-hero {
+    font-family: var(--font-space-grotesk), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(3rem, 12vw, 10rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  .text-display-lg {
+    font-family: var(--font-space-grotesk), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+
+  .text-display-md {
+    font-family: var(--font-space-grotesk), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  /* Section labels - small, uppercase, wide tracking */
+  .text-label {
+    font-family: var(--font-space-grotesk), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .text-label-lg {
+    font-family: var(--font-space-grotesk), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  /* Tighter line heights for impact */
+  .leading-tighter { line-height: 0.85; }
+  .leading-tight-custom { line-height: 0.9; }
+  .leading-snug-custom { line-height: 0.95; }
+
+  /* Letter spacing utilities */
+  .tracking-display { letter-spacing: -0.04em; }
+  .tracking-heading { letter-spacing: -0.02em; }
+  .tracking-wide-custom { letter-spacing: 0.3em; }
+  .tracking-widest-custom { letter-spacing: 0.5em; }
+
+  /* Gradient text effects */
+  .text-gradient-white {
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #10b981 50%, var(--color-primary) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #a855f7 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Drop shadow text effects */
+  .text-shadow-glow {
+    text-shadow: 0 0 20px rgba(19, 245, 132, 0.5),
+                 0 0 40px rgba(19, 245, 132, 0.3);
+  }
+
+  .text-shadow-white {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+  }
 }
 
 @layer components {
@@ -414,67 +634,9 @@
     isolation: isolate;
     transition: color 0.3s ease;
   }
-
-  .nav-link-group .nav-glow {
-    position: absolute;
-    inset: -4px;
-    border-radius: 999px;
-    background: radial-gradient(circle at 50% 50%,
-        rgba(19, 245, 132, 0.45) 0%,
-        rgba(19, 245, 132, 0.15) 55%,
-        rgba(19, 245, 132, 0.05) 75%,
-        transparent 100%);
-    opacity: 0;
-    transform: scale(0.85);
-    filter: blur(18px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .nav-link-group:hover .nav-glow,
-  .nav-link-group:focus-visible .nav-glow,
-  .nav-link-group.is-active .nav-glow {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 @layer components {
-
-  /* Hero Badge Container */
-  .hero-badge {
-    @apply mb-8 inline-flex h-10 items-stretch rounded-[48px] overflow-hidden pl-1.5 py-1;
-    background: rgba(2, 3, 5, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(19, 245, 132, 0.3);
-    box-shadow: 0 0 20px rgba(19, 245, 132, 0.1);
-  }
-
-  /* Hero Badge Exclusive Section */
-  .hero-badge-exclusive {
-    @apply rounded-[48px] shrink-0 px-5 flex items-center justify-center h-full;
-    background-color: var(--color-primary);
-    box-shadow: 0 0 15px rgba(19, 245, 132, 0.4);
-  }
-
-  /* Hero Badge Exclusive Text */
-  .hero-badge-exclusive-text {
-    @apply text-xs font-semibold leading-none;
-    color: var(--color-primary-dark);
-  }
-
-  /* Hero Badge Text Section */
-  .hero-badge-text {
-    @apply flex items-center px-6 gap-3 h-full;
-    background-color: var(--color-black);
-  }
-
-  /* Hero Badge Text Content */
-  .hero-badge-text-content {
-    @apply text-sm font-medium leading-none;
-    color: var(--color-primary);
-  }
 
   /* Global Button Hover Effects for Native Buttons */
   /* Excludes: navigation links, react-flow controls, and standard Button component instances */

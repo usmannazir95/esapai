@@ -13,7 +13,7 @@ const buttonVariants = cva(
         default:
           "bg-white text-black shadow-lg shadow-white/10 hover:shadow-[0_8px_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] relative overflow-hidden",
         primary:
-          "bg-primary text-[var(--color-primary-dark)] tracking-wide shadow-[0_0_30px_rgba(19,245,132,0.4)] hover:shadow-[0_0_50px_rgba(19,245,132,0.6),0_0_100px_rgba(19,245,132,0.3)] hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-500 before:ease-out border border-white/20",
+          "bg-[#0a8a52] text-white tracking-wide shadow-[0_0_25px_rgba(19,245,132,0.3)] hover:bg-[#0c9d5e] hover:shadow-[0_0_40px_rgba(19,245,132,0.5)] hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] transition-all duration-300",
         premium:
           "bg-gradient-to-br from-primary via-[#4ADE80] to-[#8EFFC7] text-[var(--color-primary-dark)] shadow-[0_4px_15px_rgba(19,245,132,0.3)] hover:shadow-[0_8px_40px_rgba(19,245,132,0.5),0_0_60px_rgba(19,245,132,0.3)] hover:-translate-y-1 hover:scale-[1.03] active:scale-95 transition-all duration-500 relative overflow-hidden group/premium",
         glass:

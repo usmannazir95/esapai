@@ -1,51 +1,61 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import type { CaseStudyWithUrls } from "@/types/case-study";
 import type { CaseStudyCardProps } from "@/types/props";
-
 
 export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
   const thumbnailImage = caseStudy.heroImages[0];
   const displayTags = caseStudy.tags.slice(0, 3);
-  const excerpt = caseStudy.subtitle.length > 150
-    ? `${caseStudy.subtitle.substring(0, 150)}...`
-    : caseStudy.subtitle;
+  const excerpt =
+    caseStudy.subtitle.length > 150
+      ? `${caseStudy.subtitle.substring(0, 150)}...`
+      : caseStudy.subtitle;
 
   return (
-    <Link href={`/case-study/${caseStudy.slug}`} className="block h-full">
-      <SpotlightCard className="h-full">
+    <Link href={`/case-study/${caseStudy.slug}`} className="block h-full group">
+      <SpotlightCard
+        className="h-full"
+        enableTilt={true}
+        tiltIntensity={6}
+        spotlightColor="rgba(19, 245, 132, 0.2)"
+        glowColor="rgba(19, 245, 132, 0.4)"
+      >
         <div className="p-4 sm:p-5 md:p-6 h-full flex flex-col">
-          {/* Thumbnail Image */}
+          {/* Thumbnail Image with enhanced hover */}
           {thumbnailImage && (
             <div className="relative w-full h-40 sm:h-44 md:h-48 lg:h-56 mb-3 sm:mb-4 md:mb-5 rounded-lg overflow-hidden">
               <Image
                 src={thumbnailImage.url}
                 alt={thumbnailImage.alt || caseStudy.title}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
+              {/* Overlay gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           )}
 
-          {/* Title */}
-          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 text-gradient-radial-white">
+          {/* Title with hover color transition */}
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 text-white group-hover:text-primary transition-colors duration-300">
             {caseStudy.title}
           </h3>
 
           {/* Description */}
-          <p className="text-xs sm:text-sm md:text-base text-light-gray-90 leading-relaxed mb-4 sm:mb-5 flex-1">
+          <p className="text-xs sm:text-sm md:text-base text-white/70 leading-relaxed mb-4 sm:mb-5 flex-1 group-hover:text-white/90 transition-colors duration-300">
             {excerpt}
           </p>
 
-          {/* Tags */}
+          {/* Tags with stagger hover effect */}
           {displayTags.length > 0 && (
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
               {displayTags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs md:text-sm rounded-full bg-dark border border-primary/30 text-primary"
+                  className="px-2.5 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs md:text-sm rounded-full bg-white/5 border border-primary/30 text-primary transition-all duration-300 group-hover:bg-primary/20 group-hover:border-primary/50"
+                  style={{ transitionDelay: `${index * 50}ms` }}
                 >
                   {tag}
                 </span>
@@ -53,9 +63,9 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
             </div>
           )}
 
-          {/* CTA */}
-          <div className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all">
-            <span>View</span>
+          {/* Enhanced CTA with glow */}
+          <div className="flex items-center gap-2 text-primary font-semibold transition-all duration-300 group-hover:gap-4">
+            <span className="group-hover:text-shadow-glow">View</span>
             <svg
               width="20"
               height="20"
@@ -63,7 +73,7 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="transition-transform group-hover:translate-x-1"
+              className="transition-all duration-300 group-hover:translate-x-2 group-hover:drop-shadow-[0_0_8px_rgba(19,245,132,0.6)]"
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>

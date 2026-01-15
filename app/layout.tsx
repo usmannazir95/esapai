@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google"; // Changed font
+import { Plus_Jakarta_Sans, Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/features/navigation/navbar";
 import { Footer } from "@/components/features/navigation/footer";
@@ -15,11 +15,28 @@ import { generateHomeMetadata } from "@/lib/seo/metadata";
 import { generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/structured-data";
 import { StructuredDataComponent } from "@/components/seo/structured-data";
 import { BackgroundLayout } from "@/components/ui/background/background-layout";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 const jakarta = Plus_Jakarta_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
   variable: "--font-jakarta",
+  display: "swap",
+});
+
+// Space Grotesk for bold headings - Agency style
+const spaceGrotesk = Space_Grotesk({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+// Inter for clean body text
+const inter = Inter({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -48,8 +65,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jakarta.variable} font-jakarta antialiased flex flex-col min-h-screen`}
+        className={`${jakarta.variable} ${spaceGrotesk.variable} ${inter.variable} font-jakarta antialiased flex flex-col min-h-screen`}
       >
+        <ScrollProgress
+          gradientFrom="#13f584"
+          gradientVia="#10b981"
+          gradientTo="#13f584"
+          glowColor="rgba(19, 245, 132, 0.6)"
+          height={3}
+        />
         <BackgroundLayout />
         <StructuredDataComponent data={structuredData} />
         <ToastProvider>

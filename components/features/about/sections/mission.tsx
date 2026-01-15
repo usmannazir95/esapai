@@ -6,6 +6,7 @@ import type { MissionProps } from "@/types/props";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { MissionCard } from "@/components/ui/mission-card";
+import { CharacterReveal } from "@/components/ui/character-reveal";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -80,6 +81,29 @@ export function Mission({
         }
       );
 
+      // Add clip-path reveal animation to individual cards
+      const cardElements = trackRef.current?.querySelectorAll('.mission-card-wrapper');
+      if (cardElements) {
+        gsap.fromTo(cardElements,
+          {
+            clipPath: "inset(0 100% 0 0)",
+            opacity: 0.3,
+          },
+          {
+            clipPath: "inset(0 0% 0 0)",
+            opacity: 1,
+            stagger: 0.15,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 60%",
+              end: "top 20%",
+              scrub: 1,
+            },
+          }
+        );
+      }
+
       // Smooth Header Reveal
       const header = sectionRef.current.querySelector('[data-testid="section-header"]');
       if (header) {
@@ -131,14 +155,15 @@ export function Mission({
           {cards.map((card, index) => (
             <div
               key={index}
-              className="w-[260px] sm:w-[300px] md:w-[340px] h-[320px] sm:h-[380px] md:h-[420px] flex-shrink-0"
+              className="mission-card-wrapper w-[260px] sm:w-[300px] md:w-[340px] h-[320px] sm:h-[380px] md:h-[420px] flex-shrink-0"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <MissionCard
                 title={card.title}
                 description={card.description}
                 icon={card.icon}
                 image={card.image}
-                className="h-full w-full"
+                className="h-full w-full glass-card glass-card-hover"
               />
             </div>
           ))}

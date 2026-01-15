@@ -4,11 +4,17 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 import { Button } from "@/components/ui/button";
 import { TypewriterTitle } from "@/components/ui/typewriter-title";
 import { HeroBadge } from "@/components/ui/hero-badge";
+import { CharacterReveal } from "@/components/ui/character-reveal";
 import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
@@ -280,30 +286,65 @@ export function Hero() {
                 <Box className="max-w-[1400px] xl:max-w-[1800px] w-auto h-auto opacity-100 brightness-[1.2]" />
             </div>
 
+            {/* Grid overlay with fading edges and parallax */}
+            <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
+                <div
+                    ref={(el) => {
+                        if (el && typeof window !== 'undefined') {
+                            gsap.to(el, {
+                                yPercent: 30,
+                                ease: 'none',
+                                scrollTrigger: {
+                                    trigger: sectionRef.current,
+                                    start: 'top top',
+                                    end: 'bottom top',
+                                    scrub: true,
+                                },
+                            });
+                        }
+                    }}
+                    className="absolute inset-0 will-change-transform"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(19, 245, 132, 0.06) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(19, 245, 132, 0.06) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '60px 60px',
+                        maskImage: 'radial-gradient(ellipse 50% 50% at 50% 40%, black 20%, transparent 70%)',
+                        WebkitMaskImage: 'radial-gradient(ellipse 50% 50% at 50% 40%, black 20%, transparent 70%)',
+                    }}
+                />
+            </div>
+
             <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-8 md:py-12 lg:py-16 flex flex-col items-center text-center">
-                {/* Tagline Badge */}
+                {/* Glossy Glassmorphism Badge */}
                 <div
                     ref={badgeRef}
-                    className="hero-badge relative max-w-5xl gsap-slide-up-optimized scale-90 sm:scale-95 md:scale-100 mb-4 sm:mb-6 md:mb-8 overflow-hidden"
+                    className="gsap-slide-up-optimized mb-6 sm:mb-8"
                 >
-                    {/* Animated beam effect */}
-                    <motion.div
-                        className="absolute inset-0 w-[200%] z-10 pointer-events-none"
-                        style={{
-                            background: 'linear-gradient(90deg, transparent 0%, transparent 45%, rgba(255, 255, 255, 0.15) 50%, transparent 55%, transparent 100%)',
-                        }}
-                        animate={{ x: ['-100%', '100%'] }}
-                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
-                    />
-                    <div className="hero-badge-exclusive">
-                        <span className="hero-badge-exclusive-text text-[9px] sm:text-[10px] md:text-xs tracking-wide">
-                            Exclusive
-                        </span>
-                    </div>
-                    <div className="hero-badge-text">
-                        <span className="hero-badge-text-content text-[10px] sm:text-[11px] md:text-sm tracking-wide">
-                            Tomorrow&apos;s Edge, Built Today
-                        </span>
+                    <div className="relative group cursor-pointer">
+                        {/* Outer glow */}
+                        <div className="absolute -inset-1 rounded-full bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                        {/* Main badge container */}
+                        <div className="relative flex items-center rounded-full p-1 bg-black/40 backdrop-blur-xl border-[0.5px] border-primary/60 shadow-[0_0_15px_rgba(19,245,132,0.2)]">
+                            {/* Green button on left */}
+                            <div className="flex items-center justify-center px-4 py-1.5 rounded-full bg-primary text-black text-[11px] sm:text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(19,245,132,0.4)]">
+                                New
+                            </div>
+
+                            {/* Text */}
+                            <span className="px-4 py-1.5 text-[11px] sm:text-xs text-white/90 font-medium tracking-wide">
+                                Introducing AI-Powered Automation
+                            </span>
+
+                            {/* Arrow icon */}
+                            <div className="pr-3">
+                                <svg className="w-4 h-4 text-white/60 group-hover:text-primary group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -320,16 +361,12 @@ export function Hero() {
                 </div>
 
                 {/* Subtitle/Description */}
-                <div
+                <p
                     ref={subtitleRef}
-                    className="mb-5 sm:mb-6 md:mb-8 lg:mb-10 space-y-1 sm:space-y-2 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white max-w-3xl mx-auto px-2 sm:px-4 gsap-fade-in-optimized tracking-tight"
+                    className="mb-4 sm:mb-5 text-xs sm:text-sm md:text-base text-white/60 max-w-xl mx-auto px-2 sm:px-4 leading-relaxed font-light gsap-fade-in-optimized"
                 >
-                    <p>
-                        Transform your business with intelligent automation, voice-activated
-                        systems,
-                    </p>
-                    <p>and AI agents that drive productivity and innovation</p>
-                </div>
+                    We design intelligent solutions that redefine how industries operate, tackle real-world challenges, and lead the next wave of transformation.
+                </p>
 
                 {/* CTA Button */}
                 <div ref={buttonRef} className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto gsap-scale-in-optimized">
