@@ -190,10 +190,9 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="w-full mt-auto bg-transparent relative"
+      className="w-full mt-auto relative z-[60]"
       style={{
-        maskImage: "linear-gradient(to bottom, transparent, black 10%, black 100%)",
-        WebkitMaskImage: "linear-gradient(to bottom, transparent, black 10%, black 100%)"
+        background: 'linear-gradient(180deg, #020305 0%, #030d0a 30%, #04120c 60%, #030d0a 100%)',
       }}
     >
       <div className="container mx-auto px-4 py-12 md:py-16">

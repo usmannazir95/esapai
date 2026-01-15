@@ -169,7 +169,7 @@ export function Navbar() {
   })) satisfies MobileMenuItem[];
 
   return (
-    <ResizableUiNavbar className="fixed inset-x-0 top-2 z-50">
+    <ResizableUiNavbar className="fixed inset-x-0 top-2 z-[100]">
       {/* Desktop Navbar */}
       <NavBody>
         {/* Logo */}

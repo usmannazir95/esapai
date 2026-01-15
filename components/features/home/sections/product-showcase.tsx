@@ -6,14 +6,20 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { ArrowUpRight } from "lucide-react";
 
 import { products } from "@/lib/products";
 import { cn } from "@/lib/utils";
-import { Section } from "@/components/ui/section";
-import { SectionHeader } from "@/components/ui/section-header";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Green color scheme for all cards (matching site theme)
+const cardStyle = {
+  bg: "from-emerald-950 via-[#0a2a1f] to-black",
+  accent: "text-primary",
+  accentBg: "bg-primary/20",
+  glow: "rgba(19, 245, 132, 0.3)",
+};
 
 export function ProductShowcase() {
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -162,9 +168,32 @@ export function ProductShowcase() {
   return (
     <section
       ref={triggerRef}
-      className="relative w-full h-screen bg-transparent overflow-visible"
+      className="relative w-full h-screen overflow-visible z-40"
+      style={{
+        background: 'linear-gradient(180deg, #0d3025 0%, #0a2a1f 25%, #071d16 50%, #041510 75%, #030d0a 100%)',
+      }}
     >
-      <div className="w-full h-screen flex flex-col overflow-hidden">
+      {/* Grid overlay matching hero */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(19, 245, 132, 0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(19, 245, 132, 0.06) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+          maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%)',
+        }}
+      />
+      {/* Top gradient fade - blends with Services background */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[50vh] z-[1] pointer-events-none"
+        style={{
+          background: 'linear-gradient(180deg, #041510 0%, rgba(4,21,16,0.75) 20%, rgba(7,29,22,0.55) 40%, rgba(10,42,31,0.35) 60%, rgba(13,48,37,0.15) 80%, transparent 100%)',
+        }}
+      />
+      <div className="relative w-full h-screen flex flex-col overflow-hidden z-10">
         {/* Extreme Right Fixed Sidebar - Minimalist Product Names */}
         <div className="absolute right-0 top-0 bottom-0 z-[100] hidden lg:flex flex-col justify-center px-4 md:px-8 select-none pointer-events-none">
           <div className="flex flex-col items-end gap-10">
@@ -196,26 +225,23 @@ export function ProductShowcase() {
           </div>
         </div>
 
-        <div className="pt-20 shrink-0">
-          <SectionHeader
-            title="Our Product Suite"
-            subtitle="Discover our comprehensive range of AI-powered solutions designed to transform your business operations."
-            className="mb-4"
-          />
+        <div className="pt-28 md:pt-32 shrink-0">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-sm text-white/50 mb-2">Discover our comprehensive AI-powered solutions</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">Our Product Suite</h2>
+          </div>
         </div>
 
         {/* Main viewport */}
-        <div className="relative flex-1 w-full flex items-start justify-center pt-0">
+        <div className="relative flex-1 w-full flex items-start justify-center pt-2">
 
           {/* Card Container */}
           <div
             ref={containerRef}
-            className="relative w-full max-w-[1000px] h-[500px] px-4"
+            className="relative w-full max-w-[1200px] h-[65vh] md:h-[70vh] px-4"
           >
             {products.map((product, index) => {
               const iconSrc = product.icon ?? product.content?.hero?.centerIcon;
-              const iconAlt =
-                product.content?.hero?.centerIconAlt ?? `${product.name} icon`;
 
               return (
                 <div
@@ -225,144 +251,112 @@ export function ProductShowcase() {
                   }}
                   className="absolute inset-0 w-full h-full p-4"
                 >
-                  <SpotlightCard className="h-full glass-cyber-strong !bg-[#050505] group overflow-hidden transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_0_80px_rgba(19,245,132,0.15)]">
-
-                    {/* Interactive Glow Background */}
-                    <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary-500/10 via-transparent to-primary-500/5 opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
-
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none z-0">
-                      <div className="absolute inset-0 [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+                  {/* Agency-style colorful card */}
+                  <div
+                    className={cn(
+                      "relative w-full h-full rounded-[32px] md:rounded-[48px] bg-gradient-to-br border border-white/10 shadow-2xl overflow-hidden group",
+                      cardStyle.bg
+                    )}
+                  >
+                    {/* Background accent glow */}
+                    <div className="absolute top-0 right-0 w-[50%] h-[50%] opacity-20 pointer-events-none">
+                      <div className="absolute top-[-30%] right-[-20%] w-full h-full bg-white blur-[150px] rounded-full"></div>
                     </div>
 
-                    <div className="relative h-full flex flex-col md:flex-row items-center p-8 md:p-12 gap-12 z-10">
-
-                      {/* Left Side: Content */}
-                      <div className="flex-1 text-left space-y-8">
-                        <div className="space-y-4">
-                          <div className="flex items-center gap-6">
-                            {iconSrc && (
-                              <div className="relative w-16 h-16 flex items-center justify-center">
-                                <Image
-                                  src={iconSrc}
-                                  alt={iconAlt}
-                                  width={64}
-                                  height={64}
-                                  className="object-contain filter-glow-primary"
-                                />
-                              </div>
-                            )}
-                            <span className="text-base text-white/40 tracking-[0.2em] uppercase pt-2">
-                              / Product_{index.toString().padStart(3, "0")}
-                            </span>
-                          </div>
-                          <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight drop-shadow-2xl">
-                            {product.name}
-                          </h3>
+                    {/* Content */}
+                    <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-12 lg:p-14">
+                      {/* Top Row - Category & Index */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <span className={cn("text-xs md:text-sm font-medium uppercase tracking-wider", cardStyle.accent)}>
+                            AI Product
+                          </span>
+                          <span className="w-1 h-1 rounded-full bg-white/30" />
+                          <span className="text-xs md:text-sm text-white/40 font-mono">
+                            {(index + 1).toString().padStart(2, "0")}
+                          </span>
                         </div>
-
-                        <p className="text-xl md:text-2xl text-white/80 font-medium leading-relaxed max-w-lg">
-                          {product.description}
-                        </p>
-
-                        <Link href={`/product/${product.slug}`} className="inline-block mt-8">
-                          <div
-                            className="group/btn relative inline-flex items-center gap-4 px-8 py-3 bg-[#13F584] rounded-full overflow-hidden transition-all duration-500 hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(19,245,132,0.4)] cursor-pointer"
-                          >
-                            {/* Inner Shimmer Sweep */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] transition-transform duration-1000"></div>
-
-                            <span className="relative z-10 text-base font-black uppercase tracking-widest text-black">
-                              Explore
-                            </span>
-
-                            <div className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black text-[#13F584] transition-all duration-500 group-hover:rotate-[360deg] group-hover:scale-110">
-                              <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="3"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                              </svg>
-                            </div>
-                          </div>
+                        <Link href={`/product/${product.slug}`}>
+                          <button className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:bg-white hover:text-black transition-all duration-300">
+                            <ArrowUpRight size={18} />
+                          </button>
                         </Link>
                       </div>
 
-                      {/* Right Side: Tilted Video Placeholder / Graphic */}
-                      <div className="flex-1 relative w-full h-full flex items-center justify-center [perspective:1500px]">
-                        <div className="relative w-[90%] aspect-video bg-neutral-900/80 border border-white/20 rounded-2xl overflow-hidden shadow-[20px_40px_80px_rgba(0,0,0,0.8)] [transform:rotateY(-25deg)_rotateX(15deg)_rotateZ(-2deg)] group-hover:[transform:rotateY(-15deg)_rotateX(10deg)_rotateZ(-1deg)] transition-transform duration-700 ease-out flex items-center justify-center">
-                          {product.content?.hero?.demoVideo ? (
-                            <div className="relative w-full h-full">
-                              <video
-                                ref={(el) => {
-                                  videoRefs.current[index] = el;
-                                }}
-                                src={product.content.hero.demoVideo}
-                                loop
-                                muted
-                                playsInline
-                                className="w-full h-full object-cover"
-                              />
-                              {/* Overlay for cinematic feel */}
-                              <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent pointer-events-none" />
-                            </div>
-                          ) : (
-                            <>
-                              {/* Inner Glow */}
-                              <div className="absolute inset-0 bg-gradient-to-tr from-primary-500/20 via-transparent to-white/5 opacity-50"></div>
-
-                              {/* Video UI Overlay Mockup */}
-                              <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                                <div className="flex justify-between items-start opacity-40">
-                                  <div className="flex gap-2">
-                                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                                  </div>
-                                  <div className="h-4 w-24 bg-white/10 rounded-full"></div>
-                                </div>
-
-                                <div className="flex-1 flex items-center justify-center">
-                                  <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-xl border border-white/20 group-hover:scale-110 transition-transform duration-500">
-                                    <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-white border-b-8 border-b-transparent translate-x-1"></div>
-                                  </div>
-                                </div>
-
-                                <div className="space-y-3 opacity-30">
-                                  <div className="h-2 w-full bg-white/10 rounded-full"></div>
-                                  <div className="h-2 w-2/3 bg-white/10 rounded-full"></div>
-                                </div>
-                              </div>
-                            </>
-                          )}
-
-                          {/* Large Icon Reflection/Glow (only if no video) */}
-                          {iconSrc && !product.content?.hero?.demoVideo && (
-                            <div className="absolute inset-0 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity duration-700 flex items-center justify-center blur-3xl">
+                      {/* Middle - Title & Description */}
+                      <div className="flex-1 flex flex-col justify-center py-6 md:py-10">
+                        <div className="flex items-center gap-4 mb-4">
+                          {iconSrc && (
+                            <div className="w-12 h-12 md:w-16 md:h-16">
                               <Image
                                 src={iconSrc}
-                                alt=""
-                                width={200}
-                                height={200}
-                                className="object-contain"
+                                alt={product.name}
+                                width={64}
+                                height={64}
+                                className="object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                               />
                             </div>
                           )}
                         </div>
+                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-4 md:mb-6">
+                          {product.name}
+                        </h2>
+                        <p className="text-lg md:text-xl lg:text-2xl text-white/50 max-w-2xl leading-relaxed font-light">
+                          {product.description}
+                        </p>
+                      </div>
 
-                        {/* Floating Elements Around the Tilted Screen */}
-                        <div className="absolute top-10 right-0 w-32 h-32 bg-primary-500/10 blur-3xl rounded-full"></div>
-                        <div className="absolute bottom-10 left-0 w-40 h-40 bg-primary-500/20 blur-[100px] rounded-full"></div>
+                      {/* Bottom Row - Tags & CTA */}
+                      <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
+                        <div className="flex flex-wrap gap-2 md:gap-3">
+                          {["AI-Powered", "Enterprise", "Scalable"].map((tag, j) => (
+                            <span
+                              key={j}
+                              className={cn(
+                                "px-4 py-2 rounded-full text-xs md:text-sm font-medium border border-white/10 text-white/70",
+                                cardStyle.accentBg
+                              )}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <Link href={`/product/${product.slug}`}>
+                          <button className="group/btn flex items-center gap-3 text-white hover:gap-4 transition-all">
+                            <span className="text-sm md:text-base font-semibold uppercase tracking-wider">Explore Product</span>
+                            <div className={cn(
+                              "w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors",
+                              cardStyle.accentBg,
+                              "group-hover/btn:bg-white"
+                            )}>
+                              <ArrowUpRight size={20} className="text-white group-hover/btn:text-black transition-colors" />
+                            </div>
+                          </button>
+                        </Link>
+                      </div>
+
+                      {/* Card number watermark */}
+                      <div className="absolute bottom-6 md:bottom-10 right-6 md:right-10 text-white/[0.03] text-[10rem] md:text-[14rem] font-black pointer-events-none leading-none select-none">
+                        {index + 1}
                       </div>
                     </div>
-                  </SpotlightCard>
+
+                    {/* Video overlay (if available) */}
+                    {product.content?.hero?.demoVideo && (
+                      <div className="absolute inset-0 opacity-20 pointer-events-none">
+                        <video
+                          ref={(el) => {
+                            videoRefs.current[index] = el;
+                          }}
+                          src={product.content.hero.demoVideo}
+                          loop
+                          muted
+                          playsInline
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}

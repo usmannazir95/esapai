@@ -50,18 +50,15 @@ export function TrustedPartners() {
     }, { scope: sectionRef });
 
     return (
-        <section ref={sectionRef} className="w-full pt-20 pb-12 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 overflow-hidden">
+        <section ref={sectionRef} className="relative z-[35] w-full pt-20 pb-12 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 overflow-hidden bg-transparent">
             <div className="relative flex overflow-hidden">
                 {/* Marquee Row */}
                 <div className="flex animate-marquee whitespace-nowrap py-4">
                     {[...PARTNERS, ...PARTNERS].map((partner, index) => (
                         <div
                             key={index}
-                            className="flex items-center justify-center px-12 sm:px-16 gap-3"
+                            className="flex items-center justify-center px-12 sm:px-16"
                         >
-                            <div className="w-8 h-8 rounded bg-white/5 border border-white/10 flex items-center justify-center text-[10px] font-bold text-white/40">
-                                {partner.name.substring(0, 2)}
-                            </div>
                             <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white/20 hover:text-primary/60 transition-colors cursor-default select-none uppercase tracking-tighter">
                                 {partner.name}
                             </span>

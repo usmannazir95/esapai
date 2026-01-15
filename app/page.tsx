@@ -24,14 +24,6 @@ const ProductShowcaseSection = dynamic(
   () => import("@/components/features/home/sections/product-showcase").then((mod) => ({ default: mod.ProductShowcase })),
 );
 
-const TrustedPartnersSection = dynamic(
-  () => import("@/components/features/home/sections/trusted-partners").then((mod) => ({ default: mod.TrustedPartners })),
-);
-
-const CTASection = dynamic(
-  () => import("@/components/features/home/sections/cta").then((mod) => ({ default: mod.CTASection })),
-);
-
 const TextRevealSection = dynamic(
   () => import("@/components/features/home/sections/text-reveal").then((mod) => ({ default: mod.TextRevealSection })),
 );
@@ -45,9 +37,6 @@ export default function Home() {
 
 
       <Hero />
-
-      {/* Trusted Partners Ticker */}
-      <TrustedPartnersSection />
 
       {/* Process Visualization */}
 
@@ -73,10 +62,6 @@ export default function Home() {
 
       <LazySection minHeight="200vh">
         <TextRevealSection />
-      </LazySection>
-
-      <LazySection minHeight="600px">
-        <CTASection />
       </LazySection>
     </main>
   );

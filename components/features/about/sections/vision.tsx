@@ -15,7 +15,7 @@ import { useGSAPAnimations } from "@/lib/hooks/use-gsap-animations";
 import { useIntersectionAnimation } from "@/lib/hooks/use-intersection-animation";
 import { prefersReducedMotion } from "@/lib/utils/performance-utils";
 import Robot from "@/components/shared/robot";
-import { GravityBubbles } from "@/components/features/about/components/gravity-bubbles";
+import { VisionStatCards } from "@/components/features/about/components/vision-stat-cards";
 
 const ConcaveFloor = dynamic(
   () => import("@/components/shared/concave-floor"),
@@ -28,6 +28,7 @@ export function Vision() {
   const robotRef = useRef<HTMLDivElement>(null);
   const robotWrapperRef = useRef<HTMLDivElement>(null);
   const dotCircleContainerRef = useRef<HTMLDivElement>(null);
+  const statCardsRef = useRef<HTMLDivElement>(null);
 
 
   const anim = useGSAPAnimations(sectionRef as React.RefObject<HTMLElement>);
@@ -98,7 +99,12 @@ export function Vision() {
       if (subtitleElement) gsap.set(subtitleElement, { opacity: 0, y: 10 });
       if (robotRef.current) gsap.set(robotRef.current, { opacity: 0, y: 50, scale: 0.8 });
       if (dotCircleContainerRef.current) gsap.set(dotCircleContainerRef.current, { opacity: 0, y: 30 });
+      if (statCardsRef.current) gsap.set(statCardsRef.current, { opacity: 0, scale: 0.85 });
 
+      // Stat cards entrance - small to big
+      if (statCardsRef.current) {
+        tl.to(statCardsRef.current, { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.4)" }, 0);
+      }
       if (titleElement) {
         tl.to(titleElement, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.1);
       }
@@ -209,8 +215,8 @@ export function Vision() {
 
   return (
     <>
-      {/* Fixed Vision Layer - "The Curtain Bed" */}
-      <div className="fixed inset-0 w-full h-full z-0 flex flex-col justify-center pointer-events-none">
+      {/* Fixed Vision Layer - above hero (z-30) but below Services (z-40) */}
+      <div className="fixed inset-0 w-full h-full z-[35] pointer-events-none">
         <div
           ref={(el) => {
             sectionRef.current = el;
@@ -218,16 +224,17 @@ export function Vision() {
           }}
           className="w-full h-full relative flex flex-col justify-center bg-transparent"
         >
-          {/* Background Elements */}
-          <div className="absolute inset-0 z-0">
-            <GravityBubbles />
+          {/* Background Elements - 3D Floating Stat Cards - Full viewport */}
+          <div ref={statCardsRef} className="absolute inset-0 w-full h-full">
+            <VisionStatCards className="w-full h-full" />
           </div>
-
-          <Section background="transparent" className="pt-44 sm:pt-48 md:pt-52 pb-6 sm:pb-8 md:pb-10 h-full flex flex-col z-10 pointer-events-auto">
-            <SectionHeader
-              title="Our Vision"
-              subtitle="Seamlessly integrating advanced AI to transform enterprises of all sizes."
-            />
+          <Section background="transparent" className="pt-32 pb-6 sm:pb-8 md:pb-10 h-full flex flex-col z-10 pointer-events-auto">
+            <div className="mt-20">
+              <SectionHeader
+                title="Our Vision"
+                subtitle="Seamlessly integrating advanced AI to transform enterprises of all sizes."
+              />
+            </div>
 
             <div className="relative w-full flex items-center justify-center py-4 sm:py-6 md:py-8 lg:py-10 z-0 flex-grow">
               <div className="relative w-full max-w-[1200px] aspect-[1.5/1] sm:aspect-[1.8/1] md:aspect-[2.2/1] lg:aspect-[2.5/1] z-0">
@@ -261,8 +268,8 @@ export function Vision() {
         </div>
       </div>
 
-      {/* Spacer Implementation - Reserves the scroll area */}
-      <div ref={spacerRef} className="vision-spacer-container relative w-full h-[120vh] z-0 pointer-events-none" />
+      {/* Spacer Implementation - Reserves the scroll area, taller to account for mission animation */}
+      <div ref={spacerRef} className="vision-spacer-container relative w-full h-[200vh] z-0 pointer-events-none" />
     </>
   );
 }

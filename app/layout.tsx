@@ -16,6 +16,7 @@ import { generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/str
 import { StructuredDataComponent } from "@/components/seo/structured-data";
 import { BackgroundLayout } from "@/components/ui/background/background-layout";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { InitialLoader } from "@/components/ui/initial-loader";
 
 const jakarta = Plus_Jakarta_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body
         className={`${jakarta.variable} ${spaceGrotesk.variable} ${inter.variable} font-jakarta antialiased flex flex-col min-h-screen`}
       >
+        <InitialLoader />
         <ScrollProgress
           gradientFrom="#13f584"
           gradientVia="#10b981"

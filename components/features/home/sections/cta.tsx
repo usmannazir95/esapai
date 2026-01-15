@@ -3,13 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
 
 import { Button } from "@/components/ui/button";
 
@@ -117,53 +110,43 @@ export function CTASection() {
         };
     }, []);
 
-    useGSAP(() => {
-        if (!sectionRef.current) return;
-
-        const content = sectionRef.current.querySelector(".container");
-        if (content) {
-            gsap.fromTo(content,
-                {
-                    opacity: 0,
-                    y: 60,
-                    scale: 0.9,
-                    filter: "blur(10px)"
-                },
-                {
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: "top 85%",
-                        end: "top 50%",
-                        scrub: 1.5,
-                    },
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    filter: "blur(0px)",
-                    ease: "expo.out",
-                }
-            );
-        }
-    }, { scope: sectionRef });
+    // Content is always visible - appears from behind text reveal
 
 
 
     return (
         <section
             ref={sectionRef}
-            // Seamless blend: Fully transparent to show global background + Warp on top
-            className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-transparent"
+            className="relative w-full h-screen flex items-center justify-center overflow-hidden z-[50]"
+            style={{
+                background: 'linear-gradient(180deg, #0d3025 0%, #0a2a1f 25%, #071d16 50%, #041510 75%, #030d0a 100%)',
+            }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Canvas Background - z-0 */}
+            {/* Grid overlay */}
+            <div
+                className="absolute inset-0 z-0 pointer-events-none"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(19, 245, 132, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(19, 245, 132, 0.06) 1px, transparent 1px)`,
+                    backgroundSize: '60px 60px',
+                    maskImage: 'radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 70%)',
+                    WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 70%)',
+                }}
+            />
+
+            {/* Top gradient fade */}
+            <div
+                className="absolute top-0 left-0 right-0 h-[20vh] z-[1] pointer-events-none"
+                style={{
+                    background: 'linear-gradient(180deg, #030d0a 0%, transparent 100%)',
+                }}
+            />
+
+            {/* Canvas Background - star warp */}
             <canvas
                 ref={canvasRef}
-                className="absolute inset-0 z-0 w-full h-full block opacity-80" // Slightly transparent to blend better
-                style={{
-                    maskImage: "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)",
-                    WebkitMaskImage: "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)"
-                }}
+                className="absolute inset-0 z-[2] w-full h-full block opacity-60"
             />
 
             {/* Content */}
